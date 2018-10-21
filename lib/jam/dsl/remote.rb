@@ -16,6 +16,8 @@ module Jam
         freeze
       end
 
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
       def prepend(*args)
         raise ArgumentError, "prepend requires an argument" if args.empty?
         raise ArgumentError, "prepend must be given a block" unless block_given?
@@ -31,6 +33,8 @@ module Jam
           prefixes.pop(args.count)
         end
       end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength
 
       def attach(command, *args, echo: true)
         command_string = shell_join(command, *args)
@@ -38,13 +42,19 @@ module Jam
         ssh.attach(command_string)
       end
 
-      def run(command, *args, echo: true, silent: false, pty: false, raise_on_error: true)
+      # rubocop:disable Metrics/ParameterLists
+      def run(command, *args,
+              echo: true,
+              silent: false,
+              pty: false,
+              raise_on_error: true)
         command_string = shell_join(command, *args)
         log(command_string, echo) if echo
         result = ssh.run(command_string, silent: silent, pty: pty)
         raise_run_error(result) if result.error? && raise_on_error
         result
       end
+      # rubocop:enable Metrics/ParameterLists
 
       def run?(command, *args, **run_opts)
         result = run(command, *args, **run_opts.merge(raise_on_error: false))

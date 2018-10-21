@@ -4,7 +4,7 @@ module Jam
     autoload :Connection, "jam/ssh/connection"
     autoload :Result, "jam/ssh/result"
 
-    def self.connect(host, &block)
+    def self.connect(host)
       connection = Connection.new(host)
       yield(connection)
     ensure

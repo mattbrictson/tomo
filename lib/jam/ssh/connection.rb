@@ -21,7 +21,7 @@ module Jam
         ChildProcess.execute(
           ssh_command,
           stdout_io: silent ? nil : $stdout,
-          stderr_io: silent ? nil : $stderr,
+          stderr_io: silent ? nil : $stderr
         )
       end
 

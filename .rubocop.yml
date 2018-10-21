@@ -1,0 +1,60 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 2.4
+
+Metrics/AbcSize:
+  Exclude:
+    - "test/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "*.gemspec"
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
+
+Metrics/MethodLength:
+  Exclude:
+    - "test/**/*"
+
+Metrics/LineLength:
+  Exclude:
+    - "*.gemspec"
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrivialAccessors:
+  AllowPredicates: true
