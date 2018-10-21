@@ -2,6 +2,9 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   TargetRubyVersion: 2.4
+  Exclude:
+    - "tmp/**/*"
+    - "vendor/**/*"
 
 Metrics/AbcSize:
   Exclude:
