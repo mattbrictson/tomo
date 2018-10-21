@@ -16,13 +16,18 @@ module Jam
         Process.exec(ssh_command)
       end
 
-      def run(command, silent: false, pty: false)
+      def run(command, silent: false, pty: false, raise_on_error: true)
         ssh_command = build_ssh_command(command, pty: pty)
-        ChildProcess.execute(
+        result = ChildProcess.execute(
           ssh_command,
           stdout_io: silent ? nil : $stdout,
           stderr_io: silent ? nil : $stderr
         )
+        if result.error? && raise_on_error
+          raise_run_error(command, ssh_command, result)
+        end
+
+        result
       end
 
       def close
@@ -55,6 +60,16 @@ module Jam
           token = SecureRandom.hex(8)
           File.join(Dir.tmpdir, "jam_ssh_#{token}")
         end
+      end
+
+      def raise_run_error(remote_command, ssh_command, result)
+        RemoteExecutionError.raise_with(
+          "Failed with status #{result.exit_status}: #{ssh_command}",
+          host: host,
+          remote_command: remote_command,
+          ssh_command: ssh_command,
+          result: result
+        )
       end
     end
   end

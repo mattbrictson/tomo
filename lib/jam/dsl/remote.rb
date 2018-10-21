@@ -50,9 +50,12 @@ module Jam
               raise_on_error: true)
         command_string = shell_join(command, *args)
         log(command_string, echo) if echo
-        result = ssh.run(command_string, silent: silent, pty: pty)
-        raise_run_error(result) if result.error? && raise_on_error
-        result
+        ssh.run(
+          command_string,
+          silent: silent,
+          pty: pty,
+          raise_on_error: raise_on_error
+        )
       end
       # rubocop:enable Metrics/ParameterLists
 
