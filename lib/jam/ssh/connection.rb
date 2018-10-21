@@ -31,8 +31,6 @@ module Jam
 
       private
 
-      attr_reader :host
-
       def build_ssh_command(command, pty:)
         args = [*ssh_options]
         args << "-tt" if pty

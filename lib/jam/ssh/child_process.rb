@@ -6,10 +6,8 @@ module Jam
       def self.execute(command, stdout_io: $stdout, stderr_io: $stderr)
         process = new(command, stdout_io: stdout_io, stderr_io: stderr_io)
         process.wait_for_exit
-        process
+        process.result
       end
-
-      attr_reader :exit_status
 
       def initialize(command, stdout_io:, stderr_io:)
         @command = command
@@ -28,20 +26,19 @@ module Jam
           stderr_thread.join
           @exit_status = wait_thread.value.to_i
         end
-        close
       end
 
-      def stdout
-        stdout_buffer.string
-      end
-
-      def stderr
-        stderr_buffer.string
+      def result
+        Result.new(
+          exit_status: exit_status,
+          stdout: stdout_buffer.string,
+          stderr: stderr_buffer.string
+        )
       end
 
       private
 
-      attr_reader :command
+      attr_reader :command, :exit_status
       attr_reader :stdout_io, :stderr_io, :stdout_buffer, :stderr_buffer
 
       def start_io_thread(source, dest_io, dest_buffer)
@@ -51,12 +48,6 @@ module Jam
             dest_buffer << line
           end
         end
-      end
-
-      def close
-        stdout_buffer.close
-        stderr_buffer.close
-        freeze
       end
     end
   end
