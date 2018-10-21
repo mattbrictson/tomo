@@ -1,5 +1,4 @@
-require "jam/version"
-
 module Jam
-  # Your code goes here...
+  autoload :SSH, "jam/ssh"
+  autoload :Version, "jam/version"
 end
