@@ -1,3 +1,4 @@
+require "fileutils"
 require "securerandom"
 require "shellwords"
 require "tmpdir"
@@ -37,11 +38,15 @@ module Jam
       private
 
       def build_ssh_command(command, pty:)
+        unless command.is_a?(String) || command.is_a?(Symbol)
+          raise ArgumentError, "command must be a string, not #{command.class}"
+        end
+
         args = [*ssh_options]
         args << "-tt" if pty
         args << host.shellescape
         args << "--"
-        args << command.shellescape
+        args << command.to_s.shellescape
 
         ["ssh", *args].join(" ")
       end

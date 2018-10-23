@@ -16,25 +16,16 @@ module Jam
         freeze
       end
 
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
       def prepend(*args)
-        raise ArgumentError, "prepend requires an argument" if args.empty?
-        raise ArgumentError, "prepend must be given a block" unless block_given?
-
-        begin
-          if args.length == 1
-            prefixes.push(raw(args.first))
-          else
-            prefixes.push(*args)
-          end
-          yield
-        ensure
-          prefixes.pop(args.count)
+        if args.length == 1
+          prefixes.push(raw(args.first))
+        else
+          prefixes.push(*args)
         end
+        yield
+      ensure
+        prefixes.pop(args.count)
       end
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/MethodLength
 
       def attach(command, *args, echo: true)
         command_string = shell_join(command, *args)
@@ -58,11 +49,6 @@ module Jam
         )
       end
       # rubocop:enable Metrics/ParameterLists
-
-      def run?(command, *args, **run_opts)
-        result = run(command, *args, **run_opts.merge(raise_on_error: false))
-        result.success?
-      end
 
       private
 
