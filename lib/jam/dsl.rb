@@ -11,11 +11,6 @@ module Jam
     def paths
     end
 
-    def raw(string)
-      string.define_singleton_method(:shellescape) { string }
-      string
-    end
-
     def remote
       Framework.instance.remote
     end

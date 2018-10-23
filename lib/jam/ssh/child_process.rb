@@ -18,7 +18,7 @@ module Jam
       end
 
       def wait_for_exit
-        Open3.popen3(command) do |stdin, stdout, stderr, wait_thread|
+        Open3.popen3(*command) do |stdin, stdout, stderr, wait_thread|
           stdin.close
           stdout_thread = start_io_thread(stdout, stdout_io, stdout_buffer)
           stderr_thread = start_io_thread(stderr, stderr_io, stderr_buffer)
