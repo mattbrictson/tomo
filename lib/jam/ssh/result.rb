@@ -14,7 +14,7 @@ module Jam
         exit_status.zero?
       end
 
-      def error?
+      def failure?
         !success?
       end
     end

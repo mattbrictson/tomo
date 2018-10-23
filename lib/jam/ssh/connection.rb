@@ -23,11 +23,25 @@ module Jam
           stdout_io: silent ? nil : $stdout,
           stderr_io: silent ? nil : $stderr
         )
-        if result.error? && raise_on_error
+        if result.failure? && raise_on_error
           raise_run_error(command, ssh_command, result)
         end
 
         result
+      end
+
+      def run?(command, silent: false, pty: false)
+        run(command, silent: silent, pty: pty, raise_on_error: false).success?
+      end
+
+      def capture(command, silent: true, pty: false, raise_on_error: true)
+        result = run(
+          command,
+          silent: silent,
+          pty: pty,
+          raise_on_error: raise_on_error
+        )
+        result.stdout
       end
 
       def close
