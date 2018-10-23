@@ -53,6 +53,7 @@ module Jam
 
       def ssh_options
         [
+          "-A",
           "-o ControlMaster=auto",
           "-o ControlPath=#{control_path.shellescape}",
           "-o ControlPersist=30s",
