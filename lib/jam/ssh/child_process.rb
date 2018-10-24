@@ -3,14 +3,14 @@ require "open3"
 module Jam
   module SSH
     class ChildProcess
-      def self.execute(command, io: $stdout)
-        process = new(command, io: io)
+      def self.execute(*command, io: $stdout)
+        process = new(*command, io: io)
         process.wait_for_exit
         process.result
       end
 
-      def initialize(command, io:)
-        @command = command
+      def initialize(*command, io:)
+        @command = *command
         @io = io
         @stdout_buffer = StringIO.new
         @stderr_buffer = StringIO.new

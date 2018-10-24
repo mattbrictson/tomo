@@ -1,6 +1,7 @@
 module Jam
   module DSL
     autoload :Remote, "jam/dsl/remote"
+    autoload :ShellCommand, "jam/dsl/shell_command"
 
     def dry_run?
     end

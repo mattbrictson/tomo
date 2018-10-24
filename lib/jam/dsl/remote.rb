@@ -5,21 +5,14 @@ module Jam
     class Remote
       extend Forwardable
       def_delegators :ssh, :host
+      def_delegators :shell_command, :chdir, :env, :umask
 
       include Jam::DSL
 
       def initialize(ssh, helpers: [])
         @ssh = ssh
-        @prefixes = []
         helpers.each { |mod| extend(mod) }
         freeze
-      end
-
-      def prepend(*args)
-        prefixes.push(*args)
-        yield
-      ensure
-        prefixes.pop(args.count)
       end
 
       def attach(command, *args, echo: true)
@@ -47,7 +40,7 @@ module Jam
 
       private
 
-      attr_reader :ssh, :prefixes
+      attr_reader :ssh
 
       def log(command, echo)
         command_string = command.join(" ")
@@ -55,7 +48,7 @@ module Jam
       end
 
       def build_full_command(command, args)
-        [prefixes, command, args].flatten
+        [command, args].flatten
       end
     end
   end
