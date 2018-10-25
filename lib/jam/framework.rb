@@ -6,12 +6,11 @@ module Jam
     autoload :Current, "jam/framework/current"
     autoload :SSHConnection, "jam/framework/ssh_connection"
 
-    include Singleton
-
     def initialize
       reset!
     end
 
+    # TODO: better name for this method?
     def connect_remote(host)
       conn = SSHConnection.new(host)
       remote = Remote.new(conn)
@@ -22,7 +21,7 @@ module Jam
       conn&.close
     end
 
-    def remote
+    def current_remote
       current[:remote]
     end
 

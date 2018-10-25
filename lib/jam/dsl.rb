@@ -10,7 +10,7 @@ module Jam
     end
 
     def remote
-      Framework.instance.remote
+      Jam.framework.current_remote
     end
 
     def settings
