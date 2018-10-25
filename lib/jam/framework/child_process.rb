@@ -1,7 +1,7 @@
 require "open3"
 
 module Jam
-  module SSH
+  class Framework
     class ChildProcess
       def self.execute(*command, io: $stdout)
         process = new(*command, io: io)
