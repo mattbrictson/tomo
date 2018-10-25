@@ -18,7 +18,7 @@ module Jam
       def attach(command, *args, echo: true)
         full_command = build_full_command(command, args)
         log(full_command, echo) if echo
-        ssh.attach(full_command)
+        ssh.ssh_exec(full_command)
       end
 
       # rubocop:disable Metrics/ParameterLists
@@ -29,7 +29,7 @@ module Jam
               raise_on_error: true)
         full_command = build_full_command(command, args)
         log(full_command, echo) if echo
-        ssh.run(
+        ssh.ssh_subprocess(
           full_command,
           silent: silent,
           pty: pty,

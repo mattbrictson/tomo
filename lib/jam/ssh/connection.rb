@@ -11,14 +11,12 @@ module Jam
         @host = host
       end
 
-      # TODO: rename to ssh_exec
-      def attach(command)
+      def ssh_exec(command)
         ssh_args = build_ssh_command(command, pty: true)
         Process.exec(*ssh_args)
       end
 
-      # TODO: rename to ssh_subprocess
-      def run(command, silent: false, pty: false, raise_on_error: true)
+      def ssh_subprocess(command, silent: false, pty: false, raise_on_error: true)
         ssh_args = build_ssh_command(command, pty: pty)
         result = ChildProcess.execute(*ssh_args, io: silent ? nil : $stdout)
         if result.failure? && raise_on_error
@@ -28,22 +26,6 @@ module Jam
         end
 
         result
-      end
-
-      # TODO: remove
-      def run?(command, silent: false, pty: false)
-        run(command, silent: silent, pty: pty, raise_on_error: false).success?
-      end
-
-      # TODO: remove
-      def capture(command, silent: true, pty: false, raise_on_error: true)
-        result = run(
-          command,
-          silent: silent,
-          pty: pty,
-          raise_on_error: raise_on_error
-        )
-        result.stdout
       end
 
       def close
