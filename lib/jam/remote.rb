@@ -10,26 +10,39 @@ module Jam
 
     def initialize(ssh, helpers: [])
       @ssh = ssh
+      @shell_command = ShellCommand.new
       helpers.each { |mod| extend(mod) }
       freeze
     end
 
-    def attach(command, *args, echo: true)
-      full_command = build_full_command(command, args)
+    # TODO: move to core/helpers
+    def capture(*command, **run_options)
+      result = run(*command, **{ silent: true }.merge(run_options))
+      result.stdout
+    end
+
+    # TODO: move to core/helpers
+    def run?(*command, **run_options)
+      result = run(*command, **run_options.merge(raise_on_error: false))
+      result.success?
+    end
+
+    def attach(*command, echo: true)
+      full_command = shell_command.build(*command)
       log(full_command, echo) if echo
-      ssh.ssh_exec(full_command)
+      ssh.ssh_exec(*full_command)
     end
 
     # rubocop:disable Metrics/ParameterLists
-    def run(command, *args,
+    def run(*command,
             echo: true,
             silent: false,
             pty: false,
             raise_on_error: true)
-      full_command = build_full_command(command, args)
+      full_command = shell_command.build(*command)
       log(full_command, echo) if echo
       ssh.ssh_subprocess(
-        full_command,
+        *full_command,
         silent: silent,
         pty: pty,
         raise_on_error: raise_on_error
@@ -39,15 +52,11 @@ module Jam
 
     private
 
-    attr_reader :ssh
+    attr_reader :ssh, :shell_command
 
     def log(command, echo)
-      command_string = command.join(" ")
-      puts(echo == true ? "\e[0;90;49m#{host}$ #{command_string}\e[0m" : echo)
-    end
-
-    def build_full_command(command, args)
-      [command, args].flatten
+      command_string = echo == true ? Array(command).join(" ") : echo
+      puts "\e[0;90;49m#{host}$ #{command_string}\e[0m"
     end
   end
 end

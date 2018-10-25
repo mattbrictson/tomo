@@ -12,8 +12,14 @@ module Jam
       reset!
     end
 
-    def with_remote(remote, &block)
-      current.set(remote: remote, &block)
+    def connect_remote(host)
+      conn = SSHConnection.new(host)
+      remote = Remote.new(conn)
+      current.set(remote: remote) do
+        yield(remote)
+      end
+    ensure
+      conn&.close
     end
 
     def remote
