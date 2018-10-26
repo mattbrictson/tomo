@@ -16,12 +16,12 @@ module Jam
           run("ln", "-sf", target, link, **run_opts)
         end
 
-        def mkdir_p(directory, **run_opts)
-          run("mkdir", "-p", directory, **run_opts)
+        def mkdir_p(*directories, **run_opts)
+          run("mkdir", "-p", *directories, **run_opts)
         end
 
-        def rm_rf(path, **run_opts)
-          run("rm", "-rf", path, **run_opts)
+        def rm_rf(*paths, **run_opts)
+          run("rm", "-rf", *paths, **run_opts)
         end
 
         def command_available?(command_name, **run_opts)
