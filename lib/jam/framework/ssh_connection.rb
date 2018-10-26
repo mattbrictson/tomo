@@ -16,7 +16,10 @@ module Jam
         Process.exec(*ssh_args)
       end
 
-      def ssh_subprocess(command, silent: false, pty: false, raise_on_error: true)
+      def ssh_subprocess(command,
+                         silent: false,
+                         pty: false,
+                         raise_on_error: true)
         ssh_args = build_ssh_command(command, pty: pty)
         result = ChildProcess.execute(*ssh_args, io: silent ? nil : $stdout)
         if result.failure? && raise_on_error

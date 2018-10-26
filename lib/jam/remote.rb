@@ -21,7 +21,6 @@ module Jam
       ssh.ssh_exec(*full_command)
     end
 
-    # rubocop:disable Metrics/ParameterLists
     def run(*command,
             echo: true,
             silent: false,
@@ -36,7 +35,6 @@ module Jam
         raise_on_error: raise_on_error
       )
     end
-    # rubocop:enable Metrics/ParameterLists
 
     private
 
