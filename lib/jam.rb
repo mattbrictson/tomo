@@ -2,6 +2,7 @@ module Jam
   autoload :DSL, "jam/dsl"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
+  autoload :Paths, "jam/paths"
   autoload :Plugin, "jam/plugin"
   autoload :Plugins, "jam/plugins"
   autoload :Remote, "jam/remote"
@@ -11,8 +12,8 @@ module Jam
   autoload :Version, "jam/version"
 
   class << self
-    def load!
-      @framework ||= Framework.new.load!
+    def load!(settings={})
+      @framework ||= Framework.new.load!(settings: settings)
     end
 
     def framework

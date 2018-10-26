@@ -7,6 +7,7 @@ module Jam
     end
 
     def paths
+      Jam.framework.paths
     end
 
     def remote
@@ -14,6 +15,7 @@ module Jam
     end
 
     def settings
+      Jam.framework.settings
     end
   end
 end

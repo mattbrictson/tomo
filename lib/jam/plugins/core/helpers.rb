@@ -39,7 +39,7 @@ module Jam
         private
 
         def flag?(flag, path, **run_opts)
-          run?("[ #{flag} #{path.shellescape} ]", **run_opts)
+          run?("[ #{flag} #{path.to_s.shellescape} ]", **run_opts)
         end
       end
     end

@@ -8,12 +8,13 @@ module Jam
     autoload :SettingsRegistry, "jam/framework/settings_registry"
     autoload :SSHConnection, "jam/framework/ssh_connection"
 
-    attr_reader :settings
+    attr_reader :paths, :settings
 
     def initialize
       @current = Current.new
       @helpers = [].freeze
       @settings = {}.freeze
+      @paths = Paths.new(@settings)
     end
 
     def load!(settings: {}, plugins: ["core"])
@@ -22,6 +23,7 @@ module Jam
       yield(self) if block_given?
       @helpers = plugins_registry.helper_modules.freeze
       @settings = settings_registry.to_hash.freeze
+      @paths = Paths.new(@settings)
       freeze
     end
 

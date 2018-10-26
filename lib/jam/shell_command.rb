@@ -44,11 +44,11 @@ module Jam
     def shell_join(*command)
       return command.first if command.length == 1
 
-      command.map(&:shellescape).join(" ")
+      command.map(&:to_s).map(&:shellescape).join(" ")
     end
 
     def cd_chdir
-      @chdir.map { |dir| "cd #{dir.shellescape}" }
+      @chdir.map { |dir| "cd #{dir.to_s.shellescape}" }
     end
 
     def unset_env
