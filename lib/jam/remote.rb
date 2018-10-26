@@ -15,18 +15,6 @@ module Jam
       freeze
     end
 
-    # TODO: move to core/helpers
-    def capture(*command, **run_options)
-      result = run(*command, **{ silent: true }.merge(run_options))
-      result.stdout
-    end
-
-    # TODO: move to core/helpers
-    def run?(*command, **run_options)
-      result = run(*command, **run_options.merge(raise_on_error: false))
-      result.success?
-    end
-
     def attach(*command, echo: true)
       full_command = shell_command.build(*command)
       log(full_command, echo) if echo
