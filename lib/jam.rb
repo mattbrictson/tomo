@@ -2,6 +2,7 @@ module Jam
   autoload :DSL, "jam/dsl"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
+  autoload :Path, "jam/path"
   autoload :Paths, "jam/paths"
   autoload :Plugin, "jam/plugin"
   autoload :Plugins, "jam/plugins"

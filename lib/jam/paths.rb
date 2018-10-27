@@ -1,5 +1,3 @@
-require "pathname"
-
 module Jam
   class Paths
     def initialize(settings)
@@ -15,7 +13,7 @@ module Jam
       return super unless setting?(method)
       raise ArgumentError, "#{method} takes no arguments" unless args.empty?
 
-      pathname(method)
+      path(method)
     end
 
     def respond_to_missing?(method, include_private=false)
@@ -26,9 +24,9 @@ module Jam
       settings.key?(:"#{name}_path")
     end
 
-    def pathname(name)
+    def path(name)
       path = settings.fetch(:"#{name}_path").to_s.gsub(%r{//+}, "/")
-      Pathname.new(path)
+      Path.new(path)
     end
   end
 end
