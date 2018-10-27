@@ -16,7 +16,8 @@ module Jam::Plugins::Git
 
     def log_revision
       user = ENV["USER"]
-      message = "Branch #{branch} (at #{sha}) deployed as release #{release} by #{user}"
+      # message = "Branch #{branch} (at #{sha}) deployed as release #{release} by #{user}"
+      message = "Branch #{branch} (at #{sha}) deployed by #{user}"
       remote.run "echo #{message.shellescape} >> #{paths.revision_log}"
     end
 
