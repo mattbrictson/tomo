@@ -14,7 +14,13 @@ module Jam
 
   class << self
     def load!(settings={})
-      @framework ||= Framework.new.load!(settings: settings)
+      @framework = Framework.new.load!(settings: settings)
+    end
+
+    def load_project!(settings={})
+      @framework = Framework.new.tap do |framework|
+        framework.load_project!(settings: settings)
+      end
     end
 
     def framework
