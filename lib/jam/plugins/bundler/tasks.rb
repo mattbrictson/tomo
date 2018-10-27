@@ -3,17 +3,13 @@ module Jam::Plugins::Bundler
     include Jam::DSL
 
     def install
-      remote.chdir(paths.release) do
-        return if remote.bundle?("check", *check_options)
+      return if remote.bundle?("check", *check_options)
 
-        remote.bundle("install", *install_options)
-      end
+      remote.bundle("install", *install_options)
     end
 
     def clean
-      remote.chdir(paths.release) do
-        remote.bundle("clean", settings[:bundler_clean_options])
-      end
+      remote.bundle("clean", settings[:bundler_clean_options])
     end
 
     private

@@ -15,8 +15,8 @@ module Jam
       freeze
     end
 
-    def attach(*command, echo: true)
-      full_command = shell_command.build(*command)
+    def attach(*command, echo: true, default_chdir: nil)
+      full_command = shell_command.build(*command, default_chdir: default_chdir)
       log(full_command, echo) if echo
       ssh.ssh_exec(*full_command)
     end
@@ -25,8 +25,14 @@ module Jam
             echo: true,
             silent: false,
             pty: false,
-            raise_on_error: true)
-      full_command = shell_command.build(*command)
+            raise_on_error: true,
+            attach: false,
+            default_chdir: nil)
+      if attach
+        return attach(*command, echo: echo, default_chdir: default_chdir)
+      end
+
+      full_command = shell_command.build(*command, default_chdir: default_chdir)
       log(full_command, echo) if echo
       ssh.ssh_subprocess(
         *full_command,

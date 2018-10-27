@@ -31,7 +31,11 @@ module Jam
       @umask = orig_umask
     end
 
-    def build(*command)
+    def build(*command, default_chdir: nil)
+      if @chdir.empty? && default_chdir
+        return chdir(default_chdir) { build(*command) }
+      end
+
       command_string = shell_join(*command)
       prefixes = [cd_chdir, unset_env, export_env, set_umask].compact.flatten
       return command_string if prefixes.empty?
