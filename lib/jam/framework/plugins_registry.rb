@@ -11,7 +11,7 @@ module Jam
       def load_plugin_by_name(name)
         raise unless name == "core"
 
-        load_plugin(Jam::Plugins::Core)
+        load_plugin(Jam::Plugins::Core::Plugin)
       end
 
       def load_plugin(plugin_class)

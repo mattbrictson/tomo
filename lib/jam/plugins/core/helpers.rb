@@ -1,6 +1,6 @@
 module Jam
   module Plugins
-    class Core
+    module Core
       module Helpers
         def capture(*command, **run_opts)
           result = run(*command, **{ silent: true }.merge(run_opts))
