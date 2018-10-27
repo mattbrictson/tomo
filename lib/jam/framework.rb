@@ -1,4 +1,4 @@
-require "singleton"
+require "forwardable"
 
 module Jam
   class Framework
@@ -8,6 +8,10 @@ module Jam
     autoload :ProjectLoader, "jam/framework/project_loader"
     autoload :SettingsRegistry, "jam/framework/settings_registry"
     autoload :SSHConnection, "jam/framework/ssh_connection"
+    autoload :TasksRegistry, "jam/framework/tasks_registry"
+
+    extend Forwardable
+    def_delegators :tasks_registry, :invoke_task
 
     attr_reader :paths, :settings
 
@@ -52,7 +56,10 @@ module Jam
 
     def plugins_registry
       @plugins_registry ||= begin
-        PluginsRegistry.new(settings_registry: settings_registry)
+        PluginsRegistry.new(
+          settings_registry: settings_registry,
+          tasks_registry: tasks_registry
+        )
       end
     end
 
@@ -67,6 +74,10 @@ module Jam
 
     def settings_registry
       @settings_registry ||= SettingsRegistry.new
+    end
+
+    def tasks_registry
+      @tasks_registry ||= TasksRegistry.new
     end
   end
 end

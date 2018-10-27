@@ -8,7 +8,11 @@ module Jam
     end
 
     def join(*other)
-      Path.new(Pathname.new(path).join(*other).to_s)
+      self.class.new(Pathname.new(path).join(*other).to_s)
+    end
+
+    def dirname
+      self.class.new(Pathname.new(path).dirname.to_s)
     end
 
     def to_s
