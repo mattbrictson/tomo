@@ -9,7 +9,7 @@ module Jam::Plugins::Bundler
     helpers Jam::Plugins::Bundler::Helpers
 
     defaults bundler_binstubs:      nil,
-             bundler_clean_options: "",
+             bundler_clean_options: nil,
              bundler_env_variables: {},
              bundler_flags:         "--deployment",
              bundler_gemfile:       nil,

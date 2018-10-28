@@ -14,7 +14,6 @@ module Jam::Plugins::Core
              linked_dirs:       [],
              release_path:      "%<current_path>",
              releases_path:     "%<deploy_to>/releases",
-             repo_path:         "%<deploy_to>/repo",
              shared_path:       "%<deploy_to>/shared",
              revision_log_path: "%<deploy_to>/revisions.log"
 

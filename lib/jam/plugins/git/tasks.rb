@@ -5,7 +5,7 @@ module Jam::Plugins::Git
     include Jam::DSL
 
     def create_release
-      remote.chdir(paths.repo) do
+      remote.chdir(paths.git_repo) do
         remote.run "git remote update --prune"
         self.sha = remote.capture("git rev-list --max-count=1 #{branch}").strip
         remote.mkdir_p paths.release
