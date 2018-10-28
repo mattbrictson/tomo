@@ -46,9 +46,7 @@ module Jam
     private
 
     def shell_join(*command)
-      return command.first if command.length == 1
-
-      command.map(&:to_s).map(&:shellescape).join(" ")
+      command.flatten.compact.map(&:to_s).join(" ")
     end
 
     def cd_chdir

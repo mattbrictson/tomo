@@ -32,8 +32,9 @@ module Jam
     end
 
     def load_project!(settings: {})
-      project_loader.load_project
-      load!(settings: settings)
+      project_loader.load_project.tap do
+        load!(settings: settings)
+      end
     end
 
     def connect(host)
