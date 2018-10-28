@@ -68,7 +68,8 @@ module Jam
       @project_loader ||= begin
         ProjectLoader.new(
           settings_registry: settings_registry,
-          plugins_registry: plugins_registry
+          plugins_registry: plugins_registry,
+          tasks_registry: tasks_registry
         )
       end
     end
