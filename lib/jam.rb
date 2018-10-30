@@ -11,7 +11,7 @@ module Jam
   autoload :Result, "jam/result"
   autoload :ShellCommand, "jam/shell_command"
   autoload :SSH, "jam/ssh"
-  autoload :Version, "jam/version"
+  autoload :VERSION, "jam/version"
 
   class << self
     def load!(settings:{})
