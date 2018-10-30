@@ -16,6 +16,5 @@ module Jam::Plugins::Core
              releases_path:     "%<deploy_to>/releases",
              shared_path:       "%<deploy_to>/shared",
              revision_log_path: "%<deploy_to>/revisions.log"
-
   end
 end

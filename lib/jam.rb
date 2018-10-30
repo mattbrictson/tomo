@@ -14,11 +14,11 @@ module Jam
   autoload :VERSION, "jam/version"
 
   class << self
-    def load!(settings:{})
+    def load!(settings: {})
       @framework = Framework.new.load!(settings: settings)
     end
 
-    def load_project!(environment: nil, settings:{})
+    def load_project!(environment: nil, settings: {})
       @framework = Framework.new
       @framework.load_project!(environment: environment, settings: settings)
     end

@@ -18,7 +18,7 @@ module Jam
       end
 
       def load_plugin_by_name(name)
-        raise unless BUILT_IN_PLUGINS.keys.include?(name)
+        raise unless BUILT_IN_PLUGINS.key?(name)
 
         load_plugin(name, Jam.const_get(BUILT_IN_PLUGINS[name]))
       end

@@ -1,5 +1,8 @@
 require "optparse"
 
+# TODO: refactor this entire thing
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
 module Jam
   class CLI
     def deploy
@@ -40,3 +43,5 @@ module Jam
     end
   end
 end
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength

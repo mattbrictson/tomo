@@ -21,6 +21,7 @@ module Jam
       ssh.ssh_exec(*full_command)
     end
 
+    # rubocop:disable Metrics/ParameterLists
     def run(*command,
             echo: true,
             silent: false,
@@ -28,19 +29,15 @@ module Jam
             raise_on_error: true,
             attach: false,
             default_chdir: nil)
-      if attach
-        return attach(*command, echo: echo, default_chdir: default_chdir)
-      end
+      attach(*command, echo: echo, default_chdir: default_chdir) if attach
 
       full_command = shell_command.build(*command, default_chdir: default_chdir)
       log(full_command, echo) if echo
       ssh.ssh_subprocess(
-        *full_command,
-        silent: silent,
-        pty: pty,
-        raise_on_error: raise_on_error
+        *full_command, silent: silent, pty: pty, raise_on_error: raise_on_error
       )
     end
+    # rubocop:enable Metrics/ParameterLists
 
     private
 

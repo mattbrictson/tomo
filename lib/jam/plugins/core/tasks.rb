@@ -5,7 +5,7 @@ module Jam::Plugins::Core
     def symlink_shared_directories
       return if linked_dirs.empty?
 
-      remote.mkdir_p(*linked_dir_parents) unless linked_dir_parents.empty?
+      create_linked_parents
       linked_dirs.each do |dir|
         remote.ln_sf paths.shared.join(dir), paths.release.join(dir)
       end
@@ -21,11 +21,13 @@ module Jam::Plugins::Core
       settings[:linked_dirs]
     end
 
-    def linked_dir_parents
+    def create_linked_parents
       parents = linked_dirs.map do |dir|
         paths.release.join(dir).dirname
       end
       parents = parents.uniq - [paths.release]
+
+      remote.mkdir_p(*parents) unless parents.empty?
     end
   end
 end

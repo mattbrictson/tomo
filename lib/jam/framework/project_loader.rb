@@ -36,12 +36,16 @@ module Jam
         environments = json.delete("environments") || {}
         return json if env.nil? && environments.empty?
 
-        raise_no_environment_specified(environments) if env.nil?
-        raise_unknown_environment(environments, env) if environments[env].nil?
+        validate_environment(environments, env)
 
         json.merge(environments[env]) do |key, orig, replacement|
           key == "settings" ? orig.merge(replacement) : replacement
         end
+      end
+
+      def validate_environment(environments, env)
+        raise_no_environment_specified(environments) if env.nil?
+        raise_unknown_environment(environments, env) if environments[env].nil?
       end
 
       def load_plugins(plugin_names)
@@ -70,11 +74,11 @@ module Jam
 
       def raise_unknown_environment(environments, env)
         message = "Unknown environment #{env.inspect}. "
-        if environments.empty?
-          message << "This project does not have any environments."
-        else
-          message << "Must be one of #{environments.keys.inspect}"
-        end
+        message << if environments.empty?
+                     "This project does not have any environments."
+                   else
+                     "Must be one of #{environments.keys.inspect}"
+                   end
         raise message
       end
     end
