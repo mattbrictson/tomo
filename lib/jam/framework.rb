@@ -31,8 +31,8 @@ module Jam
       freeze
     end
 
-    def load_project!(settings: {})
-      project_loader.load_project.tap do
+    def load_project!(environment: nil, settings: {})
+      project_loader.load_project(environment).tap do
         load!(settings: settings)
       end
     end

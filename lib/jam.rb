@@ -1,4 +1,5 @@
 module Jam
+  autoload :CLI, "jam/cli"
   autoload :DSL, "jam/dsl"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
@@ -13,13 +14,13 @@ module Jam
   autoload :Version, "jam/version"
 
   class << self
-    def load!(settings={})
+    def load!(settings:{})
       @framework = Framework.new.load!(settings: settings)
     end
 
-    def load_project!(settings={})
+    def load_project!(environment: nil, settings:{})
       @framework = Framework.new
-      @framework.load_project!(settings: settings)
+      @framework.load_project!(environment: environment, settings: settings)
     end
 
     def framework

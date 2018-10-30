@@ -10,9 +10,10 @@ module Jam
         @tasks_registry = tasks_registry
       end
 
-      def load_project
+      def load_project(environment=nil)
         dir = Pathname.new(".jam")
         json = load_and_validate_json(dir.join("project.json"))
+        json = merge_environment(json, environment)
 
         load_plugins(json.delete("plugins") || [])
         load_tasks(dir.join("tasks.rb"))
@@ -29,6 +30,18 @@ module Jam
         raise "Jam project (.jam/project.json) not found" unless path.file?
 
         JSON.parse(IO.read(path))
+      end
+
+      def merge_environment(json, env)
+        environments = json.delete("environments") || {}
+        return json if env.nil? && environments.empty?
+
+        raise_no_environment_specified(environments) if env.nil?
+        raise_unknown_environment(environments, env) if environments[env].nil?
+
+        json.merge(environments[env]) do |key, orig, replacement|
+          key == "settings" ? orig.merge(replacement) : replacement
+        end
       end
 
       def load_plugins(plugin_names)
@@ -48,6 +61,21 @@ module Jam
 
       def apply_settings(settings)
         settings_registry.assign(settings)
+      end
+
+      def raise_no_environment_specified(environments)
+        raise "No environment specified! "\
+              "Must be one of #{environments.keys.inspect}"
+      end
+
+      def raise_unknown_environment(environments, env)
+        message = "Unknown environment #{env.inspect}. "
+        if environments.empty?
+          message << "This project does not have any environments."
+        else
+          message << "Must be one of #{environments.keys.inspect}"
+        end
+        raise message
       end
     end
   end

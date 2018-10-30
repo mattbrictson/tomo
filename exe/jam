@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
 
 require "jam"
+Jam::CLI.new.deploy
