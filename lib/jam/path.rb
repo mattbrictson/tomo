@@ -1,26 +1,19 @@
+require "forwardable"
 require "pathname"
 
 module Jam
-  class Path
+  class Path < SimpleDelegator
     def initialize(path)
-      @path = path.to_s
+      super(path.to_s)
       freeze
     end
 
     def join(*other)
-      self.class.new(Pathname.new(path).join(*other).to_s)
+      self.class.new(Pathname.new(self).join(*other))
     end
 
     def dirname
-      self.class.new(Pathname.new(path).dirname.to_s)
+      self.class.new(Pathname.new(self).dirname)
     end
-
-    def to_s
-      path
-    end
-
-    private
-
-    attr_reader :path
   end
 end
