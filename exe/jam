@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require "jam"
-Jam::CLI.new.deploy
+Jam::CLI.new.call(ARGV)

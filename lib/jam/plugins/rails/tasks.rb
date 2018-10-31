@@ -7,7 +7,7 @@ module Jam::Plugins::Rails
     end
 
     def console
-      remote.rails("console", attach: true)
+      remote.rails("console", settings[:run_args], attach: true)
     end
 
     def db_migrate

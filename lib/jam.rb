@@ -1,5 +1,6 @@
 module Jam
   autoload :CLI, "jam/cli"
+  autoload :Commands, "jam/commands"
   autoload :DSL, "jam/dsl"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
