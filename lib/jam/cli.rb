@@ -1,6 +1,7 @@
 module Jam
   class CLI
-    autoload :Options, "jam/cli/options"
+    autoload :DeployOptions, "jam/cli/deploy_options"
+    autoload :Parser, "jam/cli/parser"
 
     COMMANDS = {
       "deploy" => Jam::Commands::Deploy,
@@ -10,8 +11,7 @@ module Jam
 
     def call(argv)
       command = COMMANDS[argv.shift]
-      options = Options.parse(argv)
-      command.new.call(options)
+      command.new.call(argv)
     end
   end
 end
