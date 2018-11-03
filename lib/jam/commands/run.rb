@@ -28,6 +28,8 @@ module Jam
       end
 
       def call(options)
+        puts "jam run v#{Jam::VERSION}"
+
         task, *args = options[:extra_args]
 
         jam = Framework.new

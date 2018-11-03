@@ -15,7 +15,7 @@ module Jam
               jam COMMAND -h
           USAGE
           parser.on("-v", "--version") do
-            puts "jam #{Jam::VERSION}"
+            puts Jam::VERSION
             exit
           end
         end

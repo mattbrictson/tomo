@@ -16,6 +16,8 @@ module Jam
       end
 
       def call(options)
+        puts "jam deploy v#{Jam::VERSION}"
+
         jam = Framework.new
         release = Time.now.utc.strftime("%Y%m%d%H%M%S")
         project = jam.load_project!(
