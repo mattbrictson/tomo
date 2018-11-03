@@ -12,7 +12,7 @@ module Jam
 
       def invoke_task(name)
         task = tasks_by_name.fetch(name.to_s) do
-          raise "No task named #{name}"
+          raise_no_task_found(name.to_s)
         end
         task.call
       end
@@ -32,6 +32,19 @@ module Jam
       private
 
       attr_reader :framework, :tasks_by_name
+
+      def raise_no_task_found(name)
+        message = "No task named #{name.inspect}"
+        if defined?(DidYouMean::SpellChecker)
+          checker = DidYouMean::SpellChecker.new(dictionary: tasks_by_name.keys)
+          sugg = checker.correct(name)
+          if sugg&.any?
+            message << ". Did you mean? #{sugg.map(&:inspect).join(", ")}"
+          end
+        end
+
+        raise message
+      end
     end
   end
 end
