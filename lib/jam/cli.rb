@@ -7,11 +7,16 @@ module Jam
       "deploy" => Jam::Commands::Deploy,
       "run" => Jam::Commands::Run
     }.freeze
-    private_constant :COMMANDS
 
     def call(argv)
-      command = COMMANDS[argv.shift]
-      command.new.call(argv)
+      command = if COMMANDS.key?(argv.first)
+                  COMMANDS[argv.shift].new
+                else
+                  Jam::Commands::Default.new
+                end
+
+      options = command.parser.parse(argv)
+      command.call(options)
     end
   end
 end
