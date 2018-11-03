@@ -33,20 +33,23 @@ module Jam
       end
 
       def merge_environment(json, env)
-        environments = json.delete("environments") || {}
-        return json if env.nil? && environments.empty?
+        envs = json.delete("environments") || {}
+        return json if env.nil? && envs.empty?
 
-        environments[:auto] = environments.values.first.dup || {}
-        validate_environment(environments, env)
+        environment = lookup_environment(envs, env)
 
-        json.merge(environments[env]) do |key, orig, replacement|
+        json.merge(environment) do |key, orig, replacement|
           key == "settings" ? orig.merge(replacement) : replacement
         end
       end
 
-      def validate_environment(environments, env)
+      def lookup_environment(environments, env)
+        return environments.values.first || {} if env == :auto
+
         raise_no_environment_specified(environments) if env.nil?
         raise_unknown_environment(environments, env) if environments[env].nil?
+
+        environments[env]
       end
 
       def load_plugins(plugin_names)
