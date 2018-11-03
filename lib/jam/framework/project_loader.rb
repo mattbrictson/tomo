@@ -57,8 +57,7 @@ module Jam
         return unless path.file?
 
         script = IO.read(path)
-        klass = Class.new
-        klass.include(Jam::DSL)
+        klass = Class.new(TaskLibrary)
         klass.class_eval(script, path.to_s, 0)
         tasks_registry.register_task_library(nil, klass)
       end

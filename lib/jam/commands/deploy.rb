@@ -16,16 +16,17 @@ module Jam
       end
 
       def call(options)
+        jam = Framework.new
         release = Time.now.utc.strftime("%Y%m%d%H%M%S")
-        project = Jam.load_project!(
+        project = jam.load_project!(
           environment: options[:environment],
           settings: options[:settings].merge(
             release_path: "%<releases_path>/#{release}"
           )
         )
-        Jam.framework.connect(project["host"]) do
+        jam.connect(project["host"]) do
           project["deploy"].each do |task|
-            Jam.framework.invoke_task(task)
+            jam.invoke_task(task)
           end
         end
       end

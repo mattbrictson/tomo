@@ -1,7 +1,5 @@
 module Jam::Plugins::Rails
-  class Tasks
-    include Jam::DSL
-
+  class Tasks < Jam::TaskLibrary
     def assets_precompile
       remote.rake("assets:precompile")
     end

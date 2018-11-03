@@ -3,15 +3,15 @@ require "forwardable"
 module Jam
   class Remote
     extend Forwardable
+    def_delegators :framework, :paths, :settings
     def_delegators :ssh, :host
     def_delegators :shell_command, :chdir, :env, :umask
 
-    include Jam::DSL
-
-    def initialize(ssh, helpers: [])
+    def initialize(ssh, framework)
       @ssh = ssh
+      @framework = framework
       @shell_command = ShellCommand.new
-      helpers.each { |mod| extend(mod) }
+      framework.helper_modules.each { |mod| extend(mod) }
       freeze
     end
 
@@ -41,11 +41,15 @@ module Jam
 
     private
 
-    attr_reader :ssh, :shell_command
+    attr_reader :framework, :ssh, :shell_command
 
     def log(command, echo)
       command_string = echo == true ? Array(command).join(" ") : echo
       puts "\e[0;90;49m#{host}$ #{command_string}\e[0m"
+    end
+
+    def remote
+      self
     end
   end
 end

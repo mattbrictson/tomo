@@ -1,7 +1,5 @@
 module Jam::Plugins::Core
-  class Tasks
-    include Jam::DSL
-
+  class Tasks < Jam::TaskLibrary
     def symlink_shared_directories
       return if linked_dirs.empty?
 

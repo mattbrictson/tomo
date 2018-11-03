@@ -13,11 +13,11 @@ module Jam
     extend Forwardable
     def_delegators :tasks_registry, :invoke_task
 
-    attr_reader :paths, :settings
+    attr_reader :helper_modules, :paths, :settings
 
     def initialize
       @current = Current.new
-      @helpers = [].freeze
+      @helper_modules = [].freeze
       @settings = {}.freeze
       @paths = Paths.new(@settings)
     end
@@ -25,7 +25,7 @@ module Jam
     def load!(settings: {}, plugins: ["core"])
       plugins.each { |plug| plugins_registry.load_plugin_by_name(plug) }
       settings_registry.assign(settings)
-      @helpers = plugins_registry.helper_modules.freeze
+      @helper_modules = plugins_registry.helper_modules.freeze
       @settings = settings_registry.to_hash.freeze
       @paths = Paths.new(@settings)
       freeze
@@ -39,7 +39,7 @@ module Jam
 
     def connect(host)
       conn = SSHConnection.new(host)
-      remote = Remote.new(conn, helpers: helpers)
+      remote = Remote.new(conn, self)
       current.set(remote: remote) do
         yield(remote)
       end
@@ -47,13 +47,13 @@ module Jam
       conn&.close
     end
 
-    def current_remote
+    def remote
       current[:remote]
     end
 
     private
 
-    attr_reader :current, :helpers
+    attr_reader :current
 
     def plugins_registry
       @plugins_registry ||= begin
@@ -79,7 +79,7 @@ module Jam
     end
 
     def tasks_registry
-      @tasks_registry ||= TasksRegistry.new
+      @tasks_registry ||= TasksRegistry.new(self)
     end
   end
 end

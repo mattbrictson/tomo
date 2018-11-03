@@ -30,13 +30,14 @@ module Jam
       def call(options)
         task, *args = options[:extra_args]
 
-        project = Jam.load_project!(
+        jam = Framework.new
+        project = jam.load_project!(
           environment: options[:environment],
           settings: options[:settings].merge(run_args: args)
         )
 
-        Jam.framework.connect(project["host"]) do
-          Jam.framework.invoke_task(task)
+        jam.connect(project["host"]) do
+          jam.invoke_task(task)
         end
       end
     end

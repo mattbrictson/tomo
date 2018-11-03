@@ -1,9 +1,7 @@
 require "shellwords"
 
 module Jam::Plugins::Git
-  class Tasks
-    include Jam::DSL
-
+  class Tasks < Jam::TaskLibrary
     # rubocop:disable Metrics/AbcSize
     def create_release
       remote.chdir(paths.git_repo) do

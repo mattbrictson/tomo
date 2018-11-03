@@ -1,7 +1,6 @@
 module Jam
   autoload :CLI, "jam/cli"
   autoload :Commands, "jam/commands"
-  autoload :DSL, "jam/dsl"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
   autoload :Path, "jam/path"
@@ -11,21 +10,6 @@ module Jam
   autoload :Remote, "jam/remote"
   autoload :Result, "jam/result"
   autoload :ShellCommand, "jam/shell_command"
-  autoload :SSH, "jam/ssh"
+  autoload :TaskLibrary, "jam/task_library"
   autoload :VERSION, "jam/version"
-
-  class << self
-    def load!(settings: {})
-      @framework = Framework.new.load!(settings: settings)
-    end
-
-    def load_project!(environment: nil, settings: {})
-      @framework = Framework.new
-      @framework.load_project!(environment: environment, settings: settings)
-    end
-
-    def framework
-      @framework || raise("Jam has not been loaded. Call `Jam.load!` first.")
-    end
-  end
 end

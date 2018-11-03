@@ -1,7 +1,5 @@
 module Jam::Plugins::Bundler
-  class Tasks
-    include Jam::DSL
-
+  class Tasks < Jam::TaskLibrary
     def install
       return if remote.bundle?("check", *check_options)
 

@@ -1,7 +1,8 @@
 module Jam
   class Framework
     class TasksRegistry
-      def initialize
+      def initialize(framework)
+        @framework = framework
         @tasks = {}
       end
 
@@ -17,7 +18,7 @@ module Jam
       end
 
       def register_task_library(namespace, library_class)
-        library = library_class.new
+        library = library_class.new(framework)
         library_class.public_instance_methods(false).each do |task_name|
           qualified_name = [namespace, task_name].compact.join(":")
           tasks[qualified_name] = -> { library.public_send(task_name) }
@@ -26,7 +27,7 @@ module Jam
 
       private
 
-      attr_reader :tasks
+      attr_reader :framework, :tasks
     end
   end
 end
