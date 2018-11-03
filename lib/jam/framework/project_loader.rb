@@ -36,6 +36,7 @@ module Jam
         environments = json.delete("environments") || {}
         return json if env.nil? && environments.empty?
 
+        environments[:auto] = environments.values.first.dup || {}
         validate_environment(environments, env)
 
         json.merge(environments[env]) do |key, orig, replacement|

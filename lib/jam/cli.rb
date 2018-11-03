@@ -5,7 +5,8 @@ module Jam
 
     COMMANDS = {
       "deploy" => Jam::Commands::Deploy,
-      "run" => Jam::Commands::Run
+      "run" => Jam::Commands::Run,
+      "tasks" => Jam::Commands::Tasks
     }.freeze
 
     def call(argv)

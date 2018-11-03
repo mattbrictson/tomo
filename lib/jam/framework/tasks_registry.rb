@@ -3,11 +3,15 @@ module Jam
     class TasksRegistry
       def initialize(framework)
         @framework = framework
-        @tasks = {}
+        @tasks_by_name = {}
+      end
+
+      def tasks
+        tasks_by_name.keys.freeze
       end
 
       def invoke_task(name)
-        task = tasks.fetch(name.to_s) do
+        task = tasks_by_name.fetch(name.to_s) do
           raise "No task named #{name}"
         end
         task.call
@@ -21,13 +25,13 @@ module Jam
         library = library_class.new(framework)
         library_class.public_instance_methods(false).each do |task_name|
           qualified_name = [namespace, task_name].compact.join(":")
-          tasks[qualified_name] = -> { library.public_send(task_name) }
+          tasks_by_name[qualified_name] = -> { library.public_send(task_name) }
         end
       end
 
       private
 
-      attr_reader :framework, :tasks
+      attr_reader :framework, :tasks_by_name
     end
   end
 end

@@ -11,7 +11,7 @@ module Jam
     autoload :TasksRegistry, "jam/framework/tasks_registry"
 
     extend Forwardable
-    def_delegators :tasks_registry, :invoke_task
+    def_delegators :tasks_registry, :invoke_task, :tasks
 
     attr_reader :helper_modules, :paths, :settings
 
