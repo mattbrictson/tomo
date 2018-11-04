@@ -1,6 +1,8 @@
 module Jam
   module Commands
     class Run
+      include Jam::Colors
+
       def parser
         Jam::CLI::Parser.new do |parser|
           parser.banner = <<~BANNER
@@ -41,6 +43,8 @@ module Jam
         jam.connect(project["host"]) do
           jam.invoke_task(task)
         end
+
+        puts green("✔ Ran #{task} on #{project["host"]}")
       end
     end
   end

@@ -1,6 +1,8 @@
 module Jam
   module Commands
     class Deploy
+      include Jam::Colors
+
       def parser
         Jam::CLI::Parser.new do |parser|
           parser.banner = <<~BANNER
@@ -31,6 +33,9 @@ module Jam
             jam.invoke_task(task)
           end
         end
+
+        app = jam.settings[:application]
+        puts green("✔ Deployed #{app} to #{project["host"]}")
       end
     end
   end

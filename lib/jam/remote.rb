@@ -45,7 +45,7 @@ module Jam
 
     def log(command, echo)
       command_string = echo == true ? Array(command).join(" ") : echo
-      puts "\e[0;90;49m#{host}$ #{command_string}\e[0m"
+      puts Jam::Colors.gray("#{host}$ #{command_string}")
     end
 
     def remote

@@ -1,5 +1,6 @@
 module Jam
   autoload :CLI, "jam/cli"
+  autoload :Colors, "jam/colors"
   autoload :Commands, "jam/commands"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
