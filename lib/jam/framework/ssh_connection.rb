@@ -9,6 +9,7 @@ module Jam
 
       def initialize(host)
         @host = host
+        validate!
       end
 
       def ssh_exec(command)
@@ -36,6 +37,15 @@ module Jam
       end
 
       private
+
+      def validate!
+        begin
+          result = ssh_subprocess("echo hi", silent: true)
+          raise unless result.stdout.chomp == "hi"
+        rescue StandardError
+          raise "Unable to connect to #{host}"
+        end
+      end
 
       def build_ssh_command(command, pty:)
         args = [*ssh_options]
