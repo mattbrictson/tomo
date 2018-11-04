@@ -1,11 +1,11 @@
 module Jam
   module Colors
     ANSI_CODES = {
-      :red    => 31,
-      :green  => 32,
-      :yellow => 33,
-      :blue   => 34,
-      :gray   => 90
+      red: 31,
+      green: 32,
+      yellow: 33,
+      blue: 34,
+      gray: 90
     }.freeze
     private_constant :ANSI_CODES
 

@@ -15,7 +15,7 @@ module Jam
         end
       end
 
-      def call(options)
+      def call(_options)
         jam = Framework.new
         jam.load_project!(environment: :auto)
 

@@ -1,6 +1,7 @@
 module Jam
   module Commands
     class Default
+      # rubocop:disable Metrics/MethodLength
       def parser
         Jam::CLI::Parser.new do |parser|
           parser.banner = "Usage: jam COMMAND [options]"
@@ -20,6 +21,7 @@ module Jam
           end
         end
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

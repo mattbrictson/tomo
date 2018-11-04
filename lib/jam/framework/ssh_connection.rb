@@ -7,25 +7,27 @@ module Jam
     class SSHConnection
       attr_reader :host
 
-      def initialize(host)
+      def initialize(host, logger)
         @host = host
+        @logger = logger
         validate!
       end
 
       def ssh_exec(command)
-        ssh_args = build_ssh_command(command, pty: true)
+        ssh_args = build_ssh_args(command)
+        logger.command_start(command)
         Process.exec(*ssh_args)
       end
 
-      def ssh_subprocess(command,
-                         silent: false,
-                         pty: false,
-                         raise_on_error: true)
-        ssh_args = build_ssh_command(command, pty: pty)
-        result = ChildProcess.execute(*ssh_args, io: silent ? nil : $stdout)
-        if result.failure? && raise_on_error
-          $stdout << result.stdout if silent
-          $stdout << result.stderr if silent
+      def ssh_subprocess(command)
+        ssh_args = build_ssh_args(command)
+        handle_data = ->(data) { logger.command_output(command, data) }
+
+        logger.command_start(command)
+        result = ChildProcess.execute(*ssh_args, on_data: handle_data)
+        logger.command_end(command, result)
+
+        if result.failure? && command.raise_on_error?
           raise_run_error(command, ssh_args.join(" "), result)
         end
 
@@ -38,22 +40,25 @@ module Jam
 
       private
 
+      attr_reader :logger
+
       def validate!
-        begin
-          result = ssh_subprocess("echo hi", silent: true)
-          raise unless result.stdout.chomp == "hi"
-        rescue StandardError
-          raise "Unable to connect to #{host}"
-        end
+        logger.connect(host)
+        result = ssh_subprocess(
+          Command.new("echo hi", silent: true, echo: false)
+        )
+        raise unless result.stdout.chomp == "hi"
+      rescue StandardError
+        raise "Unable to connect to #{host}"
       end
 
-      def build_ssh_command(command, pty:)
+      def build_ssh_args(command)
         args = [*ssh_options]
-        args << "-tt" if pty
+        args << "-tt" if command.pty?
         args << host
         args << "--"
 
-        ["ssh", args, command].flatten
+        ["ssh", args, command.to_s].flatten
       end
 
       def ssh_options

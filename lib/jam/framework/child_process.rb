@@ -3,15 +3,15 @@ require "open3"
 module Jam
   class Framework
     class ChildProcess
-      def self.execute(*command, io: $stdout)
-        process = new(*command, io: io)
+      def self.execute(*command, on_data:)
+        process = new(*command, on_data: on_data)
         process.wait_for_exit
         process.result
       end
 
-      def initialize(*command, io:)
+      def initialize(*command, on_data:)
         @command = *command
-        @io = io
+        @on_data = on_data
         @stdout_buffer = StringIO.new
         @stderr_buffer = StringIO.new
       end
@@ -37,17 +37,17 @@ module Jam
 
       private
 
-      attr_reader :command, :exit_status, :io, :stdout_buffer, :stderr_buffer
+      attr_reader :command, :exit_status, :on_data,
+                  :stdout_buffer, :stderr_buffer
 
       def start_io_thread(source, buffer)
         Thread.new do
           begin
             while (line = source.gets)
-              io << line unless io.nil?
+              on_data&.call(line)
               buffer << line
             end
-          rescue IOError
-            # ignore
+          rescue IOError # rubocop:disable Lint/HandleExceptions
           end
         end
       end

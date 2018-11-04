@@ -39,7 +39,7 @@ module Jam
           checker = DidYouMean::SpellChecker.new(dictionary: tasks_by_name.keys)
           sugg = checker.correct(name)
           if sugg&.any?
-            message << ". Did you mean? #{sugg.map(&:inspect).join(", ")}"
+            message << ". Did you mean? #{sugg.map(&:inspect).join(', ')}"
           end
         end
 

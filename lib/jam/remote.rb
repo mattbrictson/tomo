@@ -3,7 +3,6 @@ require "forwardable"
 module Jam
   class Remote
     extend Forwardable
-    def_delegators :framework, :paths, :settings
     def_delegators :ssh, :host
     def_delegators :shell_command, :chdir, :env, :umask
 
@@ -15,38 +14,22 @@ module Jam
       freeze
     end
 
-    def attach(*command, echo: true, default_chdir: nil)
+    def attach(*command, default_chdir: nil, **command_opts)
       full_command = shell_command.build(*command, default_chdir: default_chdir)
-      log(full_command, echo) if echo
-      ssh.ssh_exec(*full_command)
+      ssh.ssh_exec(Command.new(full_command, **command_opts))
     end
 
-    # rubocop:disable Metrics/ParameterLists
-    def run(*command,
-            echo: true,
-            silent: false,
-            pty: false,
-            raise_on_error: true,
-            attach: false,
-            default_chdir: nil)
-      attach(*command, echo: echo, default_chdir: default_chdir) if attach
+    def run(*command, attach: false, default_chdir: nil, **command_opts)
+      attach(*command, default_chdir: default_chdir, **command_opts) if attach
 
       full_command = shell_command.build(*command, default_chdir: default_chdir)
-      log(full_command, echo) if echo
-      ssh.ssh_subprocess(
-        *full_command, silent: silent, pty: pty, raise_on_error: raise_on_error
-      )
+      ssh.ssh_subprocess(Command.new(full_command, **command_opts))
     end
-    # rubocop:enable Metrics/ParameterLists
 
     private
 
+    def_delegators :framework, :logger, :paths, :settings
     attr_reader :framework, :ssh, :shell_command
-
-    def log(command, echo)
-      command_string = echo == true ? Array(command).join(" ") : echo
-      puts Jam::Colors.gray("#{host}$ #{command_string}")
-    end
 
     def remote
       self

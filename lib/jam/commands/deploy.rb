@@ -18,24 +18,34 @@ module Jam
       end
 
       def call(options)
-        puts "jam deploy v#{Jam::VERSION}"
-
-        jam = Framework.new
         release = Time.now.utc.strftime("%Y%m%d%H%M%S")
+        jam, project = load!(options, release)
+        app = jam.settings[:application]
+
+        jam.logger.info "jam deploy v#{Jam::VERSION}"
+        run_deploy_tasks_on_host(jam, project)
+        jam.logger.info green("✔ Deployed #{app} to #{project['host']}")
+      end
+
+      private
+
+      def load!(options, release)
+        jam = Framework.new
         project = jam.load_project!(
           environment: options[:environment],
           settings: options[:settings].merge(
             release_path: "%<releases_path>/#{release}"
           )
         )
+        [jam, project]
+      end
+
+      def run_deploy_tasks_on_host(jam, project)
         jam.connect(project["host"]) do
           project["deploy"].each do |task|
             jam.invoke_task(task)
           end
         end
-
-        app = jam.settings[:application]
-        puts green("✔ Deployed #{app} to #{project["host"]}")
       end
     end
   end

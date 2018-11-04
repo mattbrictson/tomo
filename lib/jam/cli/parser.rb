@@ -28,9 +28,7 @@ module Jam
 
         args = args.dup
         opt_parse.parse!(args)
-        # TODO: print a nicer error instead of just showing the usage
-        usage_and_exit!(1) if args.any? && !permit_extra_args
-        usage_and_exit!(1) if args.empty? && !permit_empty_args
+        validate_remaining_args!(args)
 
         results[:extra_args] = args
         results.freeze
@@ -62,18 +60,21 @@ module Jam
         end
       end
 
+      def validate_remaining_args!(args)
+        usage_and_exit!(1) if args.any? && !permit_extra_args
+        usage_and_exit!(1) if args.empty? && !permit_empty_args
+      end
+
       def usage_and_exit!(status=0)
         puts
-        puts banner.gsub(/^/, "  ")
-        puts
-        if usage
-          puts usage.gsub(/^/, "  ")
-        else
-          puts "  Options:"
-          puts opt_parse.to_s.gsub(/^/, "  ")
-        end
+        puts indent(banner)
+        puts indent(usage || "Options:\n#{opt_parse}")
         puts
         exit(status)
+      end
+
+      def indent(str)
+        str.gsub(/^/, "  ")
       end
     end
   end

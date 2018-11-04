@@ -11,15 +11,16 @@ module Jam
     autoload :TasksRegistry, "jam/framework/tasks_registry"
 
     extend Forwardable
-    def_delegators :tasks_registry, :invoke_task, :tasks
+    def_delegators :tasks_registry, :tasks
 
-    attr_reader :helper_modules, :paths, :settings
+    attr_reader :helper_modules, :logger, :paths, :settings
 
     def initialize
       @current = Current.new
       @helper_modules = [].freeze
-      @settings = {}.freeze
+      @logger = Logger.new
       @paths = Paths.new(@settings)
+      @settings = {}.freeze
     end
 
     def load!(settings: {}, plugins: ["core"])
@@ -38,13 +39,18 @@ module Jam
     end
 
     def connect(host)
-      conn = SSHConnection.new(host)
+      conn = SSHConnection.new(host, logger)
       remote = Remote.new(conn, self)
       current.set(remote: remote) do
         yield(remote)
       end
     ensure
       conn&.close
+    end
+
+    def invoke_task(task)
+      logger.task_start(task)
+      tasks_registry.invoke_task(task)
     end
 
     def remote

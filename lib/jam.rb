@@ -1,9 +1,11 @@
 module Jam
   autoload :CLI, "jam/cli"
   autoload :Colors, "jam/colors"
+  autoload :Command, "jam/command"
   autoload :Commands, "jam/commands"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
+  autoload :Logger, "jam/logger"
   autoload :Path, "jam/path"
   autoload :Paths, "jam/paths"
   autoload :Plugin, "jam/plugin"
