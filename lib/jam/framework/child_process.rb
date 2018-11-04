@@ -41,9 +41,13 @@ module Jam
 
       def start_io_thread(source, buffer)
         Thread.new do
-          while (line = source.gets)
-            io << line unless io.nil?
-            buffer << line
+          begin
+            while (line = source.gets)
+              io << line unless io.nil?
+              buffer << line
+            end
+          rescue IOError
+            # ignore
           end
         end
       end
