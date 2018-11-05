@@ -12,6 +12,10 @@ module Jam
         opts.on("-e", "--environment=ENVIRONMENT", "Specify environment to use (e.g. production)") do |env|
           results[:environment] = env
         end
+
+        opts.on("--[no-]color", "Enable/disable color output") do |color|
+          color ? Jam::Colors.enable : Jam::Colors.disable
+        end
       end
     end
   end

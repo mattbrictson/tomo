@@ -10,8 +10,18 @@ module Jam
     private_constant :ANSI_CODES
 
     class << self
+      def enable
+        @enabled = true
+      end
+
+      def disable
+        @enabled = false
+      end
+
       def enabled?
-        @enabled ||= determine_color_support
+        return @enabled if defined?(@enabled)
+
+        @enabled = determine_color_support
       end
 
       private
