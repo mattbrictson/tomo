@@ -10,6 +10,17 @@ module Jam::Plugins::Bundler
       remote.bundle("clean", settings[:bundler_clean_options])
     end
 
+    def upgrade_bundler
+      needed_bundler_ver = extract_bundler_ver_from_lockfile
+      return if needed_bundler_ver.nil?
+
+      remote.run(
+        "gem install bundler",
+        "--conservative --no-document",
+        "-v #{needed_bundler_ver}"
+      )
+    end
+
     private
 
     def check_options
@@ -38,5 +49,14 @@ module Jam::Plugins::Bundler
       options
     end
     # rubocop:enable Metrics/AbcSize
+
+    def extract_bundler_ver_from_lockfile
+      lockfile_tail = remote.capture(
+        "tail -n 10",
+        paths.release.join("Gemfile.lock"),
+        raise_on_error: false
+      )
+      lockfile_tail[/BUNDLED WITH\n   (\S+)$/, 1]
+    end
   end
 end

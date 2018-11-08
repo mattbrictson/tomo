@@ -26,6 +26,10 @@ module Jam::Plugins::Core
       run?("which", command_name, **{ silent: true }.merge(run_opts))
     end
 
+    def file?(file, **run_opts)
+      flag?("-f", file, **run_opts)
+    end
+
     def executable?(file, **run_opts)
       flag?("-x", file, **run_opts)
     end

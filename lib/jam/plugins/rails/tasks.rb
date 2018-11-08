@@ -15,5 +15,10 @@ module Jam::Plugins::Rails
     def db_seed
       remote.rake("db:seed")
     end
+
+    def log_tail
+      log_path = paths.release.join("log/${RAILS_ENV}.log")
+      remote.run("tail", settings[:run_args], log_path)
+    end
   end
 end
