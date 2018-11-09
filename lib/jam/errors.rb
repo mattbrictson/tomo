@@ -8,6 +8,6 @@ module Jam
   end
 
   class RemoteExecutionError < Error
-    attr_accessor :host, :remote_command, :ssh_command, :result
+    attr_accessor :host, :script, :ssh_command, :result
   end
 end

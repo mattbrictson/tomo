@@ -1,13 +1,13 @@
 module Jam
-  class Command
-    attr_reader :command
+  class Script
+    attr_reader :script
 
-    def initialize(command,
+    def initialize(script,
                    echo: true,
                    pty: false,
                    raise_on_error: true,
                    silent: false)
-      @command = command
+      @script = script
       @echo = echo
       @pty = pty
       @raise_on_error = raise_on_error
@@ -22,7 +22,7 @@ module Jam
     def echo_string
       return nil unless echo?
 
-      @echo == true ? command : @echo
+      @echo == true ? script : @echo
     end
 
     def pty?
@@ -38,7 +38,7 @@ module Jam
     end
 
     def to_s
-      command
+      script
     end
   end
 end

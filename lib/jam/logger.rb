@@ -9,22 +9,22 @@ module Jam
       @stdout = stdout
     end
 
-    def command_start(command)
-      return unless command.echo?
+    def script_start(script)
+      return unless script.echo?
 
-      puts yellow(command.echo_string)
+      puts yellow(script.echo_string)
     end
 
-    def command_output(command, output)
-      return if command.silent?
+    def script_output(script, output)
+      return if script.silent?
 
       puts output
     end
 
-    def command_end(command, result)
+    def script_end(script, result)
       return unless result.failure?
-      return unless command.silent?
-      return unless command.raise_on_error?
+      return unless script.silent?
+      return unless script.raise_on_error?
 
       puts [result.stdout, result.stderr].compact.join
     end

@@ -13,22 +13,22 @@ module Jam
         validate!
       end
 
-      def ssh_exec(command)
-        ssh_args = build_ssh_args(command)
-        logger.command_start(command)
+      def ssh_exec(script)
+        ssh_args = build_ssh_args(script)
+        logger.script_start(script)
         Process.exec(*ssh_args)
       end
 
-      def ssh_subprocess(command)
-        ssh_args = build_ssh_args(command)
-        handle_data = ->(data) { logger.command_output(command, data) }
+      def ssh_subprocess(script)
+        ssh_args = build_ssh_args(script)
+        handle_data = ->(data) { logger.script_output(script, data) }
 
-        logger.command_start(command)
+        logger.script_start(script)
         result = ChildProcess.execute(*ssh_args, on_data: handle_data)
-        logger.command_end(command, result)
+        logger.script_end(script, result)
 
-        if result.failure? && command.raise_on_error?
-          raise_run_error(command, ssh_args.join(" "), result)
+        if result.failure? && script.raise_on_error?
+          raise_run_error(script, ssh_args.join(" "), result)
         end
 
         result
@@ -45,20 +45,20 @@ module Jam
       def validate!
         logger.connect(host)
         result = ssh_subprocess(
-          Command.new("echo hi", silent: true, echo: false)
+          Script.new("echo hi", silent: true, echo: false)
         )
         raise unless result.stdout.chomp == "hi"
       rescue StandardError
         raise "Unable to connect to #{host}"
       end
 
-      def build_ssh_args(command)
+      def build_ssh_args(script)
         args = [*ssh_options]
-        args << "-tt" if command.pty?
+        args << "-tt" if script.pty?
         args << host
         args << "--"
 
-        ["ssh", args, command.to_s].flatten
+        ["ssh", args, script.to_s].flatten
       end
 
       def ssh_options
@@ -78,11 +78,11 @@ module Jam
         end
       end
 
-      def raise_run_error(remote_command, ssh_command, result)
+      def raise_run_error(script, ssh_command, result)
         RemoteExecutionError.raise_with(
           "Failed with status #{result.exit_status}: #{ssh_command}",
           host: host,
-          remote_command: remote_command,
+          script: script,
           ssh_command: ssh_command,
           result: result
         )

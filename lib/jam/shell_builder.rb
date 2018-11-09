@@ -1,8 +1,7 @@
 require "shellwords"
 
 module Jam
-  # TODO: rename to ShellBuilder
-  class ShellCommand
+  class ShellBuilder
     def initialize
       @env = {}
       @chdir = []

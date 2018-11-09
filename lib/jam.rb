@@ -1,7 +1,6 @@
 module Jam
   autoload :CLI, "jam/cli"
   autoload :Colors, "jam/colors"
-  autoload :Command, "jam/command"
   autoload :Commands, "jam/commands"
   autoload :Error, "jam/errors"
   autoload :Framework, "jam/framework"
@@ -12,7 +11,8 @@ module Jam
   autoload :Plugins, "jam/plugins"
   autoload :Remote, "jam/remote"
   autoload :Result, "jam/result"
-  autoload :ShellCommand, "jam/shell_command"
+  autoload :Script, "jam/script"
+  autoload :ShellBuilder, "jam/shell_builder"
   autoload :TaskLibrary, "jam/task_library"
   autoload :VERSION, "jam/version"
 end
