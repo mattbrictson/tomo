@@ -11,6 +11,7 @@ module Jam::Plugins::Core
     defaults application:       "default",
              deploy_to:         "/var/www/%<application>",
              current_path:      "%<deploy_to>/current",
+             keep_releases:     10,
              linked_dirs:       [],
              release_path:      "%<current_path>",
              releases_path:     "%<deploy_to>/releases",

@@ -13,6 +13,20 @@ module Jam::Plugins::Core
       remote.ln_sfn paths.release, paths.current
     end
 
+    # rubocop:disable Metrics/AbcSize
+    def clean_releases
+      desired_count = settings[:keep_releases].to_i
+      return if desired_count < 1
+
+      remote.chdir(paths.releases) do
+        releases = remote.list_files.grep(/^\d{14}$/).sort
+        return if releases.length <= desired_count
+
+        remote.rm_rf(*releases.take(releases.length - desired_count))
+      end
+    end
+    # rubocop:enable Metrics/AbcSize
+
     private
 
     def linked_dirs

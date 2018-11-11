@@ -26,6 +26,10 @@ module Jam::Plugins::Core
       run("rm", "-rf", *paths, **run_opts)
     end
 
+    def list_files(directory=nil, **run_opts)
+      capture("ls", "-A1", directory, **run_opts).strip.split("\n")
+    end
+
     def command_available?(command_name, **run_opts)
       run?("which", command_name, **{ silent: true }.merge(run_opts))
     end
