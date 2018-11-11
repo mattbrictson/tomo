@@ -14,6 +14,10 @@ module Jam::Plugins::Core
       run("ln", "-sf", target, link, **run_opts)
     end
 
+    def ln_sfn(target, link, **run_opts)
+      run("ln", "-sfn", target, link, **run_opts)
+    end
+
     def mkdir_p(*directories, **run_opts)
       run("mkdir", "-p", *directories, **run_opts)
     end

@@ -10,7 +10,7 @@ module Jam::Plugins::Core
     end
 
     def symlink_current
-      remote.ln_sf paths.release, paths.current
+      remote.ln_sfn paths.release, paths.current
     end
 
     private
