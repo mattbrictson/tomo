@@ -33,26 +33,24 @@ module Jam
 
       def call(options)
         task, *args = options[:extra_args]
-        jam, project = load!(options, args)
+        jam = load!(options, args)
 
         jam.logger.info "jam run v#{Jam::VERSION}"
-        jam.connect(project["host"]) do
+        jam.connect(jam.project["host"]) do
           jam.invoke_task(task)
         end
-        jam.logger.info green("✔ Ran #{task} on #{project['host']}")
+        jam.logger.info green("✔ Ran #{task} on #{jam.project['host']}")
       end
 
       private
 
       def load!(options, args)
-        jam = Framework.new
-        project = jam.load_project!(
+        Jam.load!(
           environment: options[:environment],
           settings: options[:settings].merge(
             options[:settings].merge(run_args: args)
           )
         )
-        [jam, project]
       end
 
       def run_deploy_tasks_on_host(jam, project)

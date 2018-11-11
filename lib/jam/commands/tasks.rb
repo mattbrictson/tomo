@@ -16,8 +16,7 @@ module Jam
       end
 
       def call(_options)
-        jam = Framework.new
-        jam.load_project!(environment: :auto)
+        jam = Jam.load!(environment: :auto)
 
         groups = jam.tasks.group_by { |task| task[/^([^:]+):/, 1].to_s }
         groups.keys.sort.each do |group|

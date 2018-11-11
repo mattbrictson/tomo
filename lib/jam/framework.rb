@@ -13,7 +13,7 @@ module Jam
     extend Forwardable
     def_delegators :tasks_registry, :tasks
 
-    attr_reader :helper_modules, :logger, :paths, :settings
+    attr_reader :helper_modules, :logger, :paths, :project, :settings
 
     def initialize
       @current = Current.new
@@ -23,19 +23,13 @@ module Jam
       @settings = {}.freeze
     end
 
-    def load!(settings: {}, plugins: ["core"])
-      plugins.each { |plug| plugins_registry.load_plugin_by_name(plug) }
+    def load!(environment: nil, settings: {})
+      @project = project_loader.load_project(environment)
       settings_registry.assign(settings)
       @helper_modules = plugins_registry.helper_modules.freeze
       @settings = settings_registry.to_hash.freeze
       @paths = Paths.new(@settings)
       freeze
-    end
-
-    def load_project!(environment: nil, settings: {})
-      project_loader.load_project(environment).tap do
-        load!(settings: settings)
-      end
     end
 
     def connect(host)
