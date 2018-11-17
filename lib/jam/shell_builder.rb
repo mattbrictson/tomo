@@ -17,7 +17,7 @@ module Jam
 
     def env(hash)
       orig_env = @env
-      @env = orig_env.merge(hash)
+      @env = orig_env.merge(hash || {})
       yield
     ensure
       @env = orig_env
