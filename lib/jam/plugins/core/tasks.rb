@@ -1,5 +1,15 @@
 module Jam::Plugins::Core
   class Tasks < Jam::TaskLibrary
+    def create_shared_directories
+      return if linked_dirs.empty?
+
+      remote.mkdir_p(paths.shared)
+
+      remote.chdir(paths.shared) do
+        remote.mkdir_p(*linked_dirs)
+      end
+    end
+
     def symlink_shared_directories
       return if linked_dirs.empty?
 
