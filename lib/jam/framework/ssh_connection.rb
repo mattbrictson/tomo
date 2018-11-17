@@ -55,7 +55,7 @@ module Jam
       def build_ssh_args(script)
         args = [*ssh_options]
         args << "-tt" if script.pty?
-        args << host
+        args << host.split
         args << "--"
 
         ["ssh", args, script.to_s].flatten
