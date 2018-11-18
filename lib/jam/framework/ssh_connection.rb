@@ -67,6 +67,7 @@ module Jam
           %w[-o ControlMaster=auto],
           ["-o", "ControlPath=#{control_path}"],
           %w[-o ControlPersist=30s],
+          %w[-o StrictHostKeyChecking=accept-new],
           %w[-o LogLevel=ERROR]
         ]
       end
