@@ -7,9 +7,16 @@ module Jam
     class SSHConnection
       attr_reader :host
 
-      def initialize(host, logger)
+      def initialize(host:,
+                     logger:,
+                     forward_agent: true,
+                     reuse_connections: true,
+                     extra_opts: {})
         @host = host
         @logger = logger
+        @forward_agent = forward_agent
+        @reuse_connections = reuse_connections
+        @extra_opts = extra_opts
         validate!
       end
 
@@ -40,7 +47,7 @@ module Jam
 
       private
 
-      attr_reader :logger
+      attr_reader :logger, :forward_agent, :reuse_connections, :extra_opts
 
       def validate!
         logger.connect(host)
@@ -62,13 +69,18 @@ module Jam
       end
 
       def ssh_options
+        opts = ["-o LogLevel=ERROR"]
+        opts << "-A" if forward_agent
+        opts.push(*control_path_opts) if reuse_connections
+        opts.push(*extra_opts) if extra_opts
+        opts
+      end
+
+      def control_path_opts
         [
-          "-A",
-          %w[-o ControlMaster=auto],
-          ["-o", "ControlPath=#{control_path}"],
-          %w[-o ControlPersist=30s],
-          %w[-o StrictHostKeyChecking=accept-new],
-          %w[-o LogLevel=ERROR]
+          "-o ControlMaster=auto",
+          "-o ControlPath=#{control_path}",
+          "-o ControlPersist=30s"
         ]
       end
 

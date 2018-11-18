@@ -33,7 +33,7 @@ module Jam
     end
 
     def connect(host)
-      conn = SSHConnection.new(host, logger)
+      conn = open_connection(host)
       remote = Remote.new(conn, self)
       current.set(remote: remote) do
         yield(remote)
@@ -54,6 +54,16 @@ module Jam
     private
 
     attr_reader :current
+
+    def open_connection(host)
+      SSHConnection.new(
+        host: host,
+        logger: logger,
+        forward_agent: settings[:ssh_forward_agent],
+        reuse_connections: settings[:ssh_reuse_connections],
+        extra_opts: settings[:ssh_extra_opts]
+      )
+    end
 
     def plugins_registry
       @plugins_registry ||= begin

@@ -8,15 +8,18 @@ module Jam::Plugins::Core
     helpers Jam::Plugins::Core::Helpers
     tasks Jam::Plugins::Core::Tasks
 
-    defaults application:       "default",
-             deploy_to:         "/var/www/%<application>",
-             current_path:      "%<deploy_to>/current",
-             keep_releases:     10,
-             linked_dirs:       [],
-             release_path:      "%<current_path>",
-             releases_path:     "%<deploy_to>/releases",
-             shared_path:       "%<deploy_to>/shared",
-             revision_log_path: "%<deploy_to>/revisions.log",
-             run_args:          []
+    defaults application:           "default",
+             current_path:          "%<deploy_to>/current",
+             deploy_to:             "/var/www/%<application>",
+             keep_releases:         10,
+             linked_dirs:           [],
+             release_path:          "%<current_path>",
+             releases_path:         "%<deploy_to>/releases",
+             revision_log_path:     "%<deploy_to>/revisions.log",
+             shared_path:           "%<deploy_to>/shared",
+             run_args:              [],
+             ssh_extra_opts:        ["-o StrictHostKeyChecking=accept-new"],
+             ssh_forward_agent:     true,
+             ssh_reuse_connections: true
   end
 end
