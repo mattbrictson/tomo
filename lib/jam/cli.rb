@@ -5,6 +5,7 @@ module Jam
 
     COMMANDS = {
       "deploy" => Jam::Commands::Deploy,
+      "init" => Jam::Commands::Init,
       "run" => Jam::Commands::Run,
       "tasks" => Jam::Commands::Tasks
     }.freeze

@@ -1,0 +1,33 @@
+{
+  "plugins": [
+    "git",
+    "bundler",
+    "rails"
+  ],
+  "host": "user@hostname.or.ip.address",
+  "settings": {
+    "application": "%%APP%%",
+    "deploy_to": "/var/www/%<application>",
+    "git_branch": "master",
+    "git_url": "%%GIT_URL%%",
+    "linked_dirs": [
+      ".bundle",
+      "public/assets"
+    ]
+  },
+  "deploy": [
+    "git:clone",
+    "git:create_release",
+    "core:create_shared_directories",
+    "core:symlink_shared_directories",
+    "bundler:upgrade_bundler",
+    "bundler:install",
+    "rails:assets_precompile",
+    "rails:db_migrate",
+    "rails:db_seed",
+    "core:symlink_current",
+    "core:clean_releases",
+    "bundler:clean",
+    "git:log_revision"
+  ]
+}

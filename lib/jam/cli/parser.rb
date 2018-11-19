@@ -68,7 +68,7 @@ module Jam
       def usage_and_exit!(status=0)
         puts
         puts indent(banner)
-        puts indent(usage || "Options:\n#{opt_parse}")
+        puts indent(usage || "\nOptions:\n#{opt_parse}")
         puts
         exit(status)
       end
