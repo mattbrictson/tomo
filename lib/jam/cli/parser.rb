@@ -19,6 +19,7 @@ module Jam
         @opt_parse.banner = ""
         @opt_parse.summary_indent = "  "
         @results = {}
+        add_trace_option
         add_help_option
         yield(self) if block_given?
       end
@@ -53,6 +54,12 @@ module Jam
       private
 
       attr_reader :banner, :opt_parse, :results, :usage
+
+      def add_trace_option
+        on_tail("--[no-]trace", "Display full backtrace on error") do |trace|
+          CLI.show_backtrace = trace
+        end
+      end
 
       def add_help_option
         on_tail("-h", "--help", "Print this documentation") do

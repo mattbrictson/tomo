@@ -1,12 +1,6 @@
 module Jam
   module Commands
-    class Init
-      include Jam::Colors
-
-      def initialize
-        @logger = Logger.new
-      end
-
+    class Init < Jam::CLI::Command
       # rubocop:disable Metrics/MethodLength
       def parser
         Jam::CLI::Parser.new do |parser|
@@ -37,8 +31,6 @@ module Jam
       end
 
       private
-
-      attr_reader :logger
 
       def assert_no_jam_dir!
         return unless File.exist?(".jam")

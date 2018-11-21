@@ -1,6 +1,6 @@
 module Jam
   module Commands
-    class Tasks
+    class Tasks < Jam::CLI::Command
       def parser
         Jam::CLI::Parser.new do |parser|
           parser.banner = <<~BANNER
@@ -16,9 +16,9 @@ module Jam
       end
 
       def call(_options)
-        jam = Jam.load!(environment: :auto)
+        load!(environment: :auto)
 
-        groups = jam.tasks.group_by { |task| task[/^([^:]+):/, 1].to_s }
+        groups = tasks.group_by { |task| task[/^([^:]+):/, 1].to_s }
         groups.keys.sort.each do |group|
           puts groups[group].sort.join("\n")
         end

@@ -1,8 +1,6 @@
 module Jam
   module Commands
-    class Run
-      include Jam::Colors
-
+    class Run < Jam::CLI::Command
       # rubocop:disable Metrics/MethodLength
       def parser
         Jam::CLI::Parser.new do |parser|
@@ -33,32 +31,24 @@ module Jam
 
       def call(options)
         task, *args = options[:extra_args]
-        jam = load!(options, args)
+        load_project!(options, args)
 
-        jam.logger.info "jam run v#{Jam::VERSION}"
-        jam.connect(jam.project["host"]) do
-          jam.invoke_task(task)
+        logger.info "jam run v#{Jam::VERSION}"
+        connect(project["host"]) do
+          invoke_task(task)
         end
-        jam.logger.info green("✔ Ran #{task} on #{jam.project['host']}")
+        logger.info green("✔ Ran #{task} on #{project['host']}")
       end
 
       private
 
-      def load!(options, args)
-        Jam.load!(
+      def load_project!(options, args)
+        load!(
           environment: options[:environment],
           settings: options[:settings].merge(
             options[:settings].merge(run_args: args)
           )
         )
-      end
-
-      def run_deploy_tasks_on_host(jam, project)
-        jam.connect(project["host"]) do
-          project["deploy"].each do |task|
-            jam.invoke_task(task)
-          end
-        end
       end
     end
   end

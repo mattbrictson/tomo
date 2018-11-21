@@ -1,6 +1,6 @@
 module Jam
   module Commands
-    class Default
+    class Default < Jam::CLI::Command
       # rubocop:disable Metrics/MethodLength
       def parser
         Jam::CLI::Parser.new do |parser|
