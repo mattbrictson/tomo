@@ -18,7 +18,11 @@ module Jam::Plugins::Core
              revision_log_path:     "%<deploy_to>/revisions.log",
              shared_path:           "%<deploy_to>/shared",
              run_args:              [],
-             ssh_extra_opts:        ["-o StrictHostKeyChecking=accept-new"],
+             ssh_extra_opts:        [
+               "-o ConnectTimeout=5",
+               "-o PasswordAuthentication=no",
+               "-o StrictHostKeyChecking=accept-new"
+             ],
              ssh_forward_agent:     true,
              ssh_reuse_connections: true
   end
