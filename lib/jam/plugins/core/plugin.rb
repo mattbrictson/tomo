@@ -18,6 +18,7 @@ module Jam::Plugins::Core
              revision_log_path:     "%<deploy_to>/revisions.log",
              shared_path:           "%<deploy_to>/shared",
              run_args:              [],
+             ssh_executable:        "ssh",
              ssh_extra_opts:        [
                "-o ConnectTimeout=5",
                "-o PasswordAuthentication=no",

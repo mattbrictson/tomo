@@ -7,27 +7,21 @@ module Jam
     class Connection
       attr_reader :host
 
-      def initialize(host:,
-                     logger:,
-                     forward_agent: true,
-                     reuse_connections: true,
-                     extra_opts: {})
+      def initialize(host:, logger:, options:)
         @host = host
         @logger = logger
-        @forward_agent = forward_agent
-        @reuse_connections = reuse_connections
-        @extra_opts = extra_opts
+        @options = options
         validate!
       end
 
       def ssh_exec(script)
-        ssh_args = build_ssh_args(script)
+        ssh_args = build_args(script)
         logger.script_start(script)
         Process.exec(*ssh_args)
       end
 
       def ssh_subprocess(script)
-        ssh_args = build_ssh_args(script)
+        ssh_args = build_args(script)
         handle_data = ->(data) { logger.script_output(script, data) }
 
         logger.script_start(script)
@@ -47,36 +41,15 @@ module Jam
 
       private
 
-      attr_reader :logger, :forward_agent, :reuse_connections, :extra_opts
+      attr_reader :logger, :options
+
+      def build_args(script)
+        options.build_args(host, script, control_path)
+      end
 
       def validate!
         logger.connect(host)
-        Jam::SSH::Probe.test!(self)
-      end
-
-      def build_ssh_args(script)
-        args = [*ssh_options]
-        args << "-tt" if script.pty?
-        args << host.split
-        args << "--"
-
-        ["ssh", args, script.to_s].flatten
-      end
-
-      def ssh_options
-        opts = ["-o LogLevel=ERROR"]
-        opts << "-A" if forward_agent
-        opts.push(*control_path_opts) if reuse_connections
-        opts.push(*extra_opts) if extra_opts
-        opts
-      end
-
-      def control_path_opts
-        [
-          "-o ControlMaster=auto",
-          "-o ControlPath=#{control_path}",
-          "-o ControlPersist=30s"
-        ]
+        Probe.test!(self)
       end
 
       def control_path

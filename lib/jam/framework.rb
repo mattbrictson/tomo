@@ -57,9 +57,7 @@ module Jam
       SSH::Connection.new(
         host: host,
         logger: logger,
-        forward_agent: settings[:ssh_forward_agent],
-        reuse_connections: settings[:ssh_reuse_connections],
-        extra_opts: settings[:ssh_extra_opts]
+        options: SSH::Options.new(settings)
       )
     end
 
