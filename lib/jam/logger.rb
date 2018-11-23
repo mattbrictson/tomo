@@ -5,8 +5,9 @@ module Jam
     extend Forwardable
     include Jam::Colors
 
-    def initialize(stdout=$stdout)
+    def initialize(stdout: $stdout, stderr: $stderr)
       @stdout = stdout
+      @stderr = stderr
     end
 
     def script_start(script)
@@ -42,16 +43,16 @@ module Jam
     end
 
     def error(message)
-      puts indent(message, red("ERROR: "))
+      stderr.puts indent("\n" + red("ERROR: ") + message + "\n")
     end
 
     private
 
     def_delegators :@stdout, :puts
+    attr_reader :stderr
 
-    def indent(str, leader)
-      str.to_s.gsub(/\A/, leader)
-         .gsub(/(?<!\A)^/, " " * leader.length)
+    def indent(message)
+      message.gsub(/^/, "  ")
     end
   end
 end

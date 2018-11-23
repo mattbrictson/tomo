@@ -34,16 +34,11 @@ module Jam
       attr_reader :framework, :tasks_by_name
 
       def raise_no_task_found(name)
-        message = "No task named #{name.inspect}"
-        if defined?(DidYouMean::SpellChecker)
-          checker = DidYouMean::SpellChecker.new(dictionary: tasks_by_name.keys)
-          sugg = checker.correct(name)
-          if sugg&.any?
-            message << ". Did you mean? #{sugg.map(&:inspect).join(', ')}"
-          end
-        end
-
-        raise message
+        UnknownTaskError.raise_with(
+          name,
+          unknown_task: name,
+          known_tasks: tasks_by_name.keys
+        )
       end
     end
   end
