@@ -7,11 +7,10 @@ module Jam
     class Connection
       attr_reader :host
 
-      def initialize(host:, logger:, options:)
+      def initialize(host, options, logger)
         @host = host
         @logger = logger
         @options = options
-        validate!
       end
 
       def ssh_exec(script)
@@ -45,11 +44,6 @@ module Jam
 
       def build_args(script)
         options.build_args(host, script, control_path)
-      end
-
-      def validate!
-        logger.connect(host)
-        Probe.test!(self)
       end
 
       def control_path

@@ -1,19 +1,24 @@
-require "English"
-
 module Jam
   module SSH
-    class Probe
-      def self.test!(connection)
-        new(connection).tap(&:call)
-      end
-
-      def initialize(connection)
+    class Audits
+      def initialize(executable, connection)
+        @executable = executable
         @connection = connection
       end
 
-      def call
-        assert_openssh_executable
+      def assert_valid_executable!
+        result = begin
+                   ChildProcess.execute(executable, "-V")
+                 rescue StandardError => error
+                   handle_bad_executable(error)
+                 end
 
+        return if result.success? && supported?(result.output)
+
+        raise_unsupported_version(result.output)
+      end
+
+      def assert_valid_connection!
         script = Script.new(
           "echo hi",
           silent: true, echo: false, raise_on_error: false
@@ -25,20 +30,7 @@ module Jam
 
       private
 
-      attr_reader :connection
-
-      def assert_openssh_executable
-        # TODO: get executable path from connection object
-        result = begin
-                   ChildProcess.execute("ssh", "-V")
-                 rescue StandardError => error
-                   handle_bad_executable(error)
-                 end
-
-        return if result.success? && supported?(result.output)
-
-        raise_unsupported_version(result)
-      end
+      attr_reader :executable, :connection
 
       def supported?(version)
         version[/OpenSSH_(\d+\.\d+)/i, 1].to_f >= 7.6

@@ -1,6 +1,8 @@
 module Jam
   module SSH
     class Options
+      attr_reader :executable
+
       def initialize(settings)
         @executable = settings.fetch(:ssh_executable)
         @extra_opts = settings.fetch(:ssh_extra_opts)
@@ -25,7 +27,7 @@ module Jam
 
       private
 
-      attr_reader :executable, :extra_opts, :forward_agent, :reuse_connections
+      attr_reader :extra_opts, :forward_agent, :reuse_connections
 
       def control_path_opts(path)
         [

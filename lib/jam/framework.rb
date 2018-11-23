@@ -54,7 +54,7 @@ module Jam
     attr_reader :current
 
     def open_connection(host)
-      SSH::Connection.new(
+      SSH.connect(
         host: host,
         logger: logger,
         options: SSH::Options.new(settings)
