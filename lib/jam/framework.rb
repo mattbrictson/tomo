@@ -2,33 +2,44 @@ require "forwardable"
 
 module Jam
   class Framework
+    extend Forwardable
+
     autoload :PluginsRegistry, "jam/framework/plugins_registry"
-    autoload :ProjectLoader, "jam/framework/project_loader"
     autoload :SettingsRegistry, "jam/framework/settings_registry"
     autoload :TasksRegistry, "jam/framework/tasks_registry"
 
-    extend Forwardable
-    def_delegators :tasks_registry, :tasks
+    def_delegators :plugins_registry, :load_plugin_by_name, :load_plugin
+    def_delegators :settings_registry, :assign_settings, :define_settings
+    def_delegators :tasks_registry, :register_task_library,
+                   :register_task_libraries
 
-    attr_reader :helper_modules, :paths, :project, :settings
+    attr_reader :helper_modules, :paths, :settings, :tasks
 
-    def initialize
-      @helper_modules = [].freeze
-      @paths = Paths.new(@settings)
-      @settings = {}.freeze
+    def load_project!(environment:, settings: {})
+      json = Project::JsonParser.parse(
+        path: ".jam/project.json", environment: environment
+      )
+      (json["settings"] ||= {}).merge!(settings)
+
+      project = Project::Loader.load!(
+        framework: self, json: json, tasks_path: ".jam/tasks.rb"
+      )
+      ready!
+      project
     end
 
-    def load!(environment: nil, settings: {})
-      @project = project_loader.load_project(environment)
-      settings_registry.assign(settings)
+    def ready!
       @helper_modules = plugins_registry.helper_modules.freeze
       @settings = settings_registry.to_hash.freeze
+      @tasks = tasks_registry.tasks_by_name.keys.freeze
       @paths = Paths.new(@settings)
-      freeze
     end
 
     def connect(host)
-      conn = open_connection(Host.new(host))
+      conn = SSH.connect(
+        host: host,
+        options: SSH::Options.new(settings)
+      )
       remote = Remote.new(conn, self)
       Current.with(remote: remote) do
         yield(remote)
@@ -37,36 +48,19 @@ module Jam
       conn&.close
     end
 
-    def invoke_task(task)
-      Current.with(task: task) do
-        Jam.logger.task_start(task)
-        tasks_registry.invoke_task(task)
+    def invoke_task(name)
+      Current.with(task: name) do
+        Jam.logger.task_start(name)
+        tasks_registry.invoke_task(name)
       end
     end
 
     private
 
-    def open_connection(host)
-      SSH.connect(
-        host: host,
-        options: SSH::Options.new(settings)
-      )
-    end
-
     def plugins_registry
       @plugins_registry ||= begin
         PluginsRegistry.new(
           settings_registry: settings_registry,
-          tasks_registry: tasks_registry
-        )
-      end
-    end
-
-    def project_loader
-      @project_loader ||= begin
-        ProjectLoader.new(
-          settings_registry: settings_registry,
-          plugins_registry: plugins_registry,
           tasks_registry: tasks_registry
         )
       end

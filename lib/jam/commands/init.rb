@@ -1,6 +1,8 @@
 module Jam
   module Commands
-    class Init < Jam::CLI::Command
+    class Init
+      include Jam::Colors
+
       # rubocop:disable Metrics/MethodLength
       def parser
         Jam::CLI::Parser.new do |parser|
@@ -27,7 +29,7 @@ module Jam
         FileUtils.mkdir(".jam")
         IO.write(".jam/project.json", json_template(app, git_url))
 
-        logger.info(green("✔ Created .jam/project.json"))
+        Jam.logger.info(green("✔ Created .jam/project.json"))
       end
 
       private
@@ -36,9 +38,9 @@ module Jam
         return unless File.exist?(".jam")
 
         if Dir.exist?(".jam")
-          logger.error("A .jam directory already exists")
+          Jam.logger.error("A .jam directory already exists")
         else
-          logger.error("Can't create .jam directory; a file already exists")
+          Jam.logger.error("Can't create .jam directory; a file already exists")
         end
 
         exit(1)

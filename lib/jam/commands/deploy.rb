@@ -1,6 +1,8 @@
 module Jam
   module Commands
-    class Deploy < Jam::CLI::Command
+    class Deploy
+      include Jam::Colors
+
       def parser
         Jam::CLI::Parser.new do |parser|
           parser.banner = <<~BANNER
@@ -17,31 +19,24 @@ module Jam
 
       def call(options)
         release = Time.now.utc.strftime("%Y%m%d%H%M%S")
-        load_project!(options, release)
-        app = settings[:application]
+        project = load_project!(options, release)
+        app = project.settings[:application]
 
-        logger.info "jam deploy v#{Jam::VERSION}"
-        run_deploy_tasks_on_host
-        logger.info green("✔ Deployed #{app} to #{project['host']}")
+        Jam.logger.info "jam deploy v#{Jam::VERSION}"
+        plan = project.build_deploy_plan
+        plan.call
+        Jam.logger.info green("✔ Deployed #{app} to #{plan.host}")
       end
 
       private
 
       def load_project!(options, release)
-        load!(
+        Jam.load_project!(
           environment: options[:environment],
           settings: options[:settings].merge(
             release_path: "%<releases_path>/#{release}"
           )
         )
-      end
-
-      def run_deploy_tasks_on_host
-        connect(project["host"]) do
-          project["deploy"].each do |task|
-            invoke_task(task)
-          end
-        end
       end
     end
   end

@@ -5,11 +5,11 @@ module Jam
         @settings = {}
       end
 
-      def define(definitions)
+      def define_settings(definitions)
         settings.merge!(symbolize(definitions)) { |_, existing, _| existing }
       end
 
-      def assign(assignments)
+      def assign_settings(assignments)
         settings.merge!(symbolize(assignments))
       end
 

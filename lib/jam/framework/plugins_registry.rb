@@ -25,7 +25,7 @@ module Jam
 
       def load_plugin(namespace, plugin_class)
         helper_modules.push(*plugin_class.helper_modules)
-        settings_registry.define(plugin_class.default_settings)
+        settings_registry.define_settings(plugin_class.default_settings)
         tasks_registry.register_task_libraries(
           namespace,
           *plugin_class.tasks_classes

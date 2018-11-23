@@ -1,13 +1,11 @@
 module Jam
   class Framework
     class TasksRegistry
+      attr_reader :tasks_by_name
+
       def initialize(framework)
         @framework = framework
         @tasks_by_name = {}
-      end
-
-      def tasks
-        tasks_by_name.keys.freeze
       end
 
       def invoke_task(name)
@@ -31,7 +29,7 @@ module Jam
 
       private
 
-      attr_reader :framework, :tasks_by_name
+      attr_reader :framework
 
       def raise_no_task_found(name)
         UnknownTaskError.raise_with(
