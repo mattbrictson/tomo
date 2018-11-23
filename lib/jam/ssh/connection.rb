@@ -3,8 +3,8 @@ require "securerandom"
 require "tmpdir"
 
 module Jam
-  class Framework
-    class SSHConnection
+  module SSH
+    class Connection
       attr_reader :host
 
       def initialize(host:,

@@ -30,7 +30,7 @@ module Jam
       def assert_openssh_executable
         # TODO: get executable path from connection object
         result = begin
-                   Jam::Framework::ChildProcess.execute("ssh", "-V")
+                   ChildProcess.execute("ssh", "-V")
                  rescue StandardError => error
                    handle_bad_executable(error)
                  end

@@ -2,12 +2,10 @@ require "forwardable"
 
 module Jam
   class Framework
-    autoload :ChildProcess, "jam/framework/child_process"
     autoload :Current, "jam/framework/current"
     autoload :PluginsRegistry, "jam/framework/plugins_registry"
     autoload :ProjectLoader, "jam/framework/project_loader"
     autoload :SettingsRegistry, "jam/framework/settings_registry"
-    autoload :SSHConnection, "jam/framework/ssh_connection"
     autoload :TasksRegistry, "jam/framework/tasks_registry"
 
     extend Forwardable
@@ -56,7 +54,7 @@ module Jam
     attr_reader :current
 
     def open_connection(host)
-      SSHConnection.new(
+      SSH::Connection.new(
         host: host,
         logger: logger,
         forward_agent: settings[:ssh_forward_agent],

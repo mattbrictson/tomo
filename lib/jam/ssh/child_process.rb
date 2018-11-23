@@ -1,7 +1,7 @@
 require "open3"
 
 module Jam
-  class Framework
+  module SSH
     class ChildProcess
       def self.execute(*command, on_data: ->(data) {})
         process = new(*command, on_data: on_data)
