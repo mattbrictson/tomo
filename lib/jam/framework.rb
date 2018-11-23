@@ -2,7 +2,6 @@ require "forwardable"
 
 module Jam
   class Framework
-    autoload :Current, "jam/framework/current"
     autoload :PluginsRegistry, "jam/framework/plugins_registry"
     autoload :ProjectLoader, "jam/framework/project_loader"
     autoload :SettingsRegistry, "jam/framework/settings_registry"
@@ -14,7 +13,6 @@ module Jam
     attr_reader :helper_modules, :paths, :project, :settings
 
     def initialize
-      @current = Current.new
       @helper_modules = [].freeze
       @paths = Paths.new(@settings)
       @settings = {}.freeze
@@ -32,7 +30,7 @@ module Jam
     def connect(host)
       conn = open_connection(Host.new(host))
       remote = Remote.new(conn, self)
-      current.set(remote: remote) do
+      Current.with(remote: remote) do
         yield(remote)
       end
     ensure
@@ -40,17 +38,13 @@ module Jam
     end
 
     def invoke_task(task)
-      Jam.logger.task_start(task)
-      tasks_registry.invoke_task(task)
-    end
-
-    def remote
-      current[:remote]
+      Current.with(task: task) do
+        Jam.logger.task_start(task)
+        tasks_registry.invoke_task(task)
+      end
     end
 
     private
-
-    attr_reader :current
 
     def open_connection(host)
       SSH.connect(

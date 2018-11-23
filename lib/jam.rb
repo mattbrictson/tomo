@@ -2,6 +2,7 @@ module Jam
   autoload :CLI, "jam/cli"
   autoload :Colors, "jam/colors"
   autoload :Commands, "jam/commands"
+  autoload :Current, "jam/current"
   autoload :Error, "jam/error"
   autoload :Framework, "jam/framework"
   autoload :Host, "jam/host"
