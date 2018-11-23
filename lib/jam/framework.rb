@@ -11,12 +11,11 @@ module Jam
     extend Forwardable
     def_delegators :tasks_registry, :tasks
 
-    attr_reader :helper_modules, :logger, :paths, :project, :settings
+    attr_reader :helper_modules, :paths, :project, :settings
 
     def initialize
       @current = Current.new
       @helper_modules = [].freeze
-      @logger = Logger.new
       @paths = Paths.new(@settings)
       @settings = {}.freeze
     end
@@ -41,7 +40,7 @@ module Jam
     end
 
     def invoke_task(task)
-      logger.task_start(task)
+      Jam.logger.task_start(task)
       tasks_registry.invoke_task(task)
     end
 
@@ -56,7 +55,6 @@ module Jam
     def open_connection(host)
       SSH.connect(
         host: host,
-        logger: logger,
         options: SSH::Options.new(settings)
       )
     end

@@ -14,9 +14,13 @@ module Jam
 
       def_delegators :jam,
                      :connect, :invoke_task, :load!,
-                     :logger, :project, :settings, :tasks
+                     :project, :settings, :tasks
 
       attr_reader :jam
+
+      def logger
+        Jam.logger
+      end
     end
   end
 end

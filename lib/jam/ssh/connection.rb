@@ -7,9 +7,8 @@ module Jam
     class Connection
       attr_reader :host
 
-      def initialize(host, options, logger)
+      def initialize(host, options)
         @host = host
-        @logger = logger
         @options = options
       end
 
@@ -40,7 +39,11 @@ module Jam
 
       private
 
-      attr_reader :logger, :options
+      attr_reader :options
+
+      def logger
+        Jam.logger
+      end
 
       def build_args(script)
         options.build_args(host, script, control_path)

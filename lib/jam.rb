@@ -19,4 +19,10 @@ module Jam
   autoload :TaskLibrary, "jam/task_library"
   autoload :UnknownTaskError, "jam/errors/unknown_task_error"
   autoload :VERSION, "jam/version"
+
+  class << self
+    attr_accessor :logger
+  end
+
+  self.logger = Logger.new
 end

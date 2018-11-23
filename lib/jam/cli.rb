@@ -40,7 +40,7 @@ module Jam
     def handle_error(error)
       raise error unless error.respond_to?(:to_console)
 
-      jam.logger.error(error.to_console)
+      Jam.logger.error(error.to_console)
       exit(1) unless Jam::CLI.show_backtrace
 
       raise error

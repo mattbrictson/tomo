@@ -28,8 +28,12 @@ module Jam
 
     private
 
-    def_delegators :framework, :logger, :paths, :settings
+    def_delegators :framework, :paths, :settings
     attr_reader :framework, :ssh, :shell_builder
+
+    def logger
+      Jam.logger
+    end
 
     def remote
       self

@@ -10,7 +10,11 @@ module Jam
 
     private
 
-    def_delegators :framework, :logger, :paths, :remote, :settings
+    def_delegators :framework, :paths, :remote, :settings
     attr_reader :framework
+
+    def logger
+      Jam.logger
+    end
   end
 end

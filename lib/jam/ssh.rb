@@ -6,10 +6,10 @@ module Jam
     autoload :Options, "jam/ssh/options"
 
     class << self
-      def connect(host:, options:, logger:)
-        logger.connect(host)
+      def connect(host:, options:)
+        Jam.logger.connect(host)
 
-        conn = Connection.new(host, options, logger)
+        conn = Connection.new(host, options)
         audits = Audits.new(options.executable, conn)
         audits.assert_valid_executable!
         audits.assert_valid_connection!
