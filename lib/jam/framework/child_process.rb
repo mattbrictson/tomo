@@ -23,7 +23,7 @@ module Jam
           stderr_thread = start_io_thread(stderr, stderr_buffer)
           stdout_thread.join
           stderr_thread.join
-          @exit_status = wait_thread.value.to_i
+          @exit_status = wait_thread.value.exitstatus
         end
       end
 
