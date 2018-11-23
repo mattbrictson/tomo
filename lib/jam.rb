@@ -17,8 +17,4 @@ module Jam
   autoload :SSH, "jam/ssh"
   autoload :TaskLibrary, "jam/task_library"
   autoload :VERSION, "jam/version"
-
-  def self.load!(environment: nil, settings: {})
-    Framework.new.load!(environment: environment, settings: settings)
-  end
 end
