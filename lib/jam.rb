@@ -14,6 +14,7 @@ module Jam
   autoload :Result, "jam/result"
   autoload :Script, "jam/script"
   autoload :ShellBuilder, "jam/shell_builder"
+  autoload :SSH, "jam/ssh"
   autoload :TaskLibrary, "jam/task_library"
   autoload :VERSION, "jam/version"
 

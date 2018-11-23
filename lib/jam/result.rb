@@ -16,5 +16,9 @@ module Jam
     def failure?
       !success?
     end
+
+    def output
+      [stdout, stderr].compact.join
+    end
   end
 end

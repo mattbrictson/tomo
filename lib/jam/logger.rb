@@ -26,7 +26,7 @@ module Jam
       return unless script.silent?
       return unless script.raise_on_error?
 
-      puts [result.stdout, result.stderr].compact.join
+      puts result.output
     end
 
     def connect(host)

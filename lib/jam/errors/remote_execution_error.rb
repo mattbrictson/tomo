@@ -4,7 +4,7 @@ module Jam
 
     def to_console
       <<~MESSAGE
-        The command failed to run #{blue(host)}.
+        The command failed to run on #{blue(host)}.
       MESSAGE
     end
   end

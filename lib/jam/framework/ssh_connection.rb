@@ -51,12 +51,7 @@ module Jam
 
       def validate!
         logger.connect(host)
-        result = ssh_subprocess(
-          Script.new("echo hi", silent: true, echo: false)
-        )
-        raise unless result.stdout.chomp == "hi"
-      rescue StandardError
-        raise "Unable to connect to #{host}"
+        Jam::SSH::Probe.test!(self)
       end
 
       def build_ssh_args(script)

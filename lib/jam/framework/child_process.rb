@@ -3,7 +3,7 @@ require "open3"
 module Jam
   class Framework
     class ChildProcess
-      def self.execute(*command, on_data:)
+      def self.execute(*command, on_data: ->(data) {})
         process = new(*command, on_data: on_data)
         process.wait_for_exit
         process.result
