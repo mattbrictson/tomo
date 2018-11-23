@@ -4,6 +4,7 @@ module Jam
   autoload :Commands, "jam/commands"
   autoload :Error, "jam/error"
   autoload :Framework, "jam/framework"
+  autoload :Host, "jam/host"
   autoload :Logger, "jam/logger"
   autoload :Path, "jam/path"
   autoload :Paths, "jam/paths"

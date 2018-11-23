@@ -31,7 +31,7 @@ module Jam
     end
 
     def connect(host)
-      conn = open_connection(host)
+      conn = open_connection(Host.new(host))
       remote = Remote.new(conn, self)
       current.set(remote: remote) do
         yield(remote)

@@ -18,7 +18,7 @@ module Jam
         args.push(*control_path_opts(control_path)) if reuse_connections
         args.push(*extra_opts) if extra_opts
         args << "-tt" if script.pty?
-        args << host.split
+        args << host.to_ssh_args
         args << "--"
 
         [executable, args, script.to_s].flatten

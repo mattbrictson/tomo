@@ -43,7 +43,7 @@ module Jam
     end
 
     def error(message)
-      stderr.puts indent("\n" + red("ERROR: ") + message + "\n")
+      stderr.puts indent("\n" + red("ERROR: ") + message.strip + "\n\n")
     end
 
     private
