@@ -1,4 +1,5 @@
 require "open3"
+require "shellwords"
 
 module Jam
   module SSH
@@ -14,6 +15,7 @@ module Jam
         @on_data = on_data
         @stdout_buffer = StringIO.new
         @stderr_buffer = StringIO.new
+        Jam.logger.debug command.map(&:shellescape).join(" ") if SSH.debug?
       end
 
       def wait_for_exit

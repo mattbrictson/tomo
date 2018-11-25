@@ -13,7 +13,6 @@ module Jam
   autoload :Plugins, "jam/plugins"
   autoload :Project, "jam/project"
   autoload :Remote, "jam/remote"
-  autoload :RemoteExecutionError, "jam/errors/remote_execution_error"
   autoload :Result, "jam/result"
   autoload :Script, "jam/script"
   autoload :ShellBuilder, "jam/shell_builder"

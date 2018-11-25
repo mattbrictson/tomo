@@ -7,5 +7,14 @@ module Jam
       attributes.each { |attr, value| err.public_send("#{attr}=", value) }
       raise err
     end
+
+    private
+
+    def debug_suggestion
+      return if Jam::SSH.debug?
+
+      "To troubleshoot, try this command again using the "\
+      "#{blue('--debug')} option."
+    end
   end
 end

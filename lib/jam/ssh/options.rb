@@ -12,10 +12,10 @@ module Jam
       end
 
       # rubocop:disable Metrics/AbcSize
-      def build_args(host, script, control_path)
-        args = ["-o LogLevel=ERROR"]
+      def build_args(host, script, control_path, verbose)
+        args = [verbose ? "-v" : ["-o", "LogLevel=ERROR"]]
         args << "-A" if forward_agent
-        args.push(*control_path_opts(control_path)) if reuse_connections
+        args.push(*control_opts(control_path, verbose)) if reuse_connections
         args.push(*extra_opts) if extra_opts
         args << "-tt" if script.pty?
         args << host.to_ssh_args
@@ -29,12 +29,13 @@ module Jam
 
       attr_reader :extra_opts, :forward_agent, :reuse_connections
 
-      def control_path_opts(path)
-        [
-          "-o ControlMaster=auto",
-          "-o ControlPath=#{path}",
-          "-o ControlPersist=30s"
+      def control_opts(path, verbose)
+        opts = [
+          "-o", "ControlMaster=auto",
+          "-o", "ControlPath=#{path}",
+          "-o"
         ]
+        opts << (verbose ? "ControlPersist=1s" : "ControlPersist=30s")
       end
     end
   end

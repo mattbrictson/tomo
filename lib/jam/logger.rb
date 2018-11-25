@@ -46,13 +46,17 @@ module Jam
       stderr.puts indent("\n" + red("ERROR: ") + message.strip + "\n\n")
     end
 
+    def debug(message)
+      stderr.puts gray("DEBUG: #{message}")
+    end
+
     private
 
     def_delegators :@stdout, :puts
     attr_reader :stderr
 
-    def indent(message)
-      message.gsub(/^/, "  ")
+    def indent(message, prefix="  ")
+      message.gsub(/^/, prefix)
     end
   end
 end

@@ -20,9 +20,9 @@ module Jam::Plugins::Core
              run_args:              [],
              ssh_executable:        "ssh",
              ssh_extra_opts:        [
-               "-o ConnectTimeout=5",
-               "-o PasswordAuthentication=no",
-               "-o StrictHostKeyChecking=accept-new"
+               "-o", "ConnectTimeout=5",
+               "-o", "PasswordAuthentication=no",
+               "-o", "StrictHostKeyChecking=accept-new"
              ],
              ssh_forward_agent:     true,
              ssh_reuse_connections: true

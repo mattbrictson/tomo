@@ -18,8 +18,8 @@ module Jam
         Process.exec(*ssh_args)
       end
 
-      def ssh_subprocess(script)
-        ssh_args = build_args(script)
+      def ssh_subprocess(script, verbose: false)
+        ssh_args = build_args(script, verbose)
         handle_data = ->(data) { logger.script_output(script, data) }
 
         logger.script_start(script)
@@ -27,7 +27,7 @@ module Jam
         logger.script_end(script, result)
 
         if result.failure? && script.raise_on_error?
-          raise_run_error(script, ssh_args.join(" "), result)
+          raise_run_error(script, ssh_args, result)
         end
 
         result
@@ -45,8 +45,8 @@ module Jam
         Jam.logger
       end
 
-      def build_args(script)
-        options.build_args(host, script, control_path)
+      def build_args(script, verbose=false)
+        options.build_args(host, script, control_path, verbose)
       end
 
       def control_path
@@ -56,13 +56,13 @@ module Jam
         end
       end
 
-      def raise_run_error(script, ssh_command, result)
-        RemoteExecutionError.raise_with(
-          "Failed with status #{result.exit_status}: #{ssh_command}",
+      def raise_run_error(script, ssh_args, result)
+        ScriptError.raise_with(
+          result.output,
           host: host,
+          result: result,
           script: script,
-          ssh_command: ssh_command,
-          result: result
+          ssh_args: ssh_args
         )
       end
     end
