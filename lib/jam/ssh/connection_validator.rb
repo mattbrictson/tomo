@@ -2,8 +2,7 @@ require "forwardable"
 
 module Jam
   module SSH
-    # TODO: rename to ConnectionValidator
-    class Audits
+    class ConnectionValidator
       MINIMUM_OPENSSH_VERSION = 7.6
       private_constant :MINIMUM_OPENSSH_VERSION
 
@@ -16,7 +15,6 @@ module Jam
 
       def assert_valid_executable!
         result = begin
-                   # TODO: move to Connection#ssh_version
                    ChildProcess.execute(executable, "-V")
                  rescue StandardError => error
                    handle_bad_executable(error)

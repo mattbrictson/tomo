@@ -1,8 +1,8 @@
 module Jam
   module SSH
-    autoload :Audits, "jam/ssh/audits"
     autoload :ChildProcess, "jam/ssh/child_process"
     autoload :Connection, "jam/ssh/connection"
+    autoload :ConnectionValidator, "jam/ssh/connection_validator"
     autoload :ConnectionError, "jam/ssh/connection_error"
     autoload :Error, "jam/ssh/error"
     autoload :ExecutableError, "jam/ssh/executable_error"
@@ -16,10 +16,10 @@ module Jam
       Jam.logger.connect(host)
 
       conn = Connection.new(host, options)
-      audits = Audits.new(options.executable, conn)
-      audits.assert_valid_executable!
-      audits.assert_valid_connection!
-      audits.dump_env if Jam.debug?
+      validator = ConnectionValidator.new(options.executable, conn)
+      validator.assert_valid_executable!
+      validator.assert_valid_connection!
+      validator.dump_env if Jam.debug?
 
       conn
     end
