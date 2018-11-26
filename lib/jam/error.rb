@@ -13,7 +13,7 @@ module Jam
     def debug_suggestion
       return if Jam::SSH.debug?
 
-      "To troubleshoot, try this command again using the "\
+      "For more troubleshooting info, run jam again using the "\
       "#{blue('--debug')} option."
     end
   end

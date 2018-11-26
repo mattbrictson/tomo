@@ -14,7 +14,9 @@ module Jam
       end
 
       def to_hash
-        Hash[settings.keys.map { |name| [name, fetch(name)] }]
+        hash = Hash[settings.keys.map { |name| [name, fetch(name)] }]
+        dump_settings(hash) if Jam::SSH.debug?
+        hash
       end
 
       private
@@ -38,6 +40,17 @@ module Jam
       def raise_circular_dependency_error(name, stack)
         dependencies = [*stack, name].join(" -> ")
         raise "Circular dependency detected in settings: #{dependencies}"
+      end
+
+      def dump_settings(hash)
+        key_len = hash.keys.map(&:to_s).map(&:length).max
+        dump = "Settings: {\n"
+        hash.to_a.sort_by(&:first).each do |key, value|
+          justified_key = "#{key}:".ljust(key_len + 1)
+          dump << "  #{justified_key} #{value.inspect},\n"
+        end
+        dump << "}"
+        Jam.logger.debug(dump)
       end
     end
   end

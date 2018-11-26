@@ -38,6 +38,12 @@ module Jam
         raise_unknown_error(res) if res.failure? || res.stdout.chomp != "hi"
       end
 
+      def dump_env
+        script = Script.new("env", silent: true, echo: false)
+        res = connection.ssh_subprocess(script)
+        Jam.logger.debug("#{host} environment:\n#{res.stdout.strip}")
+      end
+
       private
 
       def_delegators :connection, :host

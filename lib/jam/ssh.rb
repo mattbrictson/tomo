@@ -27,6 +27,7 @@ module Jam
         audits = Audits.new(options.executable, conn)
         audits.assert_valid_executable!
         audits.assert_valid_connection!
+        audits.dump_env if SSH.debug?
 
         conn
       end
