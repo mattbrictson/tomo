@@ -15,7 +15,7 @@ module Jam
         @on_data = on_data
         @stdout_buffer = StringIO.new
         @stderr_buffer = StringIO.new
-        Jam.logger.debug command.map(&:shellescape).join(" ") if SSH.debug?
+        Jam.logger.debug command.map(&:shellescape).join(" ")
       end
 
       def wait_for_exit

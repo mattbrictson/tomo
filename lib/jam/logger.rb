@@ -47,6 +47,8 @@ module Jam
     end
 
     def debug(message)
+      return unless Jam.debug?
+
       stderr.puts gray("DEBUG: #{message}")
     end
 

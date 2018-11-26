@@ -12,25 +12,16 @@ module Jam
     autoload :UnknownError, "jam/ssh/unknown_error"
     autoload :UnsupportedVersionError, "jam/ssh/unsupported_version_error"
 
-    class << self
-      # TODO: move to Jam.debug
-      attr_writer :debug
+    def self.connect(host:, options:)
+      Jam.logger.connect(host)
 
-      def debug?
-        !!@debug
-      end
+      conn = Connection.new(host, options)
+      audits = Audits.new(options.executable, conn)
+      audits.assert_valid_executable!
+      audits.assert_valid_connection!
+      audits.dump_env if Jam.debug?
 
-      def connect(host:, options:)
-        Jam.logger.connect(host)
-
-        conn = Connection.new(host, options)
-        audits = Audits.new(options.executable, conn)
-        audits.assert_valid_executable!
-        audits.assert_valid_connection!
-        audits.dump_env if SSH.debug?
-
-        conn
-      end
+      conn
     end
   end
 end

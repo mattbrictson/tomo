@@ -19,7 +19,7 @@ module Jam
         end
 
         opts.on("--[no-]debug-ssh", "Enable/disable SSH debugging") do |debug|
-          SSH.debug = debug
+          Jam.debug = debug
         end
 
         opts.on("--[no-]color", "Enable/disable color output") do |color|

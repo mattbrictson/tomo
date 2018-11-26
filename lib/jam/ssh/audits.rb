@@ -22,7 +22,7 @@ module Jam
                    handle_bad_executable(error)
                  end
 
-        Jam.logger.debug(result.output) if SSH.debug?
+        Jam.logger.debug(result.output)
         return if result.success? && supported?(result.output)
 
         raise_unsupported_version(result.output)
@@ -31,9 +31,9 @@ module Jam
       def assert_valid_connection!
         script = Script.new(
           "echo hi",
-          silent: !SSH.debug?, echo: false, raise_on_error: false
+          silent: !Jam.debug?, echo: false, raise_on_error: false
         )
-        res = connection.ssh_subprocess(script, verbose: SSH.debug?)
+        res = connection.ssh_subprocess(script, verbose: Jam.debug?)
         raise_connection_failure(res) if res.exit_status == 255
         raise_unknown_error(res) if res.failure? || res.stdout.chomp != "hi"
       end

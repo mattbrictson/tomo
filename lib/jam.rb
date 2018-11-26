@@ -23,9 +23,14 @@ module Jam
 
   class << self
     attr_accessor :logger
+    attr_writer :debug
 
     def load_project!(environment:, settings: {})
       Framework.new.load_project!(environment: environment, settings: settings)
+    end
+
+    def debug?
+      !!@debug
     end
   end
 

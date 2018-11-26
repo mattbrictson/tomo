@@ -15,7 +15,7 @@ module Jam
 
       def to_hash
         hash = Hash[settings.keys.map { |name| [name, fetch(name)] }]
-        dump_settings(hash) if Jam::SSH.debug?
+        dump_settings(hash) if Jam.debug?
         hash
       end
 
