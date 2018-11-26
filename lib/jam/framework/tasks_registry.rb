@@ -20,6 +20,11 @@ module Jam
       end
 
       def register_task_library(namespace, library_class)
+        Jam.logger.debug(
+          "Registering task library #{library_class}"\
+          " (#{namespace.inspect} namespace)"
+        )
+
         library = library_class.new(framework)
         library_class.public_instance_methods(false).each do |task_name|
           qualified_name = [namespace, task_name].compact.join(":")

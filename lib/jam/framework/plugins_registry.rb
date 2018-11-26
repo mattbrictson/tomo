@@ -24,6 +24,8 @@ module Jam
       end
 
       def load_plugin(namespace, plugin_class)
+        Jam.logger.debug("Loading plugin #{plugin_class}")
+
         helper_modules.push(*plugin_class.helper_modules)
         settings_registry.define_settings(plugin_class.default_settings)
         tasks_registry.register_task_libraries(

@@ -32,12 +32,14 @@ module Jam
       # rubocop:enable Metrics/MethodLength
 
       def call(options)
+        Jam.logger.info "jam run v#{Jam::VERSION}"
+
         task, *args = options[:extra_args]
         project = load_project!(options, args)
 
-        Jam.logger.info "jam run v#{Jam::VERSION}"
         plan = project.build_run_plan(task)
         plan.call
+
         Jam.logger.info green("✔ Ran #{task} on #{plan.host}")
       end
 

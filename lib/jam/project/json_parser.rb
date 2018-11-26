@@ -13,6 +13,8 @@ module Jam
       end
 
       def call
+        Jam.logger.debug("Loading project from #{path.inspect}")
+
         json = load_json
         envs = json.delete("environments") || {}
 

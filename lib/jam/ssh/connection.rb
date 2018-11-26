@@ -15,6 +15,7 @@ module Jam
       def ssh_exec(script)
         ssh_args = build_args(script)
         logger.script_start(script)
+        Jam.logger.debug ssh_args.map(&:shellescape).join(" ")
         Process.exec(*ssh_args)
       end
 

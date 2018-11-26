@@ -34,7 +34,7 @@ module Jam
 
         script = IO.read(tasks_path)
         klass = Class.new(TaskLibrary)
-        klass.class_eval(script, tasks_path.to_s, 0)
+        klass.class_eval(script, tasks_path.to_s, 1)
         framework.register_task_library(nil, klass)
       end
 

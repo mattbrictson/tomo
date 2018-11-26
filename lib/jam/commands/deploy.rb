@@ -18,11 +18,12 @@ module Jam
       end
 
       def call(options)
+        Jam.logger.info "jam deploy v#{Jam::VERSION}"
+
         release = Time.now.utc.strftime("%Y%m%d%H%M%S")
         project = load_project!(options, release)
         app = project.settings[:application]
 
-        Jam.logger.info "jam deploy v#{Jam::VERSION}"
         plan = project.build_deploy_plan
         plan.call
         Jam.logger.info green("✔ Deployed #{app} to #{plan.host}")

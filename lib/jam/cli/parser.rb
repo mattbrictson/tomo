@@ -11,6 +11,7 @@ module Jam
       attr_accessor :permit_empty_args, :permit_extra_args
       attr_writer :banner, :usage
 
+      # rubocop:disable Metrics/MethodLength
       def initialize
         @permit_empty_args = false
         @permit_extra_args = false
@@ -19,10 +20,12 @@ module Jam
         @opt_parse.banner = ""
         @opt_parse.summary_indent = "  "
         @results = {}
+        add_debug_option
         add_trace_option
         add_help_option
         yield(self) if block_given?
       end
+      # rubocop:enable Metrics/MethodLength
 
       def parse(args)
         raise "Parser#parse has already been used" if results.frozen?
@@ -54,6 +57,13 @@ module Jam
       private
 
       attr_reader :banner, :opt_parse, :results, :usage
+
+      def add_debug_option
+        on_tail("--[no-]debug",
+                "Enable/disable verbose debug logging") do |debug|
+          Jam.debug = debug
+        end
+      end
 
       def add_trace_option
         on_tail("--[no-]trace", "Display full backtrace on error") do |trace|
