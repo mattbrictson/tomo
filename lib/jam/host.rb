@@ -9,6 +9,7 @@ module Jam
       host = host.to_s.strip
       @user, @name, @port = host.match(PATTERN).captures
       @port ||= "22"
+      freeze
       raise ArgumentError, "host cannot be blank" if name.empty?
     end
 

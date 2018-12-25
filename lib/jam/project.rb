@@ -5,15 +5,14 @@ module Jam
     extend Forwardable
 
     autoload :ExecutionPlan, "jam/project/execution_plan"
-    autoload :Loader, "jam/project/loader"
-    autoload :JsonParser, "jam/project/json_parser"
+    autoload :Specification, "jam/project/specification"
 
     def_delegators :framework, :settings, :tasks
 
-    def initialize(framework, deploy_tasks, host)
+    def initialize(framework, spec)
       @framework = framework
-      @deploy_tasks = deploy_tasks
-      @host = host
+      @deploy_tasks = spec.deploy_tasks
+      @host = spec.host
     end
 
     def build_deploy_plan

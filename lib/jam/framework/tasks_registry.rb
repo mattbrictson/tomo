@@ -1,18 +1,19 @@
 module Jam
   class Framework
     class TasksRegistry
-      attr_reader :tasks_by_name
-
-      def initialize(framework)
-        @framework = framework
-        @tasks_by_name = {}
+      def initialize
+        @namespaced_classes = []
       end
 
-      def invoke_task(name)
-        task = tasks_by_name.fetch(name.to_s) do
-          raise_no_task_found(name.to_s)
+      def bind_tasks(framework)
+        namespaced_classes.each_with_object({}) do |(namespace, klass), result|
+          library = klass.new(framework)
+
+          klass.public_instance_methods(false).each do |name|
+            qualified = [namespace, name].compact.join(":")
+            result[qualified] = library.public_method(name)
+          end
         end
-        task.call
       end
 
       def register_task_libraries(namespace, *library_classes)
@@ -24,25 +25,12 @@ module Jam
           "Registering task library #{library_class}"\
           " (#{namespace.inspect} namespace)"
         )
-
-        library = library_class.new(framework)
-        library_class.public_instance_methods(false).each do |task_name|
-          qualified_name = [namespace, task_name].compact.join(":")
-          tasks_by_name[qualified_name] = -> { library.public_send(task_name) }
-        end
+        namespaced_classes << [namespace, library_class]
       end
 
       private
 
-      attr_reader :framework
-
-      def raise_no_task_found(name)
-        UnknownTaskError.raise_with(
-          name,
-          unknown_task: name,
-          known_tasks: tasks_by_name.keys
-        )
-      end
+      attr_reader :namespaced_classes
     end
   end
 end

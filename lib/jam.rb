@@ -26,7 +26,18 @@ module Jam
     attr_writer :debug
 
     def load_project!(environment:, settings: {})
-      Framework.new.load_project!(environment: environment, settings: settings)
+      spec = Project::Specification.from_json(".jam/project.json")
+                                   .for_environment(environment)
+
+      framework = Framework.configure do |config|
+        config.add_plugins(spec.plugins)
+        config.add_settings(spec.settings.merge(settings))
+        if File.file?(".jam/tasks.rb")
+          config.add_task_library(TaskLibrary.from_script(".jam/tasks.rb"))
+        end
+      end
+
+      Project.new(framework, spec)
     end
 
     def debug?

@@ -17,6 +17,14 @@ module Jam
         @tasks_registry = tasks_registry
       end
 
+      def core_loaded?
+        helper_modules.include?(Jam::Plugins::Core::Plugin)
+      end
+
+      def load_plugins_by_name(names)
+        names.each { |name| load_plugin_by_name(name) }
+      end
+
       def load_plugin_by_name(name)
         raise unless BUILT_IN_PLUGINS.key?(name)
 
