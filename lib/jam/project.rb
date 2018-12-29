@@ -5,6 +5,7 @@ module Jam
     extend Forwardable
 
     autoload :ExecutionPlan, "jam/project/execution_plan"
+    autoload :NotFoundError, "jam/project/not_found_error"
     autoload :Specification, "jam/project/specification"
 
     def_delegators :framework, :settings, :tasks

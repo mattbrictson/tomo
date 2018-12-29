@@ -4,7 +4,7 @@ module Jam
   class Project
     class Specification
       def self.from_json(path)
-        raise "Jam project (#{path}) not found" unless File.file?(path)
+        NotFoundError.raise_with(path: path) unless File.file?(path)
 
         Jam.logger.debug("Loading project from #{path.inspect}")
         new(JSON.parse(IO.read(path)))
