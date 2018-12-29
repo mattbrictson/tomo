@@ -8,27 +8,9 @@ module Jam
         To see a list of all available tasks, run #{blue('jam tasks')}.
       ERROR
 
-      error << "\nDid you mean #{suggestions}?\n" if suggestions
+      sugg = Error::Suggestions.new(dictionary: known_tasks, word: unknown_task)
+      error << sugg.to_console if sugg.any?
       error
-    end
-
-    private
-
-    def suggestions
-      return unless defined?(DidYouMean::SpellChecker)
-
-      checker = DidYouMean::SpellChecker.new(dictionary: known_tasks)
-      suggestions = checker.correct(unknown_task)
-      return unless suggestions&.any?
-
-      to_sentence(suggestions.map! { |s| blue(s) })
-    end
-
-    def to_sentence(words)
-      return words.first if words.length == 1
-      return words.join(" or ") if words.length == 2
-
-      words[0...-1].join(", ") + ", or " + words.last
     end
   end
 end

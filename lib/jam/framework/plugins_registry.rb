@@ -26,7 +26,12 @@ module Jam
       end
 
       def load_plugin_by_name(name)
-        raise unless BUILT_IN_PLUGINS.key?(name)
+        unless BUILT_IN_PLUGINS.key?(name)
+          UnknownPluginError.raise_with(
+            name: name,
+            known_plugins: BUILT_IN_PLUGINS.keys
+          )
+        end
 
         load_plugin(name, Jam.const_get(BUILT_IN_PLUGINS[name]))
       end

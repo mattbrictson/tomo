@@ -1,5 +1,7 @@
 module Jam
   class Error < StandardError
+    autoload :Suggestions, "jam/error/suggestions"
+
     include Jam::Colors
 
     def self.raise_with(message=nil, attributes)
