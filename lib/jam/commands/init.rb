@@ -22,7 +22,8 @@ module Jam
       # rubocop:enable Metrics/MethodLength
 
       def call(options)
-        assert_no_jam_dir!
+        assert_can_create_jam_directory!
+        assert_no_jam_project!
 
         app = options[:extra_args].first || current_dir_name || "default"
         git_url = git_origin_url || "TODO"
@@ -34,15 +35,18 @@ module Jam
 
       private
 
-      def assert_no_jam_dir!
+      def assert_can_create_jam_directory!
+        return if Dir.exist?(".jam")
         return unless File.exist?(".jam")
 
-        if Dir.exist?(".jam")
-          Jam.logger.error("A .jam directory already exists")
-        else
-          Jam.logger.error("Can't create .jam directory; a file already exists")
-        end
+        Jam.logger.error("Can't create .jam directory; a file already exists")
+        exit(1)
+      end
 
+      def assert_no_jam_project!
+        return unless File.exist?(".jam/project.json")
+
+        Jam.logger.error("A .jam/project.json file already exists")
         exit(1)
       end
 
