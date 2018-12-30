@@ -33,7 +33,8 @@ module Jam
       raise error unless error.respond_to?(:to_console)
 
       Jam.logger.error(error.to_console)
-      exit(1) unless Jam::CLI.show_backtrace
+      status = error.respond_to?(:exit_status) ? error.exit_status : 1
+      exit(status) unless Jam::CLI.show_backtrace
 
       raise error
     end
