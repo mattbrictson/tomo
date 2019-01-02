@@ -25,7 +25,7 @@ module Jam
     end
 
     def remote
-      Current.remote
+      Framework::Current.remote
     end
   end
 end

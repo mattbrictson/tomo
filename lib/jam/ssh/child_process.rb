@@ -43,7 +43,7 @@ module Jam
                   :stdout_buffer, :stderr_buffer
 
       def start_io_thread(source, buffer)
-        Thread.new do
+        new_thread_inheriting_current_vars do
           begin
             while (line = source.gets)
               on_data&.call(line)
@@ -51,6 +51,12 @@ module Jam
             end
           rescue IOError # rubocop:disable Lint/HandleExceptions
           end
+        end
+      end
+
+      def new_thread_inheriting_current_vars(&block)
+        Thread.new(Framework::Current.variables) do |vars|
+          Framework::Current.with(vars, &block)
         end
       end
     end

@@ -5,6 +5,7 @@ module Jam
     extend Forwardable
 
     autoload :Configuration, "jam/framework/configuration"
+    autoload :Current, "jam/framework/current"
     autoload :PluginsRegistry, "jam/framework/plugins_registry"
     autoload :SettingsRegistry, "jam/framework/settings_registry"
     autoload :TasksRegistry, "jam/framework/tasks_registry"
@@ -16,32 +17,52 @@ module Jam
       end
     end
 
-    attr_reader :helper_modules, :paths, :settings, :tasks
+    attr_reader :helper_modules, :paths, :settings
 
     def initialize(helper_modules:, settings:, tasks_registry:)
       @helper_modules = helper_modules.freeze
       @paths = Paths.new(settings)
       @settings = settings.freeze
-      @tasks = tasks_registry.bind_tasks(self).freeze
+      @tasks_by_name = tasks_registry.bind_tasks(self).freeze
       freeze
     end
 
-    def connect(host)
-      conn = SSH.connect(
-        host: host,
-        options: SSH::Options.new(settings)
-      )
-      remote = Remote.new(conn, self)
-      Current.with(remote: remote) do
-        yield(remote)
-      end
-    ensure
-      conn&.close
+    def tasks
+      tasks_by_name.keys
     end
 
+    def execute(tasks:, remote:)
+      return if tasks.empty?
+
+      Current.with(remote: remote) do
+        tasks.each { |name| invoke_task(name) }
+      end
+    end
+
+    def connect(host)
+      Current.with(host: host) do
+        conn = SSH.connect(host: host, options: SSH::Options.new(settings))
+        remote = Remote.new(conn, self)
+        if block_given?
+          begin
+            return yield(remote)
+          ensure
+            remote&.close if block_given?
+          end
+        else
+          remote
+        end
+      end
+    end
+
+    private
+
+    attr_reader :tasks_by_name
+
     def invoke_task(name)
-      task = tasks.fetch(name.to_s) do
-        raise_no_task_found(name.to_s)
+      name = name.to_s
+      task = tasks_by_name.fetch(name) do
+        raise_no_task_found(name)
       end
 
       Current.with(task: name) do
@@ -50,13 +71,11 @@ module Jam
       end
     end
 
-    private
-
     def raise_no_task_found(name)
       UnknownTaskError.raise_with(
         name,
         unknown_task: name,
-        known_tasks: tasks.keys
+        known_tasks: tasks
       )
     end
   end

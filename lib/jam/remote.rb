@@ -3,7 +3,7 @@ require "forwardable"
 module Jam
   class Remote
     extend Forwardable
-    def_delegators :ssh, :host
+    def_delegators :ssh, :close, :host
     def_delegators :shell_builder, :chdir, :env, :umask
 
     def initialize(ssh, framework)

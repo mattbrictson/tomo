@@ -10,8 +10,9 @@ module Jam
       end
 
       def call
-        framework.connect(host) do
-          task_names.each { |task| framework.invoke_task(task) }
+        Jam.logger.prefix_host(host, "1")
+        framework.connect(host) do |remote|
+          framework.execute(tasks: task_names, remote: remote)
         end
       end
 

@@ -2,12 +2,19 @@ require "forwardable"
 
 module Jam
   class Logger
+    autoload :HostPrependingIO, "jam/logger/host_prepending_io"
+
     extend Forwardable
     include Jam::Colors
 
     def initialize(stdout: $stdout, stderr: $stderr)
-      @stdout = stdout
-      @stderr = stderr
+      @stdout = HostPrependingIO.new(stdout)
+      @stderr = HostPrependingIO.new(stderr)
+    end
+
+    def prefix_host(host, prefix)
+      @stdout.prefix_host(host, prefix)
+      @stderr.prefix_host(host, prefix)
     end
 
     def script_start(script)
