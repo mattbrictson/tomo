@@ -3,12 +3,13 @@ module Jam
     PATTERN = /^(?:(\S+)@)?(\S*?)(?::(\S+))?$/
     private_constant :PATTERN
 
-    attr_reader :name, :user, :port
+    attr_reader :name, :user, :port, :roles
 
-    def initialize(host)
+    def initialize(host, roles: nil)
       host = host.to_s.strip
-      @user, @name, @port = host.match(PATTERN).captures
+      @user, @name, @port = host.match(PATTERN).captures.map(&:freeze)
       @port ||= "22"
+      @roles = Array(roles).map(&:freeze).freeze
       freeze
       raise ArgumentError, "host cannot be blank" if name.empty?
     end
