@@ -14,6 +14,7 @@ module Jam
       @framework = framework
       @deploy_tasks = spec.deploy_tasks
       @hosts = spec.hosts
+      @roles = spec.roles
     end
 
     def build_deploy_plan
@@ -26,6 +27,6 @@ module Jam
 
     private
 
-    attr_reader :framework, :deploy_tasks, :hosts
+    attr_reader :framework, :deploy_tasks, :hosts, :roles
   end
 end

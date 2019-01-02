@@ -10,17 +10,20 @@ module Jam
         new(JSON.parse(IO.read(path)))
       end
 
-      attr_reader :hosts, :deploy_tasks, :plugins, :settings
+      attr_reader :hosts, :deploy_tasks, :plugins, :roles, :settings
 
+      # rubocop:disable Metrics/AbcSize
       def initialize(spec)
         normalize_hosts(spec)
         @hosts = build_hosts(spec["hosts"])
         @environments = merge_environments(spec).freeze
         @deploy_tasks = (spec["deploy"] || []).freeze
         @plugins = (spec["plugins"] || []).freeze
+        @roles = Framework::RolesFilter.new(spec["roles"])
         @settings = (spec["settings"] || {}).freeze
         freeze
       end
+      # rubocop:enable Metrics/AbcSize
 
       def for_environment(env)
         if env.nil?

@@ -6,7 +6,9 @@ module Jam
 
     autoload :Configuration, "jam/framework/configuration"
     autoload :Current, "jam/framework/current"
+    autoload :Glob, "jam/framework/glob"
     autoload :PluginsRegistry, "jam/framework/plugins_registry"
+    autoload :RolesFilter, "jam/framework/roles_filter"
     autoload :SettingsRegistry, "jam/framework/settings_registry"
     autoload :TasksRegistry, "jam/framework/tasks_registry"
     autoload :UnknownPluginError, "jam/framework/unknown_plugin_error"
