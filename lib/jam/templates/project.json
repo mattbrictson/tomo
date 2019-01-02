@@ -1,9 +1,21 @@
 {
   "plugins": ["git", "bundler", "rails"],
   "hosts": {
-    "user@app01": { "roles": ["app", "db"] },
-    "user@app02": { "roles": ["app"] },
-    "user@worker01": { "roles": ["sidekiq"] }
+    "app01": {
+      "address": "123.456.78.90",
+      "user": "deployer",
+      "roles": ["app", "db"]
+    },
+    "app02": {
+      "address": "123.456.78.91",
+      "user": "deployer",
+      "roles": ["app"]
+    },
+    "worker01": {
+      "address": "123.456.78.92",
+      "user": "deployer",
+      "roles": ["sidekiq"]
+    }
   },
   "settings": {
     "application": "%%APP%%",
@@ -22,7 +34,6 @@
     "rails:assets_precompile",
     "rails:db_migrate",
     "rails:db_seed",
-    "core:synchronize",
     "core:symlink_current",
     "core:clean_releases",
     "bundler:clean",
