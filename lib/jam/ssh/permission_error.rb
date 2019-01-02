@@ -5,7 +5,7 @@ module Jam
         as_user = host.user && " as user #{yellow(host.user)}"
 
         msg = <<~ERROR
-          Unable to connect via SSH to #{yellow(host.name)}#{as_user}.
+          Unable to connect via SSH to #{yellow(host.address)}#{as_user}.
 
           Check that you’ve specified the correct username and that your public key
           is properly installed on the server.

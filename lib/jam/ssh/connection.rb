@@ -2,6 +2,8 @@ require "fileutils"
 require "securerandom"
 require "tmpdir"
 
+# TODO: register at_exit to call #close
+
 module Jam
   module SSH
     class Connection

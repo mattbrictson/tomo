@@ -26,7 +26,7 @@ module Jam
 
         plan = project.build_deploy_plan
         plan.call
-        Jam.logger.info green("✔ Deployed #{app} to #{plan.host}")
+        Jam.logger.info green("✔ Deployed #{app} to #{plan.hosts_sentence}")
       end
 
       private

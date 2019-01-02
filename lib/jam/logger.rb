@@ -12,11 +12,6 @@ module Jam
       @stderr = HostPrependingIO.new(stderr)
     end
 
-    def prefix_host(host, prefix)
-      @stdout.prefix_host(host, prefix)
-      @stderr.prefix_host(host, prefix)
-    end
-
     def script_start(script)
       return unless script.echo?
 

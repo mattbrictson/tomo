@@ -10,10 +10,11 @@ module Jam
         new(JSON.parse(IO.read(path)))
       end
 
-      attr_reader :host, :deploy_tasks, :plugins, :settings
+      attr_reader :hosts, :deploy_tasks, :plugins, :settings
 
       def initialize(spec)
-        @host = Host.new(spec["host"]) if spec.key?("host")
+        normalize_hosts(spec)
+        @hosts = build_hosts(spec["hosts"])
         @environments = merge_environments(spec).freeze
         @deploy_tasks = (spec["deploy"] || []).freeze
         @plugins = (spec["plugins"] || []).freeze
@@ -38,9 +39,39 @@ module Jam
 
       attr_reader :environments
 
+      # rubocop:disable Metrics/MethodLength
+      def normalize_hosts(spec)
+        return unless spec.key?("host")
+        raise "Cannot specify both host and hosts" if spec.key?("hosts")
+
+        host = Host.parse(spec.delete("host"))
+        spec["hosts"] = {
+          nil => {
+            "address" => host.address,
+            "port" => host.port,
+            "roles" => host.roles,
+            "user" => host.user
+          }
+        }
+      end
+      # rubocop:enable Metrics/MethodLength
+
+      def build_hosts(spec_hosts)
+        (spec_hosts || []).map do |name, meta|
+          Host.new(
+            name: name,
+            address: meta["address"],
+            port: meta["port"],
+            roles: meta["roles"],
+            user: meta["user"]
+          )
+        end
+      end
+
       def merge_environments(spec)
         environments = spec.delete("environments") || {}
         environments.each_with_object({}) do |(name, env_spec), result|
+          normalize_hosts(env_spec)
           merged = spec.merge(env_spec) do |key, orig, new|
             key == "settings" ? orig.merge(new) : new
           end

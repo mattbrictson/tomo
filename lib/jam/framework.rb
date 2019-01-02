@@ -43,14 +43,12 @@ module Jam
       Current.with(host: host) do
         conn = SSH.connect(host: host, options: SSH::Options.new(settings))
         remote = Remote.new(conn, self)
-        if block_given?
-          begin
-            return yield(remote)
-          ensure
-            remote&.close if block_given?
-          end
-        else
-          remote
+        return remote unless block_given?
+
+        begin
+          return yield(remote)
+        ensure
+          remote&.close if block_given?
         end
       end
     end

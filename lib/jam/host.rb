@@ -3,25 +3,33 @@ module Jam
     PATTERN = /^(?:(\S+)@)?(\S*?)(?::(\S+))?$/
     private_constant :PATTERN
 
-    attr_reader :name, :user, :port, :roles
+    attr_reader :address, :name, :user, :port, :roles
 
-    def initialize(host, roles: nil)
+    def self.parse(host)
       host = host.to_s.strip
-      @user, @name, @port = host.match(PATTERN).captures.map(&:freeze)
-      @port ||= "22"
+      user, address, port = host.match(PATTERN).captures
+      raise ArgumentError, "host cannot be blank" if address.empty?
+
+      new(user: user, port: port, address: address)
+    end
+
+    def initialize(address:, port: nil, user: nil, name: nil, roles: nil)
+      @user = user.freeze
+      @port = (port || "22").freeze
+      @address = address.freeze
+      @name = name.freeze
       @roles = Array(roles).map(&:freeze).freeze
       freeze
-      raise ArgumentError, "host cannot be blank" if name.empty?
     end
 
     def to_s
-      str = user ? "#{user}@#{name}" : name
+      str = user ? "#{user}@#{address}" : address
       str << ":#{port}" unless port == "22"
       str
     end
 
     def to_ssh_args
-      args = [user ? "#{user}@#{name}" : name]
+      args = [user ? "#{user}@#{address}" : address]
       args.push("-p", port) unless port == "22"
       args
     end

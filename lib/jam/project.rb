@@ -13,19 +13,19 @@ module Jam
     def initialize(framework, spec)
       @framework = framework
       @deploy_tasks = spec.deploy_tasks
-      @host = spec.host
+      @hosts = spec.hosts
     end
 
     def build_deploy_plan
-      ExecutionPlan.new(framework, host, deploy_tasks)
+      ExecutionPlan.new(framework, hosts, deploy_tasks)
     end
 
     def build_run_plan(task_name)
-      ExecutionPlan.new(framework, host, [task_name])
+      ExecutionPlan.new(framework, hosts, [task_name])
     end
 
     private
 
-    attr_reader :framework, :deploy_tasks, :host
+    attr_reader :framework, :deploy_tasks, :hosts
   end
 end
