@@ -8,12 +8,10 @@ module Jam
       end
 
       def puts(str)
-        return if str.nil?
-
         prefix = Framework::Current.host&.name
         return io.puts(str) if prefix.nil?
 
-        io.puts(str.gsub(/^/, gray("[#{prefix}] ")))
+        io.puts(str.to_s.gsub(/^/, gray("[#{prefix}] ")))
       end
 
       private
