@@ -67,11 +67,13 @@ module Jam
       end
 
       def thread_pool
-        @_thread_pool ||= if applicable_hosts.length > 1
-                            ConcurrentRubyThreadPool.new(concurrency)
-                          else
-                            InlineThreadPool.new
-                          end
+        @_thread_pool ||= begin
+          if applicable_hosts.length > 1
+            ConcurrentRubyThreadPool.new(concurrency)
+          else
+            InlineThreadPool.new
+          end
+        end
       end
 
       def concurrency
