@@ -2,7 +2,7 @@ module Jam
   class Framework
     class RolesFilter
       def initialize(roles_spec)
-        @spec = (roles_spec || { "*" => "*" }).freeze
+        @spec = (roles_spec || {}).freeze
         @globs = parse_spec(@spec).freeze
         freeze
       end
@@ -23,22 +23,22 @@ module Jam
       attr_reader :globs, :spec
 
       def parse_spec(roles_spec)
-        roles_spec.each_with_object({}) do |(role_spec, project_specs), globs|
+        roles_spec.each_with_object({}) do |(role_spec, task_specs), globs|
           role_glob = Glob.new(role_spec)
-          project_globs = Array(project_specs).map { |spec| Glob.new(spec) }
+          task_globs = Array(task_specs).map { |spec| Glob.new(spec) }
 
-          globs[role_glob] = project_globs
+          task_globs.each do |task_glob|
+            (globs[task_glob] ||= []) << role_glob
+          end
         end
       end
 
       def match?(task, role)
-        role_globs = globs.keys.select { |glob| glob.match?(role) }
-        return false if role_globs.empty?
+        task_globs = globs.keys.select { |glob| glob.match?(task) }
+        return true if task_globs.empty?
 
-        role_globs.any? do |key|
-          project_globs = globs[key]
-          project_globs.any? { |glob| glob.match?(task) }
-        end
+        role_globs = globs.values_at(*task_globs).flatten
+        role_globs.any? { |glob| glob.match?(role) }
       end
     end
   end
