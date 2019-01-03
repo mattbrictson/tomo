@@ -7,11 +7,13 @@ module Jam
 
       def to_console
         msg = <<~ERROR
-          Script failed to run on #{yellow(host)} (exit status #{red(result.exit_status)}).
+          The following script failed on #{yellow(host)} (exit status #{red(result.exit_status)}).
+
+            #{yellow(script)}
 
           You can manually re-execute the script via SSH as follows:
 
-          #{gray(ssh_args.map(&:shellescape).join(' '))}
+            #{gray(ssh_args.map(&:shellescape).join(' '))}
         ERROR
 
         [msg, super].join("\n")
