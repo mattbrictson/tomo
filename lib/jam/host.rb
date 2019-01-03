@@ -15,7 +15,7 @@ module Jam
 
     def initialize(address:, port: nil, user: nil, name: nil, roles: nil)
       @user = user.freeze
-      @port = (port || "22").freeze
+      @port = (port || 22).to_s.freeze
       @address = address.freeze
       @name = name.freeze
       @roles = Array(roles).map(&:freeze).freeze
