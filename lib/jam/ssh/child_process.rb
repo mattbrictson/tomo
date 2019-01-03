@@ -44,13 +44,11 @@ module Jam
 
       def start_io_thread(source, buffer)
         new_thread_inheriting_current_vars do
-          begin
-            while (line = source.gets)
-              on_data&.call(line)
-              buffer << line
-            end
-          rescue IOError # rubocop:disable Lint/HandleExceptions
+          while (line = source.gets)
+            on_data&.call(line)
+            buffer << line
           end
+        rescue IOError # rubocop:disable Lint/HandleExceptions
         end
       end
 
