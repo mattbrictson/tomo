@@ -26,6 +26,9 @@ Metrics/LineLength:
   Exclude:
     - "*.gemspec"
 
+Layout/AlignHash:
+  Enabled: false
+
 Layout/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
 

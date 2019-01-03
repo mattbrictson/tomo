@@ -1,6 +1,6 @@
 module Jam
   class Host
-    PATTERN = /^(?:(\S+)@)?(\S*?)(?::(\S+))?$/
+    PATTERN = /^(?:(\S+)@)?(\S*?)(?::(\S+))?$/.freeze
     private_constant :PATTERN
 
     attr_reader :address, :name, :user, :port, :roles
