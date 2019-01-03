@@ -24,7 +24,9 @@ module Jam
       attr_reader :settings
 
       def symbolize(hash)
-        hash.transform_keys(&:to_sym)
+        hash.each_with_object({}) do |(key, value), symbolized|
+          symbolized[key.to_sym] = value
+        end
       end
 
       def fetch(name, stack=[])

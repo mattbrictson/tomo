@@ -20,18 +20,19 @@ module Jam
         @promises = []
       end
 
-      # rubocop:disable Layout/RescueEnsureAlignment
       def post(*args)
         return if failure?
 
         promises << future_on(executor, *args) do |*thr_args|
-          yield(*thr_args)
-        rescue StandardError => error
-          self.failure = error
+          begin
+            yield(*thr_args)
+          rescue StandardError => error
+            self.failure = error
+          end
         end
+
         nil
       end
-      # rubocop:enable Layout/RescueEnsureAlignment
 
       def run_to_completion
         promises_to_wait = promises.dup

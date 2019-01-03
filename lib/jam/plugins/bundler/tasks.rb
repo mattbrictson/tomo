@@ -28,8 +28,8 @@ module Jam::Plugins::Bundler
       path = paths.bundler
 
       options = []
-      options.append("--gemfile", gemfile) if gemfile
-      options.append("--path", path) if path
+      options.push("--gemfile", gemfile) if gemfile
+      options.push("--path", path) if path
       options
     end
 
@@ -41,10 +41,10 @@ module Jam::Plugins::Bundler
       flags = settings[:bundler_flags]
 
       options = check_options.dup
-      options.append("--binstubs", binstubs) if binstubs
-      options.append("--jobs", jobs) if jobs
-      options.append("--without", without) if without
-      options.append(flags) if flags
+      options.push("--binstubs", binstubs) if binstubs
+      options.push("--jobs", jobs) if jobs
+      options.push("--without", without) if without
+      options.push(flags) if flags
 
       options
     end

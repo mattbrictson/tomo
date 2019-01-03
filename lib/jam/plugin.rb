@@ -9,7 +9,7 @@ module Jam
     attr_reader :helper_modules, :default_settings, :tasks_classes
 
     def helpers(mod, *more_mods)
-      @helper_modules.append(mod, *more_mods)
+      @helper_modules.push(mod, *more_mods)
     end
 
     def defaults(settings)
@@ -17,7 +17,7 @@ module Jam
     end
 
     def tasks(tasks_class, *more_tasks_classes)
-      @tasks_classes.append(tasks_class, *more_tasks_classes)
+      @tasks_classes.push(tasks_class, *more_tasks_classes)
     end
   end
 end

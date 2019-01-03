@@ -9,7 +9,7 @@ module Jam
 
       def filter_tasks(tasks, roles: [])
         roles = roles.empty? ? [""] : roles
-        tasks.filter do |task|
+        tasks.select do |task|
           roles.any? { |role| match?(task, role) }
         end
       end
@@ -32,7 +32,7 @@ module Jam
       end
 
       def match?(task, role)
-        role_globs = globs.keys.filter { |glob| glob.match?(role) }
+        role_globs = globs.keys.select { |glob| glob.match?(role) }
         return false if role_globs.empty?
 
         role_globs.any? do |key|
