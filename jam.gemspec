@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.5.0"
 
   spec.add_development_dependency "bundler", "~> 1.16"
+  spec.add_development_dependency "concurrent-ruby", "~> 1.1"
   spec.add_development_dependency "minitest", "~> 5.11"
   spec.add_development_dependency "minitest-reporters", "~> 1.3"
   spec.add_development_dependency "mocha", "~> 1.7"

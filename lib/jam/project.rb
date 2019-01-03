@@ -4,7 +4,6 @@ module Jam
   class Project
     extend Forwardable
 
-    autoload :ExecutionPlan, "jam/project/execution_plan"
     autoload :NotFoundError, "jam/project/not_found_error"
     autoload :Specification, "jam/project/specification"
 
@@ -18,11 +17,11 @@ module Jam
     end
 
     def build_deploy_plan
-      ExecutionPlan.new(framework, hosts, deploy_tasks)
+      Framework::ExecutionPlan.new(framework, hosts, roles, deploy_tasks)
     end
 
     def build_run_plan(task_name)
-      ExecutionPlan.new(framework, hosts, [task_name])
+      Framework::ExecutionPlan.new(framework, hosts, roles, [task_name])
     end
 
     private

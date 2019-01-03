@@ -38,9 +38,11 @@ module Jam
         project = load_project!(options, args)
 
         plan = project.build_run_plan(task)
-        plan.call
+        plan.run
 
-        Jam.logger.info green("✔ Ran #{task} on #{plan.hosts_sentence}")
+        Jam.logger.info(
+          green("✔ Ran #{task} on #{plan.applicable_hosts_sentence}")
+        )
       end
 
       private

@@ -4,9 +4,15 @@ module Jam
   class Framework
     extend Forwardable
 
+    autoload :ConcurrentRubyLoadError,
+             "jam/framework/concurrent_ruby_load_error"
+    autoload :ConcurrentRubyThreadPool,
+             "jam/framework/concurrent_ruby_thread_pool"
     autoload :Configuration, "jam/framework/configuration"
     autoload :Current, "jam/framework/current"
+    autoload :ExecutionPlan, "jam/framework/execution_plan"
     autoload :Glob, "jam/framework/glob"
+    autoload :InlineThreadPool, "jam/framework/inline_thread_pool"
     autoload :PluginsRegistry, "jam/framework/plugins_registry"
     autoload :RolesFilter, "jam/framework/roles_filter"
     autoload :SettingsRegistry, "jam/framework/settings_registry"
@@ -33,11 +39,9 @@ module Jam
       tasks_by_name.keys
     end
 
-    def execute(tasks:, remote:)
-      return if tasks.empty?
-
+    def execute(task:, remote:)
       Current.with(remote: remote) do
-        tasks.each { |name| invoke_task(name) }
+        invoke_task(task)
       end
     end
 

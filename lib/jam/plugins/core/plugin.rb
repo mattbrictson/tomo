@@ -9,6 +9,7 @@ module Jam::Plugins::Core
     tasks Jam::Plugins::Core::Tasks
 
     defaults application:           "default",
+             concurrency:           10,
              current_path:          "%<deploy_to>/current",
              deploy_to:             "/var/www/%<application>",
              keep_releases:         10,

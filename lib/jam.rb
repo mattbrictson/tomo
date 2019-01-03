@@ -42,6 +42,10 @@ module Jam
     def debug?
       !!@debug
     end
+
+    def bundled?
+      !!(defined?(Bundler) && ENV["BUNDLE_GEMFILE"])
+    end
   end
 
   self.logger = Logger.new
