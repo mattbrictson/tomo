@@ -47,8 +47,6 @@ module Jam
       def open_connections
         remotes = applicable_hosts.each_with_object([]) do |host, opened|
           thread_pool.post(host) do |thr_host|
-            break if thread_pool.failure?
-
             opened << framework.connect(thr_host)
           end
         end
