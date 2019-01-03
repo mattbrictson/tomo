@@ -44,16 +44,12 @@ module Jam
 
       attr_reader :framework, :hosts, :roles, :tasks
 
-      # TODO: move thread_pool.failure stuff into threadpool impl
-
       def open_connections
         remotes = applicable_hosts.each_with_object([]) do |host, opened|
           thread_pool.post(host) do |thr_host|
             break if thread_pool.failure?
 
             opened << framework.connect(thr_host)
-          rescue StandardError => error
-            thread_pool.failure = error
           end
         end
         thread_pool.run_to_completion
@@ -68,8 +64,6 @@ module Jam
             break if thread_pool.failure?
 
             framework.execute(task: task, remote: thr_remote)
-          rescue StandardError => error
-            thread_pool.failure = error
           end
         end
       end

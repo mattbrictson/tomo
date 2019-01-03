@@ -15,33 +15,38 @@ module Jam
     class ConcurrentRubyThreadPool
       include ::Concurrent::Promises::FactoryMethods
 
-      attr_writer :failure
-
       def initialize(size)
         @executor = ::Concurrent::FixedThreadPool.new(size)
         @promises = []
       end
 
-      def post(*args, &block)
+      # rubocop:disable Layout/RescueEnsureAlignment
+      def post(*args)
         return if failure?
 
-        promises << future_on(executor, *args, &block)
+        promises << future_on(executor, *args) do |*thr_args|
+          yield(*thr_args)
+        rescue StandardError => error
+          self.failure = error
+        end
         nil
       end
+      # rubocop:enable Layout/RescueEnsureAlignment
 
       def run_to_completion
         promises_to_wait = promises.dup
         promises.clear
         zip_futures_on(executor, *promises_to_wait).value
-        raise @failure if failure?
+        raise failure if failure?
       end
 
       def failure?
-        !!@failure
+        !!failure
       end
 
       private
 
+      attr_accessor :failure
       attr_reader :executor, :promises
     end
   end
