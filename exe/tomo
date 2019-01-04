@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "tomo"
+Tomo::CLI.new.call(ARGV)
