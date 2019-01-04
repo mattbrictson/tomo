@@ -1,28 +1,19 @@
 {
-  "plugins": ["git", "bundler", "rails"],
-  "hosts": {
-    "app01": {
-      "address": "123.456.78.90",
-      "user": "deployer",
-      "roles": ["app", "db"]
-    },
-    "app02": {
-      "address": "123.456.78.91",
-      "user": "deployer",
-      "roles": ["app"]
-    },
-    "worker01": {
-      "address": "123.456.78.92",
-      "user": "deployer",
-      "roles": ["sidekiq"]
-    }
-  },
+  "plugins": [
+    "git",
+    "bundler",
+    "rails"
+  ],
+  "host": "user@hostname.or.ip.address",
   "settings": {
     "application": "%%APP%%",
     "deploy_to": "/var/www/%<application>",
     "git_branch": "master",
     "git_url": "%%GIT_URL%%",
-    "linked_dirs": [".bundle", "public/assets"]
+    "linked_dirs": [
+      ".bundle",
+      "public/assets"
+    ]
   },
   "deploy": [
     "git:clone",
@@ -38,10 +29,5 @@
     "core:clean_releases",
     "bundler:clean",
     "git:log_revision"
-  ],
-  "roles": {
-    "*": ["git:*", "core:*", "bundler:*"],
-    "app": ["rails:assets_precompile"],
-    "db": ["rails:db_*"]
-  }
+  ]
 }
