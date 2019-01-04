@@ -17,15 +17,24 @@ module Jam
     end
 
     def build_deploy_plan
-      Framework::ExecutionPlan.new(framework, hosts, roles, deploy_tasks)
+      new_execution_plan(deploy_tasks)
     end
 
     def build_run_plan(task_name)
-      Framework::ExecutionPlan.new(framework, hosts, roles, [task_name])
+      new_execution_plan([task_name])
     end
 
     private
 
     attr_reader :framework, :deploy_tasks, :hosts, :roles
+
+    def new_execution_plan(tasks)
+      Framework::ExecutionPlan.new(
+        framework: framework,
+        hosts: hosts,
+        roles: roles,
+        tasks: tasks
+      )
+    end
   end
 end

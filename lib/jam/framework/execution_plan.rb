@@ -1,7 +1,7 @@
 module Jam
   class Framework
     class ExecutionPlan
-      def initialize(framework, hosts, roles, tasks)
+      def initialize(framework:, hosts:, roles:, tasks:)
         @framework = framework
         @hosts = hosts
         @roles = roles
