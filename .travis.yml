@@ -4,4 +4,6 @@ cache: bundler
 rvm:
   - 2.4.5
   - 2.5.3
+  - 2.6.0
+  - ruby-head
 before_install: gem install bundler -v 1.16.6
