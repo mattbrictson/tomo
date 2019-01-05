@@ -36,6 +36,8 @@ module Tomo
 
         results[:extra_args] = args
         results.freeze
+      rescue OptionParser::InvalidOption => e
+        raise UnknownOptionError, e.message
       end
 
       def on(*args)

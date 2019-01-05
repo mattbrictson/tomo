@@ -5,7 +5,7 @@ module Tomo
     def to_console
       error = <<~ERROR
         #{yellow(unknown_task)} is not a recognized task.
-        To see a list of all available tasks, run #{blue('tomo tasks')}.
+        To see a list of all available tasks, run #{tomo('tasks')}.
       ERROR
 
       sugg = Error::Suggestions.new(dictionary: known_tasks, word: unknown_task)

@@ -8,7 +8,7 @@ module Tomo
           A #{yellow(path)} configuration file is required to run this command.
           Are you in the right directory?
 
-          To create a new #{yellow(path)} file, run #{blue('tomo init')}.
+          To create a new #{yellow(path)} file, run #{tomo('init')}.
         ERROR
       end
     end
