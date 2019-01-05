@@ -1,7 +1,7 @@
 module Tomo
   module Commands
     class Init
-      include Tomo::Colors
+      include Colors
 
       # rubocop:disable Metrics/MethodLength
       def parser

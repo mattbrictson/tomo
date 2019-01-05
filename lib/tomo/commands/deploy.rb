@@ -1,7 +1,7 @@
 module Tomo
   module Commands
     class Deploy
-      include Tomo::Colors
+      include Colors
 
       def parser
         Tomo::CLI::Parser.new do |parser|
