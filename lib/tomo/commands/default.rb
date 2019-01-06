@@ -16,7 +16,7 @@ module Tomo
               tomo COMMAND -h
           USAGE
           parser.on("-v", "--version") do
-            puts Tomo::VERSION
+            puts "tomo/#{Tomo::VERSION} #{RUBY_DESCRIPTION}"
             exit
           end
         end

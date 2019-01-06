@@ -32,6 +32,7 @@ module Tomo
 
         args = args.dup
         opt_parse.parse!(args)
+        dump_runtime_info if Tomo.debug?
         validate_remaining_args!(args)
 
         results[:extra_args] = args
@@ -59,6 +60,19 @@ module Tomo
       private
 
       attr_reader :banner, :opt_parse, :results, :usage
+
+      def dump_runtime_info
+        Tomo.logger.debug("tomo #{Tomo::VERSION}")
+        Tomo.logger.debug(RUBY_DESCRIPTION)
+        Tomo.logger.debug("rubygems #{Gem::VERSION}")
+        Tomo.logger.debug("bundler #{Bundler::VERSION}") if Tomo.bundled?
+
+        begin
+          require "concurrent"
+          Tomo.logger.debug("concurrent-ruby #{Concurrent::VERSION}")
+        rescue LoadError # rubocop:disable Lint/HandleExceptions
+        end
+      end
 
       def add_debug_option
         on_tail("--[no-]debug",
