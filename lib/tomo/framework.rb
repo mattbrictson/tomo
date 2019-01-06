@@ -39,9 +39,21 @@ module Tomo
       tasks_by_name.keys
     end
 
+    def validate_task!(name)
+      return if tasks_by_name.key?(name)
+
+      UnknownTaskError.raise_with(
+        name,
+        unknown_task: name,
+        known_tasks: tasks
+      )
+    end
+
     def execute(task:, remote:)
-      Current.with(remote: remote) do
-        invoke_task(task)
+      validate_task!(task)
+      Current.with(task: task, remote: remote) do
+        Tomo.logger.task_start(task)
+        tasks_by_name[task].call
       end
     end
 
@@ -62,25 +74,5 @@ module Tomo
     private
 
     attr_reader :tasks_by_name
-
-    def invoke_task(name)
-      name = name.to_s
-      task = tasks_by_name.fetch(name) do
-        raise_no_task_found(name)
-      end
-
-      Current.with(task: name) do
-        Tomo.logger.task_start(name)
-        task.call
-      end
-    end
-
-    def raise_no_task_found(name)
-      UnknownTaskError.raise_with(
-        name,
-        unknown_task: name,
-        known_tasks: tasks
-      )
-    end
   end
 end

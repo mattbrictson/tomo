@@ -6,15 +6,11 @@ module Tomo
         @hosts = hosts
         @roles = roles
         @tasks = tasks
+        validate_tasks!
       end
 
       def applicable_hosts
-        @_applicable_hosts ||= begin
-          flat_tasks = tasks.flatten
-          hosts.reject do |host|
-            roles.filter_tasks(flat_tasks, roles: host.roles).empty?
-          end
-        end
+        tasks_per_host.keys
       end
 
       def applicable_hosts_sentence
@@ -43,6 +39,22 @@ module Tomo
       private
 
       attr_reader :framework, :hosts, :roles, :tasks
+
+      def validate_tasks!
+        tasks_per_host.values.flatten.uniq.each do |task|
+          framework.validate_task!(task)
+        end
+      end
+
+      def tasks_per_host
+        @_tasks_per_host ||= begin
+          flat_tasks = tasks.flatten
+          hosts.each_with_object({}) do |host, hash|
+            tasks = roles.filter_tasks(flat_tasks, roles: host.roles)
+            hash[host] = tasks unless tasks.empty?
+          end
+        end
+      end
 
       def open_connections
         remotes = applicable_hosts.each_with_object([]) do |host, opened|
