@@ -83,18 +83,14 @@ module Tomo
       end
 
       def raise_no_environment_specified
-        raise "No environment specified! "\
-              "Must be one of #{environments.keys.inspect}"
+        UnspecifiedEnvironmentError.raise_with(environments: environments.keys)
       end
 
       def raise_unknown_environment(environment)
-        message = "Unknown environment #{environment.inspect}. "
-        message << if environments.empty?
-                     "This project does not have any environments."
-                   else
-                     "Must be one of #{environments.keys.inspect}"
-                   end
-        raise message
+        UnknownEnvironmentError.raise_with(
+          name: environment,
+          known_environments: environments.keys
+        )
       end
     end
   end

@@ -6,6 +6,9 @@ module Tomo
 
     autoload :NotFoundError, "tomo/project/not_found_error"
     autoload :Specification, "tomo/project/specification"
+    autoload :UnknownEnvironmentError, "tomo/project/unknown_environment_error"
+    autoload :UnspecifiedEnvironmentError,
+             "tomo/project/unspecified_environment_error"
 
     def_delegators :framework, :settings, :tasks
 
