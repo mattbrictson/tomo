@@ -40,12 +40,20 @@ module Tomo
         plan = project.build_run_plan(task)
         plan.run
 
-        Tomo.logger.info(
-          green("✔ Ran #{task} on #{plan.applicable_hosts_sentence}")
-        )
+        log_completion(task, plan)
       end
 
       private
+
+      def log_completion(task, plan)
+        target = "#{task} on #{plan.applicable_hosts_sentence}"
+
+        if Tomo.dry_run?
+          Tomo.logger.info(green("* Simulated #{target} (dry run)"))
+        else
+          Tomo.logger.info(green("✔ Ran #{target}"))
+        end
+      end
 
       def load_project!(options, args)
         Tomo.load_project!(

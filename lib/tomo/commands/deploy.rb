@@ -26,12 +26,21 @@ module Tomo
 
         plan = project.build_deploy_plan
         plan.run
-        Tomo.logger.info(
-          green("✔ Deployed #{app} to #{plan.applicable_hosts_sentence}")
-        )
+
+        log_completion(app, plan)
       end
 
       private
+
+      def log_completion(app, plan)
+        target = "#{app} to #{plan.applicable_hosts_sentence}"
+
+        if Tomo.dry_run?
+          Tomo.logger.info(green("* Simulated deploy of #{target} (dry run)"))
+        else
+          Tomo.logger.info(green("✔ Deployed #{target}"))
+        end
+      end
 
       def load_project!(options, release)
         Tomo.load_project!(

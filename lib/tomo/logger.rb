@@ -2,14 +2,14 @@ require "forwardable"
 
 module Tomo
   class Logger
-    autoload :HostPrependingIO, "tomo/logger/host_prepending_io"
+    autoload :TaggedIO, "tomo/logger/tagged_io"
 
     extend Forwardable
     include Tomo::Colors
 
     def initialize(stdout: $stdout, stderr: $stderr)
-      @stdout = HostPrependingIO.new(stdout)
-      @stderr = HostPrependingIO.new(stderr)
+      @stdout = TaggedIO.new(stdout)
+      @stderr = TaggedIO.new(stderr)
     end
 
     def script_start(script)

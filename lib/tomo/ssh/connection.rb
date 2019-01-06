@@ -7,18 +7,29 @@ require "tmpdir"
 module Tomo
   module SSH
     class Connection
+      def self.dry_run(host, options)
+        new(
+          host,
+          options,
+          exec_proc: proc { exit(0) },
+          child_proc: proc { Result.empty_success }
+        )
+      end
+
       attr_reader :host
 
-      def initialize(host, options)
+      def initialize(host, options, exec_proc: nil, child_proc: nil)
         @host = host
         @options = options
+        @exec_proc = exec_proc || Process.method(:exec)
+        @child_proc = child_proc || ChildProcess.method(:execute)
       end
 
       def ssh_exec(script)
         ssh_args = build_args(script)
         logger.script_start(script)
         Tomo.logger.debug ssh_args.map(&:shellescape).join(" ")
-        Process.exec(*ssh_args)
+        exec_proc.call(*ssh_args)
       end
 
       def ssh_subprocess(script, verbose: false)
@@ -26,7 +37,7 @@ module Tomo
         handle_data = ->(data) { logger.script_output(script, data) }
 
         logger.script_start(script)
-        result = ChildProcess.execute(*ssh_args, on_data: handle_data)
+        result = child_proc.call(*ssh_args, on_data: handle_data)
         logger.script_end(script, result)
 
         if result.failure? && script.raise_on_error?
@@ -42,7 +53,7 @@ module Tomo
 
       private
 
-      attr_reader :options
+      attr_reader :options, :exec_proc, :child_proc
 
       def logger
         Tomo.logger

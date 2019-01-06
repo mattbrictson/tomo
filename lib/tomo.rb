@@ -22,7 +22,7 @@ module Tomo
 
   class << self
     attr_accessor :logger
-    attr_writer :debug
+    attr_writer :debug, :dry_run
 
     def load_project!(environment:, settings: {})
       spec = Project::Specification.from_json(".tomo/project.json")
@@ -41,6 +41,10 @@ module Tomo
 
     def debug?
       !!@debug
+    end
+
+    def dry_run?
+      !!@dry_run
     end
 
     def bundled?

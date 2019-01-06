@@ -14,6 +14,7 @@ module Tomo
 
     def self.connect(host:, options:)
       Tomo.logger.connect(host)
+      return Connection.dry_run(host, options) if Tomo.dry_run?
 
       conn = Connection.new(host, options)
       validator = ConnectionValidator.new(options.executable, conn)

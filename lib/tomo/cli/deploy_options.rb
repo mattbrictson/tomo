@@ -18,6 +18,11 @@ module Tomo
           results[:environment] = env
         end
 
+        opts.on("--[no-]dry-run",
+                "Simulate running tasks instead of using real SSH") do |dry|
+          Tomo.dry_run = dry
+        end
+
         opts.on("--[no-]color", "Enable/disable color output") do |color|
           color ? Tomo::Colors.enable : Tomo::Colors.disable
         end

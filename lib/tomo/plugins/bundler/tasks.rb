@@ -1,7 +1,7 @@
 module Tomo::Plugins::Bundler
   class Tasks < Tomo::TaskLibrary
     def install
-      return if remote.bundle?("check", *check_options)
+      return if remote.bundle?("check", *check_options) && !dry_run?
 
       remote.bundle("install", *install_options)
     end

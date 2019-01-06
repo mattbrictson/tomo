@@ -20,6 +20,10 @@ module Tomo
     def_delegators :framework, :paths, :settings
     attr_reader :framework
 
+    def dry_run?
+      Tomo.dry_run?
+    end
+
     def logger
       Tomo.logger
     end
