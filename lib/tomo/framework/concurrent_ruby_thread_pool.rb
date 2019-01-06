@@ -20,17 +20,13 @@ module Tomo
         @promises = []
       end
 
-      def post(*args)
+      def post(*args, &block)
         return if failure?
 
-        promises << future_on(executor, *args) do |*thr_args|
-          begin
-            yield(*thr_args)
-          rescue StandardError => error
-            self.failure = error
-          end
-        end
-
+        promises << future_on(executor, *args, &block)
+                    .on_rejection_using(executor) do |reason|
+                      self.failure = reason
+                    end
         nil
       end
 
