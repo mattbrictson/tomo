@@ -15,6 +15,15 @@ module Tomo
         settings_registry.assign_settings(settings)
       end
 
+      def add_settings_from_env(env=ENV)
+        env.each do |key, value|
+          setting_name = key[/^TOMO_(\w+)$/i, 1]&.downcase
+          next if setting_name.nil?
+
+          settings_registry.assign_settings(setting_name => value)
+        end
+      end
+
       def add_task_library(task_library)
         return if task_library.nil?
 

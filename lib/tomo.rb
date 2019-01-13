@@ -24,20 +24,24 @@ module Tomo
     attr_accessor :logger
     attr_writer :debug, :dry_run
 
-    def load_project!(environment:, settings: {})
+    # rubocop:disable Metrics/MethodLength
+    def load_project!(environment:, settings: {}, env: ENV)
       spec = Project::Specification.from_json(".tomo/project.json")
                                    .for_environment(environment)
 
       framework = Framework.configure do |config|
         config.add_plugins(spec.plugins)
-        config.add_settings(spec.settings.merge(settings))
         if File.file?(".tomo/tasks.rb")
           config.add_task_library(TaskLibrary.from_script(".tomo/tasks.rb"))
         end
+        config.add_settings(spec.settings)
+        config.add_settings_from_env(env)
+        config.add_settings(settings)
       end
 
       Project.new(framework, spec)
     end
+    # rubocop:enable Metrics/MethodLength
 
     def debug?
       !!@debug
