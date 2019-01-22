@@ -1,3 +1,5 @@
+require "time"
+
 module Tomo
   module Commands
     class Deploy
@@ -20,8 +22,9 @@ module Tomo
       def call(options)
         Tomo.logger.info "tomo deploy v#{Tomo::VERSION}"
 
-        release = Time.now.utc.strftime("%Y%m%d%H%M%S")
-        project = load_project!(options, release)
+        start_time = Time.now
+        release = start_time.utc.strftime("%Y%m%d%H%M%S")
+        project = load_project!(options, release, start_time)
         app = project.settings[:application]
 
         plan = project.build_deploy_plan
@@ -42,11 +45,12 @@ module Tomo
         end
       end
 
-      def load_project!(options, release)
+      def load_project!(options, release, start_time)
         Tomo.load_project!(
           environment: options[:environment],
           settings: options[:settings].merge(
-            release_path: "%<releases_path>/#{release}"
+            release_path: "%<releases_path>/#{release}",
+            start_time: start_time
           )
         )
       end

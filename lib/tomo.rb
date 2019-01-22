@@ -37,6 +37,7 @@ module Tomo
         config.add_settings(spec.settings)
         config.add_settings_from_env(env)
         config.add_settings(settings)
+        config.add_settings(environment: environment)
       end
 
       Project.new(framework, spec)

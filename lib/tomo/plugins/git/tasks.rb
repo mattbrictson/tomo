@@ -1,4 +1,5 @@
 require "shellwords"
+require "time"
 
 module Tomo::Plugins::Git
   class Tasks < Tomo::TaskLibrary
@@ -14,26 +15,37 @@ module Tomo::Plugins::Git
     def create_release
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
-        @sha = remote.capture("git rev-list --max-count=1 #{branch}").strip
         remote.mkdir_p(paths.release)
-        remote.run("echo #{sha} > #{paths.release.join('REVISION')}")
         remote.git("archive #{branch} | tar -x -f - -C #{paths.release}")
       end
+      store_release_info
     end
     # rubocop:enable Metrics/AbcSize
 
-    def log_revision
-      user = ENV["USER"]
-      message = "Branch #{branch} (at #{sha}) deployed by #{user}"
-      remote.run "echo #{message.shellescape} >> #{paths.revision_log}"
-    end
-
     private
-
-    attr_reader :sha
 
     def branch
       settings[:git_branch]
     end
+
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
+    def store_release_info
+      log = remote.chdir(paths.git_repo) do
+        remote.capture(
+          %Q(git log -n1 --date=iso --pretty=format:"%H/%cd/%ae" #{branch})
+        ).strip
+      end
+
+      sha, date, email = log.split("/", 3)
+      remote.release[:branch] = branch
+      remote.release[:author] = email
+      remote.release[:revision] = sha
+      remote.release[:revision_date] = date
+      remote.release[:deploy_date] = settings[:start_time].to_s
+      remote.release[:deploy_user] = ENV["USER"] || ENV["USERNAME"]
+    end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
   end
 end

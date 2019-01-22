@@ -6,9 +6,12 @@ module Tomo
     def_delegators :ssh, :close, :host
     def_delegators :shell_builder, :chdir, :env, :umask
 
+    attr_reader :release
+
     def initialize(ssh, framework)
       @ssh = ssh
       @framework = framework
+      @release = {}
       @shell_builder = ShellBuilder.new
       framework.helper_modules.each { |mod| extend(mod) }
       freeze

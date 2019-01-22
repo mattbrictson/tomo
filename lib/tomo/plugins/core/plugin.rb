@@ -12,9 +12,11 @@ module Tomo::Plugins::Core
              concurrency:           10,
              current_path:          "%<deploy_to>/current",
              deploy_to:             "/var/www/%<application>",
+             environment:           nil,
              keep_releases:         10,
              linked_dirs:           [],
              release_path:          "%<current_path>",
+             release_json_path:     "%<release_path>/.tomo_release.json",
              releases_path:         "%<deploy_to>/releases",
              revision_log_path:     "%<deploy_to>/revisions.log",
              shared_path:           "%<deploy_to>/shared",
@@ -26,6 +28,7 @@ module Tomo::Plugins::Core
                "-o", "StrictHostKeyChecking=accept-new"
              ],
              ssh_forward_agent:     true,
-             ssh_reuse_connections: true
+             ssh_reuse_connections: true,
+             start_time:            nil
   end
 end

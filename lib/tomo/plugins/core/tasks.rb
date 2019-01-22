@@ -1,3 +1,6 @@
+require "json"
+require "shellwords"
+
 module Tomo::Plugins::Core
   class Tasks < Tomo::TaskLibrary
     def create_shared_directories
@@ -20,6 +23,8 @@ module Tomo::Plugins::Core
     end
 
     def symlink_current
+      return if paths.release == paths.current
+
       remote.ln_sfn paths.release, paths.current
     end
 
@@ -34,6 +39,26 @@ module Tomo::Plugins::Core
 
         remote.rm_rf(*releases.take(releases.length - desired_count))
       end
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def write_release_json
+      json = JSON.pretty_generate(remote.release)
+      path = paths.release_json
+      remote.run(
+        "echo", json.shellescape, ">", path,
+        echo: "Writing release info to #{path}"
+      )
+    end
+
+    # rubocop:disable Metrics/AbcSize
+    def log_revision
+      message = settings[:start_time].to_s
+      message << " - Branch #{remote.release[:branch] || '<unknown>'}"
+      message << " (at #{remote.release[:revision] || '<unknown>'})"
+      message << " deployed by #{remote.release[:deploy_user] || '<unknown>'}"
+
+      remote.run "echo #{message.shellescape} >> #{paths.revision_log}"
     end
     # rubocop:enable Metrics/AbcSize
 

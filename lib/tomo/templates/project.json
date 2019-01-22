@@ -20,6 +20,7 @@
     "git:create_release",
     "core:create_shared_directories",
     "core:symlink_shared_directories",
+    "core:write_release_json",
     "bundler:upgrade_bundler",
     "bundler:install",
     "rails:assets_precompile",
@@ -28,6 +29,6 @@
     "core:symlink_current",
     "core:clean_releases",
     "bundler:clean",
-    "git:log_revision"
+    "core:log_revision"
   ]
 }

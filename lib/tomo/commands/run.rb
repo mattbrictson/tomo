@@ -1,3 +1,5 @@
+require "time"
+
 module Tomo
   module Commands
     class Run
@@ -34,8 +36,9 @@ module Tomo
       def call(options)
         Tomo.logger.info "tomo run v#{Tomo::VERSION}"
 
+        start_time = Time.now
         task, *args = options[:extra_args]
-        project = load_project!(options, args)
+        project = load_project!(options, args, start_time)
 
         plan = project.build_run_plan(task)
         plan.run
@@ -55,11 +58,11 @@ module Tomo
         end
       end
 
-      def load_project!(options, args)
+      def load_project!(options, args, start_time)
         Tomo.load_project!(
           environment: options[:environment],
           settings: options[:settings].merge(
-            options[:settings].merge(run_args: args)
+            options[:settings].merge(run_args: args, start_time: start_time)
           )
         )
       end
