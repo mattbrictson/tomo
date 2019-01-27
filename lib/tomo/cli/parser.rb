@@ -57,6 +57,15 @@ module Tomo
         parser_extensions.call(self, results)
       end
 
+      def usage_and_exit!(status=0)
+        puts
+        puts indent(banner)
+        puts
+        puts indent(usage || "Options:\n#{opt_parse}")
+        puts
+        exit(status)
+      end
+
       private
 
       attr_reader :banner, :opt_parse, :results, :usage
@@ -96,15 +105,6 @@ module Tomo
       def validate_remaining_args!(args)
         usage_and_exit!(1) if args.any? && !permit_extra_args
         usage_and_exit!(1) if args.empty? && !permit_empty_args
-      end
-
-      def usage_and_exit!(status=0)
-        puts
-        puts indent(banner)
-        puts
-        puts indent(usage || "Options:\n#{opt_parse}")
-        puts
-        exit(status)
       end
 
       def indent(str)

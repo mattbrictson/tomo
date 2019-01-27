@@ -11,9 +11,11 @@ module Tomo
 
     COMMANDS = {
       "deploy" => Tomo::Commands::Deploy,
+      "help" => Tomo::Commands::Help,
       "init" => Tomo::Commands::Init,
       "run" => Tomo::Commands::Run,
-      "tasks" => Tomo::Commands::Tasks
+      "tasks" => Tomo::Commands::Tasks,
+      "version" => Tomo::Commands::Version
     }.freeze
 
     def call(argv)

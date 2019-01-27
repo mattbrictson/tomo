@@ -9,19 +9,25 @@ module Tomo
             Tomo is an extensible tool for deploying projects to remote hosts via SSH.
             Please specify a COMMAND, which can be:
 
-            #{Tomo::CLI::COMMANDS.keys.map { |key| "  - #{key}" }.join("\n")}
+            #{commands.map { |key| "  - #{key}" }.join("\n")}
 
             For additional help, run:
 
               tomo COMMAND -h
           USAGE
           parser.on("-v", "--version") do
-            puts "tomo/#{Tomo::VERSION} #{RUBY_DESCRIPTION}"
+            Version.new.call({})
             exit
           end
         end
       end
       # rubocop:enable Metrics/MethodLength
+
+      private
+
+      def commands
+        Tomo::CLI::COMMANDS.keys - ["help"]
+      end
     end
   end
 end
