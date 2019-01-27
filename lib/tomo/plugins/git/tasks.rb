@@ -4,7 +4,7 @@ module Tomo::Plugins::Git
   class Tasks < Tomo::TaskLibrary
     # rubocop:disable Metrics/AbcSize
     def clone
-      return if remote.directory?(paths.git_repo)
+      return if remote.directory?(paths.git_repo) && !dry_run?
       raise "The git_url setting is required" unless settings[:git_url]
 
       remote.mkdir_p(paths.git_repo.dirname)
