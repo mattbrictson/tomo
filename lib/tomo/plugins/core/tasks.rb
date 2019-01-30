@@ -44,21 +44,17 @@ module Tomo::Plugins::Core
 
     def write_release_json
       json = JSON.pretty_generate(remote.release)
-      path = paths.release_json
-      remote.run(
-        "echo", json.shellescape, ">", path,
-        echo: "Writing release info to #{path}"
-      )
+      remote.write(text: json, to: paths.release_json)
     end
 
     # rubocop:disable Metrics/AbcSize
     def log_revision
       message = settings[:start_time].to_s
-      message << " - Branch #{remote.release[:branch] || '<unknown>'}"
-      message << " (at #{remote.release[:revision] || '<unknown>'})"
+      message << " - #{remote.release[:revision] || '<unknown>'}"
+      message << " (#{remote.release[:branch] || '<unknown>'})"
       message << " deployed by #{remote.release[:deploy_user] || '<unknown>'}"
 
-      remote.run "echo #{message.shellescape} >> #{paths.revision_log}"
+      remote.write(text: message, to: paths.revision_log, append: true)
     end
     # rubocop:enable Metrics/AbcSize
 

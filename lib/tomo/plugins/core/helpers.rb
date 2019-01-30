@@ -1,3 +1,5 @@
+require "shellwords"
+
 module Tomo::Plugins::Core
   module Helpers
     def capture(*command, **run_opts)
@@ -8,6 +10,14 @@ module Tomo::Plugins::Core
     def run?(*command, **run_opts)
       result = run(*command, **run_opts.merge(raise_on_error: false))
       result.success?
+    end
+
+    def write(text:, to:, append: false, **run_opts)
+      message = "Writing #{text.bytesize} bytes to #{to}"
+      run(
+        "echo", text.shellescape, append ? ">>" : ">", to,
+        **{ echo: message }.merge(run_opts)
+      )
     end
 
     def ln_sf(target, link, **run_opts)
