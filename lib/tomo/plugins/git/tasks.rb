@@ -13,6 +13,7 @@ module Tomo::Plugins::Git
     end
 
     def create_release
+      configure_git_attributes
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
         remote.mkdir_p(paths.release)
@@ -28,13 +29,24 @@ module Tomo::Plugins::Git
       settings[:git_branch]
     end
 
+    def configure_git_attributes
+      exclusions = settings[:git_exclusions] || []
+      attributes = exclusions.map { |excl| "#{excl} export-ignore" }.join("\n")
+
+      remote.write(
+        text: attributes,
+        to: paths.git_repo.join("info/attributes")
+      )
+    end
+
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def store_release_info
       log = remote.chdir(paths.git_repo) do
-        remote.capture(
-          %Q(git log -n1 --date=iso --pretty=format:"%H/%cd/%ae" #{branch})
-        ).strip
+        remote.git(
+          %Q(log -n1 --date=iso --pretty=format:"%H/%cd/%ae" #{branch}),
+          silent: true
+        ).stdout.strip
       end
 
       sha, date, email = log.split("/", 3)

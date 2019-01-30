@@ -9,6 +9,11 @@
     "application": "%%APP%%",
     "deploy_to": "/var/www/%<application>",
     "git_branch": "master",
+    "git_exclusions": [
+      ".tomo/",
+      "spec/",
+      "test/"
+    ],
     "git_url": "%%GIT_URL%%",
     "linked_dirs": [
       ".bundle",
