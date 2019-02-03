@@ -2,6 +2,7 @@ module Tomo
   class CLI
     autoload :DeployOptions, "tomo/cli/deploy_options"
     autoload :Error, "tomo/cli/error"
+    autoload :InterruptedError, "tomo/cli/interrupted_error"
     autoload :Parser, "tomo/cli/parser"
     autoload :UnknownOptionError, "tomo/cli/unknown_option_error"
 
@@ -28,6 +29,8 @@ module Tomo
 
       options = command.parser.parse(argv)
       command.call(options)
+    rescue Interrupt
+      handle_error(InterruptedError.new, command_name)
     rescue StandardError => error
       handle_error(error, command_name)
     end
