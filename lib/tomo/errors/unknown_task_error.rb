@@ -8,6 +8,8 @@ module Tomo
         To see a list of all available tasks, run #{tomo('tasks')}.
       ERROR
 
+      # TODO: suggest "did you forget to add the <abc> plugin?"
+
       sugg = Error::Suggestions.new(dictionary: known_tasks, word: unknown_task)
       error << sugg.to_console if sugg.any?
       error

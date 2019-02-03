@@ -16,6 +16,8 @@ module Tomo
     autoload :PluginsRegistry, "tomo/framework/plugins_registry"
     autoload :RolesFilter, "tomo/framework/roles_filter"
     autoload :SettingsRegistry, "tomo/framework/settings_registry"
+    autoload :SettingsRequiredError, "tomo/framework/settings_required_error"
+    autoload :TaskAbortedError, "tomo/framework/task_aborted_error"
     autoload :TasksRegistry, "tomo/framework/tasks_registry"
     autoload :UnknownPluginError, "tomo/framework/unknown_plugin_error"
 
