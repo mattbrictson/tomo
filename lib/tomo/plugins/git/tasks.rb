@@ -6,8 +6,8 @@ module Tomo::Plugins::Git
     # rubocop:disable Metrics/AbcSize
     def clone
       return if remote.directory?(paths.git_repo) && !dry_run?
-      require_setting :git_url
 
+      require_setting :git_url
       remote.mkdir_p(paths.git_repo.dirname)
       remote.git("clone --mirror #{settings[:git_url]} #{paths.git_repo}")
     end

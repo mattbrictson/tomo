@@ -7,8 +7,8 @@ module Tomo
         <<~ERROR
           The #{yellow(task)} task requires #{settings_sentence}
 
-          Settings can be specified in #{blue(".tomo/project.json")}, or by running tomo
-          with the #{blue("-s")} option. For example:
+          Settings can be specified in #{blue('.tomo/project.json')}, or by running tomo
+          with the #{blue('-s')} option. For example:
 
             #{blue("-s #{settings.first}=foo")}
 

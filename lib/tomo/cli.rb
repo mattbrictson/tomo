@@ -28,14 +28,18 @@ module Tomo
                 end
 
       options = command.parser.parse(argv)
+      call_with_error_handling(command, options, command_name)
+    end
+
+    private
+
+    def call_with_error_handling(command, options, command_name)
       command.call(options)
     rescue Interrupt
       handle_error(InterruptedError.new, command_name)
     rescue StandardError => error
       handle_error(error, command_name)
     end
-
-    private
 
     def handle_error(error, command_name)
       raise error unless error.respond_to?(:to_console)
