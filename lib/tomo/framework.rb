@@ -14,6 +14,7 @@ module Tomo
     autoload :Glob, "tomo/framework/glob"
     autoload :InlineThreadPool, "tomo/framework/inline_thread_pool"
     autoload :PluginsRegistry, "tomo/framework/plugins_registry"
+    autoload :PluginResolver, "tomo/framework/plugin_resolver"
     autoload :RolesFilter, "tomo/framework/roles_filter"
     autoload :SettingsRegistry, "tomo/framework/settings_registry"
     autoload :SettingsRequiredError, "tomo/framework/settings_required_error"
