@@ -1,7 +1,7 @@
 require "json"
 require "shellwords"
 
-module Tomo::Plugins::Core
+module Tomo::Plugin::Core
   class Tasks < Tomo::TaskLibrary
     def create_shared_directories
       return if linked_dirs.empty?

@@ -1,12 +1,12 @@
 require_relative "helpers"
 require_relative "tasks"
 
-module Tomo::Plugins::Core
+module Tomo::Plugin::Core
   module Plugin
     extend Tomo::Plugin
 
-    helpers Tomo::Plugins::Core::Helpers
-    tasks Tomo::Plugins::Core::Tasks
+    helpers Tomo::Plugin::Core::Helpers
+    tasks Tomo::Plugin::Core::Tasks
 
     defaults application:           "default",
              concurrency:           10,

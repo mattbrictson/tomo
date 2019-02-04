@@ -1,12 +1,12 @@
 require_relative "helpers"
 require_relative "tasks"
 
-module Tomo::Plugins::Bundler
+module Tomo::Plugin::Bundler
   module Plugin
     extend Tomo::Plugin
 
-    tasks Tomo::Plugins::Bundler::Tasks
-    helpers Tomo::Plugins::Bundler::Helpers
+    tasks Tomo::Plugin::Bundler::Tasks
+    helpers Tomo::Plugin::Bundler::Helpers
 
     defaults bundler_binstubs:      nil,
              bundler_clean_options: nil,

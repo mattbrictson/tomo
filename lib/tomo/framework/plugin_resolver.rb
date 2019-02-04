@@ -1,7 +1,7 @@
 module Tomo
   class Framework
     class PluginResolver
-      PLUGIN_PREFIX = "tomo/plugins".freeze
+      PLUGIN_PREFIX = "tomo/plugin".freeze
       private_constant :PLUGIN_PREFIX
 
       def self.resolve(name)

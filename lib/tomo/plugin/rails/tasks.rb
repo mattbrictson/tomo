@@ -1,4 +1,4 @@
-module Tomo::Plugins::Rails
+module Tomo::Plugin::Rails
   class Tasks < Tomo::TaskLibrary
     def assets_precompile
       remote.rake("assets:precompile")

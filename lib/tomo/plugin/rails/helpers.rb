@@ -1,4 +1,4 @@
-module Tomo::Plugins::Rails
+module Tomo::Plugin::Rails
   module Helpers
     def rails(*args, **opts)
       bundle("exec", "rails", *args, **opts)

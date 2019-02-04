@@ -10,9 +10,9 @@ module Tomo
       end
 
       def core_loaded?
-        return false unless defined?(Tomo::Plugins::Core::Plugin)
+        return false unless defined?(Tomo::Plugin::Core::Plugin)
 
-        helper_modules.include?(Tomo::Plugins::Core::Plugin)
+        helper_modules.include?(Tomo::Plugin::Core::Plugin)
       end
 
       def load_plugins_by_name(names)

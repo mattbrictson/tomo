@@ -1,12 +1,12 @@
 require_relative "helpers"
 require_relative "tasks"
 
-module Tomo::Plugins::Git
+module Tomo::Plugin::Git
   module Plugin
     extend Tomo::Plugin
 
-    helpers Tomo::Plugins::Git::Helpers
-    tasks Tomo::Plugins::Git::Tasks
+    helpers Tomo::Plugin::Git::Helpers
+    tasks Tomo::Plugin::Git::Tasks
 
     # rubocop:disable Metrics/LineLength
     defaults git_branch:     "master",

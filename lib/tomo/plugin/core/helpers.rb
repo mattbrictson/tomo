@@ -1,6 +1,6 @@
 require "shellwords"
 
-module Tomo::Plugins::Core
+module Tomo::Plugin::Core
   module Helpers
     def capture(*command, **run_opts)
       result = run(*command, **{ silent: true }.merge(run_opts))

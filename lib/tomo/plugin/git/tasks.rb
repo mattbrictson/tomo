@@ -1,7 +1,7 @@
 require "shellwords"
 require "time"
 
-module Tomo::Plugins::Git
+module Tomo::Plugin::Git
   class Tasks < Tomo::TaskLibrary
     # rubocop:disable Metrics/AbcSize
     def clone
