@@ -5,11 +5,17 @@ module Tomo::Plugin::Git
   class Tasks < Tomo::TaskLibrary
     # rubocop:disable Metrics/AbcSize
     def clone
-      return if remote.directory?(paths.git_repo) && !dry_run?
-
       require_setting :git_url
-      remote.mkdir_p(paths.git_repo.dirname)
-      remote.git("clone --mirror #{settings[:git_url]} #{paths.git_repo}")
+
+      if remote.directory?(paths.git_repo) && !dry_run?
+        set_origin_url
+      else
+        remote.mkdir_p(paths.git_repo.dirname)
+        remote.git(
+          "clone --mirror",
+          settings[:git_url].shellescape, paths.git_repo
+        )
+      end
     end
 
     def create_release
@@ -27,6 +33,12 @@ module Tomo::Plugin::Git
 
     def branch
       settings[:git_branch]
+    end
+
+    def set_origin_url
+      remote.chdir(paths.git_repo) do
+        remote.git("remote set-url origin", settings[:git_url].shellescape)
+      end
     end
 
     def configure_git_attributes
