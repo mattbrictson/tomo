@@ -17,7 +17,6 @@ module Tomo
   autoload :ShellBuilder, "tomo/shell_builder"
   autoload :SSH, "tomo/ssh"
   autoload :TaskLibrary, "tomo/task_library"
-  autoload :UnknownTaskError, "tomo/errors/unknown_task_error"
   autoload :VERSION, "tomo/version"
 
   class << self

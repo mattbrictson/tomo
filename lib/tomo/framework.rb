@@ -21,6 +21,7 @@ module Tomo
     autoload :TaskAbortedError, "tomo/framework/task_aborted_error"
     autoload :TasksRegistry, "tomo/framework/tasks_registry"
     autoload :UnknownPluginError, "tomo/framework/unknown_plugin_error"
+    autoload :UnknownTaskError, "tomo/framework/unknown_task_error"
 
     class << self
       def configure(&block)
