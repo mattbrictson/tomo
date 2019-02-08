@@ -23,7 +23,7 @@ module Tomo
     def die(reason)
       Framework::TaskAbortedError.raise_with(
         reason,
-        task: Framework::Current.task,
+        task: framework.current_task,
         host: remote.host
       )
     end
@@ -37,7 +37,7 @@ module Tomo
     end
 
     def remote
-      Framework::Current.remote
+      framework.current_remote
     end
 
     def require_setting(*names)
@@ -46,7 +46,7 @@ module Tomo
 
       Framework::SettingsRequiredError.raise_with(
         settings: missing,
-        task: Framework::Current.task
+        task: framework.current_task
       )
     end
     alias require_settings require_setting

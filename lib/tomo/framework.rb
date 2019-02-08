@@ -74,6 +74,14 @@ module Tomo
       end
     end
 
+    def current_remote
+      Current.remote
+    end
+
+    def current_task
+      Current.task
+    end
+
     private
 
     attr_reader :tasks_by_name
