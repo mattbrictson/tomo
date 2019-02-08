@@ -1,9 +1,9 @@
-require_relative "helpers"
-require_relative "tasks"
+require_relative "bundler/helpers"
+require_relative "bundler/tasks"
 
-module Tomo::Plugin::Bundler
-  module Plugin
-    extend Tomo::Plugin
+module Tomo::Plugin
+  module Bundler
+    extend Tomo::PluginDSL
 
     tasks Tomo::Plugin::Bundler::Tasks
     helpers Tomo::Plugin::Bundler::Helpers

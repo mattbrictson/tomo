@@ -13,8 +13,8 @@ module Tomo
       end
 
       def plugin_module
-        plugin_path = [PLUGIN_PREFIX, name.tr("-", "/"), "plugin"].join("/")
-        logging_loaded_gems { require plugin_path }
+        plugin_path = [PLUGIN_PREFIX, name.tr("-", "/")].join("/")
+        require plugin_path
 
         plugin = constantize(plugin_path)
         assert_compatible_api(plugin)
@@ -29,9 +29,9 @@ module Tomo
       attr_reader :name
 
       def assert_compatible_api(plugin)
-        return if plugin.is_a?(::Tomo::Plugin)
+        return if plugin.is_a?(::Tomo::PluginDSL)
 
-        raise "#{plugin} does not extend Tomo::Plugin"
+        raise "#{plugin} does not extend Tomo::PluginDSL"
       end
 
       def constantize(path)
@@ -49,20 +49,6 @@ module Tomo
           gem_name: "#{PLUGIN_PREFIX}/#{name}".tr("/", "-"),
           known_plugins: scan_for_plugins
         )
-      end
-
-      def logging_loaded_gems
-        return yield unless Tomo.debug?
-
-        loaded_gems = Gem.loaded_specs.keys
-        yield
-        new_gems = Gem.loaded_specs.keys - loaded_gems
-
-        new_gems.each do |gem_name|
-          Tomo.logger.debug(
-            "Loaded #{gem_name} #{Gem.loaded_gems[gem_name].version}"
-          )
-        end
       end
 
       def scan_for_plugins

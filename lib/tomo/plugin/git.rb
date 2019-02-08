@@ -1,9 +1,9 @@
-require_relative "helpers"
-require_relative "tasks"
+require_relative "git/helpers"
+require_relative "git/tasks"
 
-module Tomo::Plugin::Git
-  module Plugin
-    extend Tomo::Plugin
+module Tomo::Plugin
+  module Git
+    extend Tomo::PluginDSL
 
     helpers Tomo::Plugin::Git::Helpers
     tasks Tomo::Plugin::Git::Tasks

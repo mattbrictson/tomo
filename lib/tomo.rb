@@ -9,6 +9,7 @@ module Tomo
   autoload :Path, "tomo/path"
   autoload :Paths, "tomo/paths"
   autoload :Plugin, "tomo/plugin"
+  autoload :PluginDSL, "tomo/plugin_dsl"
   autoload :Project, "tomo/project"
   autoload :Remote, "tomo/remote"
   autoload :Result, "tomo/result"

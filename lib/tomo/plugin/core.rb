@@ -1,9 +1,9 @@
-require_relative "helpers"
-require_relative "tasks"
+require_relative "core/helpers"
+require_relative "core/tasks"
 
-module Tomo::Plugin::Core
-  module Plugin
-    extend Tomo::Plugin
+module Tomo::Plugin
+  module Core
+    extend Tomo::PluginDSL
 
     helpers Tomo::Plugin::Core::Helpers
     tasks Tomo::Plugin::Core::Tasks
