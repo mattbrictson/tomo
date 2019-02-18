@@ -1,5 +1,4 @@
 require "json"
-require "shellwords"
 
 module Tomo::Plugin::Core
   class Tasks < Tomo::TaskLibrary
@@ -17,6 +16,7 @@ module Tomo::Plugin::Core
       return if linked_dirs.empty?
 
       create_linked_parents
+      remove_existing_link_targets
       linked_dirs.each do |dir|
         remote.ln_sf paths.shared.join(dir), paths.release.join(dir)
       end
@@ -61,7 +61,7 @@ module Tomo::Plugin::Core
     private
 
     def linked_dirs
-      settings[:linked_dirs]
+      settings[:linked_dirs] || []
     end
 
     def create_linked_parents
@@ -71,6 +71,14 @@ module Tomo::Plugin::Core
       parents = parents.uniq - [paths.release]
 
       remote.mkdir_p(*parents) unless parents.empty?
+    end
+
+    def remove_existing_link_targets
+      return if linked_dirs.empty?
+
+      remote.chdir(paths.release) do
+        remote.rm_rf(*linked_dirs)
+      end
     end
   end
 end
