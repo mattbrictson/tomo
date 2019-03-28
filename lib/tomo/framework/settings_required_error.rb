@@ -1,7 +1,7 @@
 module Tomo
   class Framework
     class SettingsRequiredError < Tomo::Error
-      attr_accessor :settings, :task
+      attr_accessor :command_name, :settings, :task
 
       def to_console
         <<~ERROR
@@ -10,11 +10,11 @@ module Tomo
           Settings can be specified in #{blue('.tomo/project.json')}, or by running tomo
           with the #{blue('-s')} option. For example:
 
-            #{blue("-s #{settings.first}=foo")}
+            #{blue("tomo -s #{settings.first}=foo")}
 
           You can also use environment variables:
 
-            #{blue("TOMO_#{settings.first.upcase}=foo")}
+            #{blue("TOMO_#{settings.first.upcase}=foo tomo #{command_name}")}
         ERROR
       end
 
