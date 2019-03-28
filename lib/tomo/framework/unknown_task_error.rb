@@ -6,7 +6,7 @@ module Tomo
       def to_console
         error = <<~ERROR
           #{yellow(unknown_task)} is not a recognized task.
-          To see a list of all available tasks, run #{tomo('tasks')}.
+          To see a list of all available tasks, run #{blue('tomo tasks')}.
         ERROR
 
         # TODO: suggest "did you forget to add the <abc> plugin?"

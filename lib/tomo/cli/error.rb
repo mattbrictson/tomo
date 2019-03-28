@@ -7,7 +7,7 @@ module Tomo
         <<~ERROR
           #{message}
 
-          Run #{tomo(command_name, '-h')} for help.
+          Run #{blue("tomo #{command_name} -h")} for help.
         ERROR
       end
     end
