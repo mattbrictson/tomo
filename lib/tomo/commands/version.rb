@@ -1,15 +1,19 @@
 module Tomo
   module Commands
     class Version
-      def parser
-        Tomo::CLI::Parser.new do |parser|
-          parser.banner = <<~BANNER
-            Usage: tomo version
+      extend CLI::Command
+      include CLI::CommonOptions
 
-            Displays tomo's version information.
-          BANNER
-          parser.permit_empty_args = true
-        end
+      def summary
+        "Display tomo’s version"
+      end
+
+      def banner
+        <<~BANNER
+          Usage: #{green('tomo version')}
+
+          Display tomo’s version information.
+        BANNER
       end
 
       def call(_options)

@@ -1,44 +1,55 @@
-require "time"
-
 module Tomo
   module Commands
     class Run
-      include Colors
+      extend CLI::Command
+      include CLI::DeployOptions
+      include CLI::ProjectOptions
+      include CLI::CommonOptions
 
-      # rubocop:disable Metrics/MethodLength
-      def parser
-        Tomo::CLI::Parser.new do |parser|
-          parser.banner = <<~BANNER
-            Usage: tomo run [options] [--] TASK [ARGS...]
+      arg "TASK", values: :task_names
+      arg "[ARGS...]"
 
-            Remotely run one specified TASK, optionally passing ARGS to that task.
-            For example, if this project uses the "rails" plugin, you could run:
-
-              tomo run -- rails:console --sandbox
-
-            This will run the `rails:console` task on the host specified in
-            .tomo/project.json, and will pass the `--sandbox` argument to that task.
-            The `--` is used to separate tomo options from options that are passed
-            to the task. If a task does not accept options, the `--` can be omitted.
-
-            Available tasks are those defined by plugins loaded in .tomo/project.json,
-            or can also be custom tasks defined in .tomo/tasks.rb. To see a list of
-            available tasks, run:
-
-              tomo tasks
-          BANNER
-          parser.permit_extra_args = true
-          parser.add(Tomo::CLI::DeployOptions)
-        end
+      def summary
+        "Run a specific remote task from the current project"
       end
-      # rubocop:enable Metrics/MethodLength
 
-      def call(options)
+      def banner
+        <<~BANNER
+          Usage: #{green('tomo run')} #{yellow('[--dry-run] [options] [--] TASK [ARGS...]')}
+
+          Remotely run one specified #{yellow('TASK')}, optionally passing #{yellow('ARGS')} to that task.
+          For example, if this project uses the "rails" plugin, you could run:
+
+            #{blue('tomo run -- rails:console --sandbox')}
+
+          This will run the #{blue('rails:console')} task on the host specified in
+          .tomo/project.json, and will pass the #{blue('--sandbox')} argument to that task.
+          The #{blue('--')} is used to separate tomo options from options that are passed
+          to the task. If a task does not accept options, the #{blue('--')} can be omitted,
+          like this:
+
+            #{blue('tomo run core:clean_releases')}
+
+          You can run any task defined by plugins loaded in .tomo/project.json,
+          as well as any custom task defined in .tomo/tasks.rb. To see a list of
+          available tasks, run #{blue('tomo tasks')}.
+
+          Tomo will auto-complete this command’s options, including the #{yellow('TASK')} name,
+          if you are using bash and have tomo’s completion script installed. For
+          installation instructions, run #{blue('tomo completion-script')}.
+
+          For more documentation and examples, visit:
+
+            #{blue('https://tomo-deploy.com/commands/run')}
+        BANNER
+      end
+
+      def call(task, *run_args, options)
         Tomo.logger.info "tomo run v#{Tomo::VERSION}"
 
-        start_time = Time.now
-        task, *args = options[:extra_args]
-        project = load_project!(options, args, start_time)
+        project = configure_project(
+          options, settings: { run_args: run_args }
+        )
 
         plan = project.build_run_plan(task)
         plan.run
@@ -58,13 +69,9 @@ module Tomo
         end
       end
 
-      def load_project!(options, args, start_time)
-        Tomo.load_project!(
-          environment: options[:environment],
-          settings: options[:settings].merge(
-            options[:settings].merge(run_args: args, start_time: start_time)
-          )
-        )
+      def task_names(*, options)
+        project = configure_project(options, :auto)
+        project.tasks
       end
     end
   end

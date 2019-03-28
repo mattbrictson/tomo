@@ -3,28 +3,60 @@ require "time"
 module Tomo
   module Commands
     class Deploy
-      include Colors
+      extend CLI::Command
+      include CLI::DeployOptions
+      include CLI::ProjectOptions
+      include CLI::CommonOptions
 
-      def parser
-        Tomo::CLI::Parser.new do |parser|
-          parser.banner = <<~BANNER
-            Usage: tomo deploy [options]
-
-            Run the "deploy" script specified in .tomo/project.json to deploy this project.
-            For projects that have more than one environment (e.g. staging, production),
-            specify the target environment using the `-e` option.
-          BANNER
-          parser.permit_empty_args = true
-          parser.add(Tomo::CLI::DeployOptions)
-        end
+      def summary
+        "Deploy the current project to remote host(s)"
       end
 
+      def banner
+        <<~BANNER
+          Usage: #{green('tomo deploy')} #{yellow('[--dry-run] [options]')}
+
+          Sequentially run the "deploy" list of tasks specified in .tomo/project.json to
+          deploy the project to a remote host. Use the #{blue('--dry-run')} option to quickly
+          simulate the entire deploy without actually connecting to the host.
+
+          For a .tomo/project.json that contains more than one environment (e.g. staging,
+          production), you must specify the target environment using the #{blue('-e')} option. If
+          you omit this option, tomo will automatically prompt for it.
+
+          Tomo will use the settings specified in .tomo/project.json to configure the
+          deploy. You may override these on the command line using #{blue('-s')}. E.g.:
+
+            #{blue('tomo deploy -e staging -s git_branch=develop')}
+
+          Or use environment variables with the special #{blue('TOMO_')} prefix:
+
+            #{blue('TOMO_GIT_BRANCH=develop tomo deploy -e staging')}
+
+          Bash completions are provided for tomo’s options. For example, you could type
+          #{blue('tomo deploy -s <TAB>')} to see a list of all settings, or #{blue('tomo deploy -e pr<TAB>')}
+          to expand #{blue('pr')} to #{blue('production')}. For bash completion installation instructions,
+          run #{blue('tomo completion-script')}.
+
+          More documentation and examples can be found here:
+
+            #{blue('https://tomo-deploy.com/commands/deploy')}
+        BANNER
+      end
+
+      # rubocop:disable Metrics/MethodLength
       def call(options)
         Tomo.logger.info "tomo deploy v#{Tomo::VERSION}"
 
         start_time = Time.now
         release = start_time.utc.strftime("%Y%m%d%H%M%S")
-        project = load_project!(options, release, start_time)
+        project = configure_project(
+          options,
+          settings: {
+            start_time: start_time,
+            release_path: "%<releases_path>/#{release}"
+          }
+        )
         app = project.settings[:application]
 
         plan = project.build_deploy_plan
@@ -32,6 +64,7 @@ module Tomo
 
         log_completion(app, plan)
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 
@@ -43,16 +76,6 @@ module Tomo
         else
           Tomo.logger.info(green("✔ Deployed #{target}"))
         end
-      end
-
-      def load_project!(options, release, start_time)
-        Tomo.load_project!(
-          environment: options[:environment],
-          settings: options[:settings].merge(
-            release_path: "%<releases_path>/#{release}",
-            start_time: start_time
-          )
-        )
       end
     end
   end

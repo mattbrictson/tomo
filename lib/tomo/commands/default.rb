@@ -1,32 +1,62 @@
 module Tomo
   module Commands
     class Default
-      # rubocop:disable Metrics/MethodLength
-      def parser
-        Tomo::CLI::Parser.new do |parser|
-          parser.banner = "Usage: tomo COMMAND [options]"
-          parser.usage = <<~USAGE
-            Tomo is an extensible tool for deploying projects to remote hosts via SSH.
-            Please specify a COMMAND, which can be:
+      extend CLI::Command
 
-            #{commands.map { |key| "  - #{key}" }.join("\n")}
+      arg "COMMAND", values: CLI::COMMANDS.keys
 
-            For additional help, run:
-
-              tomo COMMAND -h
-          USAGE
-          parser.on("-v", "--version") do
-            Version.new.call({})
-            exit
-          end
-        end
+      option :version, "-v, --version", "Display tomo’s version and exit" do
+        Version.parse([])
+        exit
       end
-      # rubocop:enable Metrics/MethodLength
+
+      include CLI::CommonOptions
+
+      def banner
+        <<~BANNER
+          Usage: #{green('tomo')} #{yellow('COMMAND [options]')}
+
+          Tomo is an extensible tool for deploying projects to remote hosts via SSH.
+          Please specify a #{yellow('COMMAND')}, which can be:
+
+          #{commands.map { |name, help| "  #{yellow(name.ljust(10))} #{help}" }.join("\n")}
+
+          Tomo accepts abbreviations for its commands. For example, #{blue('tomo deploy')}
+          can be shortened to #{blue('tomo d')}. You can use bash completions as well!
+          Run #{blue('tomo completion-script')} for installation instructions.
+
+          For help with any command, add #{blue('-h')} to the command, like this:
+
+            #{blue('tomo run -h')}
+
+          Or read the full documentation for all commands at:
+
+            #{blue('https://tomo-deploy.com/')}
+        BANNER
+      end
+
+      def call(*args, options)
+        # The bare `tomo` command (i.e. without `--help` or `--version`) doesn't
+        # do anything, so if we got this far, something has gone wrong.
+
+        if options.any?
+          raise CLI::Error,
+                "Options must be specified after the command: " +
+                yellow("tomo #{args.first} [options]")
+        end
+        raise CLI::Error, %Q("#{args.first}" is not a recognized tomo command.)
+      end
 
       private
 
       def commands
-        Tomo::CLI::COMMANDS.keys - ["help"]
+        CLI::COMMANDS.each_with_object({}) do |(name, klass), result|
+          command = klass.new
+          help = command.summary if command.respond_to?(:summary)
+          next if help.nil?
+
+          result[name] = help
+        end
       end
     end
   end

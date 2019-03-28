@@ -1,114 +1,91 @@
 require "forwardable"
-require "optparse"
 
 module Tomo
   class CLI
     class Parser
       extend Forwardable
+      include Colors
 
-      def_delegators :opt_parse, :accept
+      def_delegators :usage, :banner=, :to_s
 
-      attr_accessor :permit_empty_args, :permit_extra_args
-      attr_writer :banner, :usage
+      attr_accessor :context
 
-      # rubocop:disable Metrics/MethodLength
       def initialize
-        @permit_empty_args = false
-        @permit_extra_args = false
-        @usage = nil
-        @opt_parse = OptionParser.new
-        @opt_parse.banner = ""
-        @opt_parse.summary_indent = "  "
-        @results = {}
-        add_debug_option
-        add_trace_option
-        add_help_option
-        yield(self) if block_given?
-      end
-      # rubocop:enable Metrics/MethodLength
-
-      def parse(args)
-        raise "Parser#parse has already been used" if results.frozen?
-
-        args = args.dup
-        opt_parse.parse!(args)
-        dump_runtime_info if Tomo.debug?
-        validate_remaining_args!(args)
-
-        results[:extra_args] = args
-        results.freeze
-      rescue OptionParser::InvalidOption => e
-        raise UnknownOptionError, e.message
+        @rules = Rules.new
+        @usage = Usage.new
+        @after_parse_methods = []
       end
 
-      def on(*args)
-        opt_parse.on(*args) do |data|
-          yield(data, results)
-        end
+      def arg(spec, values: [])
+        rules.add_arg(spec, proc_for(values))
       end
 
-      def on_tail(*args)
-        opt_parse.on_tail(*args) do |data|
-          yield(data, results)
-        end
+      def option(key, spec, desc=nil, values: [], &block)
+        rules.add_option(key, spec, proc_for(values), &block)
+        usage.add_option(spec, desc)
       end
 
-      def add(parser_extensions)
-        parser_extensions.call(self, results)
+      def after_parse(context_method_name)
+        after_parse_methods << context_method_name
       end
 
-      def usage_and_exit!(status=0)
-        puts
-        puts indent(banner)
-        puts
-        puts indent(usage || "Options:\n#{opt_parse}")
-        puts
-        exit(status)
+      def parse(argv)
+        state = State.new
+
+        options_argv, literal_argv = split(argv, "--")
+        evaluate(options_argv, state, literal: false)
+        evaluate(literal_argv, state, literal: true)
+        check_required_rules(state)
+        invoke_after_parse_methods(state)
+
+        [*state.args, state.options]
       end
 
       private
 
-      attr_reader :banner, :opt_parse, :results, :usage
+      attr_reader :rules, :usage, :after_parse_methods
 
-      def dump_runtime_info
-        Tomo.logger.debug("tomo #{Tomo::VERSION}")
-        Tomo.logger.debug(RUBY_DESCRIPTION)
-        Tomo.logger.debug("rubygems #{Gem::VERSION}")
-        Tomo.logger.debug("bundler #{Bundler::VERSION}") if Tomo.bundled?
+      def evaluate(argv, state, literal:)
+        RulesEvaluator.evaluate(
+          rules: rules.to_a,
+          argv: argv,
+          state: state,
+          literal: literal
+        )
+      end
 
-        begin
-          require "concurrent"
-          Tomo.logger.debug("concurrent-ruby #{Concurrent::VERSION}")
-        rescue LoadError # rubocop:disable Lint/HandleExceptions
+      def check_required_rules(state)
+        (rules.to_a - state.processed_rules).each do |rule|
+          next unless rule.required?
+
+          type = rule.is_a?(Rules::Argument) ? "" : " option"
+          raise CLI::Error, "Please specify the #{yellow(rule.to_s)}#{type}."
         end
       end
 
-      def add_debug_option
-        on_tail("--[no-]debug",
-                "Enable/disable verbose debug logging") do |debug|
-          Tomo.debug = debug
+      def invoke_after_parse_methods(state)
+        after_parse_methods.each do |method|
+          context.send(method, *state.args, state.options)
         end
       end
 
-      def add_trace_option
-        on_tail("--[no-]trace", "Display full backtrace on error") do |trace|
-          CLI.show_backtrace = trace
-        end
+      def proc_for(values)
+        return values if values.respond_to?(:call)
+        return proc { values } unless values.is_a?(Symbol)
+
+        method = values
+        proc { |*args| context.send(method, *args) }
       end
 
-      def add_help_option
-        on_tail("-h", "--help", "Print this documentation") do
-          usage_and_exit!
-        end
-      end
+      def split(argv, delimiter)
+        index = argv.index(delimiter)
+        return [argv, []] if index.nil?
+        return [argv, []] if index == argv.length - 1 && Completions.active?
 
-      def validate_remaining_args!(args)
-        usage_and_exit!(1) if args.any? && !permit_extra_args
-        usage_and_exit!(1) if args.empty? && !permit_empty_args
-      end
+        before = argv[0...index]
+        after = argv[(index + 1)..-1]
 
-      def indent(str)
-        str.gsub(/^/, "  ")
+        [before, after]
       end
     end
   end

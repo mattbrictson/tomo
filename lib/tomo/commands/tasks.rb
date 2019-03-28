@@ -1,22 +1,27 @@
 module Tomo
   module Commands
     class Tasks
-      def parser
-        Tomo::CLI::Parser.new do |parser|
-          parser.banner = <<~BANNER
-            Usage: tomo tasks
+      extend CLI::Command
+      include CLI::ProjectOptions
+      include CLI::CommonOptions
 
-            Lists all tomo tasks (i.e. those that can be used with `tomo run`).
-
-            Available tasks are those defined by plugins loaded in .tomo/project.json,
-            or can also be custom tasks defined in .tomo/tasks.rb.
-          BANNER
-          parser.permit_empty_args = true
-        end
+      def summary
+        "List all tasks that can be used with the #{yellow('run')} command"
       end
 
-      def call(_options)
-        project = Tomo.load_project!(environment: :auto)
+      def banner
+        <<~BANNER
+          Usage: #{green('tomo tasks')}
+
+          List all tomo tasks (i.e. those that can be used with #{blue('tomo run')}).
+
+          Available tasks are those defined by plugins loaded in .tomo/project.json,
+          or can also be custom tasks defined in .tomo/tasks.rb.')}
+        BANNER
+      end
+
+      def call(options)
+        project = configure_project(options, :auto)
         tasks = project.tasks
 
         groups = tasks.group_by { |task| task[/^([^:]+):/, 1].to_s }

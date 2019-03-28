@@ -1,33 +1,34 @@
 module Tomo
   module Commands
     class Init
-      include Colors
+      extend CLI::Command
+      include CLI::CommonOptions
 
-      # rubocop:disable Metrics/MethodLength
-      def parser
-        Tomo::CLI::Parser.new do |parser|
-          parser.banner = <<~BANNER
-            Usage: tomo init [APP]
+      arg "[APP]"
 
-            Sets up a new tomo project named APP. If APP is not specified, the
-            name of the current directory will be used.
-
-            This command creates a .tomo/project.json file relative the current
-            directory containing some example configuration.
-          BANNER
-          parser.permit_empty_args = true
-          parser.permit_extra_args = true
-        end
+      def summary
+        "Start a new tomo project with a sample config"
       end
-      # rubocop:enable Metrics/MethodLength
 
-      def call(options)
+      def banner
+        <<~BANNER
+          Usage: #{green('tomo init')} #{yellow('[APP]')}
+
+          Set up a new tomo project named #{yellow('APP')}. If #{yellow('APP')} is not specified, the
+          name of the current directory will be used.
+
+          This command creates a .tomo/project.json file relative the current
+          directory containing some example configuration.
+        BANNER
+      end
+
+      def call(*args, _options)
         assert_can_create_tomo_directory!
         assert_no_tomo_project!
 
-        app = options[:extra_args].first || current_dir_name || "default"
+        app = args.first || current_dir_name || "default"
         git_url = git_origin_url || "TODO"
-        FileUtils.mkdir(".tomo")
+        FileUtils.mkdir_p(".tomo")
         IO.write(".tomo/project.json", json_template(app, git_url))
 
         Tomo.logger.info(green("✔ Created .tomo/project.json"))

@@ -38,6 +38,10 @@ module Tomo
         end
       end
 
+      def environment_names
+        environments.keys
+      end
+
       private
 
       attr_reader :environments
