@@ -4,10 +4,11 @@ module Tomo
       attr_accessor :command_name
 
       def to_console
+        tomo_command = ["tomo", command_name].compact.join(" ")
         <<~ERROR
           #{message}
 
-          Run #{blue("tomo #{command_name} -h")} for help.
+          Run #{blue("#{tomo_command} -h")} for help.
         ERROR
       end
     end
