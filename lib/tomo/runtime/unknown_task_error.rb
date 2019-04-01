@@ -1,5 +1,5 @@
 module Tomo
-  class Configuration
+  class Runtime
     class UnknownTaskError < Error
       attr_accessor :unknown_task, :known_tasks
 

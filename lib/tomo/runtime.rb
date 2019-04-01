@@ -12,6 +12,7 @@ module Tomo
     autoload :SettingsRequiredError, "tomo/runtime/settings_required_error"
     autoload :TaskAbortedError, "tomo/runtime/task_aborted_error"
     autoload :TaskRunner, "tomo/runtime/task_runner"
+    autoload :UnknownTaskError, "tomo/runtime/unknown_task_error"
 
     attr_reader :tasks
 

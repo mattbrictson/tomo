@@ -11,7 +11,6 @@ module Tomo
     autoload :UnknownEnvironmentError,
              "tomo/configuration/unknown_environment_error"
     autoload :UnknownPluginError, "tomo/configuration/unknown_plugin_error"
-    autoload :UnknownTaskError, "tomo/configuration/unknown_task_error"
     autoload :UnspecifiedEnvironmentError,
              "tomo/configuration/unspecified_environment_error"
 
