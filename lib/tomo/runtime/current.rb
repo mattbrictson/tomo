@@ -6,10 +6,6 @@ module Tomo
           fiber_locals[:host] || remote&.host
         end
 
-        def release_path
-          fiber_locals[:release_path]
-        end
-
         def remote
           fiber_locals[:remote]
         end

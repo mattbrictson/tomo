@@ -5,6 +5,10 @@ module Tomo
         @namespaced_classes = []
       end
 
+      def task_names
+        bind_tasks(nil).keys
+      end
+
       def bind_tasks(context)
         namespaced_classes.each_with_object({}) do |(namespace, klass), result|
           library = klass.new(context)

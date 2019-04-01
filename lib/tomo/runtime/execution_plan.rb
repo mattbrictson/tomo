@@ -5,13 +5,13 @@ module Tomo
     class ExecutionPlan
       extend Forwardable
 
-      def initialize(tasks:, hosts:, release: :current,
-                     task_filter:, task_runner:)
+      def_delegators :@task_runner, :paths, :settings
+
+      def initialize(tasks:, hosts:, task_filter:, task_runner:)
         @hosts = hosts
         @tasks = tasks
         @task_filter = task_filter
         @task_runner = task_runner
-        configure_release(release)
         validate_tasks!
       end
 
@@ -44,22 +44,7 @@ module Tomo
 
       private
 
-      def_delegators :@task_runner, :paths
-      attr_reader :tasks, :hosts, :release_path, :task_filter, :task_runner
-
-      def configure_release(type)
-        case type
-        when :current then @release_path = paths.current
-        when :new then @release_path = new_release_path
-        else raise ArgumentError, "release: must be one of `:current` or `:new`"
-        end
-      end
-
-      def new_release_path
-        start_time = Time.now
-        release = start_time.utc.strftime("%Y%m%d%H%M%S")
-        paths.releases.join(release)
-      end
+      attr_reader :tasks, :hosts, :task_filter, :task_runner
 
       def validate_tasks!
         tasks_per_host.values.flatten.uniq.each do |task|
@@ -94,9 +79,7 @@ module Tomo
           thr_tasks.each do |task|
             break if thread_pool.failure?
 
-            Current.with(release_path: release_path) do
-              task_runner.run(task: task, remote: thr_remote)
-            end
+            task_runner.run(task: task, remote: thr_remote)
           end
         end
       end
@@ -112,7 +95,7 @@ module Tomo
       end
 
       def concurrency
-        [task_runner.settings[:concurrency].to_i, 1].max
+        [settings[:concurrency].to_i, 1].max
       end
     end
   end

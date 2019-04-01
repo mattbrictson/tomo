@@ -1,5 +1,3 @@
-require "time"
-
 module Tomo
   class Configuration
     autoload :Glob, "tomo/configuration/glob"
@@ -42,6 +40,7 @@ module Tomo
       @task_filter = RoleBasedTaskFilter.new(nil)
     end
 
+    # rubocop:disable Metrics/MethodLength
     def build_runtime
       init_registries
       register_plugins
@@ -49,24 +48,19 @@ module Tomo
       register_settings
 
       Runtime.new(
-        hosts: hosts.uniq,
         deploy_tasks: deploy_tasks,
+        helper_modules: plugins_registry.helper_modules,
+        hosts: hosts.uniq,
+        settings_registry: settings_registry,
         task_filter: task_filter,
-        task_runner: build_task_runner
+        tasks_registry: tasks_registry
       )
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
     attr_reader :env, :plugins_registry, :settings_registry, :tasks_registry
-
-    def build_task_runner
-      Runtime::TaskRunner.new(
-        helper_modules: plugins_registry.helper_modules,
-        settings: settings_registry.to_hash,
-        tasks_registry: tasks_registry
-      )
-    end
 
     def init_registries
       @settings_registry = SettingsRegistry.new

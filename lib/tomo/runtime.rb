@@ -1,4 +1,4 @@
-require "forwardable"
+require "time"
 
 module Tomo
   class Runtime
@@ -13,16 +13,21 @@ module Tomo
     autoload :TaskAbortedError, "tomo/runtime/task_aborted_error"
     autoload :TaskRunner, "tomo/runtime/task_runner"
 
-    extend Forwardable
-    def_delegators :@task_runner, :settings, :paths, :tasks
+    attr_reader :tasks
 
-    def initialize(deploy_tasks:, hosts:, task_filter:, task_runner:)
+    # rubocop:disable Metrics/ParameterLists
+    def initialize(deploy_tasks:, hosts:, helper_modules:, task_filter:,
+                   settings_registry:, tasks_registry:)
       @deploy_tasks = deploy_tasks.freeze
       @hosts = hosts.freeze
+      @helper_modules = helper_modules.freeze
       @task_filter = task_filter
-      @task_runner = task_runner
+      @settings_registry = settings_registry
+      @tasks_registry = tasks_registry
+      @tasks = tasks_registry.task_names
       freeze
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def deploy!
       execution_plan_for(deploy_tasks, release: :new).execute
@@ -36,12 +41,38 @@ module Tomo
       ExecutionPlan.new(
         tasks: tasks,
         hosts: hosts,
-        release: release,
         task_filter: task_filter,
-        task_runner: task_runner
+        task_runner: new_task_runner(release)
       )
     end
 
-    attr_reader :deploy_tasks, :hosts, :task_filter, :task_runner
+    private
+
+    attr_reader :deploy_tasks, :hosts, :helper_modules, :task_filter,
+                :settings_registry, :tasks_registry
+
+    def new_task_runner(release_type)
+      settings_registry.assign_settings(
+        release_path: release_path_for(release_type)
+      )
+      TaskRunner.new(
+        helper_modules: helper_modules,
+        settings: settings_registry.to_hash,
+        tasks_registry: tasks_registry
+      )
+    end
+
+    def release_path_for(type)
+      case type
+      when :current
+        "%<current_path>"
+      when :new
+        start_time = Time.now
+        release = start_time.utc.strftime("%Y%m%d%H%M%S")
+        "%<releases_path>/#{release}"
+      else
+        raise ArgumentError, "release: must be one of `:current` or `:new`"
+      end
+    end
   end
 end

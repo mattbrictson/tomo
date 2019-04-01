@@ -15,7 +15,6 @@ module Tomo::Plugin
              environment:           nil,
              keep_releases:         10,
              linked_dirs:           [],
-             release_path:          "%<current_path>",
              release_json_path:     "%<release_path>/.tomo_release.json",
              releases_path:         "%<deploy_to>/releases",
              revision_log_path:     "%<deploy_to>/revisions.log",

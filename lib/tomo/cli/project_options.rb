@@ -1,5 +1,3 @@
-require "time"
-
 module Tomo
   class CLI
     module ProjectOptions

@@ -1,5 +1,3 @@
-require "time"
-
 module Tomo
   module Commands
     class Deploy
@@ -48,15 +46,15 @@ module Tomo
         Tomo.logger.info "tomo deploy v#{Tomo::VERSION}"
 
         runtime = configure_runtime(options)
-        app = runtime.settings[:application]
         plan = runtime.deploy!
 
-        log_completion(app, plan)
+        log_completion(plan)
       end
 
       private
 
-      def log_completion(app, plan)
+      def log_completion(plan)
+        app = plan.settings[:application]
         target = "#{app} to #{plan.applicable_hosts_sentence}"
 
         if Tomo.dry_run?

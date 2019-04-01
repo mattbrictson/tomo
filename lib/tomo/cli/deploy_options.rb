@@ -32,7 +32,8 @@ module Tomo
       end
 
       def setting_completions(*_args, options)
-        settings = configure_runtime(options, strict: false).settings
+        runtime = configure_runtime(options, strict: false)
+        settings = runtime.execution_plan_for([]).settings
         settings.keys.map { |sett| "#{sett}=" }
       end
 
