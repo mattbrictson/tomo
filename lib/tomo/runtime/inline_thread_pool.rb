@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Runtime
     class InlineThreadPool
       def post(*args)
         return if failure?

@@ -6,6 +6,8 @@ module Tomo
     attr_reader :address, :name, :user, :port, :roles
 
     def self.parse(host)
+      return host if host.is_a?(Host)
+
       host = host.to_s.strip
       user, address, port = host.match(PATTERN).captures
       raise ArgumentError, "host cannot be blank" if address.empty?

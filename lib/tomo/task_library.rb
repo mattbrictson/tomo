@@ -11,19 +11,19 @@ module Tomo
       klass
     end
 
-    def initialize(framework)
-      @framework = framework
+    def initialize(context)
+      @context = context
     end
 
     private
 
-    def_delegators :framework, :paths, :settings
-    attr_reader :framework
+    def_delegators :context, :paths, :settings
+    attr_reader :context
 
     def die(reason)
-      Framework::TaskAbortedError.raise_with(
+      Runtime::TaskAbortedError.raise_with(
         reason,
-        task: framework.current_task,
+        task: context.current_task,
         host: remote.host
       )
     end
@@ -37,16 +37,16 @@ module Tomo
     end
 
     def remote
-      framework.current_remote
+      context.current_remote
     end
 
     def require_setting(*names)
       missing = names.flatten.select { |sett| settings[sett].nil? }
       return if missing.empty?
 
-      Framework::SettingsRequiredError.raise_with(
+      Runtime::SettingsRequiredError.raise_with(
         settings: missing,
-        task: framework.current_task
+        task: context.current_task
       )
     end
     alias require_settings require_setting

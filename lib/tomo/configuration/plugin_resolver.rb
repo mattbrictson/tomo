@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Configuration
     class PluginResolver
       PLUGIN_PREFIX = "tomo/plugin".freeze
       private_constant :PLUGIN_PREFIX

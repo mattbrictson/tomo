@@ -1,26 +1,28 @@
 require "json"
 
 module Tomo
-  class Project
-    class Specification
+  class Configuration
+    class Project
       def self.from_json(path)
-        NotFoundError.raise_with(path: path) unless File.file?(path)
+        ProjectNotFoundError.raise_with(path: path) unless File.file?(path)
 
         Tomo.logger.debug("Loading project from #{path.inspect}")
-        new(JSON.parse(IO.read(path)))
+        new(JSON.parse(IO.read(path)), path)
       end
 
-      attr_reader :hosts, :deploy_tasks, :plugins, :roles, :settings
+      attr_reader :hosts, :deploy_tasks, :plugins, :roles, :settings,
+                  :source_path
 
       # rubocop:disable Metrics/AbcSize
-      def initialize(spec)
-        normalize_hosts(spec)
-        @hosts = build_hosts(spec["hosts"])
-        @environments = merge_environments(spec).freeze
-        @deploy_tasks = (spec["deploy"] || []).freeze
-        @plugins = (spec["plugins"] || []).freeze
-        @roles = Framework::RolesFilter.new(spec["roles"])
-        @settings = (spec["settings"] || {}).freeze
+      def initialize(data, source_path=nil)
+        normalize_hosts(data)
+        @source_path = source_path
+        @hosts = build_hosts(data["hosts"])
+        @environments = merge_environments(data).freeze
+        @deploy_tasks = (data["deploy"] || []).freeze
+        @plugins = (data["plugins"] || []).freeze
+        @roles = data["roles"].freeze
+        @settings = (data["settings"] || {}).freeze
         freeze
       end
       # rubocop:enable Metrics/AbcSize
@@ -29,8 +31,6 @@ module Tomo
         if env.nil?
           raise_no_environment_specified unless environments.empty?
           self
-        elsif env == :auto
-          environments.values.first || self
         else
           environments.fetch(env) do
             raise_unknown_environment(env)
@@ -42,17 +42,23 @@ module Tomo
         environments.keys
       end
 
+      def task_library_path
+        return nil if source_path.nil?
+
+        File.expand_path("../tasks.rb", source_path)
+      end
+
       private
 
       attr_reader :environments
 
       # rubocop:disable Metrics/MethodLength
-      def normalize_hosts(spec)
-        return unless spec.key?("host")
-        raise "Cannot specify both host and hosts" if spec.key?("hosts")
+      def normalize_hosts(data)
+        return unless data.key?("host")
+        raise "Cannot specify both host and hosts" if data.key?("hosts")
 
-        host = Host.parse(spec.delete("host"))
-        spec["hosts"] = {
+        host = Host.parse(data.delete("host"))
+        data["hosts"] = {
           nil => {
             "address" => host.address,
             "port" => host.port,
@@ -63,8 +69,8 @@ module Tomo
       end
       # rubocop:enable Metrics/MethodLength
 
-      def build_hosts(spec_hosts)
-        (spec_hosts || []).map do |name, meta|
+      def build_hosts(raw_hosts)
+        (raw_hosts || []).map do |name, meta|
           Host.new(
             name: name,
             address: meta["address"],
@@ -75,14 +81,14 @@ module Tomo
         end
       end
 
-      def merge_environments(spec)
-        environments = spec.delete("environments") || {}
-        environments.each_with_object({}) do |(name, env_spec), result|
-          normalize_hosts(env_spec)
-          merged = spec.merge(env_spec) do |key, orig, new|
+      def merge_environments(data)
+        environments = data.delete("environments") || {}
+        environments.each_with_object({}) do |(name, env_data), result|
+          normalize_hosts(env_data)
+          merged = data.merge(env_data) do |key, orig, new|
             key == "settings" ? orig.merge(new) : new
           end
-          result[name] = Specification.new(merged)
+          result[name] = Project.new(merged, source_path)
         end
       end
 

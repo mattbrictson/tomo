@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Configuration
     class SettingsRegistry
       def initialize
         @settings = {}

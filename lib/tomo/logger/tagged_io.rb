@@ -16,7 +16,7 @@ module Tomo
       attr_reader :io
 
       def prefix
-        host = Framework::Current.host
+        host = Runtime::Current.host
         return "" if host.nil?
 
         tags = []

@@ -44,27 +44,15 @@ module Tomo
         BANNER
       end
 
-      # rubocop:disable Metrics/MethodLength
       def call(options)
         Tomo.logger.info "tomo deploy v#{Tomo::VERSION}"
 
-        start_time = Time.now
-        release = start_time.utc.strftime("%Y%m%d%H%M%S")
-        project = configure_project(
-          options,
-          settings: {
-            start_time: start_time,
-            release_path: "%<releases_path>/#{release}"
-          }
-        )
-        app = project.settings[:application]
-
-        plan = project.build_deploy_plan
-        plan.run
+        runtime = configure_runtime(options)
+        app = runtime.settings[:application]
+        plan = runtime.deploy!
 
         log_completion(app, plan)
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 

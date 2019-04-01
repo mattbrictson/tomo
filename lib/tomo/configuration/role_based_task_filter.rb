@@ -1,13 +1,14 @@
 module Tomo
-  class Framework
-    class RolesFilter
+  class Configuration
+    class RoleBasedTaskFilter
       def initialize(roles_spec)
         @spec = (roles_spec || {}).freeze
         @globs = parse_spec(@spec).freeze
         freeze
       end
 
-      def filter_tasks(tasks, roles: [])
+      def filter(tasks, host:)
+        roles = host.roles
         roles = roles.empty? ? [""] : roles
         tasks.select do |task|
           roles.any? { |role| match?(task, role) }

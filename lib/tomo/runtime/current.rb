@@ -1,9 +1,13 @@
 module Tomo
-  class Framework
+  class Runtime
     module Current
       class << self
         def host
           fiber_locals[:host] || remote&.host
+        end
+
+        def release_path
+          fiber_locals[:release_path]
         end
 
         def remote
@@ -33,7 +37,7 @@ module Tomo
         end
 
         def fiber_locals
-          Thread.current["Tomo::Framework::Current"] ||= {}
+          Thread.current["Tomo::Runtime::Current"] ||= {}
         end
       end
     end

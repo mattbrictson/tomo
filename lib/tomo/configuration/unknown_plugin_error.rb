@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Configuration
     class UnknownPluginError < Tomo::Error
       attr_accessor :name, :known_plugins, :gem_name
 

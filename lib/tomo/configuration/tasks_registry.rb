@@ -1,13 +1,13 @@
 module Tomo
-  class Framework
+  class Configuration
     class TasksRegistry
       def initialize
         @namespaced_classes = []
       end
 
-      def bind_tasks(framework)
+      def bind_tasks(context)
         namespaced_classes.each_with_object({}) do |(namespace, klass), result|
-          library = klass.new(framework)
+          library = klass.new(context)
 
           klass.public_instance_methods(false).each do |name|
             qualified = [namespace, name].compact.join(":")

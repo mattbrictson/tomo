@@ -1,6 +1,6 @@
 module Tomo
-  class Project
-    class UnknownEnvironmentError < Error
+  class Configuration
+    class UnknownEnvironmentError < Tomo::Error
       attr_accessor :name, :known_environments
 
       def to_console

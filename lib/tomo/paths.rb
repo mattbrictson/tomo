@@ -5,6 +5,13 @@ module Tomo
       freeze
     end
 
+    def release
+      path = Runtime::Current.release_path
+      return method_missing(:release) if path.nil?
+
+      Path.new(path)
+    end
+
     private
 
     attr_reader :settings

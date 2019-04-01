@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Runtime
     class SettingsRequiredError < Tomo::Error
       attr_accessor :command_name, :settings, :task
 

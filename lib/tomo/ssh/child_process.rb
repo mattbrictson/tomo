@@ -55,8 +55,8 @@ module Tomo
       end
 
       def new_thread_inheriting_current_vars(&block)
-        Thread.new(Framework::Current.variables) do |vars|
-          Framework::Current.with(vars, &block)
+        Thread.new(Runtime::Current.variables) do |vars|
+          Runtime::Current.with(vars, &block)
         end
       end
     end

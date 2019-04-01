@@ -1,6 +1,6 @@
 module Tomo
-  class Project
-    class UnspecifiedEnvironmentError < Error
+  class Configuration
+    class UnspecifiedEnvironmentError < Tomo::Error
       attr_accessor :environments
 
       def to_console

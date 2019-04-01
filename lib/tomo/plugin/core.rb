@@ -28,7 +28,6 @@ module Tomo::Plugin
                "-o", "StrictHostKeyChecking=accept-new"
              ],
              ssh_forward_agent:     true,
-             ssh_reuse_connections: true,
-             start_time:            nil
+             ssh_reuse_connections: true
   end
 end

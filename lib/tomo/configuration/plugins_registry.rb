@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Configuration
     class PluginsRegistry
       attr_reader :helper_modules
 

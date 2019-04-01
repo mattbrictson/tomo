@@ -8,12 +8,12 @@ module Tomo
 
     attr_reader :release
 
-    def initialize(ssh, framework)
+    def initialize(ssh, context, helper_modules)
       @ssh = ssh
-      @framework = framework
+      @context = context
       @release = {}
       @shell_builder = ShellBuilder.new
-      framework.helper_modules.each { |mod| extend(mod) }
+      helper_modules.each { |mod| extend(mod) }
       freeze
     end
 
@@ -31,8 +31,8 @@ module Tomo
 
     private
 
-    def_delegators :framework, :paths, :settings
-    attr_reader :framework, :ssh, :shell_builder
+    def_delegators :context, :paths, :settings
+    attr_reader :context, :ssh, :shell_builder
 
     def logger
       Tomo.logger

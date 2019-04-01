@@ -21,8 +21,8 @@ module Tomo
       end
 
       def call(options)
-        project = configure_project(options, :auto)
-        tasks = project.tasks
+        runtime = configure_runtime(options, strict: false)
+        tasks = runtime.tasks
 
         groups = tasks.group_by { |task| task[/^([^:]+):/, 1].to_s }
         groups.keys.sort.each do |group|

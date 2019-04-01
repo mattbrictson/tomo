@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Configuration
     class UnknownTaskError < Error
       attr_accessor :unknown_task, :known_tasks
 

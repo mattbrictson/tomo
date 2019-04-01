@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Runtime
     class TaskAbortedError < Tomo::Error
       attr_accessor :task, :host
 

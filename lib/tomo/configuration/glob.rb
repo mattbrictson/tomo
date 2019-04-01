@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Configuration
     class Glob
       def initialize(spec)
         @spec = spec.to_s.freeze

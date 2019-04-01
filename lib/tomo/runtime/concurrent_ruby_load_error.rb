@@ -1,5 +1,5 @@
 module Tomo
-  class Framework
+  class Runtime
     class ConcurrentRubyLoadError < Tomo::Error
       attr_accessor :version
 

@@ -47,13 +47,10 @@ module Tomo
       def call(task, *run_args, options)
         Tomo.logger.info "tomo run v#{Tomo::VERSION}"
 
-        project = configure_project(
-          options, settings: { run_args: run_args }
-        )
-
-        plan = project.build_run_plan(task)
-        plan.run
-
+        runtime = configure_runtime(options) do |config|
+          config.settings[:run_args] = run_args
+        end
+        plan = runtime.run!(task)
         log_completion(task, plan)
       end
 
@@ -70,8 +67,8 @@ module Tomo
       end
 
       def task_names(*, options)
-        project = configure_project(options, :auto)
-        project.tasks
+        runtime = configure_runtime(options, strict: false)
+        runtime.tasks
       end
     end
   end

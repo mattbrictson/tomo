@@ -27,13 +27,12 @@ module Tomo
 
       private
 
-      def environment_names(*)
-        spec = Project::Specification.from_json(".tomo/project.json")
-        spec.environment_names
+      def environment_names(*_args, options)
+        load_project(options).environment_names
       end
 
       def setting_completions(*_args, options)
-        settings = configure_project(options, :auto).settings
+        settings = configure_runtime(options, strict: false).settings
         settings.keys.map { |sett| "#{sett}=" }
       end
 

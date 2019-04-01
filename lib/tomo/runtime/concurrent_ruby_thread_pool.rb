@@ -4,14 +4,14 @@ begin
   gem "concurrent-ruby", concurrent_ver
   require "concurrent"
 rescue LoadError => error
-  Tomo::Framework::ConcurrentRubyLoadError.raise_with(
+  Tomo::Runtime::ConcurrentRubyLoadError.raise_with(
     error.message,
     version: concurrent_ver
   )
 end
 
 module Tomo
-  class Framework
+  class Runtime
     class ConcurrentRubyThreadPool
       include ::Concurrent::Promises::FactoryMethods
 
