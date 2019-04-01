@@ -13,17 +13,13 @@ module Tomo
         freeze
       end
 
-      def tasks
-        tasks_by_name.keys
-      end
-
       def validate_task!(name)
         return if tasks_by_name.key?(name)
 
         UnknownTaskError.raise_with(
           name,
           unknown_task: name,
-          known_tasks: tasks
+          known_tasks: tasks_by_name.keys
         )
       end
 
