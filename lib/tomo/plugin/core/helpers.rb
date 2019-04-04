@@ -15,7 +15,7 @@ module Tomo::Plugin::Core
     def write(text:, to:, append: false, **run_opts)
       message = "Writing #{text.bytesize} bytes to #{to}"
       run(
-        "echo", text.shellescape, append ? ">>" : ">", to,
+        "echo #{text.shellescape} #{append ? '>>' : '>'} #{to.shellescape}",
         **{ echo: message }.merge(run_opts)
       )
     end

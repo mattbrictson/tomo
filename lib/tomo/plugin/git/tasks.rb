@@ -12,8 +12,7 @@ module Tomo::Plugin::Git
       else
         remote.mkdir_p(paths.git_repo.dirname)
         remote.git(
-          "clone --mirror",
-          settings[:git_url].shellescape, paths.git_repo
+          "clone", "--mirror", settings[:git_url], paths.git_repo
         )
       end
     end
@@ -23,7 +22,10 @@ module Tomo::Plugin::Git
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
         remote.mkdir_p(paths.release)
-        remote.git("archive #{branch} | tar -x -f - -C #{paths.release}")
+        remote.git(
+          "archive #{branch.shellescape} | "\
+          "tar -x -f - -C #{paths.release.shellescape}"
+        )
       end
       store_release_info
     end
@@ -37,7 +39,7 @@ module Tomo::Plugin::Git
 
     def set_origin_url
       remote.chdir(paths.git_repo) do
-        remote.git("remote set-url origin", settings[:git_url].shellescape)
+        remote.git("remote", "set-url", "origin", settings[:git_url])
       end
     end
 
@@ -56,7 +58,8 @@ module Tomo::Plugin::Git
     def store_release_info
       log = remote.chdir(paths.git_repo) do
         remote.git(
-          %Q(log -n1 --date=iso --pretty=format:"%H/%cd/%ae" #{branch}),
+          'log -n1 --date=iso --pretty=format:"%H/%cd/%ae"'\
+          "#{branch.shellescape}",
           silent: true
         ).stdout.strip
       end

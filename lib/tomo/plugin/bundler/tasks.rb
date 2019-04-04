@@ -15,9 +15,9 @@ module Tomo::Plugin::Bundler
       return if needed_bundler_ver.nil?
 
       remote.run(
-        "gem install bundler",
-        "--conservative --no-document",
-        "-v #{needed_bundler_ver}"
+        "gem", "install", "bundler",
+        "--conservative", "--no-document",
+        "-v", needed_bundler_ver
       )
     end
 
@@ -52,8 +52,7 @@ module Tomo::Plugin::Bundler
 
     def extract_bundler_ver_from_lockfile
       lockfile_tail = remote.capture(
-        "tail -n 10",
-        paths.release.join("Gemfile.lock"),
+        "tail", "-n", "10", paths.release.join("Gemfile.lock"),
         raise_on_error: false
       )
       lockfile_tail[/BUNDLED WITH\n   (\S+)$/, 1]

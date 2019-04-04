@@ -5,6 +5,7 @@ module Tomo
     def initialize
       @env = {}
       @chdir = []
+      @prefixes = []
       @umask = nil
     end
 
@@ -23,6 +24,13 @@ module Tomo
       @env = orig_env
     end
 
+    def prepend(*command)
+      prefixes.unshift(*command)
+      yield
+    ensure
+      prefixes.shift(command.length)
+    end
+
     def umask(mask)
       orig_umask = @umask
       @umask = mask
@@ -36,17 +44,28 @@ module Tomo
         return chdir(default_chdir) { build(*command) }
       end
 
-      command_string = shell_join(*command)
-      prefixes = [cd_chdir, unset_env, export_env, set_umask].compact.flatten
-      return command_string if prefixes.empty?
+      command_string = command_to_string(*command)
+      modifiers = [cd_chdir, unset_env, export_env, set_umask].compact.flatten
+      return command_string if modifiers.empty?
 
-      "(#{[*prefixes, command_string].join(' && ')})"
+      "(#{[*modifiers, command_string].join(' && ')})"
     end
 
     private
 
+    attr_reader :prefixes
+
+    def command_to_string(*command)
+      command_string = shell_join(*command)
+      return command_string if prefixes.empty?
+
+      "#{shell_join(*prefixes)} #{command_string}"
+    end
+
     def shell_join(*command)
-      command.flatten.compact.map(&:to_s).join(" ")
+      return command.first.to_s if command.length == 1
+
+      command.flatten.compact.map(&:to_s).map(&:shellescape).join(" ")
     end
 
     def cd_chdir
@@ -57,7 +76,7 @@ module Tomo
       unsets = @env.select { |_, value| value.nil? }
       return if unsets.empty?
 
-      ["unset", *unsets.map(&:first)].join(" ")
+      ["unset", *unsets.map { |entry| entry.first.to_s.shellescape }].join(" ")
     end
 
     def export_env
@@ -66,7 +85,9 @@ module Tomo
 
       [
         "export",
-        *exports.map { |key, value| "#{key}=#{value.to_s.shellescape}" }
+        *exports.map do |key, value|
+          "#{key.to_s.shellescape}=#{value.to_s.shellescape}"
+        end
       ].join(" ")
     end
 
@@ -74,7 +95,7 @@ module Tomo
       return if @umask.nil?
 
       umask_value = @umask.is_a?(Integer) ? @umask.to_s(8) : @umask
-      "umask #{umask_value}"
+      "umask #{umask_value.to_s.shellescape}"
     end
   end
 end
