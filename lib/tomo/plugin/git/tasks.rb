@@ -58,7 +58,7 @@ module Tomo::Plugin::Git
     def store_release_info
       log = remote.chdir(paths.git_repo) do
         remote.git(
-          'log -n1 --date=iso --pretty=format:"%H/%cd/%ae"'\
+          'log -n1 --date=iso --pretty=format:"%H/%cd/%ae" '\
           "#{branch.shellescape}",
           silent: true
         ).stdout.strip
