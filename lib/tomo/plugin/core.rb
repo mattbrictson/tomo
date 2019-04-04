@@ -12,7 +12,6 @@ module Tomo::Plugin
              concurrency:           10,
              current_path:          "%<deploy_to>/current",
              deploy_to:             "/var/www/%<application>",
-             environment:           nil,
              keep_releases:         10,
              linked_dirs:           [],
              release_json_path:     "%<release_path>/.tomo_release.json",
