@@ -7,6 +7,7 @@ module Tomo
 
     def self.parse(host)
       return host if host.is_a?(Host)
+      return new(**Utils.symbolize_keys(host)) if host.is_a?(Hash)
 
       host = host.to_s.strip
       user, address, port = host.match(PATTERN).captures

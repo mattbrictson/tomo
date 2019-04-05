@@ -17,7 +17,7 @@ module Tomo
       def initialize(data, source_path=nil)
         normalize_hosts(data)
         @source_path = source_path
-        @hosts = build_hosts(data["hosts"])
+        @hosts = data["hosts"].map(&Host.method(:parse)).freeze
         @environments = merge_environments(data).freeze
         @deploy_tasks = (data["deploy"] || []).freeze
         @plugins = (data["plugins"] || []).freeze
@@ -52,33 +52,11 @@ module Tomo
 
       attr_reader :environments
 
-      # rubocop:disable Metrics/MethodLength
       def normalize_hosts(data)
         return unless data.key?("host")
         raise "Cannot specify both host and hosts" if data.key?("hosts")
 
-        host = Host.parse(data.delete("host"))
-        data["hosts"] = {
-          nil => {
-            "address" => host.address,
-            "port" => host.port,
-            "roles" => host.roles,
-            "user" => host.user
-          }
-        }
-      end
-      # rubocop:enable Metrics/MethodLength
-
-      def build_hosts(raw_hosts)
-        (raw_hosts || []).map do |name, meta|
-          Host.new(
-            name: name,
-            address: meta["address"],
-            port: meta["port"],
-            roles: meta["roles"],
-            user: meta["user"]
-          )
-        end
+        data["hosts"] = [data.delete("host")]
       end
 
       def merge_environments(data)

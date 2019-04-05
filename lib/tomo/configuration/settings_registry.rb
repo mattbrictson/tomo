@@ -6,11 +6,13 @@ module Tomo
       end
 
       def define_settings(definitions)
-        settings.merge!(symbolize(definitions)) { |_, existing, _| existing }
+        settings.merge!(Utils.symbolize_keys(definitions)) do |_, existing, _|
+          existing
+        end
       end
 
       def assign_settings(assignments)
-        settings.merge!(symbolize(assignments))
+        settings.merge!(Utils.symbolize_keys(assignments))
       end
 
       def to_hash
@@ -22,12 +24,6 @@ module Tomo
       private
 
       attr_reader :settings
-
-      def symbolize(hash)
-        hash.each_with_object({}) do |(key, value), symbolized|
-          symbolized[key.to_sym] = value
-        end
-      end
 
       def fetch(name, stack=[])
         raise_circular_dependency_error(name, stack) if stack.include?(name)
