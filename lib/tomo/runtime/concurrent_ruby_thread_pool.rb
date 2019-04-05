@@ -3,9 +3,9 @@ concurrent_ver = "~> 1.1"
 begin
   gem "concurrent-ruby", concurrent_ver
   require "concurrent"
-rescue LoadError => error
+rescue LoadError => e
   Tomo::Runtime::ConcurrentRubyLoadError.raise_with(
-    error.message,
+    e.message,
     version: concurrent_ver
   )
 end

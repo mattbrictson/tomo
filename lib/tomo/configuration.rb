@@ -73,7 +73,7 @@ module Tomo
     end
 
     def register_plugins
-      plugins_registry.load_plugins_by_name(["core"] + (plugins).uniq)
+      plugins_registry.load_plugins_by_name(["core"] + plugins.uniq)
     end
 
     def register_tasks

@@ -20,8 +20,8 @@ module Tomo
         assert_compatible_api(plugin)
 
         plugin
-      rescue LoadError => error
-        raise_unknown_plugin_error(error)
+      rescue LoadError => e
+        raise_unknown_plugin_error(e)
       end
 
       private
