@@ -6,8 +6,8 @@ module Tomo
 
         yield(*args)
         nil
-      rescue StandardError => error
-        self.failure = error
+      rescue StandardError => e
+        self.failure = e
         nil
       end
 

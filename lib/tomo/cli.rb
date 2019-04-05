@@ -39,8 +39,8 @@ module Tomo
       command.parse(argv)
     rescue Interrupt
       handle_error(InterruptedError.new, command_name)
-    rescue StandardError => error
-      handle_error(error, command_name)
+    rescue StandardError => e
+      handle_error(e, command_name)
     end
 
     private
