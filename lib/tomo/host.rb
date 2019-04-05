@@ -3,7 +3,7 @@ module Tomo
     PATTERN = /^(?:(\S+)@)?(\S*?)(?::(\S+))?$/.freeze
     private_constant :PATTERN
 
-    attr_reader :address, :name, :user, :port, :roles
+    attr_reader :address, :log_prefix, :user, :port, :roles
 
     def self.parse(host)
       return host if host.is_a?(Host)
@@ -16,13 +16,23 @@ module Tomo
       new(user: user, port: port, address: address)
     end
 
-    def initialize(address:, port: nil, user: nil, name: nil, roles: nil)
+    def initialize(address:, port: nil, user: nil, log_prefix: nil, roles: nil)
       @user = user.freeze
       @port = (port || 22).to_s.freeze
       @address = address.freeze
-      @name = name.freeze
+      @log_prefix = log_prefix.freeze
       @roles = Array(roles).map(&:freeze).freeze
       freeze
+    end
+
+    def with_log_prefix(prefix)
+      self.class.new(
+        address: address,
+        port: port,
+        user: user,
+        roles: roles,
+        log_prefix: prefix
+      )
     end
 
     def to_s

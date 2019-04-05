@@ -49,7 +49,7 @@ module Tomo
       Runtime.new(
         deploy_tasks: deploy_tasks,
         helper_modules: plugins_registry.helper_modules,
-        hosts: hosts.uniq,
+        hosts: hosts_with_auto_log_prefixes,
         settings_registry: settings_registry,
         task_filter: task_filter,
         tasks_registry: tasks_registry
@@ -60,6 +60,18 @@ module Tomo
     private
 
     attr_reader :env, :plugins_registry, :settings_registry, :tasks_registry
+
+    # rubocop:disable Metrics/AbcSize
+    def hosts_with_auto_log_prefixes
+      return hosts if hosts.length == 1
+      return hosts unless hosts.all? { |h| h.log_prefix.nil? }
+
+      width = hosts.length.to_s.length
+      hosts.map.with_index do |host, i|
+        host.with_log_prefix((i + 1).to_s.rjust(width, "0"))
+      end
+    end
+    # rubocop:enable Metrics/AbcSize
 
     def init_registries
       @settings_registry = SettingsRegistry.new
