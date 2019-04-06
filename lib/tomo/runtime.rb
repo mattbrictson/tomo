@@ -22,7 +22,7 @@ module Tomo
       @deploy_tasks = deploy_tasks.freeze
       @hosts = hosts.freeze
       @helper_modules = helper_modules.freeze
-      @task_filter = task_filter
+      @task_filter = task_filter.freeze
       @settings_registry = settings_registry
       @tasks_registry = tasks_registry
       @tasks = tasks_registry.task_names

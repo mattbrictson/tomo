@@ -1,10 +1,21 @@
 module Tomo
   class Configuration
     class RoleBasedTaskFilter
-      def initialize(roles_spec)
-        @spec = (roles_spec || {}).freeze
-        @globs = parse_spec(@spec).freeze
-        freeze
+      def initialize
+        @globs = {}
+      end
+
+      def freeze
+        globs.freeze
+        super
+      end
+
+      def add_role(name, task_specs)
+        name = name.to_s
+        task_globs = Array(task_specs).flatten.map { |spec| Glob.new(spec) }
+        task_globs.each do |task_glob|
+          (globs[task_glob] ||= []) << name
+        end
       end
 
       def filter(tasks, host:)
@@ -15,31 +26,16 @@ module Tomo
         end
       end
 
-      def to_s
-        spec.inspect
-      end
-
       private
 
-      attr_reader :globs, :spec
-
-      def parse_spec(roles_spec)
-        roles_spec.each_with_object({}) do |(role_spec, task_specs), globs|
-          role_glob = Glob.new(role_spec)
-          task_globs = Array(task_specs).map { |spec| Glob.new(spec) }
-
-          task_globs.each do |task_glob|
-            (globs[task_glob] ||= []) << role_glob
-          end
-        end
-      end
+      attr_reader :globs
 
       def match?(task, role)
         task_globs = globs.keys.select { |glob| glob.match?(task) }
         return true if task_globs.empty?
 
-        role_globs = globs.values_at(*task_globs).flatten
-        role_globs.any? { |glob| glob.match?(role) }
+        roles = globs.values_at(*task_globs).flatten
+        roles.include?(role)
       end
     end
   end

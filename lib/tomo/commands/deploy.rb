@@ -14,15 +14,15 @@ module Tomo
         <<~BANNER
           Usage: #{green('tomo deploy')} #{yellow('[--dry-run] [options]')}
 
-          Sequentially run the "deploy" list of tasks specified in .tomo/project.json to
+          Sequentially run the "deploy" list of tasks specified in .tomo/project.rb to
           deploy the project to a remote host. Use the #{blue('--dry-run')} option to quickly
           simulate the entire deploy without actually connecting to the host.
 
-          For a .tomo/project.json that contains more than one environment (e.g. staging,
+          For a .tomo/project.rb that specifies distinct environments (e.g. staging,
           production), you must specify the target environment using the #{blue('-e')} option. If
           you omit this option, tomo will automatically prompt for it.
 
-          Tomo will use the settings specified in .tomo/project.json to configure the
+          Tomo will use the settings specified in .tomo/project.rb to configure the
           deploy. You may override these on the command line using #{blue('-s')}. E.g.:
 
             #{blue('tomo deploy -e staging -s git_branch=develop')}

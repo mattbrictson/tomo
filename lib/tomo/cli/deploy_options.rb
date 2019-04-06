@@ -28,7 +28,7 @@ module Tomo
       private
 
       def environment_names(*_args, options)
-        load_project(options).environment_names
+        load_configuration(options).environments.keys
       end
 
       def setting_completions(*_args, options)

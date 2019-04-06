@@ -17,7 +17,7 @@ module Tomo
           Set up a new tomo project named #{yellow('APP')}. If #{yellow('APP')} is not specified, the
           name of the current directory will be used.
 
-          This command creates a .tomo/project.json file relative the current
+          This command creates a .tomo/project.rb file relative the current
           directory containing some example configuration.
         BANNER
       end
@@ -29,9 +29,9 @@ module Tomo
         app = args.first || current_dir_name || "default"
         git_url = git_origin_url || "TODO"
         FileUtils.mkdir_p(".tomo")
-        IO.write(".tomo/project.json", json_template(app, git_url))
+        IO.write(".tomo/project.rb", project_rb_template(app, git_url))
 
-        Tomo.logger.info(green("✔ Created .tomo/project.json"))
+        Tomo.logger.info(green("✔ Created .tomo/project.rb"))
       end
 
       private
@@ -45,9 +45,9 @@ module Tomo
       end
 
       def assert_no_tomo_project!
-        return unless File.exist?(".tomo/project.json")
+        return unless File.exist?(".tomo/project.rb")
 
-        Tomo.logger.error("A .tomo/project.json file already exists")
+        Tomo.logger.error("A .tomo/project.rb file already exists")
         exit(1)
       end
 
@@ -63,8 +63,8 @@ module Tomo
         url.empty? ? nil : url
       end
 
-      def json_template(app, git_url)
-        path = File.expand_path("../templates/project.json", __dir__)
+      def project_rb_template(app, git_url)
+        path = File.expand_path("../templates/project.rb", __dir__)
         template = IO.read(path)
         template
           .gsub(/%%APP%%/, app.gsub(/[\W_]+/, "_").downcase)

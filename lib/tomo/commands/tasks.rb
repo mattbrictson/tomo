@@ -15,7 +15,7 @@ module Tomo
 
           List all tomo tasks (i.e. those that can be used with #{blue('tomo run')}).
 
-          Available tasks are those defined by plugins loaded in .tomo/project.json,
+          Available tasks are those defined by plugins loaded in .tomo/project.rb,
           or can also be custom tasks defined in .tomo/tasks.rb.')}
         BANNER
       end

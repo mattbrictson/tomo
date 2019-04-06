@@ -11,7 +11,7 @@ module Tomo
 
       def no_envs
         <<~ERROR
-          This project does not support environments.
+          This project does not have distinct environments.
 
           Run tomo again without the #{yellow("-e #{name}")} option.
         ERROR

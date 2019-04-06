@@ -3,9 +3,9 @@ module Tomo
     module ProjectOptions
       def self.included(mod)
         mod.class_eval do
-          option :project_json,
+          option :project,
                  "-p, --project PATH",
-                 "Location of project config (default: .tomo/project.json)"
+                 "Location of project config (default: .tomo/project.rb)"
         end
       end
 
@@ -13,20 +13,20 @@ module Tomo
 
       # rubocop:disable Metrics/AbcSize
       def configure_runtime(options, strict: true)
-        project = load_project(options)
+        config = load_configuration(options)
         env = options[:environment]
-        env = project.environment_names.first if env.nil? && !strict
-        config = Configuration.from_project(project.for_environment(env))
+        env = config.environments.keys.first if env.nil? && !strict
         config.settings.merge!(settings_from_env)
         config.settings.merge!(settings_from_options(options))
         yield(config) if block_given?
-        config.build_runtime
+        config.build_runtime(environment: env)
       end
       # rubocop:enable Metrics/AbcSize
 
-      def load_project(options)
-        path = options[:project_json] || ".tomo/project.json"
-        Configuration::Project.from_json(path)
+      def load_configuration(options)
+        path = options[:project] || ".tomo/project.rb"
+        @config_cache ||= {}
+        @config_cache[path] ||= Configuration.from_project_rb(path)
       end
 
       def settings_from_options(options)

@@ -4,7 +4,7 @@ module Tomo
       attr_accessor :path
 
       def to_console
-        path == ".tomo/project.json" ? default_message : custom_message
+        path == ".tomo/project.rb" ? default_message : custom_message
       end
 
       private

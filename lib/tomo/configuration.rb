@@ -1,9 +1,10 @@
 module Tomo
   class Configuration
+    autoload :DSL, "tomo/configuration/dsl"
+    autoload :Environment, "tomo/configuration/environment"
     autoload :Glob, "tomo/configuration/glob"
     autoload :PluginResolver, "tomo/configuration/plugin_resolver"
     autoload :PluginsRegistry, "tomo/configuration/plugins_registry"
-    autoload :Project, "tomo/configuration/project"
     autoload :ProjectNotFoundError, "tomo/configuration/project_not_found_error"
     autoload :RoleBasedTaskFilter, "tomo/configuration/role_based_task_filter"
     autoload :SettingsRegistry, "tomo/configuration/settings_registry"
@@ -14,42 +15,42 @@ module Tomo
     autoload :UnspecifiedEnvironmentError,
              "tomo/configuration/unspecified_environment_error"
 
-    # rubocop:disable Metrics/AbcSize
-    def self.from_project(project)
+    def self.from_project_rb(path=".tomo/project.rb")
+      ProjectNotFoundError.raise_with(path: path) unless File.file?(path)
+      Tomo.logger.debug("Loading project from #{path.inspect}")
+      project_rb = IO.read(path)
+
       new.tap do |config|
-        config.hosts.push(*project.hosts)
-        config.plugins.push(*project.plugins)
-        config.settings.merge!(project.settings)
-        config.deploy_tasks = project.deploy_tasks
-        config.task_filter = RoleBasedTaskFilter.new(project.roles)
-        config.task_library_path = project.task_library_path
+        config.task_library_path = File.expand_path("../tasks.rb", path)
+        DSL::Project.new(config).instance_eval(project_rb, path.to_s, 1)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
-    attr_accessor :environment, :deploy_tasks, :hosts, :plugins, :settings,
+    attr_accessor :environments, :deploy_tasks, :hosts, :plugins, :settings,
                   :task_filter, :task_library_path
 
-    def initialize(env=ENV)
-      @env = env
+    def initialize
+      @environments = Hash.new { |hash, key| hash[key] = Environment.new }
       @hosts = []
       @plugins = []
       @settings = {}
       @deploy_tasks = []
-      @task_filter = RoleBasedTaskFilter.new(nil)
+      @task_filter = RoleBasedTaskFilter.new
     end
 
     # rubocop:disable Metrics/MethodLength
-    def build_runtime
+    def build_runtime(environment: nil)
+      validate_environment!(environment)
+
       init_registries
       register_plugins
       register_tasks
-      register_settings
+      register_settings(environment)
 
       Runtime.new(
         deploy_tasks: deploy_tasks,
         helper_modules: plugins_registry.helper_modules,
-        hosts: hosts_with_auto_log_prefixes,
+        hosts: add_log_prefixes(hosts_for(environment)),
         settings_registry: settings_registry,
         task_filter: task_filter,
         tasks_registry: tasks_registry
@@ -59,27 +60,39 @@ module Tomo
 
     private
 
-    attr_reader :env, :plugins_registry, :settings_registry, :tasks_registry
+    attr_reader :plugins_registry, :settings_registry, :tasks_registry
 
-    # rubocop:disable Metrics/AbcSize
-    def hosts_with_auto_log_prefixes
-      return hosts if hosts.length == 1
-      return hosts unless hosts.all? { |h| h.log_prefix.nil? }
+    def validate_environment!(name)
+      if name.nil?
+        raise_no_environment_specified unless environments.empty?
+      else
+        raise_unknown_environment(name) unless environments.key?(name)
+      end
+    end
 
-      width = hosts.length.to_s.length
-      hosts.map.with_index do |host, i|
+    def hosts_for(environ)
+      env_hosts = environments[environ].hosts
+      return env_hosts unless env_hosts.empty?
+
+      hosts
+    end
+
+    def add_log_prefixes(host_arr)
+      return host_arr if host_arr.length == 1
+      return host_arr unless host_arr.all? { |h| h.log_prefix.nil? }
+
+      width = host_arr.length.to_s.length
+      host_arr.map.with_index do |host, i|
         host.with_log_prefix((i + 1).to_s.rjust(width, "0"))
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def init_registries
       @settings_registry = SettingsRegistry.new
       @tasks_registry = TasksRegistry.new
       @plugins_registry ||= begin
         PluginsRegistry.new(
-          settings_registry: settings_registry,
-          tasks_registry: tasks_registry
+          settings_registry: settings_registry, tasks_registry: tasks_registry
         )
       end
     end
@@ -96,8 +109,19 @@ module Tomo
       tasks_registry.register_task_library(nil, task_library)
     end
 
-    def register_settings
-      settings_registry.assign_settings(settings)
+    def register_settings(environ)
+      merged = settings.merge(environments[environ].settings)
+      settings_registry.assign_settings(merged)
+    end
+
+    def raise_no_environment_specified
+      UnspecifiedEnvironmentError.raise_with(environments: environments.keys)
+    end
+
+    def raise_unknown_environment(environ)
+      UnknownEnvironmentError.raise_with(
+        name: environ, known_environments: environments.keys
+      )
     end
   end
 end

@@ -23,14 +23,14 @@ module Tomo
             #{blue('tomo run -- rails:console --sandbox')}
 
           This will run the #{blue('rails:console')} task on the host specified in
-          .tomo/project.json, and will pass the #{blue('--sandbox')} argument to that task.
+          .tomo/project.rb, and will pass the #{blue('--sandbox')} argument to that task.
           The #{blue('--')} is used to separate tomo options from options that are passed
           to the task. If a task does not accept options, the #{blue('--')} can be omitted,
           like this:
 
             #{blue('tomo run core:clean_releases')}
 
-          You can run any task defined by plugins loaded in .tomo/project.json,
+          You can run any task defined by plugins loaded in .tomo/project.rb,
           as well as any custom task defined in .tomo/tasks.rb. To see a list of
           available tasks, run #{blue('tomo tasks')}.
 
