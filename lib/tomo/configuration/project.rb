@@ -17,7 +17,7 @@ module Tomo
       def initialize(data, source_path=nil)
         normalize_hosts(data)
         @source_path = source_path
-        @hosts = data["hosts"].map(&Host.method(:parse)).freeze
+        @hosts = (data["hosts"] || []).map(&Host.method(:parse)).freeze
         @environments = merge_environments(data).freeze
         @deploy_tasks = (data["deploy"] || []).freeze
         @plugins = (data["plugins"] || []).freeze
