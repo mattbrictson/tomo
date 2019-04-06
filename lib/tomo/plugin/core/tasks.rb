@@ -12,15 +12,26 @@ module Tomo::Plugin::Core
       end
     end
 
+    def symlink_shared_files
+      return if linked_files.empty?
+
+      create_linked_parents(linked_files)
+      linked_files.each do |file|
+        remote.ln_sfn paths.shared.join(file), paths.release.join(file)
+      end
+    end
+
+    # rubocop:disable Metrics/AbcSize
     def symlink_shared_directories
       return if linked_dirs.empty?
 
-      create_linked_parents
+      create_linked_parents(linked_dirs)
       remove_existing_link_targets
       linked_dirs.each do |dir|
         remote.ln_sf paths.shared.join(dir), paths.release.join(dir)
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def symlink_current
       return if paths.release == paths.current
@@ -64,9 +75,13 @@ module Tomo::Plugin::Core
       settings[:linked_dirs] || []
     end
 
-    def create_linked_parents
-      parents = linked_dirs.map do |dir|
-        paths.release.join(dir).dirname
+    def linked_files
+      settings[:linked_files] || []
+    end
+
+    def create_linked_parents(targets)
+      parents = targets.map do |target|
+        paths.release.join(target).dirname
       end
       parents = parents.uniq - [paths.release]
 
