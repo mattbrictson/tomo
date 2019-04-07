@@ -30,7 +30,7 @@ module Tomo
                   :task_filter, :task_library_path
 
     def initialize
-      @environments = Hash.new { |hash, key| hash[key] = Environment.new }
+      @environments = {}
       @hosts = []
       @plugins = []
       @settings = {}
@@ -71,10 +71,9 @@ module Tomo
     end
 
     def hosts_for(environ)
-      env_hosts = environments[environ].hosts
-      return env_hosts unless env_hosts.empty?
+      return hosts unless environments.key?(environ)
 
-      hosts
+      environments[environ].hosts
     end
 
     def add_log_prefixes(host_arr)
@@ -108,8 +107,10 @@ module Tomo
     end
 
     def register_settings(environ)
-      merged = settings.merge(environments[environ].settings)
-      settings_registry.assign_settings(merged)
+      settings_registry.assign_settings(settings)
+      return unless environments.key?(environ)
+
+      settings_registry.assign_settings(environments[environ].settings)
     end
 
     def raise_no_environment_specified

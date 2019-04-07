@@ -19,7 +19,7 @@ module Tomo
         end
 
         def environment(name, &block)
-          environment = @config.environments[name.to_s]
+          environment = @config.environments[name.to_s] ||= Environment.new
           EnvironmentBlock.new(environment).instance_eval(&block)
           self
         end
