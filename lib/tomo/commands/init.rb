@@ -27,8 +27,13 @@ module Tomo
         assert_no_tomo_project!
 
         app = args.first || current_dir_name || "default"
+        app = app.gsub(/([^\w\-]|_)+/, "_").downcase
         git_url = git_origin_url || "TODO"
-        FileUtils.mkdir_p(".tomo")
+        FileUtils.mkdir_p(".tomo/plugins")
+
+        # TODO: use a template for this file
+        FileUtils.touch(".tomo/plugins/#{app}.rb")
+
         IO.write(".tomo/project.rb", project_rb_template(app, git_url))
 
         Tomo.logger.info(green("✔ Created .tomo/project.rb"))
@@ -67,7 +72,7 @@ module Tomo
         path = File.expand_path("../templates/project.rb", __dir__)
         template = IO.read(path)
         template
-          .gsub(/%%APP%%/, app.gsub(/[\W_]+/, "_").downcase)
+          .gsub(/%%APP%%/, app)
           .gsub(/%%GIT_URL%%/, git_url)
       end
     end

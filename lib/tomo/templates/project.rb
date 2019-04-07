@@ -1,6 +1,7 @@
 plugin "git"
 plugin "bundler"
 plugin "rails"
+plugin "./plugins/%%APP%%.rb"
 
 host "user@hostname.or.ip.address"
 

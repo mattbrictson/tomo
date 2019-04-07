@@ -21,13 +21,13 @@ module Tomo
       project_rb = IO.read(path)
 
       new.tap do |config|
-        config.task_library_path = File.expand_path("../tasks.rb", path)
+        config.working_dir = File.dirname(path)
         DSL::Project.new(config).instance_eval(project_rb, path.to_s, 1)
       end
     end
 
     attr_accessor :environments, :deploy_tasks, :hosts, :plugins, :settings,
-                  :task_filter, :task_library_path
+                  :task_filter, :working_dir
 
     def initialize
       @environments = {}
@@ -44,7 +44,6 @@ module Tomo
 
       init_registries
       register_plugins
-      register_tasks
       register_settings(environment)
 
       Runtime.new(
@@ -95,15 +94,14 @@ module Tomo
     end
 
     def register_plugins
-      plugins_registry.load_plugins_by_name(["core"] + plugins.uniq)
-    end
-
-    def register_tasks
-      return if task_library_path.nil?
-      return unless File.file?(task_library_path)
-
-      task_library = TaskLibrary.from_script(task_library_path)
-      tasks_registry.register_task_library(nil, task_library)
+      (["core"] + plugins.uniq).each do |plug|
+        if %w[. /].include?(plug[0])
+          plug = File.expand_path(plug, working_dir) unless working_dir.nil?
+          plugins_registry.load_plugin_from_path(plug)
+        else
+          plugins_registry.load_plugin_by_name(plug)
+        end
+      end
     end
 
     def register_settings(environ)
