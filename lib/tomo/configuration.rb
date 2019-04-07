@@ -90,11 +90,9 @@ module Tomo
     def init_registries
       @settings_registry = SettingsRegistry.new
       @tasks_registry = TasksRegistry.new
-      @plugins_registry ||= begin
-        PluginsRegistry.new(
-          settings_registry: settings_registry, tasks_registry: tasks_registry
-        )
-      end
+      @plugins_registry = PluginsRegistry.new(
+        settings_registry: settings_registry, tasks_registry: tasks_registry
+      )
     end
 
     def register_plugins
