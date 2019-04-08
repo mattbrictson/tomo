@@ -17,7 +17,6 @@ module Tomo
   autoload :ShellBuilder, "tomo/shell_builder"
   autoload :SSH, "tomo/ssh"
   autoload :TaskLibrary, "tomo/task_library"
-  autoload :Utils, "tomo/utils"
   autoload :VERSION, "tomo/version"
 
   class << self

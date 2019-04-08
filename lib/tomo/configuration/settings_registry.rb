@@ -6,13 +6,11 @@ module Tomo
       end
 
       def define_settings(definitions)
-        settings.merge!(Utils.symbolize_keys(definitions)) do |_, existing, _|
-          existing
-        end
+        settings.merge!(symbolize(definitions)) { |_, existing, _| existing }
       end
 
       def assign_settings(assignments)
-        settings.merge!(Utils.symbolize_keys(assignments))
+        settings.merge!(symbolize(assignments))
       end
 
       def to_hash
@@ -38,6 +36,12 @@ module Tomo
       def raise_circular_dependency_error(name, stack)
         dependencies = [*stack, name].join(" -> ")
         raise "Circular dependency detected in settings: #{dependencies}"
+      end
+
+      def symbolize(hash)
+        hash.each_with_object({}) do |(key, value), symbolized|
+          symbolized[key.to_sym] = value
+        end
       end
 
       def dump_settings(hash)
