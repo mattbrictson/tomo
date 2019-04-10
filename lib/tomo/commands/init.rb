@@ -17,7 +17,7 @@ module Tomo
           Set up a new tomo project named #{yellow('APP')}. If #{yellow('APP')} is not specified, the
           name of the current directory will be used.
 
-          This command creates a .tomo/project.rb file relative the current
+          This command creates a #{DEFAULT_CONFIG_PATH} file relative the current
           directory containing some example configuration.
         BANNER
       end
@@ -34,9 +34,9 @@ module Tomo
         # TODO: use a template for this file
         FileUtils.touch(".tomo/plugins/#{app}.rb")
 
-        IO.write(".tomo/project.rb", project_rb_template(app, git_url))
+        IO.write(DEFAULT_CONFIG_PATH, config_rb_template(app, git_url))
 
-        Tomo.logger.info(green("✔ Created .tomo/project.rb"))
+        Tomo.logger.info(green("✔ Created #{DEFAULT_CONFIG_PATH}"))
       end
 
       private
@@ -50,9 +50,9 @@ module Tomo
       end
 
       def assert_no_tomo_project!
-        return unless File.exist?(".tomo/project.rb")
+        return unless File.exist?(DEFAULT_CONFIG_PATH)
 
-        Tomo.logger.error("A .tomo/project.rb file already exists")
+        Tomo.logger.error("A #{DEFAULT_CONFIG_PATH} file already exists")
         exit(1)
       end
 
@@ -68,8 +68,8 @@ module Tomo
         url.empty? ? nil : url
       end
 
-      def project_rb_template(app, git_url)
-        path = File.expand_path("../templates/project.rb", __dir__)
+      def config_rb_template(app, git_url)
+        path = File.expand_path("../templates/config.rb", __dir__)
         template = IO.read(path)
         template
           .gsub(/%%APP%%/, app)

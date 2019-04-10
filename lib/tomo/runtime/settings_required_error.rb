@@ -7,7 +7,7 @@ module Tomo
         <<~ERROR
           The #{yellow(task)} task requires #{settings_sentence}
 
-          Settings can be specified in #{blue('.tomo/project.rb')}, or by running tomo
+          Settings can be specified in #{blue(DEFAULT_CONFIG_PATH)}, or by running tomo
           with the #{blue('-s')} option. For example:
 
             #{blue("tomo -s #{settings.first}=foo")}

@@ -1,7 +1,7 @@
 module Tomo
   class Configuration
     module DSL
-      class Project
+      class ConfigFile
         include HostsAndSettings
 
         def initialize(config)

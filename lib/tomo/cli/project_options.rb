@@ -5,7 +5,7 @@ module Tomo
         mod.class_eval do
           option :project,
                  "-p, --project PATH",
-                 "Location of project config (default: .tomo/project.rb)"
+                 "Location of project config (default: #{DEFAULT_CONFIG_PATH})"
         end
       end
 
@@ -24,9 +24,9 @@ module Tomo
       # rubocop:enable Metrics/AbcSize
 
       def load_configuration(options)
-        path = options[:project] || ".tomo/project.rb"
+        path = options[:project] || DEFAULT_CONFIG_PATH
         @config_cache ||= {}
-        @config_cache[path] ||= Configuration.from_project_rb(path)
+        @config_cache[path] ||= Configuration.from_config_rb(path)
       end
 
       def settings_from_options(options)

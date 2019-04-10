@@ -19,6 +19,8 @@ module Tomo
   autoload :TaskLibrary, "tomo/task_library"
   autoload :VERSION, "tomo/version"
 
+  DEFAULT_CONFIG_PATH = ".tomo/config.rb".freeze
+
   class << self
     attr_accessor :logger
     attr_writer :debug, :dry_run
