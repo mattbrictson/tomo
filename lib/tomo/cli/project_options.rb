@@ -4,7 +4,7 @@ module Tomo
       def self.included(mod)
         mod.class_eval do
           option :project,
-                 "-p, --project PATH",
+                 "-c, --config PATH",
                  "Location of project config (default: #{DEFAULT_CONFIG_PATH})"
         end
       end
