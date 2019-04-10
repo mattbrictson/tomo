@@ -3,12 +3,12 @@ module Tomo
     module DSL
       module ErrorFormatter
         def self.decorate(error, path, lines)
-          unless error.backtrace[0..1].grep(/^#{Regexp.quote(path)}:/)
+          if error.backtrace[0..1].grep(/^#{Regexp.quote(path)}:/).empty?
             return error
           end
 
           error.extend(self)
-          error.dsl_lines = lines
+          error.dsl_lines = lines || []
           error.dsl_path = path
           error
         end

@@ -26,7 +26,7 @@ module Tomo
         DSL::ConfigFile.new(config).instance_eval(config_rb, path.to_s, 1)
       end
     rescue StandardError => e
-      raise DSL::ErrorFormatter.decorate(e, path, config_rb.lines)
+      raise DSL::ErrorFormatter.decorate(e, path, config_rb&.lines)
     end
     # rubocop:enable Metrics/AbcSize
 
