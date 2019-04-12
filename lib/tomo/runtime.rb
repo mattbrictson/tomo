@@ -34,16 +34,16 @@ module Tomo
       execution_plan_for(deploy_tasks, release: :new).execute
     end
 
-    def run!(task)
-      execution_plan_for([task], release: :current).execute
+    def run!(task, *args)
+      execution_plan_for([task], release: :current, args: args).execute
     end
 
-    def execution_plan_for(tasks, release: :current)
+    def execution_plan_for(tasks, release: :current, args: [])
       ExecutionPlan.new(
         tasks: tasks,
         hosts: hosts,
         task_filter: task_filter,
-        task_runner: new_task_runner(release)
+        task_runner: new_task_runner(release, args)
       )
     end
 
@@ -52,8 +52,9 @@ module Tomo
     attr_reader :deploy_tasks, :hosts, :helper_modules, :task_filter,
                 :settings_registry, :tasks_registry
 
-    def new_task_runner(release_type)
+    def new_task_runner(release_type, args)
       settings_registry.assign_settings(
+        run_args: args,
         release_path: release_path_for(release_type)
       )
       TaskRunner.new(

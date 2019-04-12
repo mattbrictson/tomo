@@ -43,13 +43,11 @@ module Tomo
         BANNER
       end
 
-      def call(task, *run_args, options)
+      def call(task, *args, options)
         Tomo.logger.info "tomo run v#{Tomo::VERSION}"
 
-        runtime = configure_runtime(options) do |config|
-          config.settings[:run_args] = run_args
-        end
-        plan = runtime.run!(task)
+        runtime = configure_runtime(options)
+        plan = runtime.run!(task, *args)
         log_completion(task, plan)
       end
 
