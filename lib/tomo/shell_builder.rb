@@ -46,8 +46,6 @@ module Tomo
 
       command_string = command_to_string(*command)
       modifiers = [cd_chdir, unset_env, export_env, set_umask].compact.flatten
-      return command_string if modifiers.empty?
-
       [*modifiers, command_string].join(" && ")
     end
 
