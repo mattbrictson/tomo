@@ -11,5 +11,10 @@ module Tomo::Plugin::Rails
         bundle(*args, **opts)
       end
     end
+
+    def rake?(*args, **opts)
+      result = rake(*args, **opts.merge(raise_on_error: false))
+      result.success?
+    end
   end
 end
