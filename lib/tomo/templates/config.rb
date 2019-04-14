@@ -30,6 +30,7 @@ setup do
   run "rbenv:install"
   run "bundler:upgrade_bundler"
   run "bundler:install"
+  run "rails:db_setup"
 end
 
 deploy do
