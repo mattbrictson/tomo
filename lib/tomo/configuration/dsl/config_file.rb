@@ -25,7 +25,12 @@ module Tomo
         end
 
         def deploy(&block)
-          DeployBlock.new(@config).instance_eval(&block)
+          TasksBlock.new(@config.deploy_tasks).instance_eval(&block)
+          self
+        end
+
+        def setup(&block)
+          TasksBlock.new(@config.setup_tasks).instance_eval(&block)
           self
         end
       end

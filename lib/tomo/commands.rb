@@ -6,6 +6,7 @@ module Tomo
     autoload :Help, "tomo/commands/help"
     autoload :Init, "tomo/commands/init"
     autoload :Run, "tomo/commands/run"
+    autoload :Setup, "tomo/commands/setup"
     autoload :Tasks, "tomo/commands/tasks"
     autoload :Version, "tomo/commands/version"
   end

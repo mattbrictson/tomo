@@ -18,6 +18,7 @@ module Tomo::Plugin
              releases_path:         "%<deploy_to>/releases",
              revision_log_path:     "%<deploy_to>/revisions.log",
              shared_path:           "%<deploy_to>/shared",
+             tmp_path:              "/tmp/tomo",
              run_args:              [],
              ssh_executable:        "ssh",
              ssh_extra_opts:        [

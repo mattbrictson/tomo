@@ -17,9 +17,11 @@ module Tomo
     attr_reader :tasks
 
     # rubocop:disable Metrics/ParameterLists
-    def initialize(deploy_tasks:, hosts:, helper_modules:, task_filter:,
+    def initialize(deploy_tasks:, setup_tasks:, hosts:,
+                   helper_modules:, task_filter:,
                    settings_registry:, tasks_registry:)
       @deploy_tasks = deploy_tasks.freeze
+      @setup_tasks = setup_tasks.freeze
       @hosts = hosts.freeze
       @helper_modules = helper_modules.freeze
       @task_filter = task_filter.freeze
@@ -32,6 +34,10 @@ module Tomo
 
     def deploy!
       execution_plan_for(deploy_tasks, release: :new).execute
+    end
+
+    def setup!
+      execution_plan_for(setup_tasks, release: :tmp).execute
     end
 
     def run!(task, *args)
@@ -49,8 +55,8 @@ module Tomo
 
     private
 
-    attr_reader :deploy_tasks, :hosts, :helper_modules, :task_filter,
-                :settings_registry, :tasks_registry
+    attr_reader :deploy_tasks, :setup_tasks, :hosts, :helper_modules,
+                :task_filter, :settings_registry, :tasks_registry
 
     def new_task_runner(release_type, args)
       settings_registry.assign_settings(
@@ -65,13 +71,13 @@ module Tomo
     end
 
     def release_path_for(type)
+      start_time = Time.now
+      release = start_time.utc.strftime("%Y%m%d%H%M%S")
+
       case type
-      when :current
-        "%<current_path>"
-      when :new
-        start_time = Time.now
-        release = start_time.utc.strftime("%Y%m%d%H%M%S")
-        "%<releases_path>/#{release}"
+      when :current then "%<current_path>"
+      when :new then "%<releases_path>/#{release}"
+      when :tmp then "%<tmp_path>/#{release}"
       else
         raise ArgumentError, "release: must be one of `:current` or `:new`"
       end

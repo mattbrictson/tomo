@@ -19,6 +19,15 @@ set linked_dirs: %w[
   public/assets
 ]
 
+setup do
+  run "git:clone"
+  run "git:create_release"
+  run "core:create_shared_directories"
+  run "core:symlink_shared_directories"
+  run "bundler:upgrade_bundler"
+  run "bundler:install"
+end
+
 deploy do
   run "git:clone"
   run "git:create_release"

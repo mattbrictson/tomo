@@ -1,4 +1,5 @@
 module Tomo
+  # rubocop:disable Metrics/ClassLength
   class Configuration
     autoload :DSL, "tomo/configuration/dsl"
     autoload :Environment, "tomo/configuration/environment"
@@ -30,8 +31,8 @@ module Tomo
     end
     # rubocop:enable Metrics/AbcSize
 
-    attr_accessor :environments, :deploy_tasks, :hosts, :plugins, :settings,
-                  :task_filter, :working_dir
+    attr_accessor :environments, :deploy_tasks, :setup_tasks, :hosts, :plugins,
+                  :settings, :task_filter, :working_dir
 
     def initialize
       @environments = {}
@@ -39,6 +40,7 @@ module Tomo
       @plugins = []
       @settings = {}
       @deploy_tasks = []
+      @setup_tasks = []
       @task_filter = RoleBasedTaskFilter.new
     end
 
@@ -52,6 +54,7 @@ module Tomo
 
       Runtime.new(
         deploy_tasks: deploy_tasks,
+        setup_tasks: setup_tasks,
         helper_modules: plugins_registry.helper_modules,
         hosts: add_log_prefixes(hosts_for(environment)),
         settings_registry: settings_registry,
@@ -125,4 +128,5 @@ module Tomo
       )
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

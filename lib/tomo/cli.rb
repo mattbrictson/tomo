@@ -28,6 +28,7 @@ module Tomo
       "help" => Tomo::Commands::Help,
       "init" => Tomo::Commands::Init,
       "run" => Tomo::Commands::Run,
+      "setup" => Tomo::Commands::Setup,
       "tasks" => Tomo::Commands::Tasks,
       "version" => Tomo::Commands::Version,
       "completion-script" => Tomo::Commands::CompletionScript

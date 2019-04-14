@@ -1,7 +1,6 @@
 module Tomo
   module Commands
     class Default < CLI::Command
-
       arg "COMMAND", values: CLI::COMMANDS.keys
 
       option :version, "-v, --version", "Display tomo’s version and exit" do
