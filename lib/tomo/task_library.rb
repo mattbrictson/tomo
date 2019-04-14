@@ -29,6 +29,10 @@ module Tomo
       Tomo.logger
     end
 
+    def raw(string)
+      ShellBuilder.raw(string)
+    end
+
     def remote
       context.current_remote
     end

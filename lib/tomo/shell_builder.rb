@@ -2,6 +2,11 @@ require "shellwords"
 
 module Tomo
   class ShellBuilder
+    def self.raw(string)
+      string.define_singleton_method(:shellescape) { string }
+      string
+    end
+
     def initialize
       @env = {}
       @chdir = []
