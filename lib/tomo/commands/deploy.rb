@@ -1,7 +1,6 @@
 module Tomo
   module Commands
-    class Deploy
-      extend CLI::Command
+    class Deploy < CLI::Command
       include CLI::DeployOptions
       include CLI::ProjectOptions
       include CLI::CommonOptions
@@ -43,7 +42,7 @@ module Tomo
       end
 
       def call(options)
-        Tomo.logger.info "tomo deploy v#{Tomo::VERSION}"
+        logger.info "tomo deploy v#{Tomo::VERSION}"
 
         runtime = configure_runtime(options)
         plan = runtime.deploy!
@@ -57,10 +56,10 @@ module Tomo
         app = plan.settings[:application]
         target = "#{app} to #{plan.applicable_hosts_sentence}"
 
-        if Tomo.dry_run?
-          Tomo.logger.info(green("* Simulated deploy of #{target} (dry run)"))
+        if dry_run?
+          logger.info(green("* Simulated deploy of #{target} (dry run)"))
         else
-          Tomo.logger.info(green("✔ Deployed #{target}"))
+          logger.info(green("✔ Deployed #{target}"))
         end
       end
     end

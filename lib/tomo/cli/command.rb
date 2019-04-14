@@ -2,23 +2,34 @@ require "forwardable"
 
 module Tomo
   class CLI
-    module Command
-      extend Forwardable
+    class Command
+      class << self
+        extend Forwardable
+        def_delegators :parser, :arg, :option, :after_parse
 
-      def_delegators :@parser, :arg, :option, :after_parse
-      attr_reader :parser
+        def parser
+          @parser ||= Parser.new
+        end
 
-      def self.extended(mod)
-        mod.include Colors
-        mod.instance_variable_set(:@parser, Parser.new)
+        def parse(argv)
+          command = new
+          parser.context = command
+          parser.banner = command.method(:banner)
+          *args, options = parser.parse(argv)
+          command.call(*args, options)
+        end
       end
 
-      def parse(argv)
-        command = new
-        @parser.context = command
-        @parser.banner = command.method(:banner)
-        *args, options = @parser.parse(argv)
-        command.call(*args, options)
+      include Colors
+
+      private
+
+      def dry_run?
+        Tomo.dry_run?
+      end
+
+      def logger
+        Tomo.logger
       end
     end
   end

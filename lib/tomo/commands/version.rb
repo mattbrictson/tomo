@@ -1,7 +1,6 @@
 module Tomo
   module Commands
-    class Version
-      extend CLI::Command
+    class Version < CLI::Command
       include CLI::CommonOptions
 
       def summary

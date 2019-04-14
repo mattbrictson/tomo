@@ -1,7 +1,6 @@
 module Tomo
   module Commands
-    class Init
-      extend CLI::Command
+    class Init < CLI::Command
       include CLI::CommonOptions
 
       arg "[APP]"
@@ -36,7 +35,7 @@ module Tomo
 
         IO.write(DEFAULT_CONFIG_PATH, config_rb_template(app, git_url))
 
-        Tomo.logger.info(green("✔ Created #{DEFAULT_CONFIG_PATH}"))
+        logger.info(green("✔ Created #{DEFAULT_CONFIG_PATH}"))
       end
 
       private
@@ -45,14 +44,14 @@ module Tomo
         return if Dir.exist?(".tomo")
         return unless File.exist?(".tomo")
 
-        Tomo.logger.error("Can't create .tomo directory; a file already exists")
+        logger.error("Can't create .tomo directory; a file already exists")
         exit(1)
       end
 
       def assert_no_tomo_project!
         return unless File.exist?(DEFAULT_CONFIG_PATH)
 
-        Tomo.logger.error("A #{DEFAULT_CONFIG_PATH} file already exists")
+        logger.error("A #{DEFAULT_CONFIG_PATH} file already exists")
         exit(1)
       end
 

@@ -1,7 +1,6 @@
 module Tomo
   module Commands
-    class Default
-      extend CLI::Command
+    class Default < CLI::Command
 
       arg "COMMAND", values: CLI::COMMANDS.keys
 

@@ -1,7 +1,6 @@
 module Tomo
   module Commands
-    class Tasks
-      extend CLI::Command
+    class Tasks < CLI::Command
       include CLI::ProjectOptions
       include CLI::CommonOptions
 

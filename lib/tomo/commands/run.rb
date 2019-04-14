@@ -1,7 +1,6 @@
 module Tomo
   module Commands
-    class Run
-      extend CLI::Command
+    class Run < CLI::Command
       include CLI::DeployOptions
       include CLI::ProjectOptions
       include CLI::CommonOptions
@@ -44,7 +43,7 @@ module Tomo
       end
 
       def call(task, *args, options)
-        Tomo.logger.info "tomo run v#{Tomo::VERSION}"
+        logger.info "tomo run v#{Tomo::VERSION}"
 
         runtime = configure_runtime(options)
         plan = runtime.run!(task, *args)
@@ -56,10 +55,10 @@ module Tomo
       def log_completion(task, plan)
         target = "#{task} on #{plan.applicable_hosts_sentence}"
 
-        if Tomo.dry_run?
-          Tomo.logger.info(green("* Simulated #{target} (dry run)"))
+        if dry_run?
+          logger.info(green("* Simulated #{target} (dry run)"))
         else
-          Tomo.logger.info(green("✔ Ran #{target}"))
+          logger.info(green("✔ Ran #{target}"))
         end
       end
 
