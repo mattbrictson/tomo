@@ -1,12 +1,14 @@
 plugin "git"
 plugin "bundler"
 plugin "rails"
+plugin "rbenv"
 plugin "./plugins/%%APP%%.rb"
 
 host "user@hostname.or.ip.address"
 
 set application: "%%APP%%"
 set deploy_to: "/var/www/%<application>"
+set rbenv_ruby_version: "%%RUBY_VERSION%%"
 set git_branch: "master"
 set git_exclusions: %w[
   .tomo/
@@ -20,6 +22,7 @@ set linked_dirs: %w[
 ]
 
 setup do
+  run "rbenv:install"
   run "git:clone"
   run "git:create_release"
   run "core:create_shared_directories"

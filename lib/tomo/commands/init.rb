@@ -73,6 +73,7 @@ module Tomo
         template
           .gsub(/%%APP%%/, app)
           .gsub(/%%GIT_URL%%/, git_url)
+          .gsub(/%%RUBY_VERSION%%/, RUBY_VERSION)
       end
     end
   end
