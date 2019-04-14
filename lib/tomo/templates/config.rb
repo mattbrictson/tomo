@@ -23,6 +23,7 @@ set linked_dirs: %w[
 
 setup do
   run "rbenv:install"
+  run "core:setup_directories"
   run "git:clone"
   run "git:create_release"
   run "core:create_shared_directories"

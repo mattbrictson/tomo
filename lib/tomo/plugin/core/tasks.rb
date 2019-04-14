@@ -2,6 +2,20 @@ require "json"
 
 module Tomo::Plugin::Core
   class Tasks < Tomo::TaskLibrary
+    # rubocop:disable Metrics/AbcSize
+    def setup_directories
+      dirs = [
+        settings[:deploy_to],
+        paths.current.dirname,
+        paths.releases,
+        paths.revision_log.dirname,
+        paths.shared
+      ].uniq
+
+      remote.mkdir_p(*dirs)
+    end
+    # rubocop:enable Metrics/AbcSize
+
     def create_shared_directories
       return if linked_dirs.empty?
 
