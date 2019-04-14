@@ -22,12 +22,12 @@ set linked_dirs: %w[
 ]
 
 setup do
-  run "rbenv:install"
   run "core:setup_directories"
   run "git:clone"
   run "git:create_release"
   run "core:create_shared_directories"
   run "core:symlink_shared_directories"
+  run "rbenv:install"
   run "bundler:upgrade_bundler"
   run "bundler:install"
 end
@@ -39,7 +39,6 @@ deploy do
   run "bundler:install"
   run "rails:assets_precompile"
   run "rails:db_migrate"
-  run "rails:db_seed"
   run "core:symlink_current"
   run "core:clean_releases"
   run "bundler:clean"
