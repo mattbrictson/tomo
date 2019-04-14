@@ -33,12 +33,9 @@ setup do
 end
 
 deploy do
-  run "git:clone"
   run "git:create_release"
-  run "core:create_shared_directories"
   run "core:symlink_shared_directories"
   run "core:write_release_json"
-  run "bundler:upgrade_bundler"
   run "bundler:install"
   run "rails:assets_precompile"
   run "rails:db_migrate"
