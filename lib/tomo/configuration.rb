@@ -18,7 +18,7 @@ module Tomo
     # rubocop:disable Metrics/AbcSize
     def self.from_config_rb(path=DEFAULT_CONFIG_PATH)
       ProjectNotFoundError.raise_with(path: path) unless File.file?(path)
-      Tomo.logger.debug("Loading project from #{path.inspect}")
+      Tomo.logger.debug("Loading configuration from #{path.inspect}")
       config_rb = IO.read(path)
 
       new.tap do |config|
