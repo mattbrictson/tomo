@@ -13,7 +13,8 @@ module Tomo
           self
         end
 
-        def run(task)
+        def run(task, priviliged: false)
+          task.extend(Runtime::PriviligedTask) if priviliged
           @tasks << task
           self
         end

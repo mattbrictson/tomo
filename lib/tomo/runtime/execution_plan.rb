@@ -7,16 +7,17 @@ module Tomo
 
       def_delegators :@task_runner, :paths, :settings
 
+      attr_reader :applicable_hosts
+
       def initialize(tasks:, hosts:, task_filter:, task_runner:)
         @hosts = hosts
         @tasks = tasks
-        @task_filter = task_filter
         @task_runner = task_runner
+        @plan = build_plan(task_filter)
+        @applicable_hosts = gather_applicable_hosts
+        @thread_pool = build_thread_pool
+        freeze
         validate_tasks!
-      end
-
-      def applicable_hosts
-        tasks_per_host.keys
       end
 
       def applicable_hosts_sentence
@@ -31,10 +32,9 @@ module Tomo
 
       def execute
         open_connections do |remotes|
-          tasks.each do |group|
-            remotes.each do |remote|
-              filtered = task_filter.filter(Array(group), host: remote.host)
-              execute_on_thread_pool(filtered, remote)
+          plan.each do |steps|
+            steps.each do |step|
+              step.execute(thread_pool: thread_pool, remotes: remotes)
             end
             thread_pool.run_to_completion
           end
@@ -44,53 +44,56 @@ module Tomo
 
       private
 
-      attr_reader :tasks, :hosts, :task_filter, :task_runner
+      attr_reader :tasks, :hosts, :plan, :task_runner, :thread_pool
 
       def validate_tasks!
-        tasks_per_host.values.flatten.uniq.each do |task|
-          task_runner.validate_task!(task)
-        end
-      end
-
-      def tasks_per_host
-        @_tasks_per_host ||= begin
-          flat_tasks = tasks.flatten
-          hosts.each_with_object({}) do |host, hash|
-            tasks = task_filter.filter(flat_tasks, host: host)
-            hash[host] = tasks unless tasks.empty?
+        plan.each do |steps|
+          steps.each do |step|
+            step.applicable_tasks.each do |task|
+              task_runner.validate_task!(task)
+            end
           end
         end
       end
 
       def open_connections
-        remotes = applicable_hosts.each_with_object([]) do |host, opened|
+        remotes = applicable_hosts.each_with_object({}) do |host, opened|
           thread_pool.post(host) do |thr_host|
-            opened << task_runner.connect(thr_host)
+            opened[thr_host] = task_runner.connect(thr_host)
           end
         end
         thread_pool.run_to_completion
         yield(remotes)
       ensure
-        (remotes || []).each(&:close)
+        (remotes || {}).values.each(&:close)
       end
 
-      def execute_on_thread_pool(tasks, remote)
-        thread_pool.post(tasks, remote) do |thr_tasks, thr_remote|
-          thr_tasks.each do |task|
-            break if thread_pool.failure?
-
-            task_runner.run(task: task, remote: thr_remote)
+      def build_plan(task_filter)
+        tasks.each_with_object([]) do |task, result|
+          steps = hosts.map do |host|
+            HostExecutionStep.new(
+              tasks: task, host: host,
+              task_filter: task_filter, task_runner: task_runner
+            )
           end
+          steps.reject!(&:empty?)
+          result << steps unless steps.empty?
         end
       end
 
-      def thread_pool
-        @_thread_pool ||= begin
-          if applicable_hosts.length > 1
-            ConcurrentRubyThreadPool.new(concurrency)
-          else
-            InlineThreadPool.new
+      def gather_applicable_hosts
+        plan.each_with_object([]) do |steps, result|
+          steps.each do |step|
+            result.push(*step.applicable_hosts)
           end
+        end.uniq
+      end
+
+      def build_thread_pool
+        if plan.map(&:length).max.to_i > 1
+          ConcurrentRubyThreadPool.new(concurrency)
+        else
+          InlineThreadPool.new
         end
       end
 

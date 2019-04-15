@@ -6,7 +6,8 @@ module Tomo
           @batch = batch
         end
 
-        def run(task)
+        def run(task, priviliged: false)
+          task.extend(Runtime::PriviligedTask) if priviliged
           @batch << task
           self
         end
