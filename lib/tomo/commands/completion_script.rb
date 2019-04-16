@@ -17,6 +17,14 @@ module Tomo
           # into your .bashrc. The full script is listed below.
 
           _tomo_complete() {
+            local cur="${COMP_WORDS[COMP_CWORD]}"
+            local prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+            if [[ $prev == "-c" || $prev == "--config" ]]; then
+              COMPREPLY=($(compgen -f -- ${cur}))
+              return 0
+            fi
+
             if [[ "${COMP_LINE: -1}" == " " ]]; then
               command=${COMP_LINE/tomo/tomo --complete}
             else
