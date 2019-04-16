@@ -23,7 +23,7 @@ module Tomo
           applicable_tasks.each do |task|
             break if thread_pool.failure?
 
-            task_host = task.is_a?(PriviligedTask) ? host.as_priviliged : host
+            task_host = task.is_a?(PrivilegedTask) ? host.as_privileged : host
             remote = remotes[task_host]
             task_runner.run(task: task, remote: remote)
           end
@@ -36,12 +36,12 @@ module Tomo
 
       def compute_applicable_hosts
         priv_tasks, normal_tasks = applicable_tasks.partition do |task|
-          task.is_a?(PriviligedTask)
+          task.is_a?(PrivilegedTask)
         end
 
         hosts = []
         hosts << host if normal_tasks.any?
-        hosts << host.as_priviliged if priv_tasks.any?
+        hosts << host.as_privileged if priv_tasks.any?
         hosts.uniq.freeze
       end
     end

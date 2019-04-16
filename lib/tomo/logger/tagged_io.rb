@@ -21,7 +21,9 @@ module Tomo
 
         tags = []
         tags << red("*") if Tomo.dry_run?
-        tags << gray("[#{host.log_prefix}]") unless host.log_prefix.nil?
+        unless host.log_prefix.nil?
+          tags << gray("[") + host.log_prefix + gray("]")
+        end
         return "" if tags.empty?
 
         "#{tags.join(' ')} "

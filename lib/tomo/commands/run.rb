@@ -2,6 +2,11 @@ module Tomo
   module Commands
     class Run < CLI::Command
       include CLI::DeployOptions
+
+      option :privileged,
+             "--[no-]privileged",
+             "Run the task using a privileged user (e.g. root)"
+
       include CLI::ProjectOptions
       include CLI::CommonOptions
 
@@ -46,7 +51,7 @@ module Tomo
         logger.info "tomo run v#{Tomo::VERSION}"
 
         runtime = configure_runtime(options)
-        plan = runtime.run!(task, *args)
+        plan = runtime.run!(task, *args, privileged: options[:privileged])
         log_completion(task, plan)
       end
 

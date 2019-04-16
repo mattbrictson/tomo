@@ -1,6 +1,6 @@
 module Tomo
   class Runtime
-    module PriviligedTask
+    module PrivilegedTask
     end
   end
 end

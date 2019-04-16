@@ -3,7 +3,7 @@ module Tomo
     PATTERN = /^(?:(\S+)@)?(\S*?)(?::(\S+))?$/.freeze
     private_constant :PATTERN
 
-    attr_reader :address, :log_prefix, :user, :port, :roles, :as_priviliged
+    attr_reader :address, :log_prefix, :user, :port, :roles, :as_privileged
 
     def self.parse(host)
       return host if host.is_a?(Host)
@@ -17,13 +17,13 @@ module Tomo
 
     # rubocop:disable Metrics/ParameterLists
     def initialize(address:, port: nil, log_prefix: nil, roles: nil,
-                   user: nil, priviliged_user: "root")
+                   user: nil, privileged_user: "root")
       @user = user.freeze
       @port = (port || 22).to_s.freeze
       @address = address.freeze
       @log_prefix = log_prefix.freeze
       @roles = Array(roles).map(&:freeze).freeze
-      @as_priviliged = priviliged_copy(priviliged_user)
+      @as_privileged = privileged_copy(privileged_user)
       freeze
     end
     # rubocop:enable Metrics/ParameterLists
@@ -52,16 +52,17 @@ module Tomo
 
     private
 
-    def priviliged_copy(priviliged_user)
-      return self if user == priviliged_user
+    def privileged_copy(priv_user)
+      return self if user == priv_user
 
+      pre = [log_prefix, Colors.red(priv_user)].compact.join(Colors.gray(":"))
       self.class.new(
         address: address,
         port: port,
-        user: priviliged_user,
-        priviliged_user: priviliged_user,
+        user: priv_user,
+        privileged_user: priv_user,
         roles: roles,
-        log_prefix: [priviliged_user, log_prefix].compact.join("@")
+        log_prefix: pre
       )
     end
   end

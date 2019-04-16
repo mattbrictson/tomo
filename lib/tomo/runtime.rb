@@ -10,7 +10,7 @@ module Tomo
     autoload :ExecutionPlan, "tomo/runtime/execution_plan"
     autoload :HostExecutionStep, "tomo/runtime/host_execution_step"
     autoload :InlineThreadPool, "tomo/runtime/inline_thread_pool"
-    autoload :PriviligedTask, "tomo/runtime/priviliged_task"
+    autoload :PrivilegedTask, "tomo/runtime/privileged_task"
     autoload :SettingsRequiredError, "tomo/runtime/settings_required_error"
     autoload :TaskAbortedError, "tomo/runtime/task_aborted_error"
     autoload :TaskRunner, "tomo/runtime/task_runner"
@@ -42,7 +42,8 @@ module Tomo
       execution_plan_for(setup_tasks, release: :tmp).execute
     end
 
-    def run!(task, *args)
+    def run!(task, *args, privileged: false)
+      task = task.dup.extend(PrivilegedTask) if privileged
       execution_plan_for([task], release: :current, args: args).execute
     end
 
