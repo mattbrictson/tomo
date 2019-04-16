@@ -55,14 +55,13 @@ module Tomo
     def privileged_copy(priv_user)
       return self if user == priv_user
 
-      pre = [log_prefix, Colors.red(priv_user)].compact.join(Colors.gray(":"))
       self.class.new(
         address: address,
         port: port,
         user: priv_user,
         privileged_user: priv_user,
         roles: roles,
-        log_prefix: pre
+        log_prefix: Colors.red([log_prefix, priv_user].compact.join(":"))
       )
     end
   end

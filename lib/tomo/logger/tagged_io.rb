@@ -21,12 +21,17 @@ module Tomo
 
         tags = []
         tags << red("*") if Tomo.dry_run?
-        unless host.log_prefix.nil?
-          tags << gray("[") + host.log_prefix + gray("]")
-        end
+        tags << grayish("[#{host.log_prefix}]") unless host.log_prefix.nil?
         return "" if tags.empty?
 
         "#{tags.join(' ')} "
+      end
+
+      def grayish(str)
+        parts = str.split(/(\e.*?\e\[0m)/)
+        parts.map! do |part|
+          part.start_with?("\e") ? part : gray(part)
+        end.join
       end
     end
   end
