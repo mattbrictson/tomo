@@ -3,6 +3,7 @@ module Tomo
   autoload :Colors, "tomo/colors"
   autoload :Commands, "tomo/commands"
   autoload :Configuration, "tomo/configuration"
+  autoload :Console, "tomo/console"
   autoload :Error, "tomo/error"
   autoload :Host, "tomo/host"
   autoload :Logger, "tomo/logger"

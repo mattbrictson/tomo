@@ -42,10 +42,11 @@ module Tomo
 
         envs = environment_names(*args, options)
         return if envs.empty?
+        return unless Console.interactive?
 
-        options[:environment] = Menu.prompt_if_available(
+        options[:environment] = Console.menu(
           "Choose an environment:",
-          envs
+          choices: envs
         )
       end
     end

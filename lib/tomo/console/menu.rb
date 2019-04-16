@@ -2,18 +2,8 @@ require "forwardable"
 require "io/console"
 
 module Tomo
-  class CLI
+  module Console
     class Menu
-      def self.available?(input=$stdin)
-        input.respond_to?(:raw) && input.respond_to?(:tty?) && input.tty?
-      end
-
-      def self.prompt_if_available(question, options)
-        return nil unless available?
-
-        new(question, options).prompt_for_selection
-      end
-
       ARROW_UP = "\e[A".freeze
       ARROW_DOWN = "\e[B".freeze
       RETURN = "\r".freeze

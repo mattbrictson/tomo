@@ -8,8 +8,6 @@ module Tomo
     autoload :DeployOptions, "tomo/cli/deploy_options"
     autoload :Error, "tomo/cli/error"
     autoload :InterruptedError, "tomo/cli/interrupted_error"
-    autoload :KeyReader, "tomo/cli/key_reader"
-    autoload :Menu, "tomo/cli/menu"
     autoload :Options, "tomo/cli/options"
     autoload :Parser, "tomo/cli/parser"
     autoload :ProjectOptions, "tomo/cli/project_options"

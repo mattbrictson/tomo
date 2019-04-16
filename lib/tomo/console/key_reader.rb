@@ -1,8 +1,9 @@
 require "forwardable"
 require "io/console"
+require "time"
 
 module Tomo
-  class CLI
+  module Console
     class KeyReader
       extend Forwardable
 
