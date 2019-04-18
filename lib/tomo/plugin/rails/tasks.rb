@@ -17,11 +17,28 @@ module Tomo::Plugin::Rails
     end
 
     def db_create
-      db_task_unless_exists("db:create")
+      return remote.rake("db:create") unless database_exists?
+
+      logger.info "Database already exists; skipping db:create."
     end
 
     def db_setup
-      db_task_unless_exists("db:setup")
+      return remote.rake("db:setup") unless database_exists?
+
+      logger.info "Database already exists; skipping db:setup."
+    end
+
+    def db_schema_load
+      return remote.rake("db:schema:load") unless database_schema_loaded?
+
+      logger.info "Database schema already loaded; skipping db:schema:load."
+    end
+
+    def db_structure_load
+      return remote.rake("db:structure:load") unless database_schema_loaded?
+
+      logger.info "Database structure already loaded; "\
+                  "skipping db:structure:load."
     end
 
     def log_tail
@@ -31,13 +48,15 @@ module Tomo::Plugin::Rails
 
     private
 
-    def db_task_unless_exists(rake_task)
-      if remote.rake?("db:version", silent: true) && !dry_run?
-        logger.info "Database exists; skipping #{rake_task}."
-        return
-      end
+    def database_exists?
+      remote.rake?("db:version", silent: true) && !dry_run?
+    end
 
-      remote.rake(rake_task)
+    def database_schema_loaded?
+      result = remote.rake("db:version", silent: true, raise_on_error: false)
+      schema_version = result.output[/version:\s*(\d+)$/i, 1].to_i
+
+      result.success? && schema_version.positive? && !dry_run?
     end
   end
 end

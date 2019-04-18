@@ -37,7 +37,9 @@ setup do
   run "rbenv:install"
   run "bundler:upgrade_bundler"
   run "bundler:install"
-  run "rails:db_setup"
+  run "rails:db_create"
+  run "rails:db_schema_load"
+  run "rails:db_seed"
 end
 
 deploy do
