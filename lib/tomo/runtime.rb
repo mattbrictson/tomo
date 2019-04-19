@@ -62,8 +62,8 @@ module Tomo
                 :task_filter, :settings_registry, :tasks_registry
 
     def new_task_runner(release_type, args)
-      settings_registry.assign_settings(
-        run_args: args,
+      settings_registry.assign_settings(run_args: args)
+      settings_registry.define_settings(
         release_path: release_path_for(release_type)
       )
       TaskRunner.new(

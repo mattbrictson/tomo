@@ -1,9 +1,6 @@
 module Tomo
   class CLI
     module DeployOptions
-      RESERVED_SETTINGS = %i[release_path].freeze
-      private_constant :RESERVED_SETTINGS
-
       # rubocop:disable Metrics/MethodLength
       def self.included(mod)
         mod.class_eval do
@@ -38,9 +35,7 @@ module Tomo
         runtime = configure_runtime(options, strict: false)
         settings = runtime.execution_plan_for([]).settings
 
-        settings = settings.select do |key, value|
-          next false if RESERVED_SETTINGS.include?(key)
-
+        settings = settings.select do |_key, value|
           value.nil? || value.is_a?(String) || value.is_a?(Numeric)
         end.to_h
 
