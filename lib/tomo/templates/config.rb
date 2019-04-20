@@ -10,6 +10,7 @@ host "user@hostname.or.ip.address"
 
 set application: "%%APP%%"
 set deploy_to: "/var/www/%<application>"
+set nvm_node_version: "%%NODE_VERSION%%"
 set rbenv_ruby_version: "%%RUBY_VERSION%%"
 set git_url: "%%GIT_URL%%"
 set git_branch: "master"

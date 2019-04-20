@@ -67,6 +67,10 @@ module Tomo
         url.empty? ? nil : url
       end
 
+      def node_version
+        `node --version`.chomp.sub(/^v/i, "")
+      end
+
       def config_rb_template(app, git_url)
         path = File.expand_path("../templates/config.rb", __dir__)
         template = IO.read(path)
@@ -74,6 +78,7 @@ module Tomo
           .gsub(/%%APP%%/, app)
           .gsub(/%%GIT_URL%%/, git_url)
           .gsub(/%%RUBY_VERSION%%/, RUBY_VERSION)
+          .gsub(/%%NODE_VERSION%%/, node_version)
       end
     end
   end
