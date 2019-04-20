@@ -21,6 +21,8 @@ module Tomo
 
         plugin
       rescue LoadError => e
+        raise unless e.message.match?(/\s#{Regexp.quote(plugin_path)}$/)
+
         raise_unknown_plugin_error(e)
       end
 
