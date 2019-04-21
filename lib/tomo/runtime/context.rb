@@ -5,7 +5,7 @@ module Tomo
 
       def initialize(settings)
         @paths = Paths.new(settings)
-        @settings = settings
+        @settings = settings.freeze
         freeze
       end
 

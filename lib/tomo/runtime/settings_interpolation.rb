@@ -1,19 +1,15 @@
 module Tomo
-  class Configuration
-    class SettingsRegistry
-      def initialize
-        @settings = {}
+  class Runtime
+    class SettingsInterpolation
+      def self.interpolate(settings)
+        new(settings).call
       end
 
-      def define_settings(definitions)
-        settings.merge!(symbolize(definitions)) { |_, existing, _| existing }
+      def initialize(settings)
+        @settings = symbolize(settings)
       end
 
-      def assign_settings(assignments)
-        settings.merge!(symbolize(assignments))
-      end
-
-      def to_hash
+      def call
         hash = Hash[settings.keys.map { |name| [name, fetch(name)] }]
         dump_settings(hash) if Tomo.debug?
         hash

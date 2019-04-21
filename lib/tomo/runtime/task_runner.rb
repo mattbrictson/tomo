@@ -6,10 +6,13 @@ module Tomo
       def_delegators :@context, :paths, :settings
       attr_reader :context
 
-      def initialize(helper_modules:, settings:, tasks_registry:)
-        @helper_modules = helper_modules.freeze
-        @context = Context.new(settings.freeze)
-        @tasks_by_name = tasks_registry.bind_tasks(context).freeze
+      def initialize(plugins_registry:, settings:)
+        interpolated_settings = SettingsInterpolation.interpolate(
+          plugins_registry.settings.merge(settings)
+        )
+        @helper_modules = plugins_registry.helper_modules.freeze
+        @context = Context.new(interpolated_settings)
+        @tasks_by_name = plugins_registry.bind_tasks(context).freeze
         freeze
       end
 

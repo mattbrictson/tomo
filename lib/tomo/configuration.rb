@@ -1,5 +1,4 @@
 module Tomo
-  # rubocop:disable Metrics/ClassLength
   class Configuration
     autoload :DSL, "tomo/configuration/dsl"
     autoload :Environment, "tomo/configuration/environment"
@@ -7,8 +6,6 @@ module Tomo
     autoload :PluginsRegistry, "tomo/configuration/plugins_registry"
     autoload :ProjectNotFoundError, "tomo/configuration/project_not_found_error"
     autoload :RoleBasedTaskFilter, "tomo/configuration/role_based_task_filter"
-    autoload :SettingsRegistry, "tomo/configuration/settings_registry"
-    autoload :TasksRegistry, "tomo/configuration/tasks_registry"
     autoload :UnknownEnvironmentError,
              "tomo/configuration/unknown_environment_error"
     autoload :UnknownPluginError, "tomo/configuration/unknown_plugin_error"
@@ -43,29 +40,21 @@ module Tomo
       @task_filter = RoleBasedTaskFilter.new
     end
 
-    # rubocop:disable Metrics/MethodLength
     def build_runtime(environment: nil)
       validate_environment!(environment)
-
-      init_registries
-      register_plugins
-      register_settings(environment)
+      plugins_registry = register_plugins
 
       Runtime.new(
         deploy_tasks: deploy_tasks,
         setup_tasks: setup_tasks,
-        helper_modules: plugins_registry.helper_modules,
+        plugins_registry: plugins_registry,
         hosts: add_log_prefixes(hosts_for(environment)),
-        settings_registry: settings_registry,
-        task_filter: task_filter,
-        tasks_registry: tasks_registry
+        settings: settings_with_env_overrides(environment),
+        task_filter: task_filter
       )
     end
-    # rubocop:enable Metrics/MethodLength
 
     private
-
-    attr_reader :plugins_registry, :settings_registry, :tasks_registry
 
     def validate_environment!(name)
       if name.nil?
@@ -91,15 +80,9 @@ module Tomo
       end
     end
 
-    def init_registries
-      @settings_registry = SettingsRegistry.new
-      @tasks_registry = TasksRegistry.new
-      @plugins_registry = PluginsRegistry.new(
-        settings_registry: settings_registry, tasks_registry: tasks_registry
-      )
-    end
-
     def register_plugins
+      plugins_registry = PluginsRegistry.new
+
       (["core"] + plugins.uniq).each do |plug|
         if %w[. /].include?(plug[0])
           plug = File.expand_path(plug, working_dir) unless working_dir.nil?
@@ -108,13 +91,14 @@ module Tomo
           plugins_registry.load_plugin_by_name(plug)
         end
       end
+
+      plugins_registry
     end
 
-    def register_settings(environ)
-      settings_registry.assign_settings(settings)
-      return unless environments.key?(environ)
+    def settings_with_env_overrides(environ)
+      return settings unless environments.key?(environ)
 
-      settings_registry.assign_settings(environments[environ].settings)
+      settings.merge(environments[environ].settings)
     end
 
     def raise_no_environment_specified
@@ -127,5 +111,4 @@ module Tomo
       )
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

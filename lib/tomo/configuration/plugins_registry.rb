@@ -5,12 +5,27 @@ module Tomo
                "tomo/configuration/plugins_registry/file_resolver"
       autoload :GemResolver, "tomo/configuration/plugins_registry/gem_resolver"
 
-      attr_reader :helper_modules
+      attr_reader :helper_modules, :settings
 
-      def initialize(settings_registry:, tasks_registry:)
+      def initialize
+        @settings = {}
         @helper_modules = []
-        @settings_registry = settings_registry
-        @tasks_registry = tasks_registry
+        @namespaced_classes = []
+      end
+
+      def task_names
+        bind_tasks(nil).keys
+      end
+
+      def bind_tasks(context)
+        namespaced_classes.each_with_object({}) do |(namespace, klass), result|
+          library = klass.new(context)
+
+          klass.public_instance_methods(false).each do |name|
+            qualified = [namespace, name].compact.join(":")
+            result[qualified] = library.public_method(name)
+          end
+        end
       end
 
       def load_plugin_by_name(name)
@@ -28,16 +43,25 @@ module Tomo
         Tomo.logger.debug("Loading plugin #{plugin_class}")
 
         helper_modules.push(*plugin_class.helper_modules)
-        settings_registry.define_settings(plugin_class.default_settings)
-        tasks_registry.register_task_libraries(
-          namespace,
-          *plugin_class.tasks_classes
-        )
+        settings.merge!(plugin_class.default_settings) { |_, exist, _| exist }
+        register_task_libraries(namespace, *plugin_class.tasks_classes)
       end
 
       private
 
-      attr_reader :settings_registry, :tasks_registry
+      attr_reader :namespaced_classes
+
+      def register_task_libraries(namespace, *library_classes)
+        library_classes.each { |cls| register_task_library(namespace, cls) }
+      end
+
+      def register_task_library(namespace, library_class)
+        Tomo.logger.debug(
+          "Registering task library #{library_class}"\
+          " (#{namespace.inspect} namespace)"
+        )
+        namespaced_classes << [namespace, library_class]
+      end
     end
   end
 end

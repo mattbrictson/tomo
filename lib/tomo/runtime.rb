@@ -11,6 +11,7 @@ module Tomo
     autoload :HostExecutionStep, "tomo/runtime/host_execution_step"
     autoload :InlineThreadPool, "tomo/runtime/inline_thread_pool"
     autoload :PrivilegedTask, "tomo/runtime/privileged_task"
+    autoload :SettingsInterpolation, "tomo/runtime/settings_interpolation"
     autoload :SettingsRequiredError, "tomo/runtime/settings_required_error"
     autoload :TaskAbortedError, "tomo/runtime/task_aborted_error"
     autoload :TaskRunner, "tomo/runtime/task_runner"
@@ -19,17 +20,15 @@ module Tomo
     attr_reader :tasks
 
     # rubocop:disable Metrics/ParameterLists
-    def initialize(deploy_tasks:, setup_tasks:, hosts:,
-                   helper_modules:, task_filter:,
-                   settings_registry:, tasks_registry:)
+    def initialize(deploy_tasks:, setup_tasks:, hosts:, task_filter:,
+                   settings:, plugins_registry:)
       @deploy_tasks = deploy_tasks.freeze
       @setup_tasks = setup_tasks.freeze
       @hosts = hosts.freeze
-      @helper_modules = helper_modules.freeze
       @task_filter = task_filter.freeze
-      @settings_registry = settings_registry
-      @tasks_registry = tasks_registry
-      @tasks = tasks_registry.task_names
+      @settings = settings
+      @plugins_registry = plugins_registry
+      @tasks = plugins_registry.task_names
       freeze
     end
     # rubocop:enable Metrics/ParameterLists
@@ -58,19 +57,15 @@ module Tomo
 
     private
 
-    attr_reader :deploy_tasks, :setup_tasks, :hosts, :helper_modules,
-                :task_filter, :settings_registry, :tasks_registry
+    attr_reader :deploy_tasks, :setup_tasks, :hosts, :task_filter, :settings,
+                :plugins_registry
 
     def new_task_runner(release_type, args)
-      settings_registry.assign_settings(run_args: args)
-      settings_registry.define_settings(
-        release_path: release_path_for(release_type)
-      )
-      TaskRunner.new(
-        helper_modules: helper_modules,
-        settings: settings_registry.to_hash,
-        tasks_registry: tasks_registry
-      )
+      run_settings = { release_path: release_path_for(release_type) }
+                     .merge(settings)
+                     .merge(run_args: args)
+
+      TaskRunner.new(plugins_registry: plugins_registry, settings: run_settings)
     end
 
     def release_path_for(type)
