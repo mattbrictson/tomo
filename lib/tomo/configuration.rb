@@ -40,16 +40,26 @@ module Tomo
       @task_filter = RoleBasedTaskFilter.new
     end
 
-    def build_runtime(environment: nil)
+    def for_environment(environment)
       validate_environment!(environment)
+
+      dup.tap do |copy|
+        copy.environments = {}
+        copy.hosts = hosts_for(environment)
+        copy.settings = settings_with_env_overrides(environment)
+      end
+    end
+
+    def build_runtime
+      validate_environment!(nil)
       plugins_registry = register_plugins
 
       Runtime.new(
         deploy_tasks: deploy_tasks,
         setup_tasks: setup_tasks,
         plugins_registry: plugins_registry,
-        hosts: add_log_prefixes(hosts_for(environment)),
-        settings: settings_with_env_overrides(environment),
+        hosts: add_log_prefixes(hosts),
+        settings: settings,
         task_filter: task_filter
       )
     end
@@ -65,7 +75,7 @@ module Tomo
     end
 
     def hosts_for(environ)
-      return hosts unless environments.key?(environ)
+      return hosts.dup unless environments.key?(environ)
 
       environments[environ].hosts
     end
@@ -96,7 +106,7 @@ module Tomo
     end
 
     def settings_with_env_overrides(environ)
-      return settings unless environments.key?(environ)
+      return settings.dup unless environments.key?(environ)
 
       settings.merge(environments[environ].settings)
     end
