@@ -29,13 +29,9 @@ module Tomo
     # rubocop:enable Metrics/ParameterLists
 
     def with_log_prefix(prefix)
-      self.class.new(
-        address: address,
-        port: port,
-        user: user,
-        roles: roles,
-        log_prefix: prefix
-      )
+      copy = dup
+      copy.instance_variable_set(:@log_prefix, prefix)
+      copy.freeze
     end
 
     def to_s
