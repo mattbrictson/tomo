@@ -2,7 +2,7 @@
 
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/mattbrictson)
 
-Tomo is a friendly command-line tool for deploying Rails apps. It is a new alternative to Capistrano, Blah, and Blah, that optimizes for simplicity and developer happiness.
+Tomo is a friendly command-line tool for deploying Rails apps. It is a new alternative to Capistrano, Mina, and Shipit, that optimizes for simplicity and developer happiness.
 
 💻 Rich command-line interface with built-in bash completions<br/>
 ☁️ Multi-environment and role-based multi-host support<br/>
