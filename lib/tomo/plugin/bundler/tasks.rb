@@ -7,7 +7,7 @@ module Tomo::Plugin::Bundler
     end
 
     def clean
-      remote.bundle("clean", settings[:bundler_clean_options])
+      remote.bundle("clean")
     end
 
     def upgrade_bundler
@@ -33,22 +33,18 @@ module Tomo::Plugin::Bundler
       options
     end
 
-    # rubocop:disable Metrics/AbcSize
     def install_options
-      binstubs = settings[:bundler_binstubs]
       jobs = settings[:bundler_jobs]
       without = settings[:bundler_without]
-      flags = settings[:bundler_flags]
+      flags = settings[:bundler_install_flags]
 
       options = check_options.dup
-      options.push("--binstubs", binstubs) if binstubs
       options.push("--jobs", jobs) if jobs
       options.push("--without", without) if without
       options.push(flags) if flags
 
       options
     end
-    # rubocop:enable Metrics/AbcSize
 
     def extract_bundler_ver_from_lockfile
       lockfile_tail = remote.capture(
