@@ -34,8 +34,16 @@ module Tomo
     def_delegators :context, :paths, :settings
     attr_reader :context, :ssh, :shell_builder
 
+    def dry_run?
+      Tomo.dry_run?
+    end
+
     def logger
       Tomo.logger
+    end
+
+    def raw(str)
+      ShellBuilder.raw(str)
     end
 
     def remote
