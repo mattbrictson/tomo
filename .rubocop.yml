@@ -15,6 +15,7 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Exclude:
     - "*.gemspec"
+    - "Rakefile"
 
 Metrics/ClassLength:
   Exclude:
