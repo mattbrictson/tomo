@@ -16,14 +16,14 @@ This project wouldn't be possible without the generosity of the open source Ruby
 
 ## Let's dive in!
 
-- Install
-- Quick start
-- Reference documentation
-- FAQ
-- Support
-- License
-- Code of conduct
-- Contribution guide
+- [Install](#install)
+- [Quick start](#quick-start)
+- [Reference documentation](#reference-documentation)
+- [FAQ](#faq)
+- [Support](#support)
+- [License](#license)
+- [Code of conduct](#code-of-conduct)
+- [Contribution guide](#contribution-guide)
 
 ## Install
 
@@ -45,6 +45,10 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Reference documentation
+
+## FAQ
+
 ## Support
 
 Thanks for your interest in Tomo! I use Tomo myself to deploy my own Rails projects and intend to keep this repository working and up to date for the foreseeable future. However Tomo is only a hobby, and as the sole maintainer, my ability to provide support and review pull request is limited and a bit sporadic. My priorities right now are:
@@ -64,3 +68,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of conduct
 
 Everyone interacting in the Tomo project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/mattbrictson/tomo/blob/master/CODE_OF_CONDUCT.md).
+
+## Contribution guide
