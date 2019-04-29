@@ -96,7 +96,7 @@ deploy do
 end
 ```
 
-Eventually you'd want to edit the config file to specify the appropriate user and host, perhaps define some custom tasks, and tweak the settings to make them suitable for your Rails app. But in the meantime, let's take a look at how the `deploy` command works:
+Eventually you'd want to edit the config file to specify the appropriate user and host, perhaps define some custom tasks, and tweak the settings to make them suitable for your Rails app. You can also take advantage of more advanced features like multiple hosts and environment-based config. But in the meantime, let's take a look at how the `deploy` command works:
 
 ```
 $ tomo deploy --help
