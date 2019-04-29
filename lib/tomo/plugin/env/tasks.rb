@@ -1,5 +1,9 @@
+require "monitor"
+
 module Tomo::Plugin::Env
   class Tasks < Tomo::TaskLibrary
+    include MonitorMixin
+
     def show
       env = read_existing
       logger.info env.gsub(/^export /, "").strip
@@ -85,7 +89,12 @@ module Tomo::Plugin::Env
     end
 
     def prompt_for(name)
-      Tomo::Console.prompt("#{name}? ")
+      synchronize do
+        @answers ||= {}
+        next @answers[name] if @answers.key?(name)
+
+        @answers[name] = Tomo::Console.prompt("#{name}? ")
+      end
     end
 
     def modify_bashrc
