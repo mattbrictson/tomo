@@ -1,5 +1,8 @@
 # Tomo
 
+[![Gem Version](https://badge.fury.io/rb/tomo.svg)](https://rubygems.org/gems/tomo)
+[![Build Status](https://travis-ci.org/mattbrictson/tomo.svg?branch=master)](https://travis-ci.org/mattbrictson/tomo)
+[![Code Climate](https://codeclimate.com/github/mattbrictson/tomo/badges/gpa.svg)](https://codeclimate.com/github/mattbrictson/tomo)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/mattbrictson)
 
 Tomo is a friendly command-line tool for deploying Rails apps. It is a new alternative to Capistrano, Mina, and Shipit that optimizes for simplicity and developer happiness.
@@ -14,7 +17,7 @@ Tomo is a friendly command-line tool for deploying Rails apps. It is a new alter
 
 This project wouldn't be possible without the generosity of the open source Ruby community. Please support open source projects and your fellow developers by helping answer questions, contributing pull requests to improve code and documentation, or just [drop a note](https://saythanks.io/to/mattbrictson) to say thanks! ❤️
 
-## Let's dive in!
+---
 
 - [Quick start](#quick-start)
 - [Reference documentation](#reference-documentation)
@@ -173,15 +176,19 @@ tomo run v0.1.0
 * cd /var/www/my-rails-app/current && bundle exec rails console
 ```
 
-And just like that, you're already using tomo! To prepare your project for a real deploy, check out the sections of the reference documentation on configuration, writing plugins, the setup command, and the deploy command.
+As you can see, it is pretty easy to get started with tomo and try things out. Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
 
-Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
+#### Next steps
 
-Enjoy using tomo!
+To prepare your project for a real deploy, check out the sections of the reference documentation on configuration, writing plugins, the setup command, and the deploy command. If you have questions, check out the [FAQ](#faq) and [support](#support) notes below. Enjoy using tomo!
 
 ## Reference documentation
 
+_TODO_
+
 ## FAQ
+
+_TODO_
 
 ## Support
 
@@ -193,7 +200,7 @@ Thanks for your interest in Tomo! I use Tomo myself to deploy my own Rails proje
 
 If you'd like to help by submitting a pull request, that would be much appreciated! Check out the contribution guide to get started.
 
-Otherwise if you want to report a bug, or have ideas, feedback or questions about Tomo, let me know and I will do my best to provide a helpful answer. Happy hacking! —Matt
+Otherwise if you want to report a bug, or have ideas, feedback or questions about Tomo, [let me know via GitHub issues](https://github.com/mattbrictson/tomo/issues/new) and I will do my best to provide a helpful answer. Happy hacking! —Matt
 
 ## License
 
@@ -204,3 +211,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 Everyone interacting in the Tomo project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/mattbrictson/tomo/blob/master/CODE_OF_CONDUCT.md).
 
 ## Contribution guide
+
+_TODO_
