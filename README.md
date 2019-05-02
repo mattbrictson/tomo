@@ -35,9 +35,13 @@ Tomo is distributed as a ruby gem. To install:
 $ gem install tomo
 ```
 
+#### Getting help
+
 An easy way to kick the tires is to view the `--help`.
 
 ![$ tomo --help](./doc/readme-images/tomo-help.png)
+
+#### Configuring a project
 
 Let’s init a project to see how tomo is configured.
 
@@ -81,15 +85,33 @@ deploy do
 end
 ```
 
-Eventually you'll want to edit the config file to specify the appropriate user and host, perhaps define some custom tasks, and tweak the settings to make them suitable for your Rails app. You can also take advantage of more advanced features like multiple hosts and environment-based config. But in the meantime, let's take a look at how the `deploy` command works:
+Eventually you'll want to edit the config file to specify the appropriate user and host, perhaps define some custom tasks, and tweak the settings to make them suitable for your Rails app. You can also take advantage of more advanced features like multiple hosts and environment-based config.
+
+#### Host setup
+
+With tomo, an initial deployment is separated in two distinct steps. The `setup` command prepares the host for its first deploy. Let’s take a look at the documentation with `--help`:
+
+![$ tomo setup --help](./doc/readme-images/tomo-setup-help.png)
+
+We can simulate the setup operation with the `--dry-run` option. Let's try it:
+
+![$ tomo setup --dry-run](./doc/readme-images/tomo-setup-dry-run.png)
+
+As you can see, the setup command in this project clones the git repository, installs ruby, node, bundler, and initializes the database. One the host is set up, it is ready for its first deploy.
+
+#### Performing a deploy
+
+Typically you only need to run `setup` once. From then on deploying a project is a matter of running the `deploy` command.
 
 ![$ tomo deploy --help](./doc/readme-images/tomo-deploy-help.png)
 
-We can simulate an entire deploy with the `--dry-run` option. Let's try it:
+Like `setup`, this can be simulated with `--dry-run`, like this:
 
 ![$ tomo deploy --dry-run](./doc/readme-images/tomo-deploy-dry-run.png)
 
-Tomo can also run individual remote tasks, which comes in very handy. Use the `tasks` command to see the list of tasks tomo knows about. By the way, it is very easy to write your own tasks to add to this list.
+#### Running a single task
+
+Tomo can also `run` individual remote tasks. Use the `tasks` command to see the list of tasks tomo knows about.
 
 ![$ tomo tasks](./doc/readme-images/tomo-tasks.png)
 
@@ -97,9 +119,35 @@ One of the built-in Rails tasks is `rails:console`, which brings up a fully-inte
 
 ![$ tomo run rails:console --dry-run](./doc/readme-images/tomo-run-rails-console-dry-run.png)
 
-And just like that, you are now already familiar with the basics of tomo and how it works! Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
+#### Writing tasks
+
+Tomo has many plugins built-in, but you can easily add your own to extend tomo with custom tasks. By convention, custom plugins are stored in `.tomo/plugins/`. These plugins can define tasks as plain ruby methods. For example:
+
+```ruby
+# .tomo/plugins/my-plugin.rb
+
+def hello
+  remote.run "echo", "hello", settings[:application]
+end
+```
+
+Use `remote.run` to execute shell scripts on the remote host, similar to how you would use Ruby's `system`. Project settings are accessible via `settings`, which is a plain Ruby hash.
+
+Load your plugin in `config.rb` like this:
+
+```ruby
+# .tomo/config.rb
+
+plugin "./plugins/my-plugin.rb"
+```
+
+And run it!
+
+![$ tomo run my-plugin:hello --dry-run](./doc/readme-images/tomo-run-hello-dry-run.png)
 
 #### Next steps
+
+And just like that, you are now already familiar with the basics of tomo and how to extend it! Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
 
 To prepare your existing project for a real deploy, check out the sections of the reference documentation on configuration, writing plugins, the setup command, and the deploy command. There is also a tutorial that walks through deploying a new Rails app from scratch. If you have questions, check out the [FAQ](#faq) and [support](#support) notes below. Enjoy using tomo!
 
