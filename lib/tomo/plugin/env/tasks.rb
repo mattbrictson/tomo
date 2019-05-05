@@ -100,11 +100,11 @@ module Tomo::Plugin::Env
     def modify_bashrc
       env_path = paths.env.shellescape
       existing_rc = remote.capture("cat", paths.bashrc, raise_on_error: false)
-      return if existing_rc.include?("source #{env_path}")
+      return if existing_rc.include?(". #{env_path}")
 
       remote.write(text: <<~BASHRC + existing_rc, to: paths.bashrc)
         if [ -f #{env_path} ]; then
-          source #{env_path}
+          . #{env_path}
         fi
 
       BASHRC
