@@ -20,12 +20,12 @@ This project wouldn't be possible without the generosity of the open source Ruby
 ---
 
 - [Quick start](#quick-start)
-- [Reference documentation](#reference-documentation)
-- [FAQ](#faq)
+- [Reference documentation](#reference-documentation) [TODO]
+- [FAQ](#faq) [TODO]
 - [Support](#support)
 - [License](#license)
 - [Code of conduct](#code-of-conduct)
-- [Contribution guide](#contribution-guide)
+- [Contribution guide](#contribution-guide) [TODO]
 
 ## Quick start
 
@@ -89,7 +89,7 @@ Eventually you'll want to edit the config file to specify the appropriate user a
 
 #### Host setup
 
-With tomo, an initial deployment is separated in two distinct steps. The `setup` command prepares the host for its first deploy. Let’s take a look at the documentation with `--help`:
+With tomo, an initial deployment is separated into two distinct steps. The `setup` command prepares the host for its first deploy. Let’s take a look at the documentation with `--help`:
 
 ![$ tomo setup --help](./docs/_readme_images/tomo-setup-help.png)
 
@@ -149,15 +149,15 @@ And run it!
 
 And just like that, you are now already familiar with the basics of tomo and how to extend it! Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
 
-To prepare your existing project for a real deploy, check out the sections of the reference documentation on configuration, writing plugins, the setup command, and the deploy command. There is also a tutorial that walks through deploying a new Rails app from scratch. If you have questions, check out the [FAQ](#faq) and [support](#support) notes below. Enjoy using tomo!
+To prepare your existing project for a real deploy, check out the sections of the reference documentation on configuration [TODO], writing plugins [TODO], the setup command [TODO], and the deploy command [TODO]. There is also a tutorial [TODO] that walks through deploying a new Rails app from scratch. If you have questions, check out the [FAQ](#faq) [TODO] and [support](#support) notes below. Enjoy using tomo!
 
 ## Reference documentation
 
-_TODO_
+[TODO]
 
 ## FAQ
 
-_TODO_
+[TODO]
 
 ## Support
 
@@ -181,4 +181,4 @@ Everyone interacting in the Tomo project’s codebases, issue trackers, chat roo
 
 ## Contribution guide
 
-_TODO_
+[TODO]
