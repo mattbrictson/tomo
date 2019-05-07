@@ -39,13 +39,13 @@ $ gem install tomo
 
 An easy way to kick the tires is to view the `--help`.
 
-![$ tomo --help](./docs/_readme_images/tomo-help.png)
+![$ tomo --help](./readme_images/tomo-help.png)
 
 #### Configuring a project
 
 Let’s init a project to see how tomo is configured.
 
-![$ tomo init](./docs/_readme_images/tomo-init.png)
+![$ tomo init](./readme_images/tomo-init.png)
 
 The `.tomo/config.rb` file defines all the settings and tasks needed to setup and deploy a typical Rails project. An abbreviated version looks like this:
 
@@ -91,11 +91,11 @@ Eventually you'll want to edit the config file to specify the appropriate user a
 
 With tomo, an initial deployment is separated into two distinct steps. The `setup` command prepares the host for its first deploy. Let’s take a look at the documentation with `--help`:
 
-![$ tomo setup --help](./docs/_readme_images/tomo-setup-help.png)
+![$ tomo setup --help](./readme_images/tomo-setup-help.png)
 
 We can simulate the setup operation with the `--dry-run` option. Let's try it:
 
-![$ tomo setup --dry-run](./docs/_readme_images/tomo-setup-dry-run.png)
+![$ tomo setup --dry-run](./readme_images/tomo-setup-dry-run.png)
 
 As you can see, the setup command in this project clones the git repository, installs ruby, node, bundler, and initializes the database. One the host is set up, it is ready for its first deploy.
 
@@ -103,21 +103,21 @@ As you can see, the setup command in this project clones the git repository, ins
 
 Typically you only need to run `setup` once. From then on deploying a project is a matter of running the `deploy` command.
 
-![$ tomo deploy --help](./docs/_readme_images/tomo-deploy-help.png)
+![$ tomo deploy --help](./readme_images/tomo-deploy-help.png)
 
 Like `setup`, this can be simulated with `--dry-run`, like this:
 
-![$ tomo deploy --dry-run](./docs/_readme_images/tomo-deploy-dry-run.png)
+![$ tomo deploy --dry-run](./readme_images/tomo-deploy-dry-run.png)
 
 #### Running a single task
 
 Tomo can also `run` individual remote tasks. Use the `tasks` command to see the list of tasks tomo knows about.
 
-![$ tomo tasks](./docs/_readme_images/tomo-tasks.png)
+![$ tomo tasks](./readme_images/tomo-tasks.png)
 
 One of the built-in Rails tasks is `rails:console`, which brings up a fully-interactive Rails console over SSH. We can simulate this with `--dry-run` as well.
 
-![$ tomo run rails:console --dry-run](./docs/_readme_images/tomo-run-rails-console-dry-run.png)
+![$ tomo run rails:console --dry-run](./readme_images/tomo-run-rails-console-dry-run.png)
 
 #### Writing tasks
 
@@ -143,7 +143,7 @@ plugin "./plugins/my-plugin.rb"
 
 And run it!
 
-![$ tomo run my-plugin:hello --dry-run](./docs/_readme_images/tomo-run-hello-dry-run.png)
+![$ tomo run my-plugin:hello --dry-run](./readme_images/tomo-run-hello-dry-run.png)
 
 #### Next steps
 
