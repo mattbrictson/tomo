@@ -3,13 +3,28 @@ require "rake/testtask"
 require "rubocop/rake_task"
 
 task default: %i[test rubocop]
+desc "Run all tests"
+task test: %w[test:unit test:docker]
 
 RuboCop::RakeTask.new
 
-Rake::TestTask.new(:test) do |t|
+Rake::TestTask.new("test:unit") do |t|
   t.libs << "test"
   t.libs << "lib"
-  t.test_files = FileList["test/**/*_test.rb"]
+  t.test_files = FileList["test/**/*_test.rb"] -
+                 FileList["test/**/*_docker_test.rb"]
+end
+
+if system("docker version > /dev/null")
+  Rake::TestTask.new("test:docker") do |t|
+    t.libs << "test"
+    t.libs << "lib"
+    t.test_files = FileList["test/**/*_docker_test.rb"]
+  end
+else
+  task "test:docker" do
+    warn "!!\n!! docker not available; docker tests will be skipped.\n!!"
+  end
 end
 
 namespace :bump do
@@ -20,9 +35,9 @@ namespace :bump do
     travis[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
     IO.write(".travis.yml", travis)
 
-    circleci = IO.read(".circleci/config.yml")
-    circleci[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
-    IO.write(".circleci/config.yml", circleci)
+    dockerfile = IO.read(".circleci/Dockerfile")
+    dockerfile[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
+    IO.write(".circleci/Dockerfile", dockerfile)
   end
 
   task :ruby do
@@ -37,6 +52,10 @@ namespace :bump do
     circleci = IO.read(".circleci/config.yml")
     circleci[%r{circleci/ruby:(.*)}, 1] = RubyVersions.latest
     IO.write(".circleci/config.yml", circleci)
+
+    dockerfile = IO.read(".circleci/Dockerfile")
+    dockerfile[%r{circleci/ruby:(.*)}, 1] = RubyVersions.latest
+    IO.write(".circleci/Dockerfile", dockerfile)
 
     travis = YAML.safe_load(open(".travis.yml"))
     travis["rvm"] = RubyVersions.latest_supported_patches + ["ruby-head"]

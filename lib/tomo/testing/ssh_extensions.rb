@@ -4,6 +4,8 @@ module Tomo
       private
 
       def build_connection(host, options)
+        return super if Testing.ssh_enabled
+
         Testing::Connection.new(host, options)
       end
     end

@@ -5,11 +5,22 @@ jobs:
       - image: circleci/ruby:2.6.3
     steps:
       - checkout
-      - run: gem install bundler -v 2.0.1
-      - run: bundle install --jobs=4 --retry=3
-      - run: bundle exec rake TESTOPTS="--ci-dir=./reports"
-      - store_test_results:
-          path: ./reports
+      - setup_remote_docker
+      - run:
+          name: docker build
+          command: |
+            mkdir -p .circleci/docker_certs
+            cp $DOCKER_CERT_PATH/* .circleci/docker_certs/
+            docker build -f .circleci/Dockerfile \
+                         -t tomo:$CIRCLE_BUILD_NUM \
+                         --build-arg DOCKER_HOST \
+                         --build-arg DOCKER_MACHINE_NAME \
+                         --build-arg DOCKER_TLS_VERIFY \
+                         .
+      - run:
+          name: bundle exec rake (within docker container)
+          command: |
+            docker run --name tomo -it tomo:$CIRCLE_BUILD_NUM bundle exec rake
 
 workflows:
   version: 2

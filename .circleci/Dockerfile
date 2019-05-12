@@ -1,0 +1,16 @@
+FROM circleci/ruby:2.6.3
+ARG DOCKER_MACHINE_NAME
+ARG DOCKER_TLS_VERIFY
+ARG DOCKER_HOST
+WORKDIR /tomo
+USER root
+RUN gem install bundler -v 2.0.1
+COPY . .
+RUN bundle install --jobs=4 --retry=3
+RUN chown -R circleci:circleci .
+USER circleci
+ENV DOCKER_MACHINE_NAME $DOCKER_MACHINE_NAME
+ENV DOCKER_CERT_PATH /tomo/.circleci/docker_certs
+ENV DOCKER_TLS_VERIFY $DOCKER_TLS_VERIFY
+ENV DOCKER_HOST $DOCKER_HOST
+ENV _TOMO_CONTAINER tomo

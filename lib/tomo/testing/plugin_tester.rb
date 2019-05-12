@@ -1,29 +1,14 @@
 module Tomo
   module Testing
     class PluginTester
-      def initialize(*plugin_names, settings: {})
-        @host = Host.parse("testing@host")
+      def initialize(*plugin_names, settings: {}, host:)
+        @host = host
         config = Configuration.new
         config.hosts << @host
         config.plugins.push(*plugin_names, "testing")
         config.settings[:application] = "testing"
         config.settings.merge!(settings)
         @runtime = config.build_runtime
-      end
-
-      def executed_script
-        return executed_scripts.first unless executed_scripts.length > 1
-
-        raise "Expected one executed script, got multiple: #{executed_scripts}"
-      end
-
-      def executed_scripts
-        host.scripts.map(&:to_s)
-      end
-
-      def mock_script_result(script=/.*/, **kwargs)
-        host.mock(script, **kwargs)
-        self
       end
 
       def call_helper(helper, *args, **kwargs)

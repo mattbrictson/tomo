@@ -3,7 +3,7 @@ require "tomo/plugin/core"
 
 class Tomo::Plugin::Core::HelpersTest < Minitest::Test
   def setup
-    @tester = Tomo::Testing::PluginTester.new
+    @tester = Tomo::Testing::MockPluginTester.new
   end
 
   def test_capture_returns_stdout_not_stderr
@@ -72,17 +72,6 @@ class Tomo::Plugin::Core::HelpersTest < Minitest::Test
   def test_rm_rf
     @tester.call_helper(:rm_rf, "/one/file", "/two/file")
     assert_equal("rm -rf /one/file /two/file", @tester.executed_script)
-  end
-
-  def test_list_files
-    @tester.mock_script_result(stdout: <<~STDOUT)
-      Gemfile
-      README.md
-      LICENSE.txt
-    STDOUT
-    files = @tester.call_helper(:list_files, "/project")
-    assert_equal(%w[Gemfile README.md LICENSE.txt], files)
-    assert_equal("ls -A1 /project", @tester.executed_script)
   end
 
   def test_command_available?

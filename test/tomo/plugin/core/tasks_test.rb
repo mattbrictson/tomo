@@ -57,6 +57,6 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
   private
 
   def configure(settings={})
-    @tester = Tomo::Testing::PluginTester.new(settings: settings)
+    @tester = Tomo::Testing::MockPluginTester.new(settings: settings)
   end
 end
