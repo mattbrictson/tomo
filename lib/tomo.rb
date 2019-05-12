@@ -39,5 +39,7 @@ module Tomo
     end
   end
 
+  self.debug = false
+  self.dry_run = false
   self.logger = Logger.new
 end
