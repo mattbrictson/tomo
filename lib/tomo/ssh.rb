@@ -12,17 +12,25 @@ module Tomo
     autoload :UnknownError, "tomo/ssh/unknown_error"
     autoload :UnsupportedVersionError, "tomo/ssh/unsupported_version_error"
 
-    def self.connect(host:, options:)
-      Tomo.logger.connect(host)
-      return Connection.dry_run(host, options) if Tomo.dry_run?
+    class << self
+      def connect(host:, options:)
+        Tomo.logger.connect(host)
+        return Connection.dry_run(host, options) if Tomo.dry_run?
 
-      conn = Connection.new(host, options)
-      validator = ConnectionValidator.new(options.executable, conn)
-      validator.assert_valid_executable!
-      validator.assert_valid_connection!
-      validator.dump_env if Tomo.debug?
+        build_connection(host, options)
+      end
 
-      conn
+      private
+
+      def build_connection(host, options)
+        conn = Connection.new(host, options)
+        validator = ConnectionValidator.new(options.executable, conn)
+        validator.assert_valid_executable!
+        validator.assert_valid_connection!
+        validator.dump_env if Tomo.debug?
+
+        conn
+      end
     end
   end
 end

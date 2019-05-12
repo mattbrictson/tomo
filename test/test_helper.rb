@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "tomo"
+require "tomo/testing"
 
 Tomo::Colors.disable
 
