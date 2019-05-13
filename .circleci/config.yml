@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6.3
+    steps:
+      - checkout
+      - run: gem install bundler -v 2.0.1
+      - run: bundle install --jobs=4 --retry=3
+      - run: bundle exec rake TESTOPTS="--ci-dir=./reports"
+      - store_test_results:
+          path: ./reports
+
+workflows:
+  version: 2
+  commit-workflow:
+    jobs:
+      - build
+  cron-workflow:
+    jobs:
+      - build
+    triggers:
+      - schedule:
+          cron: "0 13 * * 6"
+          filters:
+            branches:
+              only:
+                - master

@@ -19,6 +19,10 @@ namespace :bump do
     travis = IO.read(".travis.yml")
     travis[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
     IO.write(".travis.yml", travis)
+
+    circleci = IO.read(".circleci/config.yml")
+    circleci[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
+    IO.write(".circleci/config.yml", circleci)
   end
 
   task :ruby do
@@ -29,6 +33,10 @@ namespace :bump do
     rubocop = IO.read(".rubocop.yml")
     rubocop[/TargetRubyVersion: (.*)/, 1] = RubyVersions.lowest_supported_minor
     IO.write(".rubocop.yml", rubocop)
+
+    circleci = IO.read(".circleci/config.yml")
+    circleci[%r{circleci/ruby:(.*)}, 1] = RubyVersions.latest
+    IO.write(".circleci/config.yml", circleci)
 
     travis = YAML.safe_load(open(".travis.yml"))
     travis["rvm"] = RubyVersions.latest_supported_patches + ["ruby-head"]
@@ -68,6 +76,10 @@ module RubyVersions
 
     def lowest_supported_minor
       latest_supported_patches.first[/\d+\.\d+/]
+    end
+
+    def latest
+      latest_supported_patches.last
     end
 
     def latest_supported_patches
