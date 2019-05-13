@@ -3,7 +3,7 @@ require "forwardable"
 module Tomo
   module SSH
     class ConnectionValidator
-      MINIMUM_OPENSSH_VERSION = 7.6
+      MINIMUM_OPENSSH_VERSION = 7.4
       private_constant :MINIMUM_OPENSSH_VERSION
 
       extend Forwardable
