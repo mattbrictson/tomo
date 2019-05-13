@@ -37,5 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "mocha", "~> 1.7"
   spec.add_development_dependency "rake", "~> 12.3"
   spec.add_development_dependency "rubocop", "0.69.0"
-  spec.add_development_dependency "rubocop-performance", "1.2.0"
+  spec.add_development_dependency "rubocop-performance", "1.3.0"
 end
