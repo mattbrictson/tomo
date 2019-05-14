@@ -35,6 +35,10 @@ namespace :bump do
     travis[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
     IO.write(".travis.yml", travis)
 
+    circleci = IO.read(".circleci/config.yml")
+    circleci[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
+    IO.write(".circleci/config.yml", circleci)
+
     dockerfile = IO.read(".circleci/Dockerfile")
     dockerfile[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
     IO.write(".circleci/Dockerfile", dockerfile)

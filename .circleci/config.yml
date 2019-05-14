@@ -1,6 +1,26 @@
 version: 2
 jobs:
-  build:
+  rubocop:
+    docker:
+      - image: circleci/ruby:2.6.3
+    steps:
+      - checkout
+      - run: gem install bundler -v 2.0.1
+      - run: bundle install --jobs=4 --retry=3
+      - run: bundle exec rubocop
+
+  test_unit:
+    docker:
+      - image: circleci/ruby:2.6.3
+    steps:
+      - checkout
+      - run: gem install bundler -v 2.0.1
+      - run: bundle install --jobs=4 --retry=3
+      - run: bundle exec rake test:unit TESTOPTS="--ci-dir=./reports"
+      - store_test_results:
+          path: ./reports
+
+  test_docker:
     docker:
       - image: circleci/ruby:2.6.3
     steps:
@@ -18,18 +38,22 @@ jobs:
                          --build-arg DOCKER_TLS_VERIFY \
                          .
       - run:
-          name: bundle exec rake (within docker container)
+          name: bundle exec rake test:docker (within docker container)
           command: |
-            docker run --name tomo -it tomo:$CIRCLE_BUILD_NUM bundle exec rake
+            docker run --name tomo -it tomo:$CIRCLE_BUILD_NUM bundle exec rake test:docker
 
 workflows:
   version: 2
   commit-workflow:
     jobs:
-      - build
+      - rubocop
+      - test_docker
+      - test_unit
   cron-workflow:
     jobs:
-      - build
+      - rubocop
+      - test_docker
+      - test_unit
     triggers:
       - schedule:
           cron: "0 13 * * 6"
