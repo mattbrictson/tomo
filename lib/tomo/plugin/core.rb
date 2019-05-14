@@ -20,13 +20,13 @@ module Tomo::Plugin
              shared_path:           "%<deploy_to>/shared",
              tmp_path:              "/tmp/tomo",
              run_args:              [],
+             ssh_connect_timeout:   5,
              ssh_executable:        "ssh",
              ssh_extra_opts:        [
-               "-o", "ConnectTimeout=5",
-               "-o", "PasswordAuthentication=no",
-               "-o", "StrictHostKeyChecking=accept-new"
+               "-o", "PasswordAuthentication=no"
              ],
              ssh_forward_agent:     true,
-             ssh_reuse_connections: true
+             ssh_reuse_connections: true,
+             ssh_strict_host_key_checking: "accept-new"
   end
 end

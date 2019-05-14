@@ -43,9 +43,9 @@ module Tomo
         {
           ssh_extra_opts: [
             "-o", "UserKnownHostsFile=#{hosts_file}",
-            "-o", "StrictHostKeyChecking=no",
             "-o", "IdentityFile=#{key_file}"
-          ]
+          ],
+          ssh_strict_host_key_checking: false
         }
       end
     end
