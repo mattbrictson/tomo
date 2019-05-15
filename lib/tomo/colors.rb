@@ -10,13 +10,7 @@ module Tomo
     private_constant :ANSI_CODES
 
     class << self
-      def enable
-        @enabled = true
-      end
-
-      def disable
-        @enabled = false
-      end
+      attr_writer :enabled
 
       def enabled?
         return @enabled if defined?(@enabled)

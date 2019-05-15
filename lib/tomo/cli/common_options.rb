@@ -7,7 +7,7 @@ module Tomo
           option :color,
                  "--[no-]color",
                  "Enable/disable color output" do |color|
-            color ? Colors.enable : Colors.disable
+            Colors.enabled = color
           end
           option :debug,
                  "--[no-]debug",

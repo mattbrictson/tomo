@@ -29,7 +29,7 @@ end
 Tomo.logger = Tomo::Logger.new(
   stdout: File.open(File::NULL, "w"), stderr: File.open(File::NULL, "w")
 )
-Tomo::Colors.disable
+Tomo::Colors.enabled = false
 Tomo::Host.prepend Tomo::Testing::HostExtensions
 class << Tomo::SSH
   prepend Tomo::Testing::SSHExtensions
