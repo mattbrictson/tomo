@@ -2,6 +2,9 @@ require "json"
 
 module Tomo::Plugin::Core
   class Tasks < Tomo::TaskLibrary
+    RELEASE_REGEXP = /\d{14}/.freeze
+    private_constant :RELEASE_REGEXP
+
     # rubocop:disable Metrics/AbcSize
     def setup_directories
       dirs = [
@@ -58,8 +61,11 @@ module Tomo::Plugin::Core
       desired_count = settings[:keep_releases].to_i
       return if desired_count < 1
 
+      current = read_current_release
+
       remote.chdir(paths.releases) do
-        releases = remote.list_files.grep(/^\d{14}$/).sort
+        releases = remote.list_files.grep(/^#{RELEASE_REGEXP}$/).sort
+        desired_count -= 1 if releases.delete(current)
         return if releases.length <= desired_count
 
         remote.rm_rf(*releases.take(releases.length - desired_count))
@@ -108,6 +114,18 @@ module Tomo::Plugin::Core
       remote.chdir(paths.release) do
         remote.rm_rf(*linked_dirs)
       end
+    end
+
+    def read_current_release
+      result = remote.run(
+        "readlink",
+        paths.current,
+        raise_on_error: false,
+        silent: true
+      )
+      return nil if result.failure?
+
+      result.stdout.strip[%r{/(#{RELEASE_REGEXP})$}, 1]
     end
   end
 end
