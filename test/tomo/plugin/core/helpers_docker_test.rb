@@ -24,6 +24,6 @@ class Tomo::Plugin::Core::HelpersDockerTest < Minitest::Test
 
   def test_list_files
     files = @tester.call_helper(:list_files, "/home/deployer/test")
-    assert_equal(%w[.hidden README.md bar foo], files)
+    assert_equal(%w[.hidden README.md bar foo], files.sort)
   end
 end
