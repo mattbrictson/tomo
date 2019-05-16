@@ -7,6 +7,7 @@ module Tomo::Plugin::Nvm
       modify_bashrc
       run_installer
       install_node
+      install_yarn
     end
 
     private
@@ -39,6 +40,12 @@ module Tomo::Plugin::Nvm
         remote.run "nvm", "install", node_version
       end
       remote.run "nvm", "alias", "default", node_version
+    end
+
+    def install_yarn
+      return if remote.command_available?("yarn")
+
+      remote.run "npm i -g yarn"
     end
 
     def node_installed?(version)
