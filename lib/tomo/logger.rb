@@ -48,6 +48,10 @@ module Tomo
       stderr.puts indent("\n" + red("ERROR: ") + message.strip + "\n\n")
     end
 
+    def warn(message)
+      stderr.puts red("WARNING: ") + message
+    end
+
     def debug(message)
       return unless Tomo.debug?
 

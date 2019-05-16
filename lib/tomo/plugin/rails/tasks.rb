@@ -29,16 +29,25 @@ module Tomo::Plugin::Rails
     end
 
     def db_schema_load
-      return remote.rake("db:schema:load") unless database_schema_loaded?
-
-      logger.info "Database schema already loaded; skipping db:schema:load."
+      if !schema_rb_present?
+        logger.warn "db/schema.rb is not present; skipping schema:load."
+      elsif database_schema_loaded?
+        logger.info "Database schema already loaded; skipping db:schema:load."
+      else
+        remote.rake("db:schema:load")
+      end
     end
 
     def db_structure_load
-      return remote.rake("db:structure:load") unless database_schema_loaded?
-
-      logger.info "Database structure already loaded; "\
-                  "skipping db:structure:load."
+      if !structure_sql_present?
+        logger.warn "db/structure.sql is not present; "\
+                    "skipping db:structure:load."
+      elsif database_schema_loaded?
+        logger.info "Database structure already loaded; "\
+                    "skipping db:structure:load."
+      else
+        remote.rake("db:structure:load")
+      end
     end
 
     def log_tail
@@ -57,6 +66,14 @@ module Tomo::Plugin::Rails
       schema_version = result.output[/version:\s*(\d+)$/i, 1].to_i
 
       result.success? && schema_version.positive? && !dry_run?
+    end
+
+    def schema_rb_present?
+      remote.file?(paths.release.join("db/schema.rb"))
+    end
+
+    def structure_sql_present?
+      remote.file?(paths.release.join("db/structure.sql"))
     end
   end
 end
