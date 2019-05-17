@@ -5,6 +5,7 @@ AllCops:
   DisplayStyleGuide: true
   TargetRubyVersion: 2.4
   Exclude:
+    - "lib/tomo/templates/config.rb"
     - "readme_images/**/*"
     - "tmp/**/*"
     - "vendor/**/*"
