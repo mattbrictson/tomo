@@ -23,10 +23,12 @@ set git_exclusions: %w[
 set env_vars: {
   RAILS_ENV: "production",
   RACK_ENV: "production",
+  DATABASE_URL: :prompt,
   SECRET_KEY_BASE: :prompt
 }
 set linked_dirs: %w[
   .bundle
+  node_modules
   public/assets
 ]
 
