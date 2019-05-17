@@ -10,7 +10,6 @@ module Tomo::Plugin::Env
     end
 
     def setup
-      remote.mkdir_p(paths.env.dirname)
       update
       modify_bashrc
     end
@@ -58,6 +57,7 @@ module Tomo::Plugin::Env
       yield(env)
       return if env == original
 
+      remote.mkdir_p(paths.env.dirname) if original.empty?
       remote.write(text: env, to: paths.env)
     end
 
