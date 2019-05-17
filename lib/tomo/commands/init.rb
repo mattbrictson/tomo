@@ -27,13 +27,12 @@ module Tomo
 
         app = args.first || current_dir_name || "default"
         app = app.gsub(/([^\w\-]|_)+/, "_").downcase
-        git_url = git_origin_url || "TODO"
         FileUtils.mkdir_p(".tomo/plugins")
 
         # TODO: use a template for this file
         FileUtils.touch(".tomo/plugins/#{app}.rb")
 
-        IO.write(DEFAULT_CONFIG_PATH, config_rb_template(app, git_url))
+        IO.write(DEFAULT_CONFIG_PATH, config_rb_template(app))
 
         logger.info(green("✔ Created #{DEFAULT_CONFIG_PATH}"))
       end
@@ -65,26 +64,34 @@ module Tomo
 
         url = `git remote get-url origin`.chomp
         url.empty? ? nil : url
+      rescue SystemCallError
+        nil
       end
 
       def node_version
         `node --version`.chomp.sub(/^v/i, "")
+      rescue SystemCallError
+        nil
       end
 
       def yarn_version
         `yarn --version`.chomp
+      rescue SystemCallError
+        nil
       end
 
-      def config_rb_template(app, git_url)
+      # rubocop:disable Metrics/AbcSize
+      def config_rb_template(app)
         path = File.expand_path("../templates/config.rb", __dir__)
         template = IO.read(path)
         template
           .gsub(/%%APP%%/, app)
-          .gsub(/%%GIT_URL%%/, git_url)
-          .gsub(/%%RUBY_VERSION%%/, RUBY_VERSION)
-          .gsub(/%%NODE_VERSION%%/, node_version)
-          .gsub(/%%YARN_VERSION%%/, yarn_version)
+          .gsub(/%%GIT_URL%%/, git_origin_url&.inspect || "nil # FIXME")
+          .gsub(/%%RUBY_VERSION%%/, RUBY_VERSION.inspect)
+          .gsub(/%%NODE_VERSION%%/, node_version&.inspect || "nil # FIXME")
+          .gsub(/%%YARN_VERSION%%/, yarn_version.inspect)
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
