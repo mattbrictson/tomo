@@ -2,8 +2,6 @@ require "fileutils"
 require "securerandom"
 require "tmpdir"
 
-# TODO: register at_exit to call #close
-
 module Tomo
   module SSH
     class Connection

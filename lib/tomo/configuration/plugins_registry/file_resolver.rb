@@ -10,7 +10,8 @@ module Tomo
       end
 
       def plugin_module
-        # TODO: error handling for file-not-found
+        raise_file_not_found(path) unless File.file?(path)
+
         Tomo.logger.debug("Loading plugin from #{path.inspect}")
         script = IO.read(path)
         plugin = define_anonymous_plugin_class
@@ -22,6 +23,10 @@ module Tomo
       private
 
       attr_reader :path
+
+      def raise_file_not_found(path)
+        PluginFileNotFoundError.raise_with(path: path)
+      end
 
       def define_anonymous_plugin_class
         name = path.to_s

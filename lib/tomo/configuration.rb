@@ -3,6 +3,8 @@ module Tomo
     autoload :DSL, "tomo/configuration/dsl"
     autoload :Environment, "tomo/configuration/environment"
     autoload :Glob, "tomo/configuration/glob"
+    autoload :PluginFileNotFoundError,
+             "tomo/configuration/plugin_file_not_found_error"
     autoload :PluginsRegistry, "tomo/configuration/plugins_registry"
     autoload :ProjectNotFoundError, "tomo/configuration/project_not_found_error"
     autoload :RoleBasedTaskFilter, "tomo/configuration/role_based_task_filter"
