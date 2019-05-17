@@ -71,6 +71,10 @@ module Tomo
         `node --version`.chomp.sub(/^v/i, "")
       end
 
+      def yarn_version
+        `yarn --version`.chomp
+      end
+
       def config_rb_template(app, git_url)
         path = File.expand_path("../templates/config.rb", __dir__)
         template = IO.read(path)
@@ -79,6 +83,7 @@ module Tomo
           .gsub(/%%GIT_URL%%/, git_url)
           .gsub(/%%RUBY_VERSION%%/, RUBY_VERSION)
           .gsub(/%%NODE_VERSION%%/, node_version)
+          .gsub(/%%YARN_VERSION%%/, yarn_version)
       end
     end
   end
