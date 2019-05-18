@@ -27,39 +27,25 @@ else
   end
 end
 
+task bump: %w[bump:bundler bump:ruby bump:year]
+
 namespace :bump do
-  task all: %w[bundler ruby year]
-
   task :bundler do
-    travis = IO.read(".travis.yml")
-    travis[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
-    IO.write(".travis.yml", travis)
-
-    circleci = IO.read(".circleci/config.yml")
-    circleci[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
-    IO.write(".circleci/config.yml", circleci)
-
-    dockerfile = IO.read(".circleci/Dockerfile")
-    dockerfile[/bundler -v (\S+)/, 1] = Gemfile.bundler_version
-    IO.write(".circleci/Dockerfile", dockerfile)
+    version = Gemfile.bundler_version
+    replace_in_file ".travis.yml", /bundler -v (\S+)/ => version
+    replace_in_file ".circleci/config.yml", /bundler -v (\S+)/ => version
+    replace_in_file ".circleci/Dockerfile", /bundler -v (\S+)/ => version
   end
 
   task :ruby do
-    gemspec = IO.read("tomo.gemspec")
-    gemspec[/ruby_version = ">= (.*)"/, 1] = RubyVersions.lowest_supported
-    IO.write("tomo.gemspec", gemspec)
+    lowest = RubyVersions.lowest_supported
+    lowest_minor = RubyVersions.lowest_supported_minor
+    latest = RubyVersions.latest
 
-    rubocop = IO.read(".rubocop.yml")
-    rubocop[/TargetRubyVersion: (.*)/, 1] = RubyVersions.lowest_supported_minor
-    IO.write(".rubocop.yml", rubocop)
-
-    circleci = IO.read(".circleci/config.yml")
-    circleci[%r{circleci/ruby:(.*)}, 1] = RubyVersions.latest
-    IO.write(".circleci/config.yml", circleci)
-
-    dockerfile = IO.read(".circleci/Dockerfile")
-    dockerfile[%r{circleci/ruby:(.*)}, 1] = RubyVersions.latest
-    IO.write(".circleci/Dockerfile", dockerfile)
+    replace_in_file "tomo.gemspec", /ruby_version = ">= (.*)"/ => lowest
+    replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest_minor
+    replace_in_file ".circleci/config.yml", %r{circleci/ruby:(.*)} => latest
+    replace_in_file ".circleci/Dockerfile", %r{circleci/ruby:(.*)} => latest
 
     travis = YAML.safe_load(open(".travis.yml"))
     travis["rvm"] = RubyVersions.latest_supported_patches + ["ruby-head"]
@@ -67,15 +53,25 @@ namespace :bump do
   end
 
   task :year do
-    license = IO.read("LICENSE.txt")
-    license[/\(c\) (\d+)/, 1] = Date.today.year.to_s
-    IO.write("LICENSE.txt", license)
+    replace_in_file "LICENSE.txt", /\(c\) (\d+)/ => Date.today.year.to_s
   end
 end
 
 require "date"
 require "open-uri"
 require "yaml"
+
+def replace_in_file(path, replacements)
+  contents = IO.read(path)
+  orig_contents = contents.dup
+  replacements.each do |regexp, text|
+    contents.gsub!(regexp) do |match|
+      match[regexp, 1] = text
+      match
+    end
+  end
+  IO.write(path, contents) if contents != orig_contents
+end
 
 module Gemfile
   class << self
