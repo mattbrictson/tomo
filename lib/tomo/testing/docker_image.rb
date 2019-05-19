@@ -35,7 +35,25 @@ module Tomo
 
       def stop
         DockerImage.running_images.delete(self)
-        run!("docker stop #{container_id}", raise_on_error: false)
+        Local.capture("docker stop #{container_id}", raise_on_error: false)
+      end
+
+      # Connecting to SSH servers on local docker containers often triggers
+      # known_hosts errors due to each container potentially having a
+      # different host key. Work around this by using an empty blank temp file
+      # for storing known_hosts.
+      def ssh_settings
+        hosts_file = File.join(Dir.tmpdir, "tomo_#{SecureRandom.hex(8)}_hosts")
+        key_file = File.expand_path("tomo_test_ed25519", __dir__)
+        FileUtils.chmod(0o600, key_file)
+
+        {
+          ssh_extra_opts: [
+            "-o", "UserKnownHostsFile=#{hosts_file}",
+            "-o", "IdentityFile=#{key_file}"
+          ],
+          ssh_strict_host_key_checking: false
+        }
       end
 
       private
@@ -43,12 +61,14 @@ module Tomo
       attr_reader :container_id, :image_id
 
       def pull_base_image_if_needed
-        images = run!('docker images --format "{{.ID}}" ubuntu:18.04')
-        run!("docker pull ubuntu:18.04") if images.strip.empty?
+        images = Local.capture('docker images --format "{{.ID}}" ubuntu:18.04')
+        Local.capture("docker pull ubuntu:18.04") if images.strip.empty?
       end
 
       def build_image
-        run!("docker build #{build_dir}")[/Successfully built (\S+)$/i, 1]
+        Local.capture(
+          "docker build #{build_dir}"
+        )[/Successfully built (\S+)$/i, 1]
       end
 
       def start_container
@@ -59,13 +79,13 @@ module Tomo
         else
           args.prepend("--publish-all ")
         end
-        run!("docker run #{args}")[/\S+/]
+        Local.capture("docker run #{args}")[/\S+/]
       end
 
       def find_ssh_port
         return 22 if ENV["_TOMO_CONTAINER"]
 
-        run!("docker port #{container_id} 22")[/:(\d+)/, 1].to_i
+        Local.capture("docker port #{container_id} 22")[/:(\d+)/, 1].to_i
       end
 
       def set_up_build_dir
@@ -76,15 +96,6 @@ module Tomo
         end
         IO.write(File.join(build_dir, "custom_setup.sh"), setup_script)
         FileUtils.chmod(0o755, File.join(build_dir, "custom_setup.sh"))
-      end
-
-      def run!(command, raise_on_error: true)
-        output, status = Open3.capture2e(command)
-        if raise_on_error && !status.success?
-          raise "Command failed: #{command}\n#{output}"
-        end
-
-        output
       end
 
       def build_dir

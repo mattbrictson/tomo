@@ -6,6 +6,7 @@ module Tomo
     autoload :DockerImage, "tomo/testing/docker_image"
     autoload :DockerPluginTester, "tomo/testing/docker_plugin_tester"
     autoload :HostExtensions, "tomo/testing/host_extensions"
+    autoload :Local, "tomo/testing/local"
     autoload :MockedExecError, "tomo/testing/mocked_exec_error"
     autoload :MockPluginTester, "tomo/testing/mock_plugin_tester"
     autoload :PluginTester, "tomo/testing/plugin_tester"

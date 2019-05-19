@@ -42,18 +42,52 @@ jobs:
           command: |
             docker run --name tomo -it tomo:$CIRCLE_BUILD_NUM bundle exec rake test:docker
 
+  test_e2e:
+    docker:
+      - image: circleci/ruby:2.6.3
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: docker build
+          command: |
+            mkdir -p .circleci/docker_certs
+            cp $DOCKER_CERT_PATH/* .circleci/docker_certs/
+            docker build -f .circleci/Dockerfile \
+                         -t tomo:$CIRCLE_BUILD_NUM \
+                         --build-arg DOCKER_HOST \
+                         --build-arg DOCKER_MACHINE_NAME \
+                         --build-arg DOCKER_TLS_VERIFY \
+                         .
+      - run:
+          name: bundle exec rake test:e2e (within docker container)
+          command: |
+            docker run --name tomo -it tomo:$CIRCLE_BUILD_NUM bundle exec rake test:e2e
+
 workflows:
   version: 2
   commit-workflow:
     jobs:
       - rubocop
-      - test_docker
       - test_unit
+      - test_docker:
+          requires:
+            - rubocop
+            - test_unit
+      - test_e2e:
+          requires:
+            - test_docker
   cron-workflow:
     jobs:
       - rubocop
-      - test_docker
       - test_unit
+      - test_docker:
+          requires:
+            - rubocop
+            - test_unit
+      - test_e2e:
+          requires:
+            - test_docker
     triggers:
       - schedule:
           cron: "0 13 * * 6"

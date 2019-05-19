@@ -10,7 +10,11 @@ module Tomo
         @docker_image.setup_script = setup_script if setup_script
         @docker_image.build_and_run
         host = @docker_image.host
-        super(*plugin_names, settings: ssh_settings.merge(settings), host: host)
+        super(
+          *plugin_names,
+          settings: @docker_image.ssh_settings.merge(settings),
+          host: host
+        )
       end
 
       def run(shell_script, **kwargs)
@@ -30,24 +34,6 @@ module Tomo
       private
 
       attr_reader :docker_image
-
-      # Connecting to SSH servers on local docker containers often triggers
-      # known_hosts errors due to each container potentially having a
-      # different host key. Work around this by using an empty blank temp file
-      # for storing known_hosts.
-      def ssh_settings
-        hosts_file = File.join(Dir.tmpdir, "tomo_#{SecureRandom.hex(8)}_hosts")
-        key_file = File.expand_path("tomo_test_ed25519", __dir__)
-        FileUtils.chmod(0o600, key_file)
-
-        {
-          ssh_extra_opts: [
-            "-o", "UserKnownHostsFile=#{hosts_file}",
-            "-o", "IdentityFile=#{key_file}"
-          ],
-          ssh_strict_host_key_checking: false
-        }
-      end
     end
   end
 end
