@@ -6,4 +6,5 @@ RUN ./ubuntu_setup.sh
 COPY ./custom_setup.sh ./
 RUN ./custom_setup.sh
 EXPOSE 22
+EXPOSE 3000
 CMD ["/usr/sbin/sshd", "-D"]

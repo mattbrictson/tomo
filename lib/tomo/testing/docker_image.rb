@@ -38,6 +38,12 @@ module Tomo
         Local.capture("docker stop #{container_id}", raise_on_error: false)
       end
 
+      def puma_port
+        return 3000 if ENV["_TOMO_CONTAINER"]
+
+        Local.capture("docker port #{container_id} 3000")[/:(\d+)/, 1].to_i
+      end
+
       # Connecting to SSH servers on local docker containers often triggers
       # known_hosts errors due to each container potentially having a
       # different host key. Work around this by using an empty blank temp file

@@ -1,6 +1,7 @@
 require "test_helper"
 
 require "fileutils"
+require "net/http"
 require "securerandom"
 require "tmpdir"
 
@@ -31,6 +32,10 @@ class RailsSetupDeployE2ETest < Minitest::Test
       )
       Tomo::Testing::Local.bundle_exec("tomo setup")
       Tomo::Testing::Local.bundle_exec("tomo deploy")
+
+      rails_uri = URI("http://localhost:#{@docker.puma_port}/")
+      rails_http_response = Net::HTTP.get(rails_uri)
+      assert_match(/rails-default-error-page/, rails_http_response)
     end
   end
 
