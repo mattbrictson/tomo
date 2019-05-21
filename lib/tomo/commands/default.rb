@@ -42,10 +42,21 @@ module Tomo
                 "Options must be specified after the command: " +
                 yellow("tomo #{args.first} [options]")
         end
-        raise CLI::Error, %Q("#{args.first}" is not a recognized tomo command.)
+
+        raise_unrecognized_command(args.first)
       end
 
       private
+
+      def raise_unrecognized_command(command)
+        error = "#{yellow(command)} is not a recognized tomo command."
+        if command.match?(/\A\S+:\S+\z/)
+          suggestion = "tomo run #{command}"
+          error << "\nMaybe you meant #{blue(suggestion)}?"
+        end
+
+        raise CLI::Error, error
+      end
 
       def commands
         CLI::COMMANDS.each_with_object({}) do |(name, klass), result|

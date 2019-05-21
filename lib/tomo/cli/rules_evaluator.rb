@@ -55,6 +55,19 @@ module Tomo
           state.processed?(rule) && !rule.multiple?
         end
       end
+
+      def raise_unrecognized_args
+        problem_arg = argv.first
+        type = if literal || !problem_arg.start_with?("-")
+                 "arg"
+               else
+                 "option"
+               end
+
+        raise CLI::Error,
+              "#{Colors.yellow(problem_arg)} is not a recognized #{type} "\
+              "for this tomo command."
+      end
     end
   end
 end
