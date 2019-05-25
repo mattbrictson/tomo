@@ -1,5 +1,28 @@
 version: 2
 jobs:
+  mkdocs_build:
+    docker:
+      - image: circleci/python:3
+    steps:
+      - checkout
+      - run: sudo pip install -r requirements.txt
+      - run: mkdocs build
+
+  mkdocs_deploy:
+    docker:
+      - image: circleci/python:3
+    steps:
+      - checkout
+      - run: sudo pip install -r requirements.txt
+      - run:
+          name: mkdocs gh-deploy
+          command: |
+            git config --local user.name "Circle CI"
+            git config --local user.email ci@mattbrictson.com
+            cat README.md >> docs/index.md
+            cp -R readme_images docs/
+            mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
+
   rubocop:
     docker:
       - image: circleci/ruby:2.6.3
@@ -68,6 +91,16 @@ workflows:
   version: 2
   commit-workflow:
     jobs:
+      - mkdocs_build:
+          filters:
+            branches:
+              ignore:
+                - master
+      - mkdocs_deploy:
+          filters:
+            branches:
+              only:
+                - master
       - rubocop
       - test_unit
       - test_docker:
@@ -79,6 +112,7 @@ workflows:
             - test_docker
   cron-workflow:
     jobs:
+      - mkdocs_build
       - rubocop
       - test_unit
       - test_docker:

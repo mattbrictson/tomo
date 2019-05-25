@@ -1,8 +1,8 @@
 # Tomo
 
 [![Gem Version](https://badge.fury.io/rb/tomo.svg)](https://rubygems.org/gems/tomo)
-[![Travis](https://travis-ci.org/mattbrictson/tomo.svg?branch=master)](https://travis-ci.org/mattbrictson/tomo)
-[![Circle](https://circleci.com/gh/mattbrictson/tomo.svg?style=svg)](https://circleci.com/gh/mattbrictson/tomo)
+[![Travis](https://img.shields.io/travis/mattbrictson/tomo.svg?label=travis)](https://travis-ci.org/mattbrictson/tomo)
+[![Circle](https://circleci.com/gh/mattbrictson/tomo.svg?style=shield)](https://circleci.com/gh/mattbrictson/tomo)
 [![Code Climate](https://codeclimate.com/github/mattbrictson/tomo/badges/gpa.svg)](https://codeclimate.com/github/mattbrictson/tomo)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/mattbrictson)
 
@@ -21,8 +21,8 @@ This project wouldn't be possible without the generosity of the open source Ruby
 ---
 
 - [Quick start](#quick-start)
-- [Reference documentation](#reference-documentation) [TODO]
-- [FAQ](#faq) [TODO]
+- [Reference documentation](#reference-documentation)
+- [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
 - [Code of conduct](#code-of-conduct)
@@ -150,15 +150,51 @@ And run it!
 
 And just like that, you are now already familiar with the basics of tomo and how to extend it! Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
 
-To prepare your existing project for a real deploy, check out the sections of the reference documentation on configuration [TODO], writing plugins [TODO], the setup command [TODO], and the deploy command [TODO]. There is also a tutorial [TODO] that walks through deploying a new Rails app from scratch. If you have questions, check out the [FAQ](#faq) [TODO] and [support](#support) notes below. Enjoy using tomo!
+To prepare your existing project for a real deploy, check out the sections of the reference documentation on [configuration](https://tomo-deploy.com/configuration/), [writing custom tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/) [TODO], the [setup command](https://tomo-deploy.com/commands/setup/), and the [deploy command](https://tomo-deploy.com/commands/deploy/). There is also a tutorial that walks through [deploying a new Rails app from scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/) [TODO]. If you have questions, check out the [FAQ](#faq) and [support](#support) notes below. Enjoy using tomo!
 
 ## Reference documentation
 
-[TODO]
+- [Configuration](https://tomo-deploy.com/configuration/)
+- Commands
+  - [init](https://tomo-deploy.com/commands/init/)
+  - [setup](https://tomo-deploy.com/commands/setup/)
+  - [deploy](https://tomo-deploy.com/commands/deploy/)
+  - [run](https://tomo-deploy.com/commands/run/)
+  - [tasks](https://tomo-deploy.com/commands/tasks/)
+- Plugins
+  - [core](https://tomo-deploy.com/plugins/core/)
+  - [bundler](https://tomo-deploy.com/plugins/bundler/)
+  - [env](https://tomo-deploy.com/plugins/env/)
+  - [git](https://tomo-deploy.com/plugins/git/)
+  - [nvm](https://tomo-deploy.com/plugins/nvm/)
+  - [puma](https://tomo-deploy.com/plugins/puma/)
+  - [rails](https://tomo-deploy.com/plugins/rails/)
+  - [rbenv](https://tomo-deploy.com/plugins/rbenv/)
+- Tutorials
+  - [Deploying Rails From Scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/) [TODO]
+  - [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/) [TODO]
+  - [Publishing a Plugin](https://tomo-deploy.com/tutorials/publishing-a-plugin/) [TODO]
+- API
+  - [Host](https://tomo-deploy.com/api/Host/)
+  - [Logger](https://tomo-deploy.com/api/Logger/)
+  - [Paths](https://tomo-deploy.com/api/Paths/)
+  - [PluginDSL](https://tomo-deploy.com/api/Host/)
+  - [Remote](https://tomo-deploy.com/api/Remote/)
+  - [Result](https://tomo-deploy.com/api/Result/)
+  - [TaskLibrary](https://tomo-deploy.com/api/TaskLibrary/)
+  - [Testing::MockPluginTester](https://tomo-deploy.com/api/testing/MockPluginTester/)
+  - [Testing::DockerPluginTester](https://tomo-deploy.com/api/testing/DockerPluginTester/)
 
 ## FAQ
 
-[TODO]
+#### What does the `unsupported option "accept-new"` error mean?
+
+By default, tomo uses the ["accept-new"](https://www.openssh.com/txt/release-7.6) value for the StrictHostKeyChecking option, which is supported by OpenSSH 7.6 and newer. If you are using an older version, this will cause an error. As a workaround, you can override tomo's default behavior like this:
+
+```ruby
+# Replace "accept-new" with something compatible with older versions of SSH
+set ssh_strict_host_key_checking: true # or false
+```
 
 ## Support
 

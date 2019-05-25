@@ -1,0 +1,4 @@
+markdown_include
+mdx_truly_sane_lists
+mkdocs
+smarty

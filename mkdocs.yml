@@ -1,0 +1,44 @@
+site_name: Tomo
+theme:
+  name: readthedocs
+  custom_dir: custom_theme
+extra_css:
+  - css/extra.css
+markdown_extensions:
+  - mdx_truly_sane_lists
+  - smarty
+  - markdown_include.include:
+      base_path: docs/include
+repo_url: https://github.com/mattbrictson/tomo/
+nav:
+  - Home: index.md
+  - Configuration: configuration.md
+  - Commands:
+      - init: commands/init.md
+      - setup: commands/setup.md
+      - deploy: commands/deploy.md
+      - run: commands/run.md
+      - tasks: commands/tasks.md
+  - Plugins:
+      - core: plugins/core.md
+      - bundler: plugins/bundler.md
+      - env: plugins/env.md
+      - git: plugins/git.md
+      - nvm: plugins/nvm.md
+      - puma: plugins/puma.md
+      - rails: plugins/rails.md
+      - rbenv: plugins/rbenv.md
+  - Tutorials:
+      - Deploying Rails From Scratch: tutorials/deploying-rails-from-scratch.md
+      - Writing Custom Tasks: tutorials/writing-custom-tasks.md
+      - Publishing a Plugin: tutorials/publishing-a-plugin.md
+  - API:
+      - "Tomo::Host": api/Host.md
+      - "Tomo::Logger": api/Logger.md
+      - "Tomo::Paths": api/Paths.md
+      - "Tomo::PluginDSL": api/PluginDSL.md
+      - "Tomo::Remote": api/Remote.md
+      - "Tomo::Result": api/Result.md
+      - "Tomo::TaskLibrary": api/TaskLibrary.md
+      - "Tomo::Testing::MockPluginTester": api/testing/MockPluginTester.md
+      - "Tomo::Testing::DockerPluginTester": api/testing/DockerPluginTester.md

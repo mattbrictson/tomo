@@ -1,0 +1,4 @@
+| `--[no-]color` | By default, tomo automatically determines whether to use color output based on the capabilities of the terminal. Use this option to override this behavior and force tomo to enable or disable color output. |
+| `--[no-]debug` | Enables verbose logging output that is helpful for troubleshooting. This includes runtime information such as the environment variables on the remote host and all tomo settings. Each SSH command executed by tomo is also logged in detail. |
+| `--[no-]trace` | Normally if a tomo command fails, a concise and helpful error message is printed. If `--trace` is specified, tomo will also print the full backtrace. |
+| `-h`, `--help` | Prints the help for this tomo command, similar to what you see on this page. |

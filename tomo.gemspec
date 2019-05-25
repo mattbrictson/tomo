@@ -16,8 +16,9 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/mattbrictson/tomo/issues",
     "changelog_uri" => "https://github.com/mattbrictson/tomo/releases",
-    "homepage_uri" => "https://github.com/mattbrictson/tomo",
-    "source_code_uri" => "https://github.com/mattbrictson/tomo"
+    "source_code_uri" => "https://github.com/mattbrictson/tomo",
+    "homepage_uri" => "https://tomo-deploy.com/",
+    "documentation_uri" => "https://tomo-deploy.com/"
   }
 
   # Specify which files should be added to the gem when it is released.
