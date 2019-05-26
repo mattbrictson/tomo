@@ -57,6 +57,7 @@ deploy do
   run "bundler:install"
   run "rails:assets_precompile"
   run "rails:db_migrate"
+  run "rails:db_seed"
   run "core:symlink_current"
   run "puma:restart"
   run "core:clean_releases"
