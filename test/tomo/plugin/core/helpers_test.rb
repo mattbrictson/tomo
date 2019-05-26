@@ -10,7 +10,6 @@ class Tomo::Plugin::Core::HelpersTest < Minitest::Test
     @tester.mock_script_result(stderr: "oh no", stdout: "hello world\n")
     captured = @tester.call_helper(:capture, "greet")
     assert_equal("hello world\n", captured)
-    refute_match(/hello world/, @tester.stdout)
   end
 
   def test_capture_silences_output
