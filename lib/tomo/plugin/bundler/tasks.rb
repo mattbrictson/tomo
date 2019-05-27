@@ -43,7 +43,7 @@ module Tomo::Plugin::Bundler
       options.push("--without", without) if without
       options.push(flags) if flags
 
-      options
+      options.flatten
     end
 
     def extract_bundler_ver_from_lockfile
