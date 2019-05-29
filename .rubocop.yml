@@ -32,7 +32,12 @@ Metrics/LineLength:
     - "*.gemspec"
 
 Layout/AlignHash:
-  Enabled: false
+  EnforcedColonStyle:
+    - table
+    - key
+  EnforcedHashRocketStyle:
+    - table
+    - key
 
 Layout/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
