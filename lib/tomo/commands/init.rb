@@ -1,3 +1,5 @@
+require "erb"
+
 module Tomo
   module Commands
     class Init < CLI::Command
@@ -80,18 +82,11 @@ module Tomo
         nil
       end
 
-      # rubocop:disable Metrics/AbcSize
       def config_rb_template(app)
-        path = File.expand_path("../templates/config.rb", __dir__)
+        path = File.expand_path("../templates/config.rb.erb", __dir__)
         template = IO.read(path)
-        template
-          .gsub(/%%APP%%/, app)
-          .gsub(/%%GIT_URL%%/, git_origin_url&.inspect || "nil # FIXME")
-          .gsub(/%%RUBY_VERSION%%/, RUBY_VERSION.inspect)
-          .gsub(/%%NODE_VERSION%%/, node_version&.inspect || "nil # FIXME")
-          .gsub(/%%YARN_VERSION%%/, yarn_version.inspect)
+        ERB.new(template).result(binding)
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end
