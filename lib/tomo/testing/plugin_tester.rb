@@ -19,6 +19,7 @@ module Tomo
       def run_task(task, *args)
         capturing_logger_output do
           runtime.run!(task, *args, privileged: false)
+          nil
         end
       end
 
