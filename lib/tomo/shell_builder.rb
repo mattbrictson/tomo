@@ -97,7 +97,11 @@ module Tomo
     def set_umask
       return if @umask.nil?
 
-      umask_value = @umask.is_a?(Integer) ? @umask.to_s(8) : @umask
+      umask_value = if @umask.is_a?(Integer)
+                      @umask.to_s(8).rjust(4, "0")
+                    else
+                      @umask
+                    end
       "umask #{umask_value.to_s.shellescape}"
     end
   end
