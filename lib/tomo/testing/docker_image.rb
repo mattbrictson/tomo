@@ -36,6 +36,7 @@ module Tomo
       def stop
         DockerImage.running_images.delete(self)
         Local.capture("docker stop #{container_id}", raise_on_error: false)
+        nil
       end
 
       def puma_port
