@@ -5,6 +5,10 @@ module Tomo
       freeze
     end
 
+    def deploy_to
+      path(:deploy_to)
+    end
+
     private
 
     attr_reader :settings
@@ -13,7 +17,7 @@ module Tomo
       return super unless setting?(method)
       raise ArgumentError, "#{method} takes no arguments" unless args.empty?
 
-      path(method)
+      path(:"#{method}_path")
     end
 
     def respond_to_missing?(method, include_private=false)
@@ -24,8 +28,8 @@ module Tomo
       settings.key?(:"#{name}_path")
     end
 
-    def path(name)
-      path = settings.fetch(:"#{name}_path").to_s.gsub(%r{//+}, "/")
+    def path(setting)
+      path = settings.fetch(setting).to_s.gsub(%r{//+}, "/")
       Path.new(path)
     end
   end

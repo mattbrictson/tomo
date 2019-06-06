@@ -8,7 +8,7 @@ module Tomo::Plugin::Core
     # rubocop:disable Metrics/AbcSize
     def setup_directories
       dirs = [
-        settings[:deploy_to],
+        paths.deploy_to,
         paths.current.dirname,
         paths.releases,
         paths.revision_log.dirname,
