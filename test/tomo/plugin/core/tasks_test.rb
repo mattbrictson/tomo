@@ -16,30 +16,19 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     )
   end
 
-  def test_create_shared_directories
-    configure(linked_dirs: %w[foo bar/baz])
-    @tester.run_task("core:create_shared_directories")
-    assert_equal(
-      [
-        "mkdir -p /var/www/testing/shared",
-        "cd /var/www/testing/shared && mkdir -p foo bar/baz"
-      ],
-      @tester.executed_scripts
-    )
-  end
-
-  def test_create_shared_directories_skips_if_no_linked_dirs
-    configure(linked_dirs: [])
-    @tester.run_task("core:create_shared_directories")
+  def test_symlink_shared_does_nothing_if_no_linked_dirs_or_files
+    configure(linked_dirs: [], linked_files: [])
+    @tester.run_task("core:symlink_shared")
     assert_nil(@tester.executed_script)
   end
 
-  def test_symlink_shared_files
+  def test_symlink_shared_creates_file_links
     configure(linked_files: %w[config/database.yml .env])
-    @tester.run_task("core:symlink_shared_files")
+    @tester.run_task("core:symlink_shared")
     assert_equal(
       [
-        "mkdir -p /var/www/testing/current/config",
+        "mkdir -p /var/www/testing/shared/config "\
+                 "/var/www/testing/current/config",
         "ln -sfn /var/www/testing/shared/config/database.yml "\
                 "/var/www/testing/current/config/database.yml",
         "ln -sfn /var/www/testing/shared/.env /var/www/testing/current/.env"
@@ -48,10 +37,22 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     )
   end
 
-  def test_symlink_shared_files_skips_if_no_linked_files
-    configure(linked_files: [])
-    @tester.run_task("core:symlink_shared_files")
-    assert_nil(@tester.executed_script)
+  def test_symlink_shared_deletes_existing_dirs_and_creates_links
+    configure(linked_dirs: %w[.bundle public/assets])
+    @tester.run_task("core:symlink_shared")
+    assert_equal(
+      [
+        "mkdir -p /var/www/testing/shared/.bundle "\
+                 "/var/www/testing/shared/public/assets " \
+                 "/var/www/testing/current/public",
+        "cd /var/www/testing/current && rm -rf .bundle public/assets",
+        "ln -sf /var/www/testing/shared/.bundle "\
+               "/var/www/testing/current/.bundle",
+        "ln -sf /var/www/testing/shared/public/assets "\
+               "/var/www/testing/current/public/assets"
+      ],
+      @tester.executed_scripts
+    )
   end
 
   def test_clean_releases_deletes_oldest_releases_but_not_current

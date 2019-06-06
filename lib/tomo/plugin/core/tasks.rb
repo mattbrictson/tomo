@@ -19,36 +19,13 @@ module Tomo::Plugin::Core
     end
     # rubocop:enable Metrics/AbcSize
 
-    def create_shared_directories
-      return if linked_dirs.empty?
+    def symlink_shared
+      return if linked_dirs.empty? && linked_files.empty?
 
-      remote.mkdir_p(paths.shared)
-
-      remote.chdir(paths.shared) do
-        remote.mkdir_p(*linked_dirs)
-      end
+      remote.mkdir_p(*shared_directories, *link_dirnames)
+      symlink_shared_directories
+      symlink_shared_files
     end
-
-    def symlink_shared_files
-      return if linked_files.empty?
-
-      create_linked_parents(linked_files)
-      linked_files.each do |file|
-        remote.ln_sfn paths.shared.join(file), paths.release.join(file)
-      end
-    end
-
-    # rubocop:disable Metrics/AbcSize
-    def symlink_shared_directories
-      return if linked_dirs.empty?
-
-      create_linked_parents(linked_dirs)
-      remove_existing_link_targets
-      linked_dirs.each do |dir|
-        remote.ln_sf paths.shared.join(dir), paths.release.join(dir)
-      end
-    end
-    # rubocop:enable Metrics/AbcSize
 
     def symlink_current
       return if paths.release == paths.current
@@ -99,13 +76,39 @@ module Tomo::Plugin::Core
       settings[:linked_files] || []
     end
 
-    def create_linked_parents(targets)
-      parents = targets.map do |target|
+    # rubocop:disable Metrics/AbcSize
+    def shared_directories
+      result = linked_dirs.map { |name| paths.shared.join(name) }
+      linked_files.each do |name|
+        result << paths.shared.join(name).dirname
+      end
+      result.uniq - [paths.shared]
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def symlink_shared_files
+      return if linked_files.empty?
+
+      linked_files.each do |file|
+        remote.ln_sfn paths.shared.join(file), paths.release.join(file)
+      end
+    end
+
+    def symlink_shared_directories
+      return if linked_dirs.empty?
+
+      remove_existing_link_targets
+      linked_dirs.each do |dir|
+        remote.ln_sf paths.shared.join(dir), paths.release.join(dir)
+      end
+    end
+
+    def link_dirnames
+      parents = (linked_dirs + linked_files).map do |target|
         paths.release.join(target).dirname
       end
-      parents = parents.uniq - [paths.release]
 
-      remote.mkdir_p(*parents) unless parents.empty?
+      parents.uniq - [paths.release]
     end
 
     def remove_existing_link_targets

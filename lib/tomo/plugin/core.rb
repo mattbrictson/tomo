@@ -14,6 +14,7 @@ module Tomo::Plugin
              deploy_to:                    "/var/www/%<application>",
              keep_releases:                10,
              linked_dirs:                  [],
+             linked_files:                 [],
              release_json_path:            "%<release_path>/.tomo_release.json",
              releases_path:                "%<deploy_to>/releases",
              revision_log_path:            "%<deploy_to>/revisions.log",

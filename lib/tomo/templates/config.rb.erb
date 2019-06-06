@@ -38,8 +38,7 @@ setup do
   run "core:setup_directories"
   run "git:clone"
   run "git:create_release"
-  run "core:create_shared_directories"
-  run "core:symlink_shared_directories"
+  run "core:symlink_shared"
   run "nvm:install"
   run "rbenv:install"
   run "bundler:upgrade_bundler"
@@ -52,7 +51,7 @@ end
 deploy do
   run "env:update"
   run "git:create_release"
-  run "core:symlink_shared_directories"
+  run "core:symlink_shared"
   run "core:write_release_json"
   run "bundler:install"
   run "rails:db_migrate"

@@ -77,7 +77,7 @@ module Tomo
       when :new then "%<releases_path>/#{release}"
       when :tmp then "%<tmp_path>/#{release}"
       else
-        raise ArgumentError, "release: must be one of `:current` or `:new`"
+        raise ArgumentError, "release: must be :current, :new, or :tmp"
       end
     end
   end

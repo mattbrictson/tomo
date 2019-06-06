@@ -76,7 +76,7 @@ end
 
 deploy do
   run "git:create_release"
-  run "core:symlink_shared_directories"
+  run "core:symlink_shared"
   run "core:write_release_json"
   run "bundler:install"
   run "rails:assets_precompile"
