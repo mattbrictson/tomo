@@ -1,18 +1,17 @@
 module Tomo
   class Host
-    PATTERN = /^(?:(\S+)@)?(\S*?)(?::(\S+))?$/.freeze
+    PATTERN = /^(?:(\S+)@)?(\S*?)$/.freeze
     private_constant :PATTERN
 
     attr_reader :address, :log_prefix, :user, :port, :roles, :as_privileged
 
-    def self.parse(host)
-      return host if host.is_a?(Host)
-
+    # TODO: test!
+    def self.parse(host, **kwargs)
       host = host.to_s.strip
-      user, address, port = host.match(PATTERN).captures
+      user, address = host.match(PATTERN).captures
       raise ArgumentError, "host cannot be blank" if address.empty?
 
-      new(user: user, port: port, address: address)
+      new(**{ user: user, address: address }.merge(kwargs))
     end
 
     # rubocop:disable Metrics/ParameterLists
@@ -51,14 +50,11 @@ module Tomo
     def privileged_copy(priv_user)
       return self if user == priv_user
 
-      self.class.new(
-        address: address,
-        port: port,
-        user: priv_user,
-        privileged_user: priv_user,
-        roles: roles,
-        log_prefix: Colors.red([log_prefix, priv_user].compact.join(":"))
-      )
+      new_prefix = Colors.red([log_prefix, priv_user].compact.join(":"))
+      copy = dup
+      copy.instance_variable_set(:@user, priv_user)
+      copy.instance_variable_set(:@log_prefix, new_prefix)
+      copy.freeze
     end
   end
 end

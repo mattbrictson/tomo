@@ -19,7 +19,11 @@ class RailsSetupDeployE2ETest < Minitest::Test
     in_cloned_rails_repo do
       Tomo::Testing::Local.bundle_exec("tomo init")
       config = IO.read(".tomo/config.rb")
-      config.sub!(/host ".*"/, %Q(host "#{@docker.host}"))
+      config.sub!(
+        /host ".*"/,
+        %Q(host "#{@docker.host.user}@#{@docker.host.address}", )\
+        "port: #{@docker.host.port}"
+      )
       config << <<~CONFIG
         set(#{@docker.ssh_settings.inspect})
       CONFIG

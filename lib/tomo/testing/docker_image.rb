@@ -28,7 +28,7 @@ module Tomo
         pull_base_image_if_needed
         @image_id = build_image
         @container_id = start_container
-        @host = Host.parse("deployer@localhost:#{find_ssh_port}")
+        @host = Host.parse("deployer@localhost", port: find_ssh_port)
         DockerImage.running_images << self
         freeze
       end
