@@ -34,7 +34,7 @@ module Tomo::Plugin::Core
 
       tmp_link = "#{paths.current}-#{SecureRandom.hex(8)}"
       remote.ln_sf paths.release, tmp_link
-      remote.run "mv", "-f", tmp_link, paths.current
+      remote.run "mv", "-fT", tmp_link, paths.current
     end
     # rubocop:enable Metrics/AbcSize
 
