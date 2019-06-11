@@ -27,11 +27,16 @@ module Tomo::Plugin::Core
       symlink_shared_files
     end
 
+    # TODO: test
+    # rubocop:disable Metrics/AbcSize
     def symlink_current
       return if paths.release == paths.current
 
-      remote.ln_sfn paths.release, paths.current
+      tmp_link = "#{paths.current}-#{SecureRandom.hex(8)}"
+      remote.ln_sf paths.release, tmp_link
+      remote.run "mv", "-f", tmp_link, paths.current
     end
+    # rubocop:enable Metrics/AbcSize
 
     # rubocop:disable Metrics/AbcSize
     def clean_releases
