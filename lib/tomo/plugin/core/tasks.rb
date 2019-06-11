@@ -1,4 +1,5 @@
 require "json"
+require "securerandom"
 
 module Tomo::Plugin::Core
   class Tasks < Tomo::TaskLibrary
