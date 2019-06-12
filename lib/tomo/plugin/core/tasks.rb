@@ -61,12 +61,14 @@ module Tomo::Plugin::Core
       remote.write(text: json, to: paths.release_json)
     end
 
+    # TODO: test
     # rubocop:disable Metrics/AbcSize
     def log_revision
-      message = settings[:start_time].to_s
+      message = remote.release[:deploy_date].to_s
       message << " - #{remote.release[:revision] || '<unknown>'}"
       message << " (#{remote.release[:branch] || '<unknown>'})"
       message << " deployed by #{remote.release[:deploy_user] || '<unknown>'}"
+      message << "\n"
 
       remote.write(text: message, to: paths.revision_log, append: true)
     end
