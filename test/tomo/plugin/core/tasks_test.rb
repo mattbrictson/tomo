@@ -55,6 +55,32 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     )
   end
 
+  def test_symlink_current
+    configure(
+      release_path: "/app/releases/20190416235621",
+      current_path: "/app/current"
+    )
+    @tester.run_task("core:symlink_current")
+
+    token = @tester.executed_scripts.first[/current-(\S+)/, 1]
+    assert_equal(
+      [
+        "ln -sf /app/releases/20190416235621 /app/current-#{token}",
+        "mv -fT /app/current-#{token} /app/current"
+      ],
+      @tester.executed_scripts
+    )
+  end
+
+  def test_symlink_current_does_nothing_if_release_is_already_current
+    configure(
+      release_path: "/app/current",
+      current_path: "/app/current"
+    )
+    @tester.run_task("core:symlink_current")
+    assert_nil(@tester.executed_script)
+  end
+
   def test_clean_releases_deletes_oldest_releases_but_not_current
     configure(
       keep_releases: 3,

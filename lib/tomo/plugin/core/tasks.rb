@@ -26,7 +26,6 @@ module Tomo::Plugin::Core
       symlink_shared_files
     end
 
-    # TODO: test
     def symlink_current
       return if paths.release == paths.current
 
