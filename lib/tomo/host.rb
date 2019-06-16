@@ -5,7 +5,6 @@ module Tomo
 
     attr_reader :address, :log_prefix, :user, :port, :roles, :as_privileged
 
-    # TODO: test!
     def self.parse(host, **kwargs)
       host = host.to_s.strip
       user, address = host.match(PATTERN).captures
@@ -17,7 +16,7 @@ module Tomo
     def initialize(address:, port: nil, log_prefix: nil, roles: nil,
                    user: nil, privileged_user: "root")
       @user = user.freeze
-      @port = (port || 22).to_s.freeze
+      @port = (port || 22).to_i.freeze
       @address = address.freeze
       @log_prefix = log_prefix.freeze
       @roles = Array(roles).map(&:freeze).freeze
@@ -33,13 +32,13 @@ module Tomo
 
     def to_s
       str = user ? "#{user}@#{address}" : address
-      str << ":#{port}" unless port == "22"
+      str << ":#{port}" unless port == 22
       str
     end
 
     def to_ssh_args
       args = [user ? "#{user}@#{address}" : address]
-      args.push("-p", port) unless port == "22"
+      args.push("-p", port.to_s) unless port == 22
       args
     end
 
