@@ -1,12 +1,13 @@
 module Tomo
   module Testing
     module HostExtensions
-      attr_reader :helper_values, :mocks, :scripts
+      attr_reader :helper_values, :mocks, :scripts, :release
 
       def initialize(**kwargs)
         @mocks = []
         @scripts = []
         @helper_values = []
+        @release = {}
         super
       end
 

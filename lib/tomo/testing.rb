@@ -10,6 +10,7 @@ module Tomo
     autoload :MockedExecError, "tomo/testing/mocked_exec_error"
     autoload :MockPluginTester, "tomo/testing/mock_plugin_tester"
     autoload :PluginTester, "tomo/testing/plugin_tester"
+    autoload :RemoteExtensions, "tomo/testing/remote_extensions"
     autoload :SSHExtensions, "tomo/testing/ssh_extensions"
 
     class << self
@@ -32,6 +33,7 @@ Tomo.logger = Tomo::Logger.new(
 )
 Tomo::Colors.enabled = false
 Tomo::Host.prepend Tomo::Testing::HostExtensions
+Tomo::Remote.prepend Tomo::Testing::RemoteExtensions
 class << Tomo::SSH
   prepend Tomo::Testing::SSHExtensions
 end

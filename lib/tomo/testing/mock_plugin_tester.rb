@@ -1,8 +1,9 @@
 module Tomo
   module Testing
     class MockPluginTester < PluginTester
-      def initialize(*plugin_names, settings: {})
+      def initialize(*plugin_names, settings: {}, release: {})
         host = Host.parse("testing@host")
+        host.release.merge!(release)
         super(*plugin_names, settings: settings, host: host)
       end
 
