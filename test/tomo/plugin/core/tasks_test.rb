@@ -1,5 +1,7 @@
 require "test_helper"
 require "tomo/plugin/core"
+require "shellwords"
+require "time"
 
 class Tomo::Plugin::Core::TasksTest < Minitest::Test
   def setup
@@ -139,6 +141,27 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     configure(keep_releases: nil)
     @tester.run_task("core:clean_releases")
     assert_empty(@tester.executed_scripts)
+  end
+
+  def test_log_revision
+    now = Time.now
+    @tester = Tomo::Testing::MockPluginTester.new(
+      settings: {
+        revision_log_path: "/app/revision.log"
+      },
+      release: {
+        branch: "master",
+        deploy_date: now,
+        deploy_user: "matt",
+        revision: "65eda21"
+      }
+    )
+    @tester.run_task("core:log_revision")
+    expected = "#{now} - 65eda21 (master) deployed by matt\n"
+    assert_equal(
+      "echo -n #{expected.shellescape} >> /app/revision.log",
+      @tester.executed_script
+    )
   end
 
   private
