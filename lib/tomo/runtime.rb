@@ -19,7 +19,6 @@ module Tomo
 
     attr_reader :tasks
 
-    # rubocop:disable Metrics/ParameterLists
     def initialize(deploy_tasks:, setup_tasks:, hosts:, task_filter:,
                    settings:, plugins_registry:)
       @deploy_tasks = deploy_tasks.freeze
@@ -31,7 +30,6 @@ module Tomo
       @tasks = plugins_registry.task_names
       freeze
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def deploy!
       execution_plan_for(deploy_tasks, release: :new).execute

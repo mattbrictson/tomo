@@ -11,6 +11,7 @@ AllCops:
     - "vendor/**/*"
 
 Metrics/AbcSize:
+  Max: 16
   Exclude:
     - "test/**/*"
 
@@ -30,6 +31,9 @@ Metrics/MethodLength:
 Metrics/LineLength:
   Exclude:
     - "*.gemspec"
+
+Metrics/ParameterLists:
+  Max: 6
 
 Layout/AlignHash:
   EnforcedColonStyle:

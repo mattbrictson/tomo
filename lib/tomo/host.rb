@@ -14,7 +14,6 @@ module Tomo
       new(**{ user: user, address: address }.merge(kwargs))
     end
 
-    # rubocop:disable Metrics/ParameterLists
     def initialize(address:, port: nil, log_prefix: nil, roles: nil,
                    user: nil, privileged_user: "root")
       @user = user.freeze
@@ -25,7 +24,6 @@ module Tomo
       @as_privileged = privileged_copy(privileged_user)
       freeze
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def with_log_prefix(prefix)
       copy = dup

@@ -20,7 +20,6 @@ module Tomo
         validate_tasks!
       end
 
-      # rubocop:disable Metrics/AbcSize
       def applicable_hosts_sentence
         return "no hosts" if applicable_hosts.empty?
 
@@ -32,7 +31,6 @@ module Tomo
           "#{applicable_hosts.length - 1} other hosts"
         end
       end
-      # rubocop:enable Metrics/AbcSize
 
       def execute
         open_connections do |remotes|

@@ -14,7 +14,6 @@ module Tomo
     autoload :UnspecifiedEnvironmentError,
              "tomo/configuration/unspecified_environment_error"
 
-    # rubocop:disable Metrics/AbcSize
     def self.from_config_rb(path=DEFAULT_CONFIG_PATH)
       ProjectNotFoundError.raise_with(path: path) unless File.file?(path)
       Tomo.logger.debug("Loading configuration from #{path.inspect}")
@@ -27,7 +26,6 @@ module Tomo
     rescue StandardError => e
       raise DSL::ErrorFormatter.decorate(e, path, config_rb&.lines)
     end
-    # rubocop:enable Metrics/AbcSize
 
     attr_accessor :environments, :deploy_tasks, :setup_tasks, :hosts, :plugins,
                   :settings, :task_filter, :working_dir

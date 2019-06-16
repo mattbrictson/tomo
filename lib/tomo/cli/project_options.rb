@@ -11,7 +11,6 @@ module Tomo
 
       private
 
-      # rubocop:disable Metrics/AbcSize
       def configure_runtime(options, strict: true)
         config = load_configuration(options)
         env = options[:environment]
@@ -21,7 +20,6 @@ module Tomo
         config.settings.merge!(settings_from_options(options))
         config.build_runtime
       end
-      # rubocop:enable Metrics/AbcSize
 
       def load_configuration(options)
         path = options[:project] || DEFAULT_CONFIG_PATH

@@ -13,7 +13,6 @@ module Tomo
         @completions = completions || Completions.new(literal: literal)
       end
 
-      # rubocop:disable Metrics/AbcSize
       def call
         until argv.empty?
           complete_if_needed(remaining_rules, *argv) if argv.length == 1
@@ -23,7 +22,6 @@ module Tomo
           state.processed_rule(rule)
         end
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 

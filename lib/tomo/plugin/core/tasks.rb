@@ -6,7 +6,6 @@ module Tomo::Plugin::Core
     RELEASE_REGEXP = /\d{14}/.freeze
     private_constant :RELEASE_REGEXP
 
-    # rubocop:disable Metrics/AbcSize
     def setup_directories
       dirs = [
         paths.deploy_to,
@@ -18,7 +17,6 @@ module Tomo::Plugin::Core
 
       remote.mkdir_p(*dirs)
     end
-    # rubocop:enable Metrics/AbcSize
 
     def symlink_shared
       return if linked_dirs.empty? && linked_files.empty?
@@ -29,7 +27,6 @@ module Tomo::Plugin::Core
     end
 
     # TODO: test
-    # rubocop:disable Metrics/AbcSize
     def symlink_current
       return if paths.release == paths.current
 
@@ -37,7 +34,6 @@ module Tomo::Plugin::Core
       remote.ln_sf paths.release, tmp_link
       remote.run "mv", "-fT", tmp_link, paths.current
     end
-    # rubocop:enable Metrics/AbcSize
 
     # rubocop:disable Metrics/AbcSize
     def clean_releases
