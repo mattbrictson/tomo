@@ -7,5 +7,5 @@ rvm:
 - 2.5.5
 - 2.6.3
 - ruby-head
-before_install: gem install bundler -v 2.0.1
+before_install: gem install bundler -v 2.0.2
 script: bundle exec rake test:unit

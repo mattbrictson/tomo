@@ -4,7 +4,7 @@ ARG DOCKER_TLS_VERIFY
 ARG DOCKER_HOST
 WORKDIR /tomo
 USER root
-RUN gem install bundler -v 2.0.1
+RUN gem install bundler -v 2.0.2
 COPY . .
 RUN bundle install --jobs=4 --retry=3
 RUN chown -R circleci:circleci .

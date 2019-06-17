@@ -28,7 +28,7 @@ jobs:
       - image: circleci/ruby:2.6.3
     steps:
       - checkout
-      - run: gem install bundler -v 2.0.1
+      - run: gem install bundler -v 2.0.2
       - run: bundle install --jobs=4 --retry=3
       - run: bundle exec rubocop
 
@@ -37,7 +37,7 @@ jobs:
       - image: circleci/ruby:2.6.3
     steps:
       - checkout
-      - run: gem install bundler -v 2.0.1
+      - run: gem install bundler -v 2.0.2
       - run: bundle install --jobs=4 --retry=3
       - run: bundle exec rake test:unit TESTOPTS="--ci-dir=./reports"
       - store_test_results:
