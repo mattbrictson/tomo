@@ -6,6 +6,7 @@ module Tomo::Plugin::Core
     RELEASE_REGEXP = /\d{14}/.freeze
     private_constant :RELEASE_REGEXP
 
+    # rubocop:disable Metrics/AbcSize
     def setup_directories
       dirs = [
         paths.deploy_to,
@@ -13,10 +14,11 @@ module Tomo::Plugin::Core
         paths.releases,
         paths.revision_log.dirname,
         paths.shared
-      ].uniq
+      ].map(&:to_s).uniq
 
       remote.mkdir_p(*dirs)
     end
+    # rubocop:enable Metrics/AbcSize
 
     def symlink_shared
       return if linked_dirs.empty? && linked_files.empty?
@@ -84,7 +86,7 @@ module Tomo::Plugin::Core
       linked_files.each do |name|
         result << paths.shared.join(name).dirname
       end
-      result.uniq - [paths.shared]
+      result.map(&:to_s).uniq - [paths.shared.to_s]
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -110,7 +112,7 @@ module Tomo::Plugin::Core
         paths.release.join(target).dirname
       end
 
-      parents.uniq - [paths.release]
+      parents.map(&:to_s).uniq - [paths.release.to_s]
     end
 
     def remove_existing_link_targets
