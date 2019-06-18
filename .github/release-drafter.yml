@@ -2,20 +2,15 @@ name-template: "$NEXT_PATCH_VERSION"
 tag-template: "v$NEXT_PATCH_VERSION"
 categories:
   - title: "⚠️ Breaking Changes"
-    labels:
-      - "⚠️ Breaking"
+    label: "⚠️ Breaking"
   - title: "✨ New Features"
-    labels:
-      - "✨ Feature"
+    label: "✨ Feature"
   - title: "🐛 Bug Fixes"
-    labels:
-      - "🐛 Bug Fix"
+    label: "🐛 Bug Fix"
   - title: "📚 Documentation"
-    labels:
-      - "📚 Docs"
+    label: "📚 Docs"
   - title: "🏠 Housekeeping"
-    labels:
-      - "🏠 Housekeeping"
+    label: "🏠 Housekeeping"
 change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
 no-changes-template: "- No changes"
 template: |
