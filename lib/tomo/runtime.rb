@@ -10,6 +10,7 @@ module Tomo
     autoload :ExecutionPlan, "tomo/runtime/execution_plan"
     autoload :HostExecutionStep, "tomo/runtime/host_execution_step"
     autoload :InlineThreadPool, "tomo/runtime/inline_thread_pool"
+    autoload :NoTasksError, "tomo/runtime/no_tasks_error"
     autoload :PrivilegedTask, "tomo/runtime/privileged_task"
     autoload :SettingsInterpolation, "tomo/runtime/settings_interpolation"
     autoload :SettingsRequiredError, "tomo/runtime/settings_required_error"
@@ -32,10 +33,14 @@ module Tomo
     end
 
     def deploy!
+      NoTasksError.raise_with(task_type: "deploy") if deploy_tasks.empty?
+
       execution_plan_for(deploy_tasks, release: :new).execute
     end
 
     def setup!
+      NoTasksError.raise_with(task_type: "setup") if setup_tasks.empty?
+
       execution_plan_for(setup_tasks, release: :tmp).execute
     end
 
@@ -45,6 +50,8 @@ module Tomo
     end
 
     def execution_plan_for(tasks, release: :current, args: [])
+      raise ArgumentError, "tasks cannot be empty" if tasks.empty?
+
       ExecutionPlan.new(
         tasks: tasks,
         hosts: hosts,
