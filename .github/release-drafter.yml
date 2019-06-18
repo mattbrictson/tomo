@@ -1,0 +1,21 @@
+name-template: "$NEXT_PATCH_VERSION"
+tag-template: "v$NEXT_PATCH_VERSION"
+categories:
+  - title: "⚠️ Breaking Changes"
+    labels:
+      - "⚠️ Breaking"
+  - title: "✨ New Features"
+    labels:
+      - "✨ Feature"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - "🐛 Bug Fix"
+  - title: "📚 Documentation"
+    labels:
+      - "📚 Docs"
+  - title: "🏠 Housekeeping"
+    labels:
+      - "🏠 Housekeeping"
+change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
+no-changes-template: "- No changes"
+template: "$CHANGES"
