@@ -38,6 +38,11 @@ end
 
 task bump: %w[bump:bundler bump:ruby bump:year]
 
+Rake::Task["release"].enhance do
+  puts "Don't forget publish the release on GitHub!"
+  system "open https://github.com/mattbrictson/tomo/releases"
+end
+
 namespace :bump do
   task :bundler do
     version = Gemfile.bundler_version
