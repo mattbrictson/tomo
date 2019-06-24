@@ -103,25 +103,15 @@ workflows:
                 - master
       - rubocop
       - test_unit
-      - test_docker:
-          requires:
-            - rubocop
-            - test_unit
-      - test_e2e:
-          requires:
-            - test_docker
+      - test_docker
+      - test_e2e
   cron-workflow:
     jobs:
       - mkdocs_build
       - rubocop
       - test_unit
-      - test_docker:
-          requires:
-            - rubocop
-            - test_unit
-      - test_e2e:
-          requires:
-            - test_docker
+      - test_docker
+      - test_e2e
     triggers:
       - schedule:
           cron: "0 13 * * 6"
