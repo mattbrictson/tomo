@@ -86,7 +86,10 @@ module Tomo
         else
           args.prepend("--publish-all ")
         end
-        Local.capture("docker run #{args}")[/\S+/]
+        Local.capture("docker run #{args}")[/\S+/].tap do
+          # Allow some time for the container to finish booting
+          sleep 0.1
+        end
       end
 
       def find_ssh_port
