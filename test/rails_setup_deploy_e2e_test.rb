@@ -1,9 +1,7 @@
 require "test_helper"
 
-require "fileutils"
 require "net/http"
 require "securerandom"
-require "tmpdir"
 
 class RailsSetupDeployE2ETest < Minitest::Test
   def setup
@@ -17,7 +15,7 @@ class RailsSetupDeployE2ETest < Minitest::Test
 
   def test_rails_setup_deploy
     in_cloned_rails_repo do
-      Tomo::Testing::Local.bundle_exec("tomo init")
+      bundle_exec("tomo init")
       config = IO.read(".tomo/config.rb")
       config.sub!(
         /host ".*"/,
@@ -29,13 +27,13 @@ class RailsSetupDeployE2ETest < Minitest::Test
       CONFIG
       IO.write(".tomo/config.rb", config)
 
-      Tomo::Testing::Local.bundle_exec(
+      bundle_exec(
         "tomo run env:set "\
         "DATABASE_URL=sqlite3:/var/www/rails-new/shared/production.sqlite3 "\
         "SECRET_KEY_BASE=#{SecureRandom.hex(64)}"
       )
-      Tomo::Testing::Local.bundle_exec("tomo setup")
-      Tomo::Testing::Local.bundle_exec("tomo deploy")
+      bundle_exec("tomo setup")
+      bundle_exec("tomo deploy")
 
       rails_uri = URI("http://localhost:#{@docker.puma_port}/")
       rails_http_response = Net::HTTP.get(rails_uri)
@@ -45,10 +43,16 @@ class RailsSetupDeployE2ETest < Minitest::Test
 
   private
 
+  def bundle_exec(command)
+    Tomo::Testing::Local.with_tomo_gemfile do
+      full_cmd = "bundle exec #{command}"
+      puts ">>> #{full_cmd}"
+      system(full_cmd) || raise("Command failed")
+    end
+  end
+
   def in_cloned_rails_repo(&block)
-    dir = File.join(Dir.tmpdir, "tomo_test_#{SecureRandom.hex(8)}")
-    FileUtils.mkdir_p(dir)
-    Dir.chdir(dir) do
+    Tomo::Testing::Local.in_temp_dir do
       repo = "https://github.com/mattbrictson/rails-new.git"
       Tomo::Testing::Local.capture("git clone #{repo}")
       Dir.chdir("rails-new", &block)

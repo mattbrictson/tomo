@@ -1,18 +1,26 @@
 require "bundler"
+require "fileutils"
 require "open3"
+require "securerandom"
 require "shellwords"
+require "tmpdir"
 
 module Tomo
   module Testing
     module Local
       class << self
-        def bundle_exec(command)
-          gemfile = File.expand_path("../../../Gemfile", __dir__)
-          full_cmd = "bundle exec --gemfile=#{gemfile.shellescape} #{command}"
+        def with_tomo_gemfile
           Bundler.with_original_env do
-            puts ">>> #{full_cmd}"
-            system(full_cmd) || raise("Command failed")
+            gemfile = File.expand_path("../../../Gemfile", __dir__)
+            ENV["BUNDLE_GEMFILE"] = gemfile
+            yield
           end
+        end
+
+        def in_temp_dir(&block)
+          dir = File.join(Dir.tmpdir, "tomo_test_#{SecureRandom.hex(8)}")
+          FileUtils.mkdir_p(dir)
+          Dir.chdir(dir, &block)
         end
 
         def capture(command, raise_on_error: true)

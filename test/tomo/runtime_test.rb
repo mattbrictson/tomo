@@ -14,11 +14,4 @@ class Tomo::RuntimeTest < Minitest::Test
       runtime.setup!
     end
   end
-
-  def test_execution_plan_for_raises_if_tasks_is_empty
-    runtime = Tomo::Configuration.new.build_runtime
-    assert_raises(ArgumentError) do
-      runtime.execution_plan_for([])
-    end
-  end
 end
