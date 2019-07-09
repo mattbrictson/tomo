@@ -50,8 +50,6 @@ module Tomo
     end
 
     def execution_plan_for(tasks, release: :current, args: [])
-      raise ArgumentError, "tasks cannot be empty" if tasks.empty?
-
       ExecutionPlan.new(
         tasks: tasks,
         hosts: hosts,
