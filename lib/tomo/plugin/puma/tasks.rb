@@ -13,7 +13,7 @@ module Tomo::Plugin::Puma
 
     def try_restart
       ctl_result = remote.chdir(paths.current) do
-        ctl_result = remote.bundle(
+        remote.bundle(
           "exec", "pumactl", *control_options, "restart",
           raise_on_error: false,
           silent: true
