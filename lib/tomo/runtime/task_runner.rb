@@ -36,7 +36,7 @@ module Tomo
 
       def connect(host)
         Current.with(host: host) do
-          conn = SSH.connect(host: host, options: SSH::Options.new(settings))
+          conn = SSH.connect(host: host, options: ssh_options)
           remote = Remote.new(conn, context, helper_modules)
           return remote unless block_given?
 
@@ -51,6 +51,11 @@ module Tomo
       private
 
       attr_reader :helper_modules, :tasks_by_name
+
+      def ssh_options
+        # TODO: replace with Hash#slice after dropping Ruby 2.4 support
+        settings.select { |key| SSH::Options::DEFAULTS.key?(key) }
+      end
     end
   end
 end

@@ -13,7 +13,9 @@ module Tomo
     autoload :UnsupportedVersionError, "tomo/ssh/unsupported_version_error"
 
     class << self
-      def connect(host:, options:)
+      def connect(host:, options: {})
+        options = Options.new(options) unless options.is_a?(Options)
+
         Tomo.logger.connect(host)
         return Connection.dry_run(host, options) if Tomo.dry_run?
 
