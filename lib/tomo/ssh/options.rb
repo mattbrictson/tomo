@@ -1,17 +1,22 @@
 module Tomo
   module SSH
     class Options
+      DEFAULTS = {
+        ssh_connect_timeout: 5,
+        ssh_executable: "ssh".freeze,
+        ssh_extra_opts: %w[-o PasswordAuthentication=no].map(&:freeze),
+        ssh_forward_agent: true,
+        ssh_reuse_connections: true,
+        ssh_strict_host_key_checking: "accept-new".freeze
+      }.freeze
+
       attr_reader :executable
 
-      def initialize(settings)
-        @executable = settings.fetch(:ssh_executable)
-        @extra_opts = settings.fetch(:ssh_extra_opts)
-        @forward_agent = settings.fetch(:ssh_forward_agent)
-        @reuse_connections = settings.fetch(:ssh_reuse_connections)
-        @connect_timeout = settings.fetch(:ssh_connect_timeout)
-        @strict_host_key_checking = settings.fetch(
-          :ssh_strict_host_key_checking
-        )
+      def initialize(options)
+        DEFAULTS.merge(options).each do |attr, value|
+          unprefixed_attr = attr.to_s.sub(/^ssh_/, "")
+          send(:"#{unprefixed_attr}=", value)
+        end
         freeze
       end
 
@@ -33,8 +38,9 @@ module Tomo
 
       private
 
-      attr_reader :connect_timeout, :extra_opts, :forward_agent,
-                  :reuse_connections, :strict_host_key_checking
+      attr_writer :executable
+      attr_accessor :connect_timeout, :extra_opts, :forward_agent,
+                    :reuse_connections, :strict_host_key_checking
 
       def control_opts(path, verbose)
         opts = [
