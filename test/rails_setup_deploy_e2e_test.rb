@@ -4,6 +4,8 @@ require "net/http"
 require "securerandom"
 
 class RailsSetupDeployE2ETest < Minitest::Test
+  include Tomo::Testing::Local
+
   def setup
     @docker = Tomo::Testing::DockerImage.new
     @docker.build_and_run
@@ -44,7 +46,7 @@ class RailsSetupDeployE2ETest < Minitest::Test
   private
 
   def bundle_exec(command)
-    Tomo::Testing::Local.with_tomo_gemfile do
+    with_tomo_gemfile do
       full_cmd = "bundle exec #{command}"
       puts ">>> #{full_cmd}"
       system(full_cmd) || raise("Command failed")
@@ -52,9 +54,9 @@ class RailsSetupDeployE2ETest < Minitest::Test
   end
 
   def in_cloned_rails_repo(&block)
-    Tomo::Testing::Local.in_temp_dir do
+    in_temp_dir do
       repo = "https://github.com/mattbrictson/rails-new.git"
-      Tomo::Testing::Local.capture("git clone #{repo}")
+      capture("git clone #{repo}")
       Dir.chdir("rails-new", &block)
     end
   end

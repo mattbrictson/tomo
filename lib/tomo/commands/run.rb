@@ -34,6 +34,11 @@ module Tomo
 
             #{blue('tomo run core:clean_releases')}
 
+          When you specify a task name, the #{blue('run')} command is implied and can be
+          omitted, so this works as well:
+
+            #{blue('tomo core:clean_releases')}
+
           You can run any task defined by plugins loaded in #{DEFAULT_CONFIG_PATH}.
           To see a list of available tasks, run #{blue('tomo tasks')}.
 

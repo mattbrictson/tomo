@@ -20,6 +20,12 @@ This will run the [rails:console](../plugins/rails.md#railsconsole) task on the 
 $ tomo run core:clean_releases
 ```
 
+When you specify a task name, the `run` command is implied and can be omitted, so this works as well:
+
+```plain
+$ tomo core:clean_releases
+```
+
 You can run any task defined by plugins loaded by the [plugin](../configuration.md#pluginname_or_relative_path) declarations in `.tomo/config.rb`. To see a list of available tasks, run the [tasks](tasks.md) command.
 
 During the `run` command, tomo will initialize the `:release_path` setting to be equal to the current symlink (i.e. `/var/www/my-app/current`). This means that the task will run within the current release.

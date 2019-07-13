@@ -6,7 +6,7 @@ module Tomo
       end
 
       def self.active?
-        !!@active
+        defined?(@active) && @active
       end
 
       def initialize(literal: false, stdout: $stdout, exit_proc: nil)
