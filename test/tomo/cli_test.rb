@@ -17,7 +17,7 @@ class Tomo::CLITest < Minitest::Test
 
   def tomo(*args)
     with_tomo_gemfile do
-      @stdout = capture(["bundle", "exec", "tomo", *args.flatten].join(" "))
+      @stdout = capture("bundle", "exec", "tomo", *args.flatten)
     end
   end
 end

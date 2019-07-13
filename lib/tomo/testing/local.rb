@@ -16,8 +16,8 @@ module Tomo
         Local.with_tomo_gemfile(&block)
       end
 
-      def capture(command, raise_on_error: true)
-        Local.capture(command, raise_on_error: raise_on_error)
+      def capture(*command, raise_on_error: true)
+        Local.capture(*command, raise_on_error: raise_on_error)
       end
 
       class << self
@@ -35,12 +35,13 @@ module Tomo
           Dir.chdir(dir, &block)
         end
 
-        def capture(command, raise_on_error: true)
-          progress(command) do
-            output, status = Open3.capture2e(command)
+        def capture(*command, raise_on_error: true)
+          command_str = command.join(" ")
+          progress(command_str) do
+            output, status = Open3.capture2e(*command)
 
             if raise_on_error && !status.success?
-              raise "Command failed: #{command}\n#{output}"
+              raise "Command failed: #{command_str}\n#{output}"
             end
 
             output
