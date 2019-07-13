@@ -57,7 +57,7 @@ module Tomo
       command_name = Abbrev.abbrev(COMMANDS.keys)[command_name]
       argv.shift if command_name
 
-      # command_name = "run" if command_name.nil? && task_format?(argv.first)
+      command_name = "run" if command_name.nil? && task_format?(argv.first)
       command = COMMANDS[command_name] || Tomo::Commands::Default
       [command, command_name]
     end
