@@ -19,9 +19,13 @@ module Tomo
 
           #{commands.map { |name, help| "  #{yellow(name.ljust(10))} #{help}" }.join("\n")}
 
-          Tomo accepts abbreviations for its commands. For example, #{blue('tomo deploy')}
-          can be shortened to #{blue('tomo d')}. You can use bash completions as well!
-          Run #{blue('tomo completion-script')} for installation instructions.
+          The tomo CLI also provides some convenient shortcuts:
+
+          - Commands can be abbreviated, like #{blue('tomo d')} to run #{blue('tomo deploy')}.
+          - When running tasks, the #{yellow('run')} command is implied and can be omitted.
+            E.g., #{blue('tomo run rails:console')} can be shortened to #{blue('tomo rails:console')}.
+          - Bash completions are also available. Run #{blue('tomo completion-script')} for
+            installation instructions.
 
           For help with any command, add #{blue('-h')} to the command, like this:
 
