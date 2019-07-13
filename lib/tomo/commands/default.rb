@@ -10,6 +10,7 @@ module Tomo
 
       include CLI::CommonOptions
 
+      # rubocop:disable Metrics/AbcSize
       def banner
         <<~BANNER
           Usage: #{green('tomo')} #{yellow('COMMAND [options]')}
@@ -36,6 +37,7 @@ module Tomo
             #{blue('https://tomo-deploy.com/')}
         BANNER
       end
+      # rubocop:enable Metrics/AbcSize
 
       def call(*args, options)
         # The bare `tomo` command (i.e. without `--help` or `--version`) doesn't
