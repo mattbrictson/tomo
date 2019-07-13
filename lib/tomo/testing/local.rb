@@ -8,6 +8,18 @@ require "tmpdir"
 module Tomo
   module Testing
     module Local
+      def in_temp_dir(&block)
+        Local.in_temp_dir(&block)
+      end
+
+      def with_tomo_gemfile(&block)
+        Local.with_tomo_gemfile(&block)
+      end
+
+      def capture(command, raise_on_error: true)
+        Local.capture(command, raise_on_error: raise_on_error)
+      end
+
       class << self
         def with_tomo_gemfile
           Bundler.with_original_env do

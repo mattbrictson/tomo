@@ -1,10 +1,12 @@
 require "test_helper"
 
 class Tomo::CLI::CompletionsTest < Minitest::Test
+  include Tomo::Testing::Local
+
   def test_completions_include_setting_names
-    output = Tomo::Testing::Local.in_temp_dir do
-      capture "bundle exec tomo init"
-      capture "bundle exec tomo --complete deploy -s"
+    output = in_temp_dir do
+      tomo "init"
+      tomo "--complete", "deploy", "-s"
     end
 
     assert_match(/^git_branch=$/, output)
@@ -13,9 +15,9 @@ class Tomo::CLI::CompletionsTest < Minitest::Test
 
   private
 
-  def capture(command)
-    Tomo::Testing::Local.with_tomo_gemfile do
-      Tomo::Testing::Local.capture(command)
+  def tomo(*args)
+    with_tomo_gemfile do
+      @stdout = capture(["bundle", "exec", "tomo", *args.flatten].join(" "))
     end
   end
 end
