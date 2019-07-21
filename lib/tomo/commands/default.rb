@@ -56,7 +56,7 @@ module Tomo
 
       def raise_unrecognized_command(command)
         error = "#{yellow(command)} is not a recognized tomo command."
-        if command.match?(/\A\S+:\S+\z/)
+        if command.match?(/\A\S+:/)
           suggestion = "tomo run #{command}"
           error << "\nMaybe you meant #{blue(suggestion)}?"
         end
