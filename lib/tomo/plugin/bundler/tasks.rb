@@ -11,7 +11,8 @@ module Tomo::Plugin::Bundler
     end
 
     def upgrade_bundler
-      needed_bundler_ver = extract_bundler_ver_from_lockfile
+      args = settings[:run_args]
+      needed_bundler_ver = args.first || extract_bundler_ver_from_lockfile
       return if needed_bundler_ver.nil?
 
       remote.run(
