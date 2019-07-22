@@ -24,6 +24,12 @@ gem install bundler --conservative --no-document -v VERSION
 
 `bundler:upgrade_bundler` is intended for use as a [setup](../commands/setup.md) task. It should be run prior to [bundler:install](#bundlerinstall) to ensure that the correct version bundler is present.
 
+This task can also be used on the command line and accepts the desired bundler version as an optional argument. If given, the task will install the version of bundler specified. If not, it falls back to the implicit `Gemfile.lock` behavior described above. Example usage:
+
+```plain
+$ tomo run bundler:upgrade_bundler 2.0.2
+```
+
 ### bundler:install
 
 Runs `bundle install` to download and install all the dependencies specified by the Gemfile of the app that is being deployed. As a performance optimization, this task will run `bundle check` first to see if the app’s dependencies have already been installed. If so, `bundle install` is skipped.
