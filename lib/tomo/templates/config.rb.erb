@@ -5,6 +5,7 @@ plugin "rails"
 plugin "nvm"
 plugin "puma"
 plugin "rbenv"
+plugin "nodenv"
 plugin "./plugins/<%= app %>.rb"
 
 host "user@hostname.or.ip.address"
@@ -14,6 +15,8 @@ set deploy_to: "/var/www/%<application>"
 set nvm_node_version: <%= node_version&.inspect || "nil # FIXME" %>
 set nvm_yarn_version: <%= yarn_version.inspect %>
 set rbenv_ruby_version: <%= RUBY_VERSION.inspect %>
+set nodenv_node_version: <%= node_version&.inspect || "nil # FIXME" %>
+set nodenv_yarn_version: <%= yarn_version&.inspect %>
 set git_url: <%= git_origin_url&.inspect || "nil # FIXME" %>
 set git_branch: "master"
 set git_exclusions: %w[
