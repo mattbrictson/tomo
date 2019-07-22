@@ -13,6 +13,16 @@ class Tomo::CLI::CompletionsTest < Minitest::Test
     assert_match(/^git_url=$/, output)
   end
 
+  def test_completes_task_name_even_without_run_command
+    output = in_temp_dir do
+      tomo "init"
+      tomo "--complete-word", "rails:"
+    end
+
+    assert_match(/^console $/, output)
+    assert_match(/^db_migrate $/, output)
+  end
+
   private
 
   def tomo(*args)
