@@ -19,6 +19,10 @@ module Tomo
 
     class << self
       attr_accessor :show_backtrace
+
+      def exit(status=true)
+        Process.exit(status)
+      end
     end
 
     COMMANDS = {
@@ -74,7 +78,7 @@ module Tomo
       error.command_name = command_name if error.respond_to?(:command_name=)
       Tomo.logger.error(error.to_console)
       status = error.respond_to?(:exit_status) ? error.exit_status : 1
-      exit(status) unless Tomo::CLI.show_backtrace
+      CLI.exit(status) unless Tomo::CLI.show_backtrace
 
       raise error
     end

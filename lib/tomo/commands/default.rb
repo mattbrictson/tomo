@@ -5,7 +5,7 @@ module Tomo
 
       option :version, "-v, --version", "Display tomo’s version and exit" do
         Version.parse([])
-        exit
+        CLI.exit
       end
 
       include CLI::CommonOptions
