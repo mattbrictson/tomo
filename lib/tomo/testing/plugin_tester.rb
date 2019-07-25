@@ -1,6 +1,8 @@
 module Tomo
   module Testing
     class PluginTester
+      include LogCapturing
+
       def initialize(*plugin_names, settings: {}, host:)
         @host = host
         config = Configuration.new
@@ -23,27 +25,9 @@ module Tomo
         end
       end
 
-      def stdout
-        @stdout_io&.string
-      end
-
-      def stderr
-        @stderr_io&.string
-      end
-
       private
 
       attr_reader :host, :runtime
-
-      def capturing_logger_output
-        orig_logger = Tomo.logger
-        @stdout_io = StringIO.new
-        @stderr_io = StringIO.new
-        Tomo.logger = Tomo::Logger.new(stdout: @stdout_io, stderr: @stderr_io)
-        yield
-      ensure
-        Tomo.logger = orig_logger
-      end
     end
   end
 end
