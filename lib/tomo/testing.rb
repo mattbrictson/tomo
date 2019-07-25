@@ -3,6 +3,7 @@ require "tomo"
 module Tomo
   module Testing
     autoload :CLIExtensions, "tomo/testing/cli_extensions"
+    autoload :CLITester, "tomo/testing/cli_tester"
     autoload :Connection, "tomo/testing/connection"
     autoload :DockerImage, "tomo/testing/docker_image"
     autoload :DockerPluginTester, "tomo/testing/docker_plugin_tester"
