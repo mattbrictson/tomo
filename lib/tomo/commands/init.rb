@@ -46,14 +46,14 @@ module Tomo
         return unless File.exist?(".tomo")
 
         logger.error("Can't create .tomo directory; a file already exists")
-        exit(1)
+        CLI.exit(1)
       end
 
       def assert_no_tomo_project!
         return unless File.exist?(DEFAULT_CONFIG_PATH)
 
         logger.error("A #{DEFAULT_CONFIG_PATH} file already exists")
-        exit(1)
+        CLI.exit(1)
       end
 
       def current_dir_name

@@ -21,7 +21,7 @@ module Tomo
           end
           option :help, "-h, --help", "Print this documentation" do |_help|
             puts instance_variable_get(:@parser)
-            exit
+            CLI.exit
           end
 
           after_parse :dump_runtime_info

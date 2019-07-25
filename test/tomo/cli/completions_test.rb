@@ -1,33 +1,23 @@
 require "test_helper"
 
 class Tomo::CLI::CompletionsTest < Minitest::Test
-  include Tomo::Testing::Local
+  def setup
+    @tester = Tomo::Testing::CLITester.new
+  end
 
   def test_completions_include_setting_names
-    output = in_temp_dir do
-      tomo "init"
-      tomo "--complete", "deploy", "-s"
-    end
+    @tester.run "init"
+    @tester.run "--complete", "deploy", "-s"
 
-    assert_match(/^git_branch=$/, output)
-    assert_match(/^git_url=$/, output)
+    assert_match(/^git_branch=$/, @tester.stdout)
+    assert_match(/^git_url=$/, @tester.stdout)
   end
 
   def test_completes_task_name_even_without_run_command
-    output = in_temp_dir do
-      tomo "init"
-      tomo "--complete-word", "rails:"
-    end
+    @tester.run "init"
+    @tester.run "--complete-word", "rails:"
 
-    assert_match(/^console $/, output)
-    assert_match(/^db_migrate $/, output)
-  end
-
-  private
-
-  def tomo(*args)
-    with_tomo_gemfile do
-      capture("bundle", "exec", "tomo", *args.flatten)
-    end
+    assert_match(/^console $/, @tester.stdout)
+    assert_match(/^db_migrate $/, @tester.stdout)
   end
 end

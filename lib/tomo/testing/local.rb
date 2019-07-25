@@ -8,12 +8,12 @@ require "tmpdir"
 module Tomo
   module Testing
     module Local
-      def in_temp_dir(&block)
-        Local.in_temp_dir(&block)
-      end
-
       def with_tomo_gemfile(&block)
         Local.with_tomo_gemfile(&block)
+      end
+
+      def in_temp_dir(token=nil, &block)
+        Local.in_temp_dir(token, &block)
       end
 
       def capture(*command, raise_on_error: true)
@@ -29,8 +29,9 @@ module Tomo
           end
         end
 
-        def in_temp_dir(&block)
-          dir = File.join(Dir.tmpdir, "tomo_test_#{SecureRandom.hex(8)}")
+        def in_temp_dir(token=nil, &block)
+          token ||= SecureRandom.hex(8)
+          dir = File.join(Dir.tmpdir, "tomo_test_#{token}")
           FileUtils.mkdir_p(dir)
           Dir.chdir(dir, &block)
         end
