@@ -4,7 +4,7 @@ class Tomo::CLI::CompletionsTest < Minitest::Test
   include Tomo::Testing::Local
 
   def test_completions_include_setting_names
-    output = in_temp_dir do
+    output, _stderr = in_temp_dir do
       tomo "init"
       tomo "--complete", "deploy", "-s"
     end
@@ -14,7 +14,7 @@ class Tomo::CLI::CompletionsTest < Minitest::Test
   end
 
   def test_completes_task_name_even_without_run_command
-    output = in_temp_dir do
+    output, _stderr = in_temp_dir do
       tomo "init"
       tomo "--complete-word", "rails:"
     end
@@ -26,8 +26,32 @@ class Tomo::CLI::CompletionsTest < Minitest::Test
   private
 
   def tomo(*args)
-    with_tomo_gemfile do
-      capture("bundle", "exec", "tomo", *args.flatten)
+    capturing_logger_output do
+      handling_exit do
+        Tomo::CLI.new.call(args.flatten)
+      end
     end
+  ensure
+    Tomo.debug = false
+    Tomo.dry_run = false
+    Tomo::CLI.show_backtrace = false
+    Tomo::CLI::Completions.instance_variable_set(:@active, false)
+  end
+
+  def handling_exit
+    yield
+  rescue Tomo::Testing::MockedExitError => e
+    raise unless e.success?
+  end
+
+  def capturing_logger_output
+    orig_logger = Tomo.logger
+    stdout_io = StringIO.new
+    stderr_io = StringIO.new
+    Tomo.logger = Tomo::Logger.new(stdout: stdout_io, stderr: stderr_io)
+    yield
+    [stdout_io.string, stderr_io.string]
+  ensure
+    Tomo.logger = orig_logger
   end
 end

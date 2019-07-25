@@ -17,7 +17,7 @@ module Tomo
       def print_completions_and_exit(rules, *args, state:)
         completions = completions_for(rules, *args, state)
         words = completions.map { |c| bash_word_for(c, args.last) }
-        stdout.puts(words.join("\n")) unless words.empty?
+        Tomo.logger.info(words.join("\n")) unless words.empty?
         CLI.exit
       end
 
