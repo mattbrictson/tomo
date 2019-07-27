@@ -11,8 +11,7 @@ module Tomo::Plugin::Bundler
     end
 
     def upgrade_bundler
-      args = settings[:run_args]
-      needed_bundler_ver = args.first || extract_bundler_ver_from_lockfile
+      needed_bundler_ver = version_setting || extract_bundler_ver_from_lockfile
       return if needed_bundler_ver.nil?
 
       remote.run(
@@ -23,6 +22,10 @@ module Tomo::Plugin::Bundler
     end
 
     private
+
+    def version_setting
+      settings[:bundler_version]
+    end
 
     def check_options
       gemfile = settings[:bundler_gemfile]

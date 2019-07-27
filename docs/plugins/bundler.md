@@ -4,31 +4,26 @@ The bundler plugin installs ruby gem dependencies using bundler. This is require
 
 ## Settings
 
-| Name                    | Purpose                                                             | Default                   |
-| ----------------------- | ------------------------------------------------------------------- | ------------------------- |
-| `bundler_install_flags` | Array of command-line flags to pass to the `bundle install` command | `["--deployment"]`        |
-| `bundler_gemfile`       | Optionally used to override the location of the Gemfile             | `nil`                     |
-| `bundler_jobs`          | Amount of concurrency used when downloading/installing gems         | `"4"`                     |
-| `bundler_path`          | Directory where gems where be installed                             | `"%<shared_path>/bundle"` |
-| `bundler_without`       | Array of Gemfile groups to exclude from installation                | `["development", "test"]` |
+| Name                    | Purpose                                                                                                                                                                       | Default                   |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| `bundler_install_flags` | Array of command-line flags to pass to the `bundle install` command                                                                                                           | `["--deployment"]`        |
+| `bundler_gemfile`       | Optionally used to override the location of the Gemfile                                                                                                                       | `nil`                     |
+| `bundler_jobs`          | Amount of concurrency used when downloading/installing gems                                                                                                                   | `"4"`                     |
+| `bundler_path`          | Directory where gems where be installed                                                                                                                                       | `"%<shared_path>/bundle"` |
+| `bundler_version`       | The version of bundler to install, used by the [bundler:upgrade_bundler](#bundlerupgrade_bundler) task; if `nil` (the default), determine the version based on `Gemfile.lock` | `nil`                     |
+| `bundler_without`       | Array of Gemfile groups to exclude from installation                                                                                                                          | `["development", "test"]` |
 
 ## Tasks
 
 ### bundler:upgrade_bundler
 
-Installs the version of bundler required by the app that is being deployed. The version is determined by looking at the `BUNDLED WITH` entry within the app’s `Gemfile.lock`. If the app is missing a lockfile this task does nothing. Bundler will be installed withing this command:
+Installs the version of bundler specified by the `:bundler_version` setting, if specified. If `:bundler_version` is `nil` (the default), this task will automatically determine the version of bundler required by the app that is being deployed by looking at the `BUNDLED WITH` entry within the app’s `Gemfile.lock`. If `:bundler_version` is `nil` and the app is missing a lockfile, then this task does nothing. Bundler will be installed withing this command:
 
 ```
 gem install bundler --conservative --no-document -v VERSION
 ```
 
 `bundler:upgrade_bundler` is intended for use as a [setup](../commands/setup.md) task. It should be run prior to [bundler:install](#bundlerinstall) to ensure that the correct version bundler is present.
-
-This task can also be used on the command line and accepts the desired bundler version as an optional argument. If given, the task will install the version of bundler specified. If not, it falls back to the implicit `Gemfile.lock` behavior described above. Example usage:
-
-```plain
-$ tomo run bundler:upgrade_bundler 2.0.2
-```
 
 ### bundler:install
 
