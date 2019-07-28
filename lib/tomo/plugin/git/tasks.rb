@@ -11,9 +11,7 @@ module Tomo::Plugin::Git
         set_origin_url
       else
         remote.mkdir_p(paths.git_repo.dirname)
-        remote.git(
-          "clone", "--mirror", settings[:git_url], paths.git_repo
-        )
+        remote.git("clone", "--mirror", settings[:git_url], paths.git_repo)
       end
     end
 
