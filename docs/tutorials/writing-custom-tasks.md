@@ -375,7 +375,7 @@ echo [template:.tomo/templates/crontab.erb] | crontab -
 And we can see what is installed with our `cron:show` task:
 
 ```plain
-± tomo run cron:show
+$ tomo run cron:show
 tomo run v0.3.0
 → Connecting to deployer@app.example.com
 • cron:show
