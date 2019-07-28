@@ -150,7 +150,7 @@ And run it!
 
 And just like that, you are now already familiar with the basics of tomo and how to extend it! Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
 
-To prepare your existing project for a real deploy, check out the sections of the reference documentation on [configuration](https://tomo-deploy.com/configuration/), [writing custom tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/) [TODO], the [setup command](https://tomo-deploy.com/commands/setup/), and the [deploy command](https://tomo-deploy.com/commands/deploy/). There is also a tutorial that walks through [deploying a new Rails app from scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/) [TODO]. If you have questions, check out the [FAQ](#faq) and [support](#support) notes below. Enjoy using tomo!
+To prepare your existing project for a real deploy, check out the sections of the reference documentation on [configuration](https://tomo-deploy.com/configuration/), [writing custom tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/), the [setup command](https://tomo-deploy.com/commands/setup/), and the [deploy command](https://tomo-deploy.com/commands/deploy/). There is also a tutorial that walks through [deploying a new Rails app from scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/) [TODO]. If you have questions, check out the [FAQ](#faq) and [support](#support) notes below. Enjoy using tomo!
 
 ## Reference documentation
 
@@ -172,7 +172,7 @@ To prepare your existing project for a real deploy, check out the sections of th
   - [rbenv](https://tomo-deploy.com/plugins/rbenv/)
 - Tutorials
   - [Deploying Rails From Scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/) [TODO]
-  - [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/) [TODO]
+  - [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/)
   - [Publishing a Plugin](https://tomo-deploy.com/tutorials/publishing-a-plugin/) [TODO]
 - API
   - [Host](https://tomo-deploy.com/api/Host/)
