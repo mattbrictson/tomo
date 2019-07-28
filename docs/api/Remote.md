@@ -23,6 +23,8 @@ end
 
 ## Instance methods
 
+In addition the methods listed here, all [helpers provided by the core plugin](../plugins/core.md#helpers) are also available, as are helpers from any other plugins that have been explicitly loaded in `.tomo/config.rb`. Refer to the documentation for each plugin for details.
+
 ### run(\*command, \*\*options) → [Tomo::Result](Result.md)
 
 Runs a shell script on the remote host via SSH.
