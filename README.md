@@ -36,7 +36,7 @@ $ gem install tomo
 
 #### Configuring a project
 
-Tomo is configured via `.tomo/config.rb` file in your project. To get started, you can use `tomo init` to generate a configuration that works for a basic Rails app.
+Tomo is configured via a `.tomo/config.rb` file in your project. To get started, you can use `tomo init` to generate a configuration that works for a basic Rails app.
 
 ![$ tomo init](./readme_images/tomo-init.png)
 
