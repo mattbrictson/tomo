@@ -4,9 +4,8 @@
 [![Travis](https://img.shields.io/travis/mattbrictson/tomo.svg?label=travis)](https://travis-ci.org/mattbrictson/tomo)
 [![Circle](https://circleci.com/gh/mattbrictson/tomo.svg?style=shield)](https://circleci.com/gh/mattbrictson/tomo)
 [![Code Climate](https://codeclimate.com/github/mattbrictson/tomo/badges/gpa.svg)](https://codeclimate.com/github/mattbrictson/tomo)
-[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/mattbrictson)
 
-Tomo is a friendly command-line tool for deploying Rails apps. It is a new alternative to Capistrano, Mina, and Shipit that optimizes for simplicity and developer happiness.
+Tomo is a friendly command-line tool for deploying Rails apps. It is a new alternative to Capistrano, Mina, and Shipit that aims for simplicity and developer happiness.
 
 💻 Rich command-line interface with built-in bash completions<br/>
 ☁️ Multi-environment and role-based multi-host support<br/>
@@ -16,17 +15,16 @@ Tomo is a friendly command-line tool for deploying Rails apps. It is a new alter
 📚 Quality documentation<br/>
 🔬 Minimal dependencies<br/>
 
-This project wouldn't be possible without the generosity of the open source Ruby community. Please support open source projects and your fellow developers by helping answer questions, contributing pull requests to improve code and documentation, or just [drop a note](https://saythanks.io/to/mattbrictson) to say thanks! ❤️
-
 ---
 
 - [Quick start](#quick-start)
+- [Usage](#usage)
 - [Reference documentation](#reference-documentation)
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
 - [Code of conduct](#code-of-conduct)
-- [Contribution guide](#contribution-guide) [TODO]
+- [Contribution guide](#contribution-guide)
 
 ## Quick start
 
@@ -36,19 +34,13 @@ Tomo is distributed as a ruby gem. To install:
 $ gem install tomo
 ```
 
-#### Getting help
-
-An easy way to kick the tires is to view the `--help`.
-
-![$ tomo --help](./readme_images/tomo-help.png)
-
 #### Configuring a project
 
-Let’s init a project to see how tomo is configured.
+Tomo is configured via `.tomo/config.rb` file in your project. To get started, you can use `tomo init` to generate a configuration that works for a basic Rails app.
 
 ![$ tomo init](./readme_images/tomo-init.png)
 
-The `.tomo/config.rb` file defines all the settings and tasks needed to setup and deploy a typical Rails project. An abbreviated version looks like this:
+An abbreviated version looks like this:
 
 ```ruby
 # .tomo/config.rb
@@ -86,41 +78,50 @@ deploy do
 end
 ```
 
-Eventually you'll want to edit the config file to specify the appropriate user and host, perhaps define some custom tasks, and tweak the settings to make them suitable for your Rails app. You can also take advantage of more advanced features like multiple hosts and environment-based config.
+Check out the [configuration docs](https://tomo-deploy.com/configuration/) for a complete reference.
 
-#### Host setup
+## Usage
 
-With tomo, an initial deployment is separated into two distinct steps. The `setup` command prepares the host for its first deploy. Let’s take a look at the documentation with `--help`:
+Tomo gives you easy-to-use commands for three common use cases:
 
-![$ tomo setup --help](./readme_images/tomo-setup-help.png)
+1. `tomo setup` prepares a remote host for its first deploy
+2. `tomo deploy` performs a deployment
+3. `tomo run` lets you invoke one-off tasks
 
-We can simulate the setup operation with the `--dry-run` option. Let's try it:
+#### Setup
 
-![$ tomo setup --dry-run](./readme_images/tomo-setup-dry-run.png)
+`tomo setup` prepares the remote host for its first deploy by sequentially running the
+[setup](https://tomo-deploy.com/configuration#setupblock) list of tasks specified in `.tomo/config.rb`. These tasks typically create directories, initialize data stores, install prerequisite tools, and perform other one-time actions that are necessary before a deploy can take place.
 
-As you can see, the setup command in this project clones the git repository, installs ruby, node, bundler, and initializes the database. One the host is set up, it is ready for its first deploy.
+Out of the box, tomo will:
 
-#### Performing a deploy
+- Configure necessary environment variables, like `RAILS_ENV` and `SECRET_KEY_BASE`
+- Install Ruby, Bundler, Node, Yarn, and dependencies
+- Create all necessary deployment directories
+- Create the Rails database, load the schema, and insert seed data
 
-Typically you only need to run `setup` once. From then on deploying a project is a matter of running the `deploy` command.
+#### Deploy
 
-![$ tomo deploy --help](./readme_images/tomo-deploy-help.png)
+Whereas `tomo setup` is typically run once, you can use `tomo deploy` every time you want to deploy a new version of your app. The deploy command will sequentially run the [deploy](https://tomo-deploy.com/configuration#deployblock) list of tasks specified in `.tomo/config.rb`. You can customize this list to meet the needs of your app. By default, tomo runs these tasks:
 
-Like `setup`, this can be simulated with `--dry-run`, like this:
+1. Create a release (using the [git:create_release](https://tomo-deploy.com/plugins/git#gitcreate_release) task)
+2. Build the project (e.g. [bundler:install](https://tomo-deploy.com/plugins/bundler#bundlerinstall), [rails:assets_precompile](../plugins/rails.md#railsassets_precompile))
+3. Migrate data to the meet the requirements of the new release (e.g. [rails:db_migrate](https://tomo-deploy.com/plugins/rails#railsdb_migrate))
+4. Make the new release the "current" one ([core:symlink_current](https://tomo-deploy.com/plugins/core#coresymlink_current))
+5. Restart the app to use the new current release (e.g. [puma:restart](https://tomo-deploy.com/plugins/puma#pumarestart))
+6. Perform any cleanup (e.g. [bundler:clean](https://tomo-deploy.com/plugins/bundler#bundlerclean))
 
-![$ tomo deploy --dry-run](./readme_images/tomo-deploy-dry-run.png)
+#### Run
 
-#### Running a single task
-
-Tomo can also `run` individual remote tasks. Use the `tasks` command to see the list of tasks tomo knows about.
+Tomo can also `run` individual remote tasks on demand. You can use the `tasks` command to see the list of tasks tomo knows about.
 
 ![$ tomo tasks](./readme_images/tomo-tasks.png)
 
-One of the built-in Rails tasks is `rails:console`, which brings up a fully-interactive Rails console over SSH. We can simulate this with `--dry-run` as well.
+One of the built-in Rails tasks is `rails:console`, which brings up a fully-interactive Rails console over SSH.
 
-![$ tomo run rails:console --dry-run](./readme_images/tomo-run-rails-console-dry-run.png)
+![$ tomo run rails:console](./readme_images/tomo-run-rails-console.png)
 
-#### Writing tasks
+#### Extending tomo
 
 Tomo has many plugins built-in, but you can easily add your own to extend tomo with custom tasks. By convention, custom plugins are stored in `.tomo/plugins/`. These plugins can define tasks as plain ruby methods. For example:
 
@@ -144,13 +145,9 @@ plugin "./plugins/my-plugin.rb"
 
 And run it!
 
-![$ tomo run my-plugin:hello --dry-run](./readme_images/tomo-run-hello-dry-run.png)
+![$ tomo run my-plugin:hello](./readme_images/tomo-run-hello.png)
 
-#### Next steps
-
-And just like that, you are now already familiar with the basics of tomo and how to extend it! Tomo is even more friendly and powerful with the help of bash completions. If you use bash, run `tomo completion-script` for instructions on setting them up.
-
-To prepare your existing project for a real deploy, check out the sections of the reference documentation on [configuration](https://tomo-deploy.com/configuration/), [writing custom tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/), the [setup command](https://tomo-deploy.com/commands/setup/), and the [deploy command](https://tomo-deploy.com/commands/deploy/). There is also a tutorial that walks through [deploying a new Rails app from scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/) [TODO]. If you have questions, check out the [FAQ](#faq) and [support](#support) notes below. Enjoy using tomo!
+Read the [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/) tutorial for an in-depth guide to extending tomo.
 
 ## Reference documentation
 
@@ -198,15 +195,7 @@ set ssh_strict_host_key_checking: true # or false
 
 ## Support
 
-Thanks for your interest in Tomo! I use Tomo myself to deploy my own Rails projects and intend to keep this repository working and up to date for the foreseeable future. However Tomo is only a hobby, and as the sole maintainer, my ability to provide support and review pull request is limited and a bit sporadic. My priorities right now are:
-
-1. Improve test coverage
-2. Keep the project free of any serious bugs
-3. Stay up to date with the latest versions of Ruby and gem dependencies
-
-If you'd like to help by submitting a pull request, that would be much appreciated! Check out the contribution guide to get started.
-
-Otherwise if you want to report a bug, or have ideas, feedback or questions about Tomo, [let me know via GitHub issues](https://github.com/mattbrictson/tomo/issues/new) and I will do my best to provide a helpful answer. Happy hacking! —Matt
+This project is a labor of love and I can only spend a few hours a week maintaining it, at most. If you'd like to help by submitting a pull request, or if you've discovered a bug that needs my attention, please let me know. Check out [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/master/CONTRIBUTING.md) to get started. Happy hacking! —Matt
 
 ## License
 
@@ -218,4 +207,4 @@ Everyone interacting in the Tomo project’s codebases, issue trackers, chat roo
 
 ## Contribution guide
 
-[TODO]
+Interested in filing a bug report, feature request, or opening a PR? Excellent! Please read the short [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/master/CONTRIBUTING.md) guidelines before you dive in.
