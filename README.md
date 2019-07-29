@@ -34,6 +34,12 @@ Tomo is distributed as a ruby gem. To install:
 $ gem install tomo
 ```
 
+For instructions on setting up bash completions, run:
+
+```
+$ tomo completion-script
+```
+
 #### Configuring a project
 
 Tomo is configured via a `.tomo/config.rb` file in your project. To get started, you can use `tomo init` to generate a configuration that works for a basic Rails app.
