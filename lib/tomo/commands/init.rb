@@ -62,7 +62,7 @@ module Tomo
 
       def git_origin_url
         return unless File.file?(".git/config")
-        return unless `git remote -v` =~ /^origin/
+        return unless `git remote -v`.match?(/^origin/)
 
         url = `git remote get-url origin`.chomp
         url.empty? ? nil : url
