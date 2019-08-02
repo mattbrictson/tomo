@@ -18,6 +18,12 @@ module Tomo
     autoload :TaskRunner, "tomo/runtime/task_runner"
     autoload :UnknownTaskError, "tomo/runtime/unknown_task_error"
 
+    def self.local_user
+      ENV["USER"] || ENV["USERNAME"] || `whoami`.chomp
+    rescue StandardError
+      nil
+    end
+
     attr_reader :tasks
 
     def initialize(deploy_tasks:, setup_tasks:, hosts:, task_filter:,
@@ -65,6 +71,7 @@ module Tomo
 
     def new_task_runner(release_type, args)
       run_settings = { release_path: release_path_for(release_type) }
+                     .merge(local_user: Runtime.local_user)
                      .merge(settings)
                      .merge(run_args: args)
 
