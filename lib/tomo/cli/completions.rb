@@ -9,22 +9,21 @@ module Tomo
         defined?(@active) && @active
       end
 
-      def initialize(literal: false, stdout: $stdout, exit_proc: nil)
+      def initialize(literal: false, stdout: $stdout)
         @literal = literal
         @stdout = stdout
-        @exit_proc = exit_proc || Kernel.method(:exit)
       end
 
       def print_completions_and_exit(rules, *args, state:)
         completions = completions_for(rules, *args, state)
         words = completions.map { |c| bash_word_for(c, args.last) }
-        stdout.puts(words.join("\n")) unless words.empty?
-        exit_proc.call
+        Tomo.logger.info(words.join("\n")) unless words.empty?
+        CLI.exit
       end
 
       private
 
-      attr_reader :literal, :stdout, :exit_proc
+      attr_reader :literal, :stdout
 
       def completions_for(rules, *prefix_args, word, state)
         all_candidates(rules, prefix_args, state).select do |cand|

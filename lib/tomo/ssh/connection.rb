@@ -9,7 +9,7 @@ module Tomo
         new(
           host,
           options,
-          exec_proc: proc { exit(0) },
+          exec_proc: proc { CLI.exit },
           child_proc: proc { Result.empty_success }
         )
       end

@@ -24,7 +24,12 @@ code,
 
 pre {
   border-radius: 2px;
-  margin-bottom: 30px;
+  margin-bottom: 22px;
+}
+
+pre + h2,
+pre + h3 {
+  margin-top: 30px;
 }
 
 pre > code,
