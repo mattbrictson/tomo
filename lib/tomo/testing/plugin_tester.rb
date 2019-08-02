@@ -25,6 +25,10 @@ module Tomo
         end
       end
 
+      def settings
+        runtime.execution_plan_for([]).settings
+      end
+
       private
 
       attr_reader :host, :runtime
