@@ -68,7 +68,7 @@ module Tomo::Plugin::Git
       remote.release[:revision] = sha
       remote.release[:revision_date] = date
       remote.release[:deploy_date] = Time.now.to_s
-      remote.release[:deploy_user] = ENV["USER"] || ENV["USERNAME"]
+      remote.release[:deploy_user] = settings.fetch(:local_user)
     end
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
