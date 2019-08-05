@@ -58,7 +58,7 @@ A more complex deployment may make use of these additional directives:
 
 Load a tomo plugin by name or from a Ruby file by a relative path.
 
-Several plugins are built into tomo: [bundler](plugins/bundler.md), [env](plugins/env.md), [git](plugins/git.md), [nvm](plugins/nvm.md), [puma](plugins/puma.md), [rails](plugins/rails.md), and [rbenv](plugins/rbenv.md). If you want to use the tasks provided by one of these plugins, load it by name, like this:
+Several plugins are built into tomo: [bundler](plugins/bundler.md), [env](plugins/env.md), [git](plugins/git.md), [nodenv](plugins/nodenv.md), [puma](plugins/puma.md), [rails](plugins/rails.md), and [rbenv](plugins/rbenv.md). If you want to use the tasks provided by one of these plugins, load it by name, like this:
 
 ```ruby
 plugin "git"
@@ -179,7 +179,7 @@ setup do
   run "git:clone"
   run "git:create_release"
   run "core:symlink_shared"
-  run "nvm:install"
+  run "nodenv:install"
   run "rbenv:install"
   run "bundler:upgrade_bundler"
   run "bundler:install"

@@ -34,7 +34,7 @@ setup do
   run "git:clone"
   run "git:create_release"
   run "core:symlink_shared"
-  run "nvm:install"
+  run "nodenv:install"
   run "rbenv:install"
   run "bundler:upgrade_bundler"
   run "bundler:install"
@@ -76,41 +76,75 @@ ln -sf /var/www/rails-new/shared/.bundle /tmp/tomo/20190616214334/.bundle
 ln -sf /var/www/rails-new/shared/log /tmp/tomo/20190616214334/log
 ln -sf /var/www/rails-new/shared/node_modules /tmp/tomo/20190616214334/node_modules
 ln -sf /var/www/rails-new/shared/public/assets /tmp/tomo/20190616214334/public/assets
-• nvm:install
-mkdir -p $HOME/.nvm
+• nodenv:install
+export PATH=$HOME/.nodenv/bin:$HOME/.nodenv/shims:$PATH && curl -fsSL https://github.com/nodenv/nodenv-installer/raw/master/bin/nodenv-installer | bash
+Installing nodenv with git...
+Initialized empty Git repository in /home/deployer/.nodenv/.git/
+Updating origin
+From https://github.com/nodenv/nodenv
+ * [new branch]      master     -> origin/master
+ * [new tag]         v1.3.0     -> v1.3.0
+ * [new tag]         0.2.0      -> 0.2.0
+ * [new tag]         v0.1.0     -> v0.1.0
+ * [new tag]         v0.2.0     -> v0.2.0
+ * [new tag]         v0.3.0     -> v0.3.0
+ * [new tag]         v0.4.0     -> v0.4.0
+ * [new tag]         v1.0.0     -> v1.0.0
+ * [new tag]         v1.1.0     -> v1.1.0
+ * [new tag]         v1.1.1     -> v1.1.1
+ * [new tag]         v1.1.2     -> v1.1.2
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+ * [new tag]         v1.2.0     -> v1.2.0
+make: Entering directory '/home/deployer/.nodenv/src'
+Already on 'master'
+Cloning into '/home/deployer/.nodenv/plugins/node-build'...
+gcc -fPIC     -c -o realpath.o realpath.c
+gcc -shared -Wl,-soname,../libexec/nodenv-realpath.dylib  -o ../libexec/nodenv-realpath.dylib realpath.o
+make: Leaving directory '/home/deployer/.nodenv/src'
+
+Installing node-build with git...
+
+Running doctor script to verify installation...
+Checking for `nodenv' in PATH: /home/deployer/.nodenv/bin/nodenv
+Checking for nodenv shims in PATH: OK
+Checking `nodenv install' support: /home/deployer/.nodenv/plugins/node-build/bin/nodenv-install (node-build 4.6.2)
+Counting installed Node versions: none
+  There aren't any Node versions installed under `/home/deployer/.nodenv/versions'.
+  You can install Node versions like so: nodenv install 2.2.4
+Auditing installed plugins: OK
+
+All done!
+Note that this installer doesn't yet configure your shell startup files:
+1. You'll want to ensure that `~/.nodenv/bin' is added to PATH.
+2. Run `nodenv init' to see instructions how to configure nodenv for your shell.
+3. Launch a new terminal window to verify that the configuration is correct.
+
 cat .bashrc
-Writing 3923 bytes to .bashrc
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 13226  100 13226    0     0   116k      0 --:--:-- --:--:-- --:--:--  117k
-=> Downloading nvm from git to '/home/deployer/.nvm'
-Cloning into '/home/deployer/.nvm'...
-=> => Compressing and cleaning up git repository
+Writing 3962 bytes to .bashrc
+nodenv versions
+Installing node 10.16.0 -- this may take several minutes
+CFLAGS=-O3 nodenv install 10.16.0
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_CTYPE = "en_GB.UTF-8",
+	LC_TERMINAL = "iTerm2",
+	LC_TERMINAL_VERSION = "3.3.20190722-nightly",
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("C.UTF-8").
+Downloading node-v10.16.0-linux-x64.tar.gz...
+-> https://nodejs.org/dist/v10.16.0/node-v10.16.0-linux-x64.tar.gz
+Installing node-v10.16.0-linux-x64...
+Installed node-v10.16.0-linux-x64 to /home/deployer/.nodenv/versions/10.16.0
 
-=> nvm source string already in /home/deployer/.bashrc
-=> Appending bash_completion source string to /home/deployer/.bashrc
-=> Close and reopen your terminal to start using nvm or run the following to use it now:
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm ls
-nvm install 10.16.0
-Downloading and installing node v10.16.0...
-Downloading https://nodejs.org/dist/v10.16.0/node-v10.16.0-linux-x64.tar.xz...
-######################################################################## 100.0%
-Computing checksum with sha256sum
-Checksums matched!
-Now using node v10.16.0 (npm v6.9.0)
-Creating default alias: default -> 10.16.0 (-> v10.16.0 *)
-nvm alias default 10.16.0
-default -> 10.16.0 (-> v10.16.0 *)
-npm i -g yarn@1.16.0
-/home/deployer/.nvm/versions/node/v10.16.0/bin/yarn -> /home/deployer/.nvm/versions/node/v10.16.0/lib/node_modules/yarn/bin/yarn.js
-/home/deployer/.nvm/versions/node/v10.16.0/bin/yarnpkg -> /home/deployer/.nvm/versions/node/v10.16.0/lib/node_modules/yarn/bin/yarn.js
-+ yarn@1.16.0
-added 1 package in 0.57s
+nodenv global 10.16.0
+npm i -g yarn@1.17.3
+/home/deployer/.nodenv/versions/10.16.0/bin/yarn -> /home/deployer/.nodenv/versions/10.16.0/lib/node_modules/yarn/bin/yarn.js
+/home/deployer/.nodenv/versions/10.16.0/bin/yarnpkg -> /home/deployer/.nodenv/versions/10.16.0/lib/node_modules/yarn/bin/yarn.js
++ yarn@1.17.3
+added 1 package in 0.341s
 • rbenv:install
 export PATH=$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH && curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
 Installing rbenv with git...

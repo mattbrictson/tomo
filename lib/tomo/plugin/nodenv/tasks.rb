@@ -5,7 +5,7 @@ module Tomo::Plugin::Nodenv
     def install
       run_installer
       modify_bashrc
-      compile_node
+      install_node
       install_yarn
     end
 
@@ -30,7 +30,7 @@ module Tomo::Plugin::Nodenv
       BASHRC
     end
 
-    def compile_node
+    def install_node
       require_setting :nodenv_node_version
       node_version = settings[:nodenv_node_version]
 
