@@ -61,10 +61,10 @@ This behavior can be customized by specifying `options`, which can include:
 
 Runs a script on the remote host via SSH, just like [run][], except the Ruby process will be replaced with the SSH process and control completely handed over to SSH (this is done via `Process.exec`). In other words, tomo will immediately stop and it will be like you had run SSH directly.
 
-This is useful for things like running a Rails console, where you would like to "attach" stdin/stdout to the remote process. Typically `pty: true` is used in these situations to force a tty.
+This is useful for things like running a Rails console, where you would like to "attach" stdin/stdout to the remote process. Calling `attach` also implies `pty: true`.
 
 ```ruby
-remote.attach "bundle exec rails console", pty: true
+remote.attach "bundle exec rails console"
 ```
 
 `attach` accepts the same options as [run][] (except for `:attach`, which is redundant).
