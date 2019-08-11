@@ -38,8 +38,10 @@ class RailsSetupDeployE2ETest < Minitest::Test
       bundle_exec("tomo deploy")
 
       rails_uri = URI("http://localhost:#{@docker.puma_port}/")
-      rails_http_response = Net::HTTP.get(rails_uri)
-      assert_match(/rails-default-error-page/, rails_http_response)
+      rails_http_response = Net::HTTP.get_response(rails_uri)
+
+      assert_kind_of(Net::HTTPSuccess, rails_http_response)
+      assert_match(/It works!/i, rails_http_response.body)
     end
   end
 
