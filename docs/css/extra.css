@@ -46,3 +46,11 @@ table {
 td > code {
   white-space: nowrap;
 }
+
+img[src$="ubuntu-18-lts@2x.png"] {
+  width: 278px;
+}
+
+img[src$="ssh-auth@2x.png"] {
+  width: 399px;
+}
