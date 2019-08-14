@@ -160,7 +160,7 @@ Read the [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom
 
 - [Deploying Rails From Scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/)
 - [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/)
-- [Publishing a Plugin](https://tomo-deploy.com/tutorials/publishing-a-plugin/) [TODO]
+- [Publishing a Plugin](https://tomo-deploy.com/tutorials/publishing-a-plugin/)
 
 ## Reference documentation
 
