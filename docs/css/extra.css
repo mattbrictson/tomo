@@ -58,3 +58,9 @@ img[src$="ssh-auth@2x.png"] {
   border-radius: 2px;
   width: 399px;
 }
+
+img[src$="create-new-repo@2x.png"] {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 595px;
+}
