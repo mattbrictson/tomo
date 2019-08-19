@@ -22,8 +22,9 @@ set git_exclusions: %w[
   test/
 ]
 set env_vars: {
-  RAILS_ENV: "production",
   RACK_ENV: "production",
+  RAILS_ENV: "production",
+  RAILS_SERVE_STATIC_FILES: "1",
   DATABASE_URL: :prompt,
   SECRET_KEY_BASE: :prompt
 }
