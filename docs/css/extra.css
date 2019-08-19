@@ -48,7 +48,7 @@ td > code {
 }
 
 img[src$="ubuntu-18-lts@2x.png"] {
-  width: 278px;
+  width: 300px;
 }
 
 img[src$="ssh-auth@2x.png"] {
