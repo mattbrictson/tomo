@@ -4,10 +4,12 @@ The puma plugin provides basic, zero-configuration support for the default Rails
 
 ## Settings
 
-| Name                 | Purpose                                                      | Default                  |
-| -------------------- | ------------------------------------------------------------ | ------------------------ |
-| `puma_control_token` | Auth token to use when connecting to the puma control server | `"tomo"`                 |
-| `puma_control_url`   | Connection URL for the puma control server                   | `"tcp://127.0.0.1:9293"` |
+| Name                 | Purpose                                                      | Default                         |
+| -------------------- | ------------------------------------------------------------ | ------------------------------- |
+| `puma_control_token` | Auth token to use when connecting to the puma control server | `"tomo"`                        |
+| `puma_control_url`   | Connection URL for the puma control server                   | `"tcp://127.0.0.1:9293"`        |
+| `puma_stdout_path`   | File where puma's stdout will be written                     | `"%<shared_path>/log/puma.out"` |
+| `puma_stderr_path`   | File where puma's stderr will be written                     | `"%<shared_path>/log/puma.err"` |
 
 ## Tasks
 
