@@ -87,3 +87,17 @@ Remove one or more environment variables from the remote envrc file. This task i
 # Remove the remote envrc var named KEY
 $ tomo run env:unset KEY
 ```
+
+### env:show
+
+Display the contents of the remote envrc file. This task is intended for use with [run](../commands/run.md).
+
+```plain
+$ tomo run env:show
+tomo run v0.4.1
+→ Connecting to deployer@app.example.com
+• env:show
+RAILS_ENV=production
+SECRET_KEY_BASE=02d587d76e80b2266289adef13fc045dd8387ede92935bcc1d49aa89932e5f74c35ed25bbdc41d3cf6cfc7f5f7f1736199997be459251aec52e42797c5140743
+✔ Ran env:show on deployer@app.example.com
+```
