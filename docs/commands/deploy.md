@@ -137,4 +137,5 @@ cd /var/www/rails-new/releases && ls -A1
 cd /var/www/rails-new/releases/20190616214752 && bundle clean
 • core:log_revision
 Writing 100 bytes to /var/www/rails-new/revisions.log
+✔ Deployed rails-new to deployer@localhost:32809
 ```

@@ -11,7 +11,7 @@ $ tomo setup [--dry-run] [options]
 Prepare the remote host for its first deploy by sequentially running the
 [setup](../configuration.md#setupblock) list of tasks specified in `.tomo/config.rb`. These tasks typically create directories, initialize data stores, install prerequisite tools, and perform other one-time actions that are necessary before a deploy can take place.
 
-During setup, tomo will initialize the `:release_path` setting based on the current date and time and using a temporary directory (e.g. `/tmp/tomo/20190616214752`). This means setup tasks (e.g. [rails:db_create](../plugins/rails.md#railsdb_create), [rails:db_schema_load](../plugins/rails.md#railsdb_schema_load)) to run in a location that won't be deployed as an actual release.
+During setup, tomo will initialize the `:release_path` setting to be a temporary directory based on the current date and time (e.g. `/tmp/tomo/20190616214752`). This means setup tasks (e.g. [rails:db_create](../plugins/rails.md#railsdb_create), [rails:db_schema_load](../plugins/rails.md#railsdb_schema_load)) run in a location that won't be deployed as an actual release.
 
 ## Options
 
