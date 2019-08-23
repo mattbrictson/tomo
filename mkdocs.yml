@@ -33,12 +33,12 @@ nav:
       - Writing Custom Tasks: tutorials/writing-custom-tasks.md
       - Publishing a Plugin: tutorials/publishing-a-plugin.md
   - API:
-      - 'Tomo::Host': api/Host.md
-      - 'Tomo::Logger': api/Logger.md
-      - 'Tomo::Paths': api/Paths.md
-      - 'Tomo::PluginDSL': api/PluginDSL.md
-      - 'Tomo::Remote': api/Remote.md
-      - 'Tomo::Result': api/Result.md
-      - 'Tomo::TaskLibrary': api/TaskLibrary.md
-      - 'Tomo::Testing::MockPluginTester': api/testing/MockPluginTester.md
-      - 'Tomo::Testing::DockerPluginTester': api/testing/DockerPluginTester.md
+      - "Tomo::Host": api/Host.md
+      - "Tomo::Logger": api/Logger.md
+      - "Tomo::Paths": api/Paths.md
+      - "Tomo::PluginDSL": api/PluginDSL.md
+      - "Tomo::Remote": api/Remote.md
+      - "Tomo::Result": api/Result.md
+      - "Tomo::TaskLibrary": api/TaskLibrary.md
+      - "Tomo::Testing::MockPluginTester": api/testing/MockPluginTester.md
+      - "Tomo::Testing::DockerPluginTester": api/testing/DockerPluginTester.md

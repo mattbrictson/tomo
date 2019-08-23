@@ -35,10 +35,7 @@ module Tomo::Plugin::Nodenv
       node_version = settings[:nodenv_node_version]
 
       unless node_installed?(node_version)
-        logger.info(
-          "Installing node #{node_version} -- this may take several minutes"
-        )
-        remote.run "CFLAGS=-O3 nodenv install #{node_version.shellescape}"
+        remote.run "nodenv install #{node_version.shellescape}"
       end
       remote.run "nodenv global #{node_version.shellescape}"
     end

@@ -7,7 +7,6 @@ The nodenv plugin installs node and optionally yarn via nodenv. This allows you 
 | Name                  | Purpose                                      | Default     |
 | --------------------- | -------------------------------------------- | ----------- |
 | `bashrc_path`         | Location of the deploy user’s `.bashrc` file | `".bashrc"` |
-| `nodenv_version`      | Version of nodenv to install                 | `"0.34.0"`  |
 | `nodenv_node_version` | Version of node to install                   | `nil`       |
 | `nodenv_yarn_version` | Version of yarn to install                   | `nil`       |
 
