@@ -36,7 +36,7 @@ env:unset
 env:update
 git:clone
 git:create_release
-nvm:install
+nodenv:install
 puma:restart
 rails:assets_precompile
 rails:console

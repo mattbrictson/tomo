@@ -24,7 +24,7 @@ nav:
       - bundler: plugins/bundler.md
       - env: plugins/env.md
       - git: plugins/git.md
-      - nvm: plugins/nvm.md
+      - nodenv: plugins/nodenv.md
       - puma: plugins/puma.md
       - rails: plugins/rails.md
       - rbenv: plugins/rbenv.md

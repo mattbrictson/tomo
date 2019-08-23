@@ -169,7 +169,7 @@ Read the [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom
   - [bundler](https://tomo-deploy.com/plugins/bundler/)
   - [env](https://tomo-deploy.com/plugins/env/)
   - [git](https://tomo-deploy.com/plugins/git/)
-  - [nvm](https://tomo-deploy.com/plugins/nvm/)
+  - [nodenv](https://tomo-deploy.com/plugins/nodenv/)
   - [puma](https://tomo-deploy.com/plugins/puma/)
   - [rails](https://tomo-deploy.com/plugins/rails/)
   - [rbenv](https://tomo-deploy.com/plugins/rbenv/)

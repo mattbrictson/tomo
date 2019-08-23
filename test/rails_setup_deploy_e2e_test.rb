@@ -37,6 +37,9 @@ class RailsSetupDeployE2ETest < Minitest::Test
       bundle_exec("tomo setup")
       bundle_exec("tomo deploy")
 
+      # Pause to allow puma to completely finish booting
+      sleep 5
+
       rails_uri = URI("http://localhost:#{@docker.puma_port}/")
       rails_http_response = Net::HTTP.get_response(rails_uri)
 
