@@ -5,7 +5,8 @@ module Tomo::Plugin
     extend Tomo::PluginDSL
 
     defaults bashrc_path: ".bashrc",
-             nodenv_node_version: nil
+             nodenv_node_version: nil,
+             nodenv_yarn_version: nil
 
     tasks Tomo::Plugin::Nodenv::Tasks
   end
