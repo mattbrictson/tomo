@@ -111,7 +111,7 @@ Out of the box, tomo will:
 Whereas `tomo setup` is typically run once, you can use `tomo deploy` every time you want to deploy a new version of your app. The deploy command will sequentially run the [deploy](https://tomo-deploy.com/configuration#deployblock) list of tasks specified in `.tomo/config.rb`. You can customize this list to meet the needs of your app. By default, tomo runs these tasks:
 
 1. Create a release (using the [git:create_release](https://tomo-deploy.com/plugins/git#gitcreate_release) task)
-2. Build the project (e.g. [bundler:install](https://tomo-deploy.com/plugins/bundler#bundlerinstall), [rails:assets_precompile](../plugins/rails.md#railsassets_precompile))
+2. Build the project (e.g. [bundler:install](https://tomo-deploy.com/plugins/bundler#bundlerinstall), [rails:assets_precompile](https://tomo-deploy.com/plugins/rails#railsassets_precompile))
 3. Migrate data to the meet the requirements of the new release (e.g. [rails:db_migrate](https://tomo-deploy.com/plugins/rails#railsdb_migrate))
 4. Make the new release the "current" one ([core:symlink_current](https://tomo-deploy.com/plugins/core#coresymlink_current))
 5. Restart the app to use the new current release (e.g. [puma:restart](https://tomo-deploy.com/plugins/puma#pumarestart))
