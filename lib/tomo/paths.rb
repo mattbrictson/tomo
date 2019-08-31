@@ -29,6 +29,8 @@ module Tomo
     end
 
     def path(setting)
+      return nil if settings[setting].nil?
+
       path = settings.fetch(setting).to_s.gsub(%r{//+}, "/")
       Path.new(path)
     end
