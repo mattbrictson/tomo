@@ -37,6 +37,7 @@ setup do
   run "nodenv:install"
   run "rbenv:install"
   run "bundler:upgrade_bundler"
+  run "bundler:config"
   run "bundler:install"
   run "rails:db_create"
   run "rails:db_schema_load"
