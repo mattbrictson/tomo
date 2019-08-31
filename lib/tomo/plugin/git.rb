@@ -13,6 +13,7 @@ module Tomo::Plugin
              git_repo_path:  "%<deploy_to>/git_repo",
              git_exclusions: [],
              git_env:        { GIT_SSH_COMMAND: "ssh -o PasswordAuthentication=no -o StrictHostKeyChecking=no" },
+             git_ref:        nil,
              git_url:        nil
     # rubocop:enable Metrics/LineLength
   end

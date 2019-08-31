@@ -60,9 +60,12 @@ module Tomo::Plugin::Core
 
     # rubocop:disable Metrics/AbcSize
     def log_revision
+      ref = remote.release[:ref]
+      revision = remote.release[:revision]
+
       message = remote.release[:deploy_date].to_s
-      message << " - #{remote.release[:revision] || '<unknown>'}"
-      message << " (#{remote.release[:branch] || '<unknown>'})"
+      message << " - #{revision || '<unknown>'}"
+      message << " (#{ref})" if ref && revision && !revision.start_with?(ref)
       message << " deployed by #{remote.release[:deploy_user] || '<unknown>'}"
       message << "\n"
 
