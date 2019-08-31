@@ -14,20 +14,24 @@ module Tomo::Plugin::Git
         remote.git("clone", "--mirror", settings[:git_url], paths.git_repo)
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def create_release
-      configure_git_attributes
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
-        remote.mkdir_p(paths.release)
+      end
+
+      store_release_info
+      configure_git_attributes
+      remote.mkdir_p(paths.release)
+
+      remote.chdir(paths.git_repo) do
         remote.git(
           "archive #{ref.shellescape} | "\
           "tar -x -f - -C #{paths.release.shellescape}"
         )
       end
-      store_release_info
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 
@@ -72,7 +76,7 @@ module Tomo::Plugin::Git
       log = remote.chdir(paths.git_repo) do
         remote.git(
           'log -n1 --date=iso --pretty=format:"%H/%cd/%ae" '\
-          "#{ref.shellescape}",
+          "#{ref.shellescape} --",
           silent: true
         ).stdout.strip
       end
