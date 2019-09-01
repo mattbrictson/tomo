@@ -23,7 +23,6 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
       bundler_jobs: 12,
       bundler_path: "/app/bundle",
       bundler_retry: 2,
-      bundler_with: %w[production],
       bundler_without: %w[development test staging],
       release_path: "/app/release"
     )
@@ -36,7 +35,6 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
       'BUNDLE_JOBS:\ \'12\''
       'BUNDLE_PATH:\ \"/app/bundle\"'
       'BUNDLE_RETRY:\ \'2\''
-      'BUNDLE_WITH:\ production'
       'BUNDLE_WITHOUT:\ development:test:staging'
       ' > .bundle/config
     SCRIPT
@@ -50,7 +48,6 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
       bundler_jobs: nil,
       bundler_path: "/app/bundle",
       bundler_retry: nil,
-      bundler_with: nil,
       bundler_without: nil,
       release_path: "/app/release"
     )

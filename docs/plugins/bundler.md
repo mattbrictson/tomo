@@ -15,7 +15,6 @@ Note that the settings listed here only take effect if you run the [bundler:conf
 | `bundler_path`        | Directory where gems where be installed                                                                                                                                       | `"%<shared_path>/bundle"` |
 | `bundler_retry`       | Number of times to retry installing a gem if it fails to download                                                                                                             | `"3"`                     |
 | `bundler_version`     | The version of bundler to install, used by the [bundler:upgrade_bundler](#bundlerupgrade_bundler) task; if `nil` (the default), determine the version based on `Gemfile.lock` | `nil`                     |
-| `bundler_with`        | Array of Gemfile groups to install (empty implies all groups)                                                                                                                 | `[]`                      |
 | `bundler_without`     | Array of Gemfile groups to exclude from installation                                                                                                                          | `["development", "test"]` |
 
 ## Tasks

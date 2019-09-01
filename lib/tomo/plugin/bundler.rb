@@ -15,7 +15,6 @@ module Tomo::Plugin
              bundler_path:        "%<shared_path>/bundle",
              bundler_retry:       "3",
              bundler_version:     nil,
-             bundler_with:        [],
              bundler_without:     %w[development test]
   end
 end

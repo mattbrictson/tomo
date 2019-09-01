@@ -8,7 +8,6 @@ module Tomo::Plugin::Bundler
       bundler_jobs
       bundler_path
       bundler_retry
-      bundler_with
       bundler_without
     ].freeze
     private_constant :CONFIG_SETTINGS
