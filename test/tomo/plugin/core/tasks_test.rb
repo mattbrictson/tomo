@@ -150,7 +150,7 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
         revision_log_path: "/app/revision.log"
       },
       release: {
-        branch: "master",
+        ref: "master",
         deploy_date: now,
         deploy_user: "matt",
         revision: "65eda21"

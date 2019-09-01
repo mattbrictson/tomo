@@ -10,6 +10,7 @@ The git plugin uses git running on the remote host to fetch the code of the app 
 | `git_repo_path`  | Directory on the remote host where a cache of the repository will be stored                                                                                                                                           | `"%<deploy_to>/git_repo"`                                                             |
 | `git_exclusions` | An array of paths (similar to gitignore syntax) that will be excluded when the repository is copied into a release; it is recommend you exclude `.tomo/` and other directories not needed in production, like `spec/` | `[]`                                                                                  |
 | `git_env`        | Environment variables that will be set when issuing git commands (hash)                                                                                                                                               | `{ GIT_SSH_COMMAND: "ssh -o PasswordAuthentication=no -o StrictHostKeyChecking=no" }` |
+| `git_ref`        | The commit SHA or tag to deploy (overrides `:git_branch`)                                                                                                                                                             | `nil`                                                                                 |
 | `git_url`        | URL of the git repository; always use the SSH form like `git@github.com:username/repo.git` (not HTTPS)                                                                                                                | `nil`                                                                                 |
 
 ## Tasks
@@ -22,7 +23,7 @@ Performs the initial clone of the git repository. This is necessary before a dep
 
 ### git:create_release
 
-Fetches the latest commits from `git_branch` and creates a release by copying the contents of that branch of repository into a new release inside the `releases_path`. Releases are numbered based on the timestamp of when the deploy takes place.
+Fetches the latest commits from `git_branch` (or `git_ref`) and creates a release by copying the contents of that branch of repository into a new release inside the `releases_path`. Releases are numbered based on the timestamp of when the deploy takes place.
 
 `git:create_release` is intended for use as a [deploy](../commands/deploy.md) task.
 

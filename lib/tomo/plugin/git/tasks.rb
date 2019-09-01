@@ -15,24 +15,45 @@ module Tomo::Plugin::Git
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def create_release
-      configure_git_attributes
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
-        remote.mkdir_p(paths.release)
+      end
+
+      store_release_info
+      configure_git_attributes
+      remote.mkdir_p(paths.release)
+
+      remote.chdir(paths.git_repo) do
         remote.git(
-          "archive #{branch.shellescape} | "\
+          "archive #{ref.shellescape} | "\
           "tar -x -f - -C #{paths.release.shellescape}"
         )
       end
-      store_release_info
     end
+    # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
     private
 
-    def branch
-      settings[:git_branch]
+    def ref
+      require_setting :git_ref if settings[:git_branch].nil?
+
+      warn_if_ref_overrides_branch
+      settings[:git_ref] || settings[:git_branch]
+    end
+
+    def warn_if_ref_overrides_branch
+      return if defined?(@ref_override_warning)
+      return unless settings[:git_ref] && settings[:git_branch]
+
+      logger.warn(
+        ":git_ref (#{settings[:git_ref]}) and "\
+        ":git_branch (#{settings[:git_branch]}) are both specified. "\
+        "Ignoring :git_branch."
+      )
+      @ref_override_warning = true
     end
 
     def set_origin_url
@@ -57,13 +78,14 @@ module Tomo::Plugin::Git
       log = remote.chdir(paths.git_repo) do
         remote.git(
           'log -n1 --date=iso --pretty=format:"%H/%cd/%ae" '\
-          "#{branch.shellescape}",
+          "#{ref.shellescape} --",
           silent: true
         ).stdout.strip
       end
 
       sha, date, email = log.split("/", 3)
-      remote.release[:branch] = branch
+      remote.release[:branch] = ref if ref == settings[:git_branch]
+      remote.release[:ref] = ref
       remote.release[:author] = email
       remote.release[:revision] = sha
       remote.release[:revision_date] = date
