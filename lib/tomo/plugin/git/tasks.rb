@@ -14,8 +14,8 @@ module Tomo::Plugin::Git
         remote.git("clone", "--mirror", settings[:git_url], paths.git_repo)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
+    # rubocop:disable Metrics/MethodLength
     def create_release
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
@@ -32,6 +32,8 @@ module Tomo::Plugin::Git
         )
       end
     end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     private
 
