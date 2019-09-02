@@ -1,9 +1,27 @@
+require "yaml"
+
 module Tomo::Plugin::Bundler
   class Tasks < Tomo::TaskLibrary
-    def install
-      return if remote.bundle?("check", *check_options) && !dry_run?
+    CONFIG_SETTINGS = %i[
+      bundler_deployment
+      bundler_gemfile
+      bundler_jobs
+      bundler_path
+      bundler_retry
+      bundler_without
+    ].freeze
+    private_constant :CONFIG_SETTINGS
 
-      remote.bundle("install", *install_options)
+    def config
+      configuration = settings_to_configuration
+      remote.mkdir_p paths.bundler_config.dirname
+      remote.write(text: YAML.dump(configuration), to: paths.bundler_config)
+    end
+
+    def install
+      return if remote.bundle?("check") && !dry_run?
+
+      remote.bundle("install")
     end
 
     def clean
@@ -23,31 +41,19 @@ module Tomo::Plugin::Bundler
 
     private
 
+    def settings_to_configuration
+      CONFIG_SETTINGS.each_with_object({}) do |key, config|
+        next if settings[key].nil?
+
+        entry_key = "BUNDLE_#{key.to_s.sub(/^bundler_/, '').upcase}"
+        entry_value = settings.fetch(key)
+        entry_value = entry_value.join(":") if entry_value.is_a?(Array)
+        config[entry_key] = entry_value.to_s
+      end
+    end
+
     def version_setting
       settings[:bundler_version]
-    end
-
-    def check_options
-      gemfile = settings[:bundler_gemfile]
-      path = paths.bundler
-
-      options = []
-      options.push("--gemfile", gemfile) if gemfile
-      options.push("--path", path) if path
-      options
-    end
-
-    def install_options
-      jobs = settings[:bundler_jobs]
-      without = settings[:bundler_without]
-      flags = settings[:bundler_install_flags]
-
-      options = check_options.dup
-      options.push("--jobs", jobs) if jobs
-      options.push("--without", without) if without
-      options.push(flags) if flags
-
-      options.flatten
     end
 
     def extract_bundler_ver_from_lockfile
