@@ -10,8 +10,12 @@ module Tomo
         @token = SecureRandom.hex(8)
       end
 
+      def in_temp_dir(&block)
+        super(token, &block)
+      end
+
       def run(*args, raise_on_error: true)
-        in_temp_dir(token) do
+        in_temp_dir do
           restoring_defaults do
             capturing_logger_output do
               handling_exit(raise_on_error) do

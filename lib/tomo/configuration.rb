@@ -23,7 +23,7 @@ module Tomo
         config.working_dir = File.dirname(path)
         DSL::ConfigFile.new(config).instance_eval(config_rb, path.to_s, 1)
       end
-    rescue StandardError => e
+    rescue StandardError, SyntaxError => e
       raise DSL::ErrorFormatter.decorate(e, path, config_rb&.lines)
     end
 

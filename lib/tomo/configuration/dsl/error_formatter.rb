@@ -2,20 +2,31 @@ module Tomo
   class Configuration
     module DSL
       module ErrorFormatter
-        def self.decorate(error, path, lines)
-          if error.backtrace[0..1].grep(/^#{Regexp.quote(path)}:/).empty?
-            return error
+        class << self
+          def decorate(error, path, lines)
+            line_no = find_line_no(path, error.message, *error.backtrace[0..1])
+            return error if line_no.nil?
+
+            error.extend(self)
+            error.dsl_lines = lines || []
+            error.dsl_path = path
+            error.error_line_no = line_no
+            error
           end
 
-          error.extend(self)
-          error.dsl_lines = lines || []
-          error.dsl_path = path
-          error
+          private
+
+          def find_line_no(path, *lines)
+            lines.find do |line|
+              line_no = line[/^#{Regexp.quote(path)}:(\d+):/, 1]
+              break line_no.to_i if line_no
+            end
+          end
         end
 
         include Colors
 
-        attr_accessor :dsl_lines, :dsl_path
+        attr_accessor :dsl_lines, :dsl_path, :error_line_no
 
         def to_console
           <<~ERROR
@@ -37,16 +48,6 @@ module Tomo
           <<~HINT
             You can run this command again with #{Colors.blue('--trace')} for a full backtrace.
           HINT
-        end
-
-        def error_line_no
-          @_error_line_no ||= begin
-            pattern = /^#{Regexp.quote(dsl_path)}:(\d+):/
-            backtrace.each do |entry|
-              match = pattern.match(entry)
-              break match[1].to_i if match
-            end
-          end
         end
 
         # rubocop:disable Metrics/AbcSize
