@@ -199,6 +199,20 @@ By default, tomo uses the ["accept-new"](https://www.openssh.com/txt/release-7.6
 set ssh_strict_host_key_checking: true # or false
 ```
 
+#### Why does my deploy hang after starting puma?
+
+Puma 4.1.0 [has a bug](https://github.com/puma/puma/issues/1906) where its output isn't properly detached prior to daemonzing. This causes tomo to hang waiting for output. You may see something like this prior to the deploy freezing:
+
+```
+Puma starting in single mode...
+* Version 4.1.0 (ruby 2.6.4-p104), codename: Fourth and One
+* Min threads: 5, max threads: 5
+* Environment: production
+* Daemonizing...
+```
+
+To fix, upgrade to puma 4.1.1 or newer.
+
 ## Support
 
 This project is a labor of love and I can only spend a few hours a week maintaining it, at most. If you'd like to help by submitting a pull request, or if you've discovered a bug that needs my attention, please let me know. Check out [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/master/CONTRIBUTING.md) to get started. Happy hacking! —Matt

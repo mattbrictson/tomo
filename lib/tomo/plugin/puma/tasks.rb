@@ -31,9 +31,7 @@ module Tomo::Plugin::Puma
 
       remote.chdir(paths.current) do
         remote.bundle(
-          "exec", "puma", "--daemon", *control_options,
-          raw(">"), paths.puma_stdout,
-          raw("2>"), paths.puma_stderr
+          "exec", "puma", "--daemon", *control_options, *output_options
         )
       end
     end
@@ -50,6 +48,13 @@ module Tomo::Plugin::Puma
         "--control-url", settings[:puma_control_url],
         "--control-token", settings[:puma_control_token]
       ]
+    end
+
+    def output_options
+      options = []
+      options << ["--redirect-stdout", paths.puma_stdout] if paths.puma_stdout
+      options << ["--redirect-stderr", paths.puma_stderr] if paths.puma_stderr
+      options.flatten
     end
   end
 end

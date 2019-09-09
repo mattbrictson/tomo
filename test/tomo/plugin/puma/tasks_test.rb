@@ -32,7 +32,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
     assert_equal(
       "cd /app/current && bundle exec puma --daemon "\
       "--control-url tcp://127.0.0.1:9293 --control-token test "\
-      "> /log/puma.out 2> /log/puma.err",
+      "--redirect-stdout /log/puma.out --redirect-stderr /log/puma.err",
       @tester.executed_scripts.last
     )
   end
