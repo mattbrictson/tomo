@@ -19,8 +19,8 @@ Tomo is a friendly command-line tool for deploying Rails apps. It is a new alter
 
 - [Quick start](#quick-start)
 - [Usage](#usage)
-- [Reference documentation](#reference-documentation)
 - [Tutorials](#tutorials)
+- [Reference documentation](#reference-documentation)
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
