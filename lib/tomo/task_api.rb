@@ -1,3 +1,5 @@
+require "erb"
+
 module Tomo
   module TaskAPI
     extend Forwardable
@@ -20,6 +22,16 @@ module Tomo
 
     def logger
       Tomo.logger
+    end
+
+    def merge_template(path)
+      working_path = paths.tomo_config_file&.dirname
+      if working_path && path.start_with?(".")
+        path = File.expand_path(path, working_path)
+      end
+
+      template = IO.read(path)
+      ERB.new(template).result(binding)
     end
 
     def raw(string)
