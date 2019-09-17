@@ -2,6 +2,8 @@ require "forwardable"
 
 module Tomo
   class Remote
+    include TaskAPI
+
     extend Forwardable
     def_delegators :ssh, :close, :host
     def_delegators :shell_builder, :chdir, :env, :prepend, :umask
@@ -33,20 +35,7 @@ module Tomo
 
     private
 
-    def_delegators :context, :paths, :settings
     attr_reader :context, :ssh, :shell_builder
-
-    def dry_run?
-      Tomo.dry_run?
-    end
-
-    def logger
-      Tomo.logger
-    end
-
-    def raw(str)
-      ShellBuilder.raw(str)
-    end
 
     def remote
       self
