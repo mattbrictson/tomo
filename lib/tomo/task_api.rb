@@ -30,6 +30,9 @@ module Tomo
         path = File.expand_path(path, working_path)
       end
 
+      unless File.file?(path)
+        Runtime::TemplateNotFoundError.raise_with(path: path)
+      end
       template = IO.read(path)
       ERB.new(template).result(binding)
     end

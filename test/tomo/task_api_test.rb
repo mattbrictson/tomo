@@ -24,7 +24,7 @@ class Tomo::TaskAPITest < Minitest::Test
 
   def test_merge_template_raises_on_file_not_found
     subject = configure
-    assert_raises(Errno::ENOENT) do
+    assert_raises(Tomo::Runtime::TemplateNotFoundError) do
       subject.send(:merge_template, "path_does_not_exist")
     end
   end
