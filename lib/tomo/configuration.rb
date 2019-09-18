@@ -20,7 +20,7 @@ module Tomo
       config_rb = IO.read(path)
 
       new.tap do |config|
-        config.working_dir = File.dirname(path)
+        config.path = File.expand_path(path)
         DSL::ConfigFile.new(config).instance_eval(config_rb, path.to_s, 1)
       end
     rescue StandardError, SyntaxError => e
@@ -28,7 +28,7 @@ module Tomo
     end
 
     attr_accessor :environments, :deploy_tasks, :setup_tasks, :hosts, :plugins,
-                  :settings, :task_filter, :working_dir
+                  :settings, :task_filter, :path
 
     def initialize
       @environments = {}
@@ -59,7 +59,7 @@ module Tomo
         setup_tasks: setup_tasks,
         plugins_registry: plugins_registry,
         hosts: add_log_prefixes(hosts),
-        settings: settings,
+        settings: { tomo_config_file_path: path }.merge(settings),
         task_filter: task_filter
       )
     end
@@ -95,7 +95,7 @@ module Tomo
 
       (["core"] + plugins.uniq).each do |plug|
         if %w[. /].include?(plug[0])
-          plug = File.expand_path(plug, working_dir) unless working_dir.nil?
+          plug = File.expand_path(plug, File.dirname(path)) unless path.nil?
           plugins_registry.load_plugin_from_path(plug)
         else
           plugins_registry.load_plugin_by_name(plug)

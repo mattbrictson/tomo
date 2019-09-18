@@ -26,6 +26,7 @@ The core plugin provides tasks, settings, and helpers that are the fundamental b
 | `ssh_reuse_connections`        | Whether to use `ControlMaster` to keep connections open across multiple invocations of ssh; setting this to `false` will slow down tomo significantly                                                     | `true`                                 |
 | `ssh_strict_host_key_checking` | Use `"accept-new"` for a good compromise of security and convenience, `true` for most security, `false` for most convenience; note that older versions of ssh do not understand the `"accept-new"` option | `"accept-new"`                         |
 | `tmp_path`                     | Directory where the [setup](../commands/setup.md) command stages temporary files                                                                                                                          | `"/tmp/tomo"`                          |
+| `tomo_config_file_path`        | A special read-only setting containing the path to the `config.rb` file that was used to configure tomo                                                                                                   | `"/path/to/.tomo/config.rb"`           |
 
 ## Tasks
 
@@ -112,14 +113,21 @@ Run the given command, returning `true` if the command succeeded (exit status of
 remote.run?("which", "java") # => false
 ```
 
-### remote.write(text:, to:, append: false, \*\*options) → [Tomo::Result](../api/Result.md)
+### remote.write(text:/template:, to:, append: false, \*\*options) → [Tomo::Result](../api/Result.md)
 
-Write the given `text` (must be a String) to the remote path specified by `to:`. If `append` is `false` (the default), the remote file will completely replaced; if `true`, the file will be appended to. This is designed for small amounts of text (e.g. configuration files), not large or binary data.
+Write the given `text` (a String) or the text resulting from merging the given `template` (a local path to an ERB template file) to the remote path specified by `to:`. Refer to the [merge_template](../api/TaskLibrary.md#merge_templatepath-string) documentation for details on tomo’s ERB templating behavior.
+
+If `append` is `false` (the default), the remote file will completely replaced; if `true`, the file will be appended to. This is designed for small amounts of text (e.g. configuration files), not large or binary data.
 
 ```ruby
 remote.write text: "hello world!\n",
              to: paths.shared.join("greetings.txt"),
              append: true
+```
+
+```ruby
+remote.write template: File.expand_path("unicorn.service.erb", __dir__),
+             to: ".config/systemd/user/unicorn.service"
 ```
 
 ### remote.ln_sf(target, link, \*\*options) → [Tomo::Result](../api/Result.md)

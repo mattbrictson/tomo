@@ -12,7 +12,9 @@ module Tomo::Plugin::Core
       result.success?
     end
 
-    def write(text:, to:, append: false, **run_opts)
+    def write(text: nil, template: nil, to:, append: false, **run_opts)
+      assert_text_or_template_required!(text, template)
+      text = merge_template(template) unless template.nil?
       message = "Writing #{text.bytesize} bytes to #{to}"
       run(
         "echo -n #{text.shellescape} #{append ? '>>' : '>'} #{to.shellescape}",
@@ -60,6 +62,12 @@ module Tomo::Plugin::Core
 
     def flag?(flag, path, **run_opts)
       run?("[ #{flag} #{path.to_s.shellescape} ]", **run_opts)
+    end
+
+    def assert_text_or_template_required!(text, template)
+      return if text.nil? ^ template.nil?
+
+      raise ArgumentError, "specify text: or template:"
     end
   end
 end

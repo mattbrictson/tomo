@@ -17,6 +17,7 @@ module Tomo
   autoload :Script, "tomo/script"
   autoload :ShellBuilder, "tomo/shell_builder"
   autoload :SSH, "tomo/ssh"
+  autoload :TaskAPI, "tomo/task_api"
   autoload :TaskLibrary, "tomo/task_library"
   autoload :VERSION, "tomo/version"
 

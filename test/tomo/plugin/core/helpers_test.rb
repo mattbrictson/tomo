@@ -3,7 +3,9 @@ require "tomo/plugin/core"
 
 class Tomo::Plugin::Core::HelpersTest < Minitest::Test
   def setup
-    @tester = Tomo::Testing::MockPluginTester.new
+    @tester = Tomo::Testing::MockPluginTester.new(
+      settings: { application: "test" }
+    )
   end
 
   def test_capture_returns_stdout_not_stderr
@@ -48,6 +50,27 @@ class Tomo::Plugin::Core::HelpersTest < Minitest::Test
     @tester.call_helper(:write, text: "hello", to: "/a/file")
     refute_match(/hello/, @tester.stdout)
     assert_match(%r{Writing 5 bytes to /a/file}, @tester.stdout)
+  end
+
+  def test_write_accepts_template
+    tmpl_path = File.expand_path("../../../fixtures/template.erb", __dir__)
+    @tester.call_helper(:write, template: tmpl_path, to: "/a/file")
+    assert_equal(<<~'EXPECTED'.strip, @tester.executed_script)
+      echo -n Hello,\ test\!'
+      ' > /a/file
+    EXPECTED
+  end
+
+  def test_write_raises_error_if_text_and_template_specified
+    assert_raises(ArgumentError, "specify text: or template:") do
+      @tester.call_helper(:write, text: "text", template: "tmpl", to: "/a/file")
+    end
+  end
+
+  def test_write_raises_error_neither_text_nor_template_specified
+    assert_raises(ArgumentError, "specify text: or template:") do
+      @tester.call_helper(:write, to: "/a/file")
+    end
   end
 
   def test_ln_sf

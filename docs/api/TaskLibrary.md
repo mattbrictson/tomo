@@ -71,6 +71,39 @@ Like `require_setting`, except it accepts an arbitrary number of setting names. 
 require_settings :puma_control_token, :puma_control_url
 ```
 
+### merge_template(path) → String
+
+Given a local `path` to an [ERB](https://ruby-doc.org/stdlib/libdoc/erb/rdoc/ERB.html) template, merge that template and return the resulting string. The ERB template can access the same API that tasks and helpers can access, namely: `settings`, `paths`, `remote`, and `raw`.
+
+Here is an example of an ERB template:
+
+```erb
+Hello, <%= settings[:application] %>!
+```
+
+If `path` begins with a `"."` it is interpreted as a path relative to the tomo configuration file. This allows for easy reference to project-specific templates. For example, given this directory structure:
+
+```plain
+.tomo
+├── config.rb
+└── templates
+    └── unicorn.service.erb
+```
+
+Then you could reference the template in a setting like this:
+
+```ruby
+# .tomo/config.rb
+
+set unicorn_service_template_path: "./templates/unicorn.service.erb"
+```
+
+And merge it in a task:
+
+```ruby
+merge_template(paths.unicorn_service_template)
+```
+
 ### dry_run? → true or false
 
 Returns `true` if tomo was started with the `--dry-run` option. This is useful if there are certain code paths you want to ensure are taken during a dry run.
