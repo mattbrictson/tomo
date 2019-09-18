@@ -134,7 +134,7 @@ We'll start by building the simpler of the two tasks: `cron:show`. First, let's 
 
 ```plain
 $ tomo run cron:show
-tomo run v0.7.0
+tomo run v0.8.0
 
   ERROR: cron:show is not a recognized task.
   To see a list of all available tasks, run tomo tasks.
@@ -162,7 +162,7 @@ Now we can try again:
 
 ```plain
 $ tomo run cron:show
-tomo run v0.7.0
+tomo run v0.8.0
 → Connecting to deployer@app.example.com
 • cron:show
 Hi
@@ -181,7 +181,7 @@ One more try:
 
 ```plain
 $ tomo run cron:show
-tomo run v0.7.0
+tomo run v0.8.0
 → Connecting to deployer@app.example.com
 • cron:show
 crontab -l
@@ -212,7 +212,7 @@ Now we're all good:
 
 ```plain
 $ tomo run cron:show
-tomo run v0.7.0
+tomo run v0.8.0
 → Connecting to deployer@app.example.com
 • cron:show
 crontab -l
@@ -237,7 +237,7 @@ If we try to run `tomo setup` at this point, we'll get an error as expected:
 
 ```plain
 $ tomo setup
-tomo setup v0.7.0
+tomo setup v0.8.0
 
   ERROR: cron:install is not a recognized task.
   To see a list of all available tasks, run tomo tasks.
@@ -263,7 +263,7 @@ We can see what this task does without actually affecting the remote host by usi
 
 ```plain
 $ tomo run cron:install --dry-run
-tomo run v0.7.0
+tomo run v0.8.0
 * → Connecting to deployer@app.example.com
 * • cron:install
 * echo SHELL\=/bin/bash'
@@ -298,7 +298,7 @@ Let's check that it still works:
 
 ```plain
 $ tomo run cron:install --dry-run
-tomo run v0.7.0
+tomo run v0.8.0
 * → Connecting to deployer@app.example.com
 * • cron:install
 * echo SHELL\=/bin/bash'
@@ -322,7 +322,7 @@ And then try it:
 
 ```plain
 $ tomo run cron:install --dry-run
-tomo run v0.7.0
+tomo run v0.8.0
 * → Connecting to deployer@app.example.com
 * • cron:install
 * echo [template:.tomo/templates/crontab.erb] | crontab -
@@ -347,7 +347,7 @@ And we can see what is installed with our `cron:show` task:
 
 ```plain
 $ tomo run cron:show
-tomo run v0.7.0
+tomo run v0.8.0
 → Connecting to deployer@app.example.com
 • cron:show
 crontab -l
