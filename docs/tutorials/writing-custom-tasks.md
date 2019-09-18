@@ -29,7 +29,7 @@ end
 ```
 
 ```sh
-# ./templates/crontab.erb
+# .tomo/templates/crontab.erb
 SHELL=/bin/bash
 0 6 * * * . $HOME/.bashrc; cd <%= paths.current %>; bundle exec rails runner PeriodicTask.call > <%= paths.shared.join("log/periodic-task.log") %> 2>&1
 ```
@@ -289,7 +289,7 @@ end
 The ERB template has access to all the same APIs as our task methods; that means we can remove the hard-coded paths from our original cron job specification and use tomo's `paths` helper. So our ERB template file (`.tomo/templates/crontab.erb`) could look like this:
 
 ```sh
-# ./templates/crontab.erb
+# .tomo/templates/crontab.erb
 SHELL=/bin/bash
 0 6 * * * . $HOME/.bashrc; cd <%= paths.current %>; bundle exec rails runner PeriodicTask.call > <%= paths.shared.join("log/periodic-task.log") %> 2>&1
 ```
