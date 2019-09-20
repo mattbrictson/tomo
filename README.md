@@ -184,7 +184,7 @@ Read the [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom
   - [Host](https://tomo-deploy.com/api/Host/)
   - [Logger](https://tomo-deploy.com/api/Logger/)
   - [Paths](https://tomo-deploy.com/api/Paths/)
-  - [PluginDSL](https://tomo-deploy.com/api/Host/)
+  - [PluginDSL](https://tomo-deploy.com/api/PluginDSL/)
   - [Remote](https://tomo-deploy.com/api/Remote/)
   - [Result](https://tomo-deploy.com/api/Result/)
   - [TaskLibrary](https://tomo-deploy.com/api/TaskLibrary/)
