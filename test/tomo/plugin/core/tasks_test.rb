@@ -143,6 +143,34 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     assert_empty(@tester.executed_scripts)
   end
 
+  def test_write_release_json
+    now = Time.now
+    @tester = Tomo::Testing::MockPluginTester.new(
+      settings: {
+        release_json_path: "/app/release.json"
+      },
+      release: {
+        ref: "master",
+        deploy_date: now,
+        deploy_user: "matt",
+        revision: "65eda21"
+      }
+    )
+    @tester.run_task("core:write_release_json")
+    expected = <<~JSON
+      {
+        "ref": "master",
+        "deploy_date": #{now.to_s.inspect},
+        "deploy_user": "matt",
+        "revision": "65eda21"
+      }
+    JSON
+    assert_equal(
+      "echo -n #{expected.shellescape} > /app/release.json",
+      @tester.executed_script
+    )
+  end
+
   def test_log_revision
     now = Time.now
     @tester = Tomo::Testing::MockPluginTester.new(
