@@ -55,7 +55,7 @@ module Tomo::Plugin::Core
 
     def write_release_json
       json = JSON.pretty_generate(remote.release)
-      remote.write(text: json, to: paths.release_json)
+      remote.write(text: "#{json}\n", to: paths.release_json)
     end
 
     # rubocop:disable Metrics/AbcSize
