@@ -25,7 +25,7 @@ jobs:
 
   rubocop:
     docker:
-      - image: circleci/ruby:2.6.4
+      - image: circleci/ruby:2.6.5
     steps:
       - checkout
       - run: gem install bundler -v 2.0.2
@@ -34,7 +34,7 @@ jobs:
 
   test_unit:
     docker:
-      - image: circleci/ruby:2.6.4
+      - image: circleci/ruby:2.6.5
     steps:
       - checkout
       - run: gem install bundler -v 2.0.2
@@ -45,7 +45,7 @@ jobs:
 
   test_docker:
     docker:
-      - image: circleci/ruby:2.6.4
+      - image: circleci/ruby:2.6.5
     steps:
       - checkout
       - setup_remote_docker
@@ -67,7 +67,7 @@ jobs:
 
   test_e2e:
     docker:
-      - image: circleci/ruby:2.6.4
+      - image: circleci/ruby:2.6.5
     steps:
       - checkout
       - setup_remote_docker
