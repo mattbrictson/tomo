@@ -29,11 +29,11 @@ class Tomo::Plugin::Core::HelpersTest < Minitest::Test
 
   def test_run?
     result = @tester.call_helper(:run?, "echo hello world")
-    assert_equal(true, result)
+    assert(result)
 
     @tester.mock_script_result(exit_status: 1)
     result = @tester.call_helper(:run?, "boom")
-    assert_equal(false, result)
+    refute(result)
   end
 
   def test_write_replaces_the_file
