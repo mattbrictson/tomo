@@ -1,4 +1,6 @@
-require: rubocop-performance
+require:
+  - rubocop-minitest
+  - rubocop-performance
 
 AllCops:
   DisplayCopNames: true
