@@ -101,7 +101,7 @@ All of these methods are available on instances of [Remote](../api/Remote.md) an
 Run the given command, returning the stdout of that command. If the command did not write to stdout, then return an empty String. Note that stderr is ignored, and an exception will be thrown if the command fails.
 
 ```ruby
-remote.capture("echo", "hello") # => "hello"
+remote.capture("echo", "hello") # => "hello\n"
 ```
 
 ### remote.run?(\*command, \*\*options) → true or false

@@ -40,7 +40,7 @@ set env_vars: { RAILS_ENV: "production", PUMA_THREADS: 20 }
 This task will ensure that the envrc file is updated to include:
 
 ```bash
-export RAILS=production
+export RAILS_ENV=production
 export PUMA_THREADS=20
 ```
 
