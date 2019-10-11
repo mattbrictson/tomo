@@ -9,6 +9,15 @@ at_exit { Tomo::Testing::DockerImage.running_images.each(&:stop) }
 module Tomo
   module Testing
     class DockerImage
+      FILES_TO_COPY = %w[
+        Dockerfile
+        loginctl.sh
+        systemctl.rb
+        tomo_test_ed25519.pub
+        ubuntu_setup.sh
+      ].freeze
+      private_constant :FILES_TO_COPY
+
       class << self
         attr_reader :running_images
       end
@@ -100,8 +109,7 @@ module Tomo
 
       def set_up_build_dir
         FileUtils.mkdir_p(build_dir)
-        files = %w[Dockerfile tomo_test_ed25519.pub ubuntu_setup.sh]
-        files.each do |file|
+        FILES_TO_COPY.each do |file|
           FileUtils.cp(File.expand_path(file, __dir__), build_dir)
         end
         IO.write(File.join(build_dir, "custom_setup.sh"), setup_script)

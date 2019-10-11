@@ -1,0 +1,22 @@
+[Unit]
+Description=Puma HTTP Server for <%= settings[:application] %>
+After=network.target
+Requires=<%= settings[:puma_systemd_socket] %>
+ConditionPathExists=<%= paths.current %>
+
+[Service]
+ExecStart=/bin/bash -lc 'exec bundle exec --keep-file-descriptors puma -C config/puma.rb -b tcp://0.0.0.0:<%= settings[:puma_port] %>'
+KillMode=mixed
+Restart=always
+StandardError=syslog
+StandardInput=null
+StandardOutput=syslog
+SyslogIdentifier=%n
+TimeoutStopSec=5
+Type=simple
+WorkingDirectory=<%= paths.current %>
+# Helpful for debugging socket activation, etc.
+# Environment=PUMA_DEBUG=1
+
+[Install]
+WantedBy=multi-user.target
