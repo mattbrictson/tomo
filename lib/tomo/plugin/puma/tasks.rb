@@ -2,8 +2,6 @@ module Tomo::Plugin::Puma
   class Tasks < Tomo::TaskLibrary
     SystemdUnit = Struct.new(:name, :template, :path)
 
-    # TODO: add loginctl step to Rails tutorial
-
     # TODO: document
     # TODO: test
     # rubocop:disable Metrics/AbcSize
