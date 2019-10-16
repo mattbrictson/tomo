@@ -23,7 +23,7 @@ plugin "rails"
 host "deployer@app.example.com"
 
 set application: "my-rails-app"
-set deploy_to: "/var/www/%<application>"
+set deploy_to: "/var/www/%{application}"
 set git_url: "git@github.com:my-username/my-rails-app.git"
 set git_branch: "master"
 # ...
@@ -111,19 +111,19 @@ For a full list of settings that affect tomo’s core behavior, refer to the [co
 
 #### Interpolation
 
-It is possible to reference other settings when specifying a value. The format of a reference string is `%<name>` where `name` is the name of another setting. This is often used to build paths that are relative to the release that is being deployed, or for paths relative to tomo’s shared directory.
+It is possible to reference other settings when specifying a value. The format of a reference string is `%{name}` where `name` is the name of another setting. This is often used to build paths that are relative to the release that is being deployed, or for paths relative to tomo’s shared directory.
 
 In this example, the value will be interpolated to contain the release that is being deployed:
 
 ```ruby
-set release_json_path: "%<release_path>/.tomo_release.json"
+set release_json_path: "%{release_path}/.tomo_release.json"
 # => "/var/www/my-app/20190523234156/.tomo_release.json"
 ```
 
 Another common use case is the shared directory:
 
 ```ruby
-set bundler_path: "%<shared_path>/bundle"
+set bundler_path: "%{shared_path}/bundle"
 # => "/var/www/my-app/shared/bundle"
 ```
 

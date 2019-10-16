@@ -12,7 +12,7 @@ module Tomo::Plugin
              bundler_deployment:  true,
              bundler_gemfile:     nil,
              bundler_jobs:        "4",
-             bundler_path:        "%<shared_path>/bundle",
+             bundler_path:        "%{shared_path}/bundle",
              bundler_retry:       "3",
              bundler_version:     nil,
              bundler_without:     %w[development test]

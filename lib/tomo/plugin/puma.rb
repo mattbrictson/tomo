@@ -9,10 +9,10 @@ module Tomo::Plugin
     # rubocop:disable Metrics/LineLength
     defaults puma_check_timeout: 15,
              puma_port: "3000",
-             puma_systemd_service: "puma_%<application>.service",
-             puma_systemd_socket: "puma_%<application>.socket",
-             puma_systemd_service_path: ".config/systemd/user/%<puma_systemd_service>",
-             puma_systemd_socket_path: ".config/systemd/user/%<puma_systemd_socket>",
+             puma_systemd_service: "puma_%{application}.service",
+             puma_systemd_socket: "puma_%{application}.socket",
+             puma_systemd_service_path: ".config/systemd/user/%{puma_systemd_service}",
+             puma_systemd_socket_path: ".config/systemd/user/%{puma_systemd_socket}",
              puma_systemd_service_template_path: File.expand_path("puma/systemd/service.erb", __dir__),
              puma_systemd_socket_template_path: File.expand_path("puma/systemd/socket.erb", __dir__)
     # rubocop:enable Metrics/LineLength

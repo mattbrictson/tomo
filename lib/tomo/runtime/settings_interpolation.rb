@@ -1,5 +1,6 @@
 module Tomo
   class Runtime
+    # TODO: test
     class SettingsInterpolation
       def self.interpolate(settings)
         new(settings).call
@@ -19,19 +20,34 @@ module Tomo
 
       attr_reader :settings
 
+      # rubocop:disable Metrics/AbcSize
       def fetch(name, stack=[])
         raise_circular_dependency_error(name, stack) if stack.include?(name)
         value = settings.fetch(name)
         return value unless value.is_a?(String)
 
-        value.gsub(/%<(\w+)>/) do
-          fetch(Regexp.last_match[1].to_sym, stack + [name])
+        value.gsub(/%{(\w+)}|%<(\w+)>/) do
+          token = Regexp.last_match[1] || Regexp.last_match[2]
+          warn_deprecated_syntax(name, token) if Regexp.last_match[2]
+
+          fetch(token.to_sym, stack + [name])
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def raise_circular_dependency_error(name, stack)
         dependencies = [*stack, name].join(" -> ")
         raise "Circular dependency detected in settings: #{dependencies}"
+      end
+
+      def warn_deprecated_syntax(name, token)
+        Tomo.logger.warn <<~WARNING
+          :#{name} is using the deprecated %<...> template syntax.
+            Replace:   %<#{token}>
+            with this: %{#{token}}
+          The %<...> syntax will not work in future versions of tomo.
+
+        WARNING
       end
 
       def symbolize(hash)

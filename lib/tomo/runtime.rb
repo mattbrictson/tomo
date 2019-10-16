@@ -84,9 +84,9 @@ module Tomo
       release = start_time.utc.strftime("%Y%m%d%H%M%S")
 
       case type
-      when :current then "%<current_path>"
-      when :new then "%<releases_path>/#{release}"
-      when :tmp then "%<tmp_path>/#{release}"
+      when :current then "%{current_path}"
+      when :new then "%{releases_path}/#{release}"
+      when :tmp then "%{tmp_path}/#{release}"
       else
         raise ArgumentError, "release: must be :current, :new, or :tmp"
       end
