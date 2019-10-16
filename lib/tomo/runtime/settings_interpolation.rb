@@ -1,6 +1,5 @@
 module Tomo
   class Runtime
-    # TODO: test
     class SettingsInterpolation
       def self.interpolate(settings)
         new(settings).call
@@ -42,7 +41,7 @@ module Tomo
 
       def warn_deprecated_syntax(name, token)
         Tomo.logger.warn <<~WARNING
-          :#{name} is using the deprecated %<...> template syntax.
+          :#{name} is using the deprecated %<...> interpolation syntax.
             Replace:   %<#{token}>
             with this: %{#{token}}
           The %<...> syntax will not work in future versions of tomo.
