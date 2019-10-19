@@ -40,7 +40,6 @@ module Tomo::Plugin::Puma
       logger.warn "Timed out waiting for puma to respond on port #{port}"
     end
 
-    # TODO: document
     # TODO: test
     def log
       remote.attach "journalctl", "-q",

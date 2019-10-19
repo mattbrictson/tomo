@@ -74,4 +74,18 @@ Stops the puma socket and service via systemd. Equivalent to:
 systemctl --user stop puma.socket puma.service
 ```
 
+### puma:log
+
+Uses `journalctl` (part of systemd) to view the log output of the puma service. This task is intended for use as a [run](../commands/run.md) task and accepts command-line arguments. The arguments are passed through to the `journalctl` command. For example:
+
+```
+$ tomo run -- puma:log -f
+```
+
+Will run this remote script:
+
+```
+journalctl -q --user-unit=puma.service -f
+```
+
 [socket-activation]: https://github.com/puma/puma/blob/master/docs/systemd.md#socket-activation

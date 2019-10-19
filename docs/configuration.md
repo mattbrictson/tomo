@@ -187,6 +187,7 @@ setup do
   run "rails:db_create"
   run "rails:db_schema_load"
   run "rails:db_seed"
+  run "puma:setup_systemd"
 end
 ```
 
@@ -214,6 +215,7 @@ deploy do
   run "rails:assets_precompile"
   run "core:symlink_current"
   run "puma:restart"
+  run "puma:check_active"
   run "core:clean_releases"
   run "bundler:clean"
   run "core:log_revision"
