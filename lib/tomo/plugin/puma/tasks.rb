@@ -2,7 +2,6 @@ module Tomo::Plugin::Puma
   class Tasks < Tomo::TaskLibrary
     SystemdUnit = Struct.new(:name, :template, :path)
 
-    # TODO: test
     # rubocop:disable Metrics/AbcSize
     def setup_systemd
       linger_must_be_enabled!
@@ -16,20 +15,17 @@ module Tomo::Plugin::Puma
     end
     # rubocop:enable Metrics/AbcSize
 
-    # TODO: test
     %i[start stop].each do |action|
       define_method(action) do
         remote.run "systemctl", "--user", action, socket.name, service.name
       end
     end
 
-    # TODO: test
     def restart
       remote.run "systemctl", "--user", "start", socket.name
       remote.run "systemctl", "--user", "restart", service.name
     end
 
-    # TODO: test
     def check_active
       logger.info "Checking if puma is active and listening on port #{port}..."
 
@@ -40,7 +36,6 @@ module Tomo::Plugin::Puma
       logger.warn "Timed out waiting for puma to respond on port #{port}"
     end
 
-    # TODO: test
     def log
       remote.attach "journalctl", "-q",
                     raw("--user-unit=#{service.name.shellescape}"),
