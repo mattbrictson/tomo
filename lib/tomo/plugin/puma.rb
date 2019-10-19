@@ -6,7 +6,6 @@ module Tomo::Plugin
 
     tasks Tomo::Plugin::Puma::Tasks
 
-    # TODO: document
     # rubocop:disable Metrics/LineLength
     defaults puma_check_timeout: 15,
              puma_port: "3000",

@@ -2,7 +2,6 @@ module Tomo::Plugin::Puma
   class Tasks < Tomo::TaskLibrary
     SystemdUnit = Struct.new(:name, :template, :path)
 
-    # TODO: document
     # TODO: test
     # rubocop:disable Metrics/AbcSize
     def setup_systemd
@@ -17,7 +16,6 @@ module Tomo::Plugin::Puma
     end
     # rubocop:enable Metrics/AbcSize
 
-    # TODO: document
     # TODO: test
     %i[start stop].each do |action|
       define_method(action) do
@@ -25,14 +23,12 @@ module Tomo::Plugin::Puma
       end
     end
 
-    # TODO: document
     # TODO: test
     def restart
       remote.run "systemctl", "--user", "start", socket.name
       remote.run "systemctl", "--user", "restart", service.name
     end
 
-    # TODO: document
     # TODO: test
     def check_active
       logger.info "Checking if puma is active and listening on port #{port}..."
