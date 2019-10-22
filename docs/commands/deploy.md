@@ -66,6 +66,7 @@ deploy do
   run "rails:assets_precompile"
   run "core:symlink_current"
   run "puma:restart"
+  run "puma:check_active"
   run "core:clean_releases"
   run "bundler:clean"
   run "core:log_revision"
@@ -76,66 +77,81 @@ Then a deploy would produce:
 
 ```plain
 $ tomo deploy
-tomo deploy v0.1.0
-→ Connecting to deployer@localhost:32809
+tomo deploy v0.9.0
+→ Connecting to deployer@localhost:32829
 • env:update
 • git:create_release
-Writing 60 bytes to /var/www/rails-new/git_repo/info/attributes
 cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git remote update --prune
 Fetching origin
-cd /var/www/rails-new/git_repo && mkdir -p /var/www/rails-new/releases/20190616214752
-cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git archive master | tar -x -f - -C /var/www/rails-new/releases/20190616214752
-cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git log -n1 --date=iso --pretty=format:"%H/%cd/%ae" master
+cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git log -n1 --date=iso --pretty=format:"%H/%cd/%ae" master --
+Writing 60 bytes to /var/www/rails-new/git_repo/info/attributes
+mkdir -p /var/www/rails-new/releases/20191019200551
+cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git archive master | tar -x -f - -C /var/www/rails-new/releases/20191019200551
 • core:symlink_shared
-mkdir -p /var/www/rails-new/shared/.bundle /var/www/rails-new/shared/log /var/www/rails-new/shared/node_modules /var/www/rails-new/shared/public/assets /var/www/rails-new/releases/20190616214752/public
-cd /var/www/rails-new/releases/20190616214752 && rm -rf .bundle log node_modules public/assets
-ln -sf /var/www/rails-new/shared/.bundle /var/www/rails-new/releases/20190616214752/.bundle
-ln -sf /var/www/rails-new/shared/log /var/www/rails-new/releases/20190616214752/log
-ln -sf /var/www/rails-new/shared/node_modules /var/www/rails-new/releases/20190616214752/node_modules
-ln -sf /var/www/rails-new/shared/public/assets /var/www/rails-new/releases/20190616214752/public/assets
+mkdir -p /var/www/rails-new/shared/log /var/www/rails-new/shared/node_modules /var/www/rails-new/shared/public/assets /var/www/rails-new/shared/tmp/cache /var/www/rails-new/shared/tmp/pids /var/www/rails-new/shared/tmp/sockets /var/www/rails-new/releases/20191019200551/public /var/www/rails-new/releases/20191019200551/tmp
+cd /var/www/rails-new/releases/20191019200551 && rm -rf log node_modules public/assets tmp/cache tmp/pids tmp/sockets
+ln -sf /var/www/rails-new/shared/log /var/www/rails-new/releases/20191019200551/log
+ln -sf /var/www/rails-new/shared/node_modules /var/www/rails-new/releases/20191019200551/node_modules
+ln -sf /var/www/rails-new/shared/public/assets /var/www/rails-new/releases/20191019200551/public/assets
+ln -sf /var/www/rails-new/shared/tmp/cache /var/www/rails-new/releases/20191019200551/tmp/cache
+ln -sf /var/www/rails-new/shared/tmp/pids /var/www/rails-new/releases/20191019200551/tmp/pids
+ln -sf /var/www/rails-new/shared/tmp/sockets /var/www/rails-new/releases/20191019200551/tmp/sockets
 • core:write_release_json
-Writing 243 bytes to /var/www/rails-new/releases/20190616214752/.tomo_release.json
+Writing 299 bytes to /var/www/rails-new/releases/20191019200551/.tomo_release.json
 • bundler:install
-cd /var/www/rails-new/releases/20190616214752 && bundle check --path /var/www/rails-new/shared/bundle
+cd /var/www/rails-new/releases/20191019200551 && bundle check
+The dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
 The Gemfile's dependencies are satisfied
 • rails:db_migrate
-cd /var/www/rails-new/releases/20190616214752 && bundle exec rails db:migrate
+cd /var/www/rails-new/releases/20191019200551 && bundle exec rails db:migrate
 • rails:db_seed
-cd /var/www/rails-new/releases/20190616214752 && bundle exec rails db:seed
+cd /var/www/rails-new/releases/20191019200551 && bundle exec rails db:seed
 • rails:assets_precompile
-cd /var/www/rails-new/releases/20190616214752 && bundle exec rails assets:precompile
+cd /var/www/rails-new/releases/20191019200551 && bundle exec rails assets:precompile
 yarn install v1.16.0
 [1/4] Resolving packages...
 [2/4] Fetching packages...
 info fsevents@1.2.9: The platform "linux" is incompatible with this module.
 info "fsevents@1.2.9" is an optional dependency and failed compatibility check. Excluding it from installation.
 [3/4] Linking dependencies...
-warning " > webpack-dev-server@3.3.1" has unmet peer dependency "webpack@^4.0.0".
-warning "webpack-dev-server > webpack-dev-middleware@3.7.0" has unmet peer dependency "webpack@^4.0.0".
+warning " > webpack-dev-server@3.8.1" has unmet peer dependency "webpack@^4.0.0".
+warning "webpack-dev-server > webpack-dev-middleware@3.7.2" has unmet peer dependency "webpack@^4.0.0".
 [4/4] Building fresh packages...
-Done in 27.71s.
-I, [2019-06-16T21:48:36.682912 #36032]  INFO -- : Writing /var/www/rails-new/releases/20190616214752/public/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css
-I, [2019-06-16T21:48:36.683798 #36032]  INFO -- : Writing /var/www/rails-new/releases/20190616214752/public/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css.gz
+Done in 30.68s.
+I, [2019-10-19T20:06:30.645395 #33263]  INFO -- : Writing /var/www/rails-new/releases/20191019200551/public/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css
+I, [2019-10-19T20:06:30.645832 #33263]  INFO -- : Writing /var/www/rails-new/releases/20191019200551/public/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css.gz
 Compiling…
-Compiled all packs in /var/www/rails-new/releases/20190616214752/public/packs
+Compiled all packs in /var/www/rails-new/releases/20191019200551/public/packs
+
+WARNING: We noticed you're using the `useBuiltIns` option without declaring a core-js version. Currently, we assume version 2.x when no version is passed. Since this default version will likely change in future versions of Babel, we recommend explicitly setting the core-js version you are using via the `corejs` option.
+
+You should also be sure that the version you pass to the `corejs` option matches the version specified in your `package.json`'s `dependencies` section. If it doesn't, you need to run one of the following commands:
+
+  npm install --save core-js@2    npm install --save core-js@3
+  yarn add core-js@2              yarn add core-js@3
+
+
 • core:symlink_current
-ln -sf /var/www/rails-new/releases/20190616214752 /var/www/rails-new/current-9f36bc6f645ade90
-mv -fT /var/www/rails-new/current-9f36bc6f645ade90 /var/www/rails-new/current
+ln -sf /var/www/rails-new/releases/20191019200551 /var/www/rails-new/current-0d3d2f7a6648294a
+mv -fT /var/www/rails-new/current-0d3d2f7a6648294a /var/www/rails-new/current
 • puma:restart
-cd /var/www/rails-new/current && bundle exec pumactl --control-url tcp://127.0.0.1:9293 --control-token tomo restart
-Puma is not running. Starting it now.
-cd /var/www/rails-new/current && bundle exec puma --daemon --control-url tcp://127.0.0.1:9293 --control-token tomo
-Puma starting in single mode...
-* Version 3.12.1 (ruby 2.6.3-p62), codename: Llamas in Pajamas
-* Min threads: 5, max threads: 5
-* Environment: production
-* Daemonizing...
+systemctl --user start puma_rails-new.socket
+systemctl --user restart puma_rails-new.service
+• puma:check_active
+Checking if puma is active and listening on port 3000...
+systemctl --user is-active puma_rails-new.service
+curl -sS --connect-timeout 1 --max-time 10 http://localhost:3000 > /dev/null
+systemctl --user status puma_rails-new.service
+● puma_rails-new.service
+   Loaded: loaded (enabled; vendor preset: enabled)
+   Active: active (running)
 • core:clean_releases
 readlink /var/www/rails-new/current
 cd /var/www/rails-new/releases && ls -A1
 • bundler:clean
-cd /var/www/rails-new/releases/20190616214752 && bundle clean
+cd /var/www/rails-new/releases/20191019200551 && bundle clean
+The dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
 • core:log_revision
 Writing 100 bytes to /var/www/rails-new/revisions.log
-✔ Deployed rails-new to deployer@localhost:32809
+✔ Deployed rails-new to deployer@localhost:32829
 ```

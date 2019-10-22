@@ -9,7 +9,7 @@ In this tutorial we will use tomo to deploy a [sample Rails project](https://git
 5. [Run tomo setup](#run-tomo-setup)
 6. [Run tomo deploy](#run-tomo-deploy)
 
-This is a basic tutorial that skips over DNS, TLS, load balancing, PostgreSQL, systemd, etc. If you have suggestions for expanding this guide, consider [opening an issue or pull request on GitHub](https://github.com/mattbrictson/tomo). Thanks for reading!
+This is a basic tutorial that skips over DNS, TLS, load balancing, PostgreSQL, etc. If you have suggestions for expanding this guide, consider [opening an issue or pull request on GitHub](https://github.com/mattbrictson/tomo). Thanks for reading!
 
 ## Create an Ubuntu 18.04 LTS VPS
 
@@ -50,7 +50,10 @@ It may take a minute or two for all the packages to install.
 ## Set up a deployer user
 
 Running a Rails app as `root` is a security risk; we need to create a non-privileged user for this purpose. Run the following script to create a
-`deployer` user that has access to write to a `/var/www` directory, which is the default location where tomo will deploy our app.
+`deployer` user that:
+
+- has access to write to a `/var/www` directory, which is the default location where tomo will deploy our app; and
+- can "linger", i.e. run long-running processes like the puma web server
 
 ```sh
 # Run these commands as root on the VPS
@@ -61,6 +64,7 @@ chown -R deployer:deployer /home/deployer/.ssh
 chmod 600 /home/deployer/.ssh/authorized_keys
 mkdir -p /var/www
 chown deployer:deployer /var/www
+loginctl enable-linger deployer
 ```
 
 You can safely ignore the `Use of uninitialized value $answer` warning.

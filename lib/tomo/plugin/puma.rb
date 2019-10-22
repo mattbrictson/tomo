@@ -6,9 +6,15 @@ module Tomo::Plugin
 
     tasks Tomo::Plugin::Puma::Tasks
 
-    defaults puma_control_token: "tomo",
-             puma_control_url: "tcp://127.0.0.1:9293",
-             puma_stderr_path: "%<shared_path>/log/puma.err",
-             puma_stdout_path: "%<shared_path>/log/puma.out"
+    # rubocop:disable Metrics/LineLength
+    defaults puma_check_timeout: 15,
+             puma_port: "3000",
+             puma_systemd_service: "puma_%<application>.service",
+             puma_systemd_socket: "puma_%<application>.socket",
+             puma_systemd_service_path: ".config/systemd/user/%<puma_systemd_service>",
+             puma_systemd_socket_path: ".config/systemd/user/%<puma_systemd_socket>",
+             puma_systemd_service_template_path: File.expand_path("puma/systemd/service.erb", __dir__),
+             puma_systemd_socket_template_path: File.expand_path("puma/systemd/socket.erb", __dir__)
+    # rubocop:enable Metrics/LineLength
   end
 end
