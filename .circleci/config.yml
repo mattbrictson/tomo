@@ -1,19 +1,50 @@
-version: 2
-jobs:
-  mkdocs_build:
+version: 2.1
+executors:
+  ruby:
+    docker:
+      - image: circleci/ruby:2.6.5
+  python:
     docker:
       - image: circleci/python:3
+
+commands:
+  bundle_install:
+    description: Install Ruby dependencies
+    steps:
+      - run: gem install bundler -v 2.0.2
+      - run: bundle install --jobs=4 --retry=3
+  pip_install:
+    description: Install Python dependencies
+    steps:
+      - run: sudo pip install -r requirements.txt
+  docker_build:
+    description: Build docker image
+    steps:
+      - run:
+          name: docker build
+          command: |
+            mkdir -p .circleci/docker_certs
+            cp $DOCKER_CERT_PATH/* .circleci/docker_certs/
+            docker build -f .circleci/Dockerfile \
+                         -t tomo:$CIRCLE_BUILD_NUM \
+                         --build-arg DOCKER_HOST \
+                         --build-arg DOCKER_MACHINE_NAME \
+                         --build-arg DOCKER_TLS_VERIFY \
+                         .
+
+jobs:
+  mkdocs_build:
+    executor: python
     steps:
       - checkout
-      - run: sudo pip install -r requirements.txt
+      - pip_install
       - run: mkdocs build
 
   mkdocs_deploy:
-    docker:
-      - image: circleci/python:3
+    executor: python
     steps:
       - checkout
-      - run: sudo pip install -r requirements.txt
+      - pip_install
       - run:
           name: mkdocs gh-deploy
           command: |
@@ -24,64 +55,38 @@ jobs:
             mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
 
   rubocop:
-    docker:
-      - image: circleci/ruby:2.6.5
+    executor: ruby
     steps:
       - checkout
-      - run: gem install bundler -v 2.0.2
-      - run: bundle install --jobs=4 --retry=3
+      - bundle_install
       - run: bundle exec rubocop
 
   test_unit:
-    docker:
-      - image: circleci/ruby:2.6.5
+    executor: ruby
     steps:
       - checkout
-      - run: gem install bundler -v 2.0.2
-      - run: bundle install --jobs=4 --retry=3
+      - bundle_install
       - run: bundle exec rake test:unit TESTOPTS="--ci-dir=./reports"
       - store_test_results:
           path: ./reports
 
   test_docker:
-    docker:
-      - image: circleci/ruby:2.6.5
+    executor: ruby
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: docker build
-          command: |
-            mkdir -p .circleci/docker_certs
-            cp $DOCKER_CERT_PATH/* .circleci/docker_certs/
-            docker build -f .circleci/Dockerfile \
-                         -t tomo:$CIRCLE_BUILD_NUM \
-                         --build-arg DOCKER_HOST \
-                         --build-arg DOCKER_MACHINE_NAME \
-                         --build-arg DOCKER_TLS_VERIFY \
-                         .
+      - docker_build
       - run:
           name: bundle exec rake test:docker (within docker container)
           command: |
             docker run --name tomo -it tomo:$CIRCLE_BUILD_NUM bundle exec rake test:docker
 
   test_e2e:
-    docker:
-      - image: circleci/ruby:2.6.5
+    executor: ruby
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: docker build
-          command: |
-            mkdir -p .circleci/docker_certs
-            cp $DOCKER_CERT_PATH/* .circleci/docker_certs/
-            docker build -f .circleci/Dockerfile \
-                         -t tomo:$CIRCLE_BUILD_NUM \
-                         --build-arg DOCKER_HOST \
-                         --build-arg DOCKER_MACHINE_NAME \
-                         --build-arg DOCKER_TLS_VERIFY \
-                         .
+      - docker_build
       - run:
           name: bundle exec rake test:e2e (within docker container)
           command: |
