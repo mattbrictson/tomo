@@ -7,17 +7,19 @@ module Tomo
 
       def initialize(settings)
         @settings = symbolize(settings)
+        @deprecation_warnings = []
       end
 
       def call
         hash = Hash[settings.keys.map { |name| [name, fetch(name)] }]
         dump_settings(hash) if Tomo.debug?
+        print_deprecation_warnings
         hash
       end
 
       private
 
-      attr_reader :settings
+      attr_reader :settings, :deprecation_warnings
 
       # rubocop:disable Metrics/AbcSize
       def fetch(name, stack=[])
@@ -27,7 +29,7 @@ module Tomo
 
         value.gsub(/%{(\w+)}|%<(\w+)>/) do
           token = Regexp.last_match[1] || Regexp.last_match[2]
-          warn_deprecated_syntax(name, token) if Regexp.last_match[2]
+          deprecation_warnings << name if Regexp.last_match[2]
 
           fetch(token.to_sym, stack + [name])
         end
@@ -39,15 +41,40 @@ module Tomo
         raise "Circular dependency detected in settings: #{dependencies}"
       end
 
-      def warn_deprecated_syntax(name, token)
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
+      def print_deprecation_warnings
+        return if deprecation_warnings.empty?
+
+        examples = ""
+        deprecation_warnings.uniq.each do |name|
+          sett = settings[name].inspect
+          old_syntax = sett.gsub(
+            /%<(\w+)>/,
+            Colors.red("%<") + '\1' + Colors.red(">")
+          )
+          new_syntax = sett.gsub(
+            /%<(\w+)>/,
+            Colors.green("%{") + '\1' + Colors.green("}")
+          )
+
+          examples << "\n:#{name}\n\n"
+          examples << "  Replace:   set #{name}: #{old_syntax}\n"
+          examples << "  with this: set #{name}: #{new_syntax}\n"
+        end
+
         Tomo.logger.warn <<~WARNING
-          :#{name} is using the deprecated %<...> interpolation syntax.
-            Replace:   %<#{token}>
-            with this: %{#{token}}
-          The %<...> syntax will not work in future versions of tomo.
+          There are settings using the deprecated %<...> interpolation syntax.
+          #{examples}
+          #{Colors.red('The %<...> syntax will not work in future versions of tomo.')}
 
         WARNING
+
+        # Make sure people see the warning!
+        sleep 5
       end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/MethodLength
 
       def symbolize(hash)
         hash.each_with_object({}) do |(key, value), symbolized|

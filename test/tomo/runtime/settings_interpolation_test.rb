@@ -47,9 +47,9 @@ class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
       interpolate(application: "default", deploy_to: "/var/www/%<application>")
     end
     assert_match(<<~WARNING, stderr)
-      :deploy_to is using the deprecated %<...> interpolation syntax.
-        Replace:   %<application>
-        with this: %{application}
+        Replace:   set deploy_to: "/var/www/%<application>"
+        with this: set deploy_to: "/var/www/%{application}"
+
       The %<...> syntax will not work in future versions of tomo.
     WARNING
     assert_equal("/var/www/default", interpolated[:deploy_to])
