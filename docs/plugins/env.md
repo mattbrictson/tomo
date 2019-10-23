@@ -12,7 +12,7 @@ Note that in order for these tasks to work, you must first run [env:setup](#envs
 | Name          | Purpose                                                                                                                           | Default                |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
 | `bashrc_path` | Location of the deploy user’s `.bashrc` file                                                                                      | `".bashrc"`            |
-| `env_path`    | Location of the envrc file on the remote host                                                                                     | `"%<deploy_to>/envrc"` |
+| `env_path`    | Location of the envrc file on the remote host                                                                                     | `"%{deploy_to}/envrc"` |
 | `env_vars`    | A hash of environment variable names and values that will configured on the remote host; see [env:update](#envupdate) for details | `{}`                   |
 
 ## Tasks
