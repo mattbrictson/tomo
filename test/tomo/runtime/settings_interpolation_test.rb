@@ -1,8 +1,6 @@
 require "test_helper"
 
 class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
-  include Tomo::Testing::LogCapturing
-
   def test_interpolates_settings
     interpolated = interpolate(
       application: "test",
@@ -42,17 +40,15 @@ class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
     )
   end
 
-  def test_warns_on_old_syntax
-    interpolated = capturing_logger_output do
-      interpolate(application: "default", deploy_to: "/var/www/%<application>")
-    end
-    assert_match(<<~WARNING, stderr)
-        Replace:   set deploy_to: "/var/www/%<application>"
-        with this: set deploy_to: "/var/www/%{application}"
-
-      The %<...> syntax will not work in future versions of tomo.
-    WARNING
-    assert_equal("/var/www/default", interpolated[:deploy_to])
+  def test_no_longer_supports_old_syntax
+    interpolated = interpolate(
+      application: "default",
+      deploy_to: "/var/www/%<application>"
+    )
+    assert_equal(
+      { application: "default", deploy_to: "/var/www/%<application>" },
+      interpolated
+    )
   end
 
   private
