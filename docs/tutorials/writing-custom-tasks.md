@@ -38,7 +38,7 @@ Before we get there, let's review the basics.
 
 ## What is a plugin?
 
-Plugins extend tomo by providing some or all of these three things: tasks, helpers, and default settings. Plugins are either built into tomo (e.g. [git](../plugins/git.md), [rails](../plugins/rails.md)), provided by gems (e.g. [tomo-plugin-rollbar](https://github.com/mattbrictson/tomo-plugin-rollbar)), or loaded from `./tomo/plugins/*.rb` within a tomo project. This tutorial will focus on project-specific plugins, which are the easiest to write. Once you are ready to share your plugin amongst multiple projects (or with the larger tomo community), check out the [Publishing a Plugin](publishing-a-plugin.md) tutorial to learn how to package a plugin as a gem.
+Plugins extend tomo by providing some or all of these three things: tasks, helpers, and default settings. Plugins are either built into tomo (e.g. [git](../plugins/git.md), [rails](../plugins/rails.md)), provided by gems (e.g. [tomo-plugin-sidekiq](https://github.com/mattbrictson/tomo-plugin-sidekiq)), or loaded from `./tomo/plugins/*.rb` within a tomo project. This tutorial will focus on project-specific plugins, which are the easiest to write. Once you are ready to share your plugin amongst multiple projects (or with the larger tomo community), check out the [Publishing a Plugin](publishing-a-plugin.md) tutorial to learn how to package a plugin as a gem.
 
 ## What is a task?
 

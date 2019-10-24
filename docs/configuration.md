@@ -64,10 +64,10 @@ Several plugins are built into tomo: [bundler](plugins/bundler.md), [env](plugin
 plugin "git"
 ```
 
-Plugins can also be provided by gems installed on your system. For example, the `tomo-plugin-rollbar` gem provides the "rollbar" plugin. Make sure the gem is installed (e.g. in your Gemfile) and then reference the plugin by name to load it:
+Plugins can also be provided by gems installed on your system. For example, the `tomo-plugin-sidekiq` gem provides the "sidekiq" plugin. Make sure the gem is installed (e.g. in your Gemfile) and then reference the plugin by name to load it:
 
 ```ruby
-plugin "rollbar"
+plugin "sidekiq"
 ```
 
 Note that the name of the plugin may not necessarily match the name of the gem. Refer to the gem’s documentation for installation instructions.
