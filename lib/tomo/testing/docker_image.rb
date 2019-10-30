@@ -11,7 +11,6 @@ module Tomo
     class DockerImage
       FILES_TO_COPY = %w[
         Dockerfile
-        loginctl.sh
         systemctl.rb
         tomo_test_ed25519.pub
         ubuntu_setup.sh

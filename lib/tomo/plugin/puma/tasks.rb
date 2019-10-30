@@ -65,8 +65,10 @@ module Tomo::Plugin::Puma
     end
 
     def linger_must_be_enabled!
-      loginctl_result = remote.run "loginctl", "user-status", remote.host.user
-      return unless loginctl_result.stdout.match?(/^\s*Linger:\s*no\s*$/i)
+      linger_users = remote.list_files(
+        "/var/lib/systemd/linger", raise_on_error: false
+      )
+      return if dry_run? || linger_users.include?(remote.host.user)
 
       die <<~ERROR.strip
         Linger must be enabled for the #{remote.host.user} user in order for

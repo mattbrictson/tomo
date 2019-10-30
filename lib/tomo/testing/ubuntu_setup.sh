@@ -12,6 +12,8 @@ chown -R deployer:deployer /home/deployer/.ssh
 chmod 600 /home/deployer/.ssh/authorized_keys
 mkdir -p /var/www
 chown deployer:deployer /var/www
+mkdir -p /var/lib/systemd/linger
+touch /var/lib/systemd/linger/deployer
 
 # Packages needed for ruby, etc.
 apt-get -y update
