@@ -7,8 +7,6 @@ COPY ./custom_setup.sh ./
 RUN ./custom_setup.sh
 COPY ./systemctl.rb /usr/local/bin/systemctl
 RUN chmod a+x /usr/local/bin/systemctl
-COPY ./loginctl.sh /usr/local/bin/loginctl
-RUN chmod a+x /usr/local/bin/loginctl
 EXPOSE 22
 EXPOSE 3000
 CMD ["/usr/sbin/sshd", "-D"]
