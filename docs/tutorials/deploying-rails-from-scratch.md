@@ -67,8 +67,6 @@ chown deployer:deployer /var/www
 loginctl enable-linger deployer
 ```
 
-You can safely ignore the `Use of uninitialized value $answer` warning.
-
 For convenience, the `deployer` user will accept the same SSH key that you are already using to authenticate when connecting as `root`. Test that it works:
 
 ```sh
