@@ -22,7 +22,7 @@ module Tomo
     def attach(*command, default_chdir: nil, **command_opts)
       full_command = shell_builder.build(*command, default_chdir: default_chdir)
       ssh.ssh_exec(
-        Script.new(full_command, { pty: true }.merge(**command_opts))
+        Script.new(full_command, **{ pty: true }.merge(command_opts))
       )
     end
 
