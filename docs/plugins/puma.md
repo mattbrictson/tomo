@@ -74,6 +74,35 @@ Stops the puma socket and service via systemd. Equivalent to:
 systemctl --user stop puma.socket puma.service
 ```
 
+### puma:status
+
+Reports the status of the puma socket and service via systemd. Equivalent to:
+
+```
+systemctl --user status puma.socket puma.service
+```
+
+Sample output:
+
+```
+$ tomo run puma:status
+tomo run v0.10.0
+→ Connecting to deployer@app.example.com
+• puma:status
+systemctl --user status puma_example.socket puma_example.service
+● puma_example.socket - Puma HTTP Server Accept Sockets for example
+   Loaded: loaded (/home/deployer/.config/systemd/user/puma_example.socket; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2019-10-24 09:41:53 UTC; 1 weeks 2 days ago
+   Listen: 0.0.0.0:3000 (Stream)
+
+● puma_example.service - Puma HTTP Server for example
+   Loaded: loaded (/home/deployer/.config/systemd/user/puma_example.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2019-11-01 15:46:10 UTC; 1 day 10h ago
+ Main PID: 14513 (bundle)
+   CGroup: /user.slice/user-1000.slice/user@1000.service/puma_example.service
+           └─14513 puma 4.2.1 (tcp://0.0.0.0:3000) [20191101154450]
+```
+
 ### puma:log
 
 Uses `journalctl` (part of systemd) to view the log output of the puma service. This task is intended for use as a [run](../commands/run.md) task and accepts command-line arguments. The arguments are passed through to the `journalctl` command. For example:
