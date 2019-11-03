@@ -15,7 +15,7 @@ module Tomo::Plugin::Puma
     end
     # rubocop:enable Metrics/AbcSize
 
-    %i[start stop].each do |action|
+    %i[start stop status].each do |action|
       define_method(action) do
         remote.run "systemctl", "--user", action, socket.name, service.name
       end

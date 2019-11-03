@@ -60,6 +60,14 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
     )
   end
 
+  def test_status
+    @tester.run_task("puma:status")
+    assert_equal(
+      "systemctl --user status puma_test.socket puma_test.service",
+      @tester.executed_script
+    )
+  end
+
   def test_restart
     @tester.run_task("puma:restart")
     assert_equal(
