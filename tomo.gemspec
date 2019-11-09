@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Matt Brictson"]
   spec.email         = ["opensource@mattbrictson.com"]
 
-  spec.summary       = "A simple SSH-based deployment tool, built for Rails"
+  spec.summary       = "A friendly CLI for deploying Rails apps ✨"
   spec.homepage      = "https://github.com/mattbrictson/tomo"
   spec.license       = "MIT"
 
