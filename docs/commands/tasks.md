@@ -46,6 +46,5 @@ rails:db_schema_load
 rails:db_seed
 rails:db_setup
 rails:db_structure_load
-rails:log_tail
 rbenv:install
 ```

@@ -81,11 +81,17 @@ Any remote SSH scripts run by the task (e.g. via `remote.run`) will be mocked ac
 ```ruby
 require "tomo/testing"
 
-tester = Tomo::Testing::MockPluginTester.new("rails")
-tester.run_task("rails:log_tail", "-F")
+tester = Tomo::Testing::MockPluginTester.new(
+  "bundler", settings: { release_path: "/app/release" }
+)
+tester.mock_script_result(/bundle check/, exit_status: 1)
+tester.run_task("bundler:install")
 assert_equal(
-  "tail -F /var/www/testing/current/log/${RAILS_ENV}.log",
-  tester.executed_script
+  [
+    "cd /app/release && bundle check",
+    "cd /app/release && bundle install"
+  ],
+  tester.executed_scripts
 )
 ```
 
