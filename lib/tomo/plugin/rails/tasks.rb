@@ -50,12 +50,6 @@ module Tomo::Plugin::Rails
       end
     end
 
-    # TODO: remove
-    def log_tail
-      log_path = raw("#{paths.release.to_s.shellescape}/log/${RAILS_ENV}.log")
-      remote.run("tail", settings[:run_args], log_path)
-    end
-
     private
 
     def database_exists?
