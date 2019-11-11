@@ -12,6 +12,7 @@ markdown_extensions:
 repo_url: https://github.com/mattbrictson/tomo/
 nav:
   - Home: index.md
+  - Comparisons: comparisons.md
   - Configuration: configuration.md
   - Commands:
       - init: commands/init.md
