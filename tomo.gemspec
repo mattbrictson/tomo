@@ -9,6 +9,13 @@ Gem::Specification.new do |spec|
   spec.email         = ["opensource@mattbrictson.com"]
 
   spec.summary       = "A friendly CLI for deploying Rails apps ✨"
+  spec.description   = "Tomo is a feature-rich deployment tool that contains "\
+                       "everything you need to deploy a basic Rails app out "\
+                       "of the box. It has an opinionated, production-tested "\
+                       "set of defaults, but is easily extensible via a well-"\
+                       "documented plugin system. Unlike other Ruby-based "\
+                       "deployment tools, tomo’s friendly command-line "\
+                       "interface and task system do not rely on Rake."
   spec.homepage      = "https://github.com/mattbrictson/tomo"
   spec.license       = "MIT"
 
