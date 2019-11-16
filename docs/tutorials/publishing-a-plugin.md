@@ -103,7 +103,7 @@ Don't forget to `git commit` and `git push` the changes.
 
 ## Define the plugin
 
-The entry point for a tomo plugin gem is the `lib/tomo/plugin/<name>.rb` file. This file defines the plugin by providing the following three pieces of information:
+The entry point for a tomo plugin gem is the `lib/tomo/plugin/<name>.rb` file. This file defines the plugin by extending [Tomo::PluginDSL](../api/PluginDSL.md) to provide the following three pieces of information:
 
 1. Default settings
 2. Tasks
