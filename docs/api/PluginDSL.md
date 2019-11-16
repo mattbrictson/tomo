@@ -18,11 +18,14 @@ module Tomo::Plugin::Bundler
   tasks Tomo::Plugin::Bundler::Tasks
   helpers Tomo::Plugin::Bundler::Helpers
 
-  defaults bundler_install_flags: ["--deployment"],
-           bundler_gemfile:       nil,
-           bundler_jobs:          "4",
-           bundler_path:          "%{shared_path}/bundle",
-           bundler_without:       %w[development test]
+  defaults bundler_config_path: ".bundle/config",
+           bundler_deployment:  true,
+           bundler_gemfile:     nil,
+           bundler_jobs:        "4",
+           bundler_path:        "%{shared_path}/bundle",
+           bundler_retry:       "3",
+           bundler_version:     nil,
+           bundler_without:     %w[development test]
 end
 ```
 
@@ -42,11 +45,14 @@ Settings must use symbol keys and typically String values, although any Ruby typ
 module Tomo::Plugin::Bundler
   extend Tomo::PluginDSL
 
-  defaults bundler_install_flags: ["--deployment"],
-           bundler_gemfile:       nil,
-           bundler_jobs:          "4",
-           bundler_path:          "%{shared_path}/bundle",
-           bundler_without:       %w[development test]
+  defaults bundler_config_path: ".bundle/config",
+           bundler_deployment:  true,
+           bundler_gemfile:     nil,
+           bundler_jobs:        "4",
+           bundler_path:        "%{shared_path}/bundle",
+           bundler_retry:       "3",
+           bundler_version:     nil,
+           bundler_without:     %w[development test]
 end
 ```
 
@@ -72,7 +78,7 @@ class Tomo::Plugin::Git
 end
 ```
 
-You can use `self` to define a plugin and its tasks together as a single class:
+You can use `tasks self` to define a plugin and its tasks together as a single class:
 
 ```ruby
 class Tomo::Plugin::Git < Tomo::TaskLibrary
