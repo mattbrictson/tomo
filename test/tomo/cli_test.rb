@@ -11,6 +11,12 @@ class Tomo::CLITest < Minitest::Test
     assert_match "Simulated bundler:install", @tester.stdout
   end
 
+  def test_suggests_installing_missing_plugin
+    @tester.run "init"
+    @tester.run "foo:setup", raise_on_error: false
+    assert_match(/did you forget to install the foo plugin/i, @tester.stderr)
+  end
+
   def test_prints_error_when_config_has_syntax_error
     @tester.in_temp_dir do
       FileUtils.mkdir_p(".tomo")
