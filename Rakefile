@@ -62,6 +62,8 @@ namespace :bump do
                     %r{circleci/ruby:([\d\.]+)} => latest
     replace_in_file ".circleci/Dockerfile",
                     %r{circleci/ruby:([\d\.]+)} => latest
+    replace_in_file "docs/comparisons.md",
+                    /ruby version\s*\|\s*([\d\.]+)/i => lowest_minor
 
     travis = YAML.safe_load(open(".travis.yml"))
     travis["rvm"] = RubyVersions.latest_supported_patches + ["ruby-head"]
