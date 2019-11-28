@@ -11,9 +11,8 @@ module Tomo
 
       def initialize(tasks:, hosts:, task_filter:, task_runner:)
         @hosts = hosts
-        @tasks = tasks
         @task_runner = task_runner
-        @plan = build_plan(task_filter)
+        @plan = build_plan(tasks, task_filter)
         @applicable_hosts = gather_applicable_hosts
         @thread_pool = build_thread_pool
         freeze
@@ -33,6 +32,7 @@ module Tomo
       end
 
       def execute
+        Tomo.logger.debug("Execution plan:\n#{explain}")
         open_connections do |remotes|
           plan.each do |steps|
             steps.each do |step|
@@ -44,9 +44,13 @@ module Tomo
         self
       end
 
+      def explain
+        Explanation.new(applicable_hosts, plan, concurrency).to_s
+      end
+
       private
 
-      attr_reader :tasks, :hosts, :plan, :task_runner, :thread_pool
+      attr_reader :hosts, :plan, :task_runner, :thread_pool
 
       def validate_tasks!
         plan.each do |steps|
@@ -70,7 +74,7 @@ module Tomo
         (remotes || {}).values.each(&:close)
       end
 
-      def build_plan(task_filter)
+      def build_plan(tasks, task_filter)
         tasks.each_with_object([]) do |task, result|
           steps = hosts.map do |host|
             HostExecutionStep.new(

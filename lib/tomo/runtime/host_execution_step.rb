@@ -30,6 +30,15 @@ module Tomo
         end
       end
 
+      def explain
+        desc = []
+        applicable_tasks.each do |task|
+          task_host = task.is_a?(PrivilegedTask) ? host.as_privileged : host
+          desc << "RUN #{task} ON #{task_host}"
+        end
+        desc.join("\n")
+      end
+
       private
 
       attr_reader :host, :task_runner

@@ -8,6 +8,7 @@ module Tomo
     autoload :Context, "tomo/runtime/context"
     autoload :Current, "tomo/runtime/current"
     autoload :ExecutionPlan, "tomo/runtime/execution_plan"
+    autoload :Explanation, "tomo/runtime/explanation"
     autoload :HostExecutionStep, "tomo/runtime/host_execution_step"
     autoload :InlineThreadPool, "tomo/runtime/inline_thread_pool"
     autoload :NoTasksError, "tomo/runtime/no_tasks_error"
