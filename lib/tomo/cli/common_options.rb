@@ -40,7 +40,7 @@ module Tomo
         begin
           require "concurrent"
           Tomo.logger.debug("concurrent-ruby #{Concurrent::VERSION}")
-        rescue LoadError # rubocop:disable Lint/HandleExceptions
+        rescue LoadError # rubocop:disable Lint/SuppressedException
         end
       end
     end
