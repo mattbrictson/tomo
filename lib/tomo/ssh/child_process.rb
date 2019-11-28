@@ -49,7 +49,7 @@ module Tomo
               on_data&.call(line)
               buffer << line
             end
-          rescue IOError # rubocop:disable Lint/HandleExceptions
+          rescue IOError # rubocop:disable Lint/SuppressedException
           end
         end
       end
