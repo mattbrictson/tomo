@@ -40,6 +40,8 @@ The directory structure on the remote host looks like this:
 
 This structure is customizable; see the [core plugin settings](../plugins/core.md#settings) for details.
 
+Tip: run `tomo deploy --debug --dry-run` to see an in-depth explanation of the settings and execution plan that will be used for the deployment.
+
 ## Options
 
 | Option | Purpose |
