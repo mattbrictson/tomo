@@ -291,7 +291,47 @@ deploy do
 end
 ```
 
-In the above configuration, we care that `core:symlink_current` is executed at the same time on all hosts, but before and after that, the other tasks can be executed out of sync.
+At runtime, tomo turns this configuration into an "execution plan", which you can see by passing the `--debug` option to `tomo deploy`. Here's what the execution plan might look like for the above configuration with two hosts:
+
+```
+DEBUG: Execution plan:
+CONCURRENTLY (2 THREADS):
+  = CONNECT deployer@app1.example.com
+  = CONNECT deployer@app2.example.com
+CONCURRENTLY (2 THREADS):
+  = IN SEQUENCE:
+      RUN env:update ON deployer@app1.example.com
+      RUN git:create_release ON deployer@app1.example.com
+      RUN core:symlink_shared ON deployer@app1.example.com
+      RUN core:write_release_json ON deployer@app1.example.com
+      RUN bundler:install ON deployer@app1.example.com
+      RUN rails:assets_precompile ON deployer@app1.example.com
+      RUN rails:db_migrate ON deployer@app1.example.com
+  = IN SEQUENCE:
+      RUN env:update ON deployer@app2.example.com
+      RUN git:create_release ON deployer@app2.example.com
+      RUN core:symlink_shared ON deployer@app2.example.com
+      RUN core:write_release_json ON deployer@app2.example.com
+      RUN bundler:install ON deployer@app2.example.com
+      RUN rails:assets_precompile ON deployer@app2.example.com
+CONCURRENTLY (2 THREADS):
+  = RUN core:symlink_current ON deployer@app1.example.com
+  = RUN core:symlink_current ON deployer@app2.example.com
+CONCURRENTLY (2 THREADS):
+  = IN SEQUENCE:
+      RUN puma:restart ON deployer@app1.example.com
+      RUN core:clean_releases ON deployer@app1.example.com
+      RUN bundler:clean ON deployer@app1.example.com
+      RUN core:log_revision ON deployer@app1.example.com
+  = IN SEQUENCE:
+      RUN puma:restart ON deployer@app2.example.com
+      RUN core:clean_releases ON deployer@app2.example.com
+      RUN bundler:clean ON deployer@app2.example.com
+      RUN core:log_revision ON deployer@app2.example.com
+```
+
+As we can see, `core:symlink_current` is executed at the same time on both hosts, but before and after that, the other tasks can be executed out of sync.
+
 
 [deploy]: #deployblock
 [host]: #hostaddress-4242options
