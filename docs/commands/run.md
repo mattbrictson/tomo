@@ -44,7 +44,6 @@ During the `run` command, tomo will initialize the `:release_path` setting to be
 Given the following configuration:
 
 ```ruby
-plugin "bundler"
 plugin "puma"
 host "deployer@localhost", port: 32811
 ```
@@ -53,10 +52,10 @@ Then we could run [puma:restart](../plugins/puma.md#pumarestart) like this:
 
 ```plain
 $ tomo run puma:restart
-tomo run v0.1.0
-→ Connecting to deployer@localhost:32811
+tomo run v0.14.0
+→ Connecting to deployer@app.example.com
 • puma:restart
-cd /var/www/rails-new/current && bundle exec pumactl --control-url tcp://127.0.0.1:9293 --control-token tomo restart
-Command restart sent success
-✔ Ran puma:restart on deployer@localhost:32811
+systemctl --user start puma_visionbot.socket
+systemctl --user restart puma_visionbot.service
+✔ Ran puma:restart on deployer@app.example.com
 ```
