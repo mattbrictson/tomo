@@ -203,6 +203,37 @@ By default, tomo uses the ["accept-new"](https://www.openssh.com/txt/release-7.6
 # Replace "accept-new" with something compatible with older versions of SSH
 set ssh_strict_host_key_checking: true # or false
 ```
+#### How to deploy multiple apps to the same server with TOMO?
+
+When deploying with TOMO, the environment variables may be shared accross multiple apps and that can generate issues with database address, RAILS_MASTER_KEY and SECRET_KEY_BASE. 
+
+In order to avoid situation when you cannot run multiple apps in the same server, you must avoid using environment variables.
+
+When setting up your TOMO config file, uncomment:
+```
+# .tomo/config.rb
+...
+  # DATABASE_URL: :prompt,
+  # SECRET_KEY_BASE: :prompt
+...
+
+```
+Then you must add:
+```
+# .tomo/config.rb
+...
+set linked_files: %w[
+  config/master.key
+]
+...
+
+```
+That will create a symlink between the master.key file to your app. Use a SFTP program to copy the master.key file from config/master.key to your app/shared/config/master.key location. 
+
+You can set your environment variables with:  
+```
+$ EDITOR="sublime --wait" rails crednetials:edit
+```
 
 ## Support
 
