@@ -204,6 +204,26 @@ By default, tomo uses the ["accept-new"](https://www.openssh.com/txt/release-7.6
 set ssh_strict_host_key_checking: true # or false
 ```
 
+#### Can I deploy multiple apps to a single host?
+
+Tomo relies on the host user's bash profile for various things, like setting environment variables and initializing rbenv and nodenv. This makes it impractical to deploy multiple apps to a single host using the same deploy user.
+
+The solution is to create multiple users on the remote host, and then configure a different user for deploying each app. That way each user can have its own distinct environment variables and you can easily configure each app differently without risking conflicts. Refer to the [tomo Rails tutorial](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/#set-up-a-deployer-user) for instructions on creating a deploy user.
+
+E.g. app1 would be configured to deploy as:
+
+```ruby
+host "app1@example.com"
+```
+
+And app2 would be configured to deploy as:
+
+```ruby
+host "app2@example.com"
+```
+
+Next run `tomo setup` for _both_ apps; this will set everything up for both users on the remote host (environment variables, rbenv, etc.). You can now deploy both apps to the same host, with the confidence that their configurations will be kept cleanly separated.
+
 ## Support
 
 This project is a labor of love and I can only spend a few hours a week maintaining it, at most. If you'd like to help by submitting a pull request, or if you've discovered a bug that needs my attention, please let me know. Check out [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/master/CONTRIBUTING.md) to get started. Happy hacking! —Matt
