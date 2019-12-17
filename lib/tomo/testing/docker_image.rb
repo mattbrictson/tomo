@@ -34,6 +34,7 @@ module Tomo
 
         set_up_build_dir
         pull_base_image_if_needed
+        set_up_private_key
         @image_id = build_image
         @container_id = start_container
         @host = Host.parse("deployer@localhost", port: find_ssh_port)
@@ -59,13 +60,10 @@ module Tomo
       # for storing known_hosts.
       def ssh_settings
         hosts_file = File.join(Dir.tmpdir, "tomo_#{SecureRandom.hex(8)}_hosts")
-        key_file = File.expand_path("tomo_test_ed25519", __dir__)
-        FileUtils.chmod(0o600, key_file)
-
         {
           ssh_extra_opts: [
             "-o", "UserKnownHostsFile=#{hosts_file}",
-            "-o", "IdentityFile=#{key_file}"
+            "-o", "IdentityFile=#{private_key_path}"
           ],
           ssh_strict_host_key_checking: false
         }
@@ -73,11 +71,23 @@ module Tomo
 
       private
 
-      attr_reader :container_id, :image_id
+      attr_reader :container_id, :image_id, :private_key_path
 
       def pull_base_image_if_needed
         images = Local.capture('docker images --format "{{.ID}}" ubuntu:18.04')
         Local.capture("docker pull ubuntu:18.04") if images.strip.empty?
+      end
+
+      def set_up_private_key
+        @private_key_path = File.join(
+          Dir.tmpdir,
+          "tomo_test_ed25519_#{SecureRandom.hex(8)}"
+        )
+        FileUtils.cp(
+          File.expand_path("tomo_test_ed25519", __dir__),
+          private_key_path
+        )
+        FileUtils.chmod(0o600, private_key_path)
       end
 
       def build_image
