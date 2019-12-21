@@ -17,7 +17,7 @@ module Tomo
           deploy the project to a remote host. Use the #{blue('--dry-run')} option to quickly
           simulate the entire deploy without actually connecting to the host. Add the
           #{blue('--debug')} option to see an in-depth explanation of the settings and execution
-          plan that will be used for the deployment
+          plan that will be used for the deployment.
 
           For a #{DEFAULT_CONFIG_PATH} that specifies distinct environments (e.g. staging,
           production), you must specify the target environment using the #{blue('-e')} option. If
