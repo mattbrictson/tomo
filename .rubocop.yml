@@ -12,6 +12,10 @@ AllCops:
     - "tmp/**/*"
     - "vendor/**/*"
 
+Layout/LineLength:
+  Exclude:
+    - "*.gemspec"
+
 Metrics/AbcSize:
   Max: 16
   Exclude:
@@ -29,10 +33,6 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Exclude:
     - "test/**/*"
-
-Metrics/LineLength:
-  Exclude:
-    - "*.gemspec"
 
 Metrics/ParameterLists:
   Max: 6
