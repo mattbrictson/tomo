@@ -8,13 +8,13 @@ module Tomo::Plugin
     helpers Tomo::Plugin::Git::Helpers
     tasks Tomo::Plugin::Git::Tasks
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     defaults git_branch:     "master",
              git_repo_path:  "%{deploy_to}/git_repo",
              git_exclusions: [],
              git_env:        { GIT_SSH_COMMAND: "ssh -o PasswordAuthentication=no -o StrictHostKeyChecking=no" },
              git_ref:        nil,
              git_url:        nil
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
   end
 end
