@@ -12,9 +12,20 @@ AllCops:
     - "tmp/**/*"
     - "vendor/**/*"
 
+Layout/HashAlignment:
+  EnforcedColonStyle:
+    - table
+    - key
+  EnforcedHashRocketStyle:
+    - table
+    - key
+
 Layout/LineLength:
   Exclude:
     - "*.gemspec"
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
 
 Metrics/AbcSize:
   Max: 16
@@ -36,17 +47,6 @@ Metrics/MethodLength:
 
 Metrics/ParameterLists:
   Max: 6
-
-Layout/HashAlignment:
-  EnforcedColonStyle:
-    - table
-    - key
-  EnforcedHashRocketStyle:
-    - table
-    - key
-
-Layout/SpaceAroundEqualsInParameterDefault:
-  EnforcedStyle: no_space
 
 Naming/MemoizedInstanceVariableName:
   Enabled: false
