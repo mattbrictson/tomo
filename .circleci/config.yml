@@ -2,7 +2,7 @@ version: 2.1
 executors:
   ruby:
     docker:
-      - image: circleci/ruby:2.6.5
+      - image: circleci/ruby:2.7.0
   python:
     docker:
       - image: circleci/python:3
