@@ -16,7 +16,7 @@ module Tomo
       end
 
       def call(_options)
-        puts "tomo/#{Tomo::VERSION} #{RUBY_DESCRIPTION}"
+        puts "tomo/#{Tomo::VERSION.with_git_sha} #{RUBY_DESCRIPTION}"
       end
     end
   end

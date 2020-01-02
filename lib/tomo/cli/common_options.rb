@@ -32,7 +32,7 @@ module Tomo
       private
 
       def dump_runtime_info(*)
-        Tomo.logger.debug("tomo #{Tomo::VERSION}")
+        Tomo.logger.debug("tomo #{Tomo::VERSION.with_git_sha}")
         Tomo.logger.debug(RUBY_DESCRIPTION)
         Tomo.logger.debug("rubygems #{Gem::VERSION}")
         Tomo.logger.debug("bundler #{Bundler::VERSION}") if Tomo.bundled?

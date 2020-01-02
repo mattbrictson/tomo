@@ -53,7 +53,7 @@ module Tomo
       end
 
       def call(task, *args, options)
-        logger.info "tomo run v#{Tomo::VERSION}"
+        logger.info "tomo run v#{Tomo::VERSION.with_git_sha}"
 
         runtime = configure_runtime(options)
         plan = runtime.run!(task, *args, privileged: options[:privileged])

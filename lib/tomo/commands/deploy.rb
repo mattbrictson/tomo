@@ -44,7 +44,7 @@ module Tomo
       end
 
       def call(options)
-        logger.info "tomo deploy v#{Tomo::VERSION}"
+        logger.info "tomo deploy v#{Tomo::VERSION.with_git_sha}"
 
         runtime = configure_runtime(options)
         plan = runtime.deploy!
