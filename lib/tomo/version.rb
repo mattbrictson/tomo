@@ -5,9 +5,9 @@ module Tomo
     attr_accessor :major, :minor, :patch, :git_sha, :with_git_sha
   end)
 
-  VERSION.major = Gem::Version.new(VERSION).segments[0].freeze
-  VERSION.minor = Gem::Version.new(VERSION).segments[1].freeze
-  VERSION.patch = Gem::Version.new(VERSION).segments[2].freeze
+  VERSION.major,
+  VERSION.minor,
+  VERSION.patch, = Gem::Version.new(VERSION).segments
 
   VERSION.git_sha = \
     begin
