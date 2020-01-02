@@ -2,7 +2,7 @@
 Description=Puma HTTP Server Accept Sockets for <%= settings[:application] %>
 
 [Socket]
-ListenStream=0.0.0.0:<%= settings[:puma_port] %>
+ListenStream=<%= settings[:puma_host] %>:<%= settings[:puma_port] %>
 
 # Socket options matching Puma defaults
 NoDelay=true

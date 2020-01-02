@@ -8,6 +8,7 @@ module Tomo::Plugin
 
     # rubocop:disable Layout/LineLength
     defaults puma_check_timeout: 15,
+             puma_host: "0.0.0.0",
              puma_port: "3000",
              puma_systemd_service: "puma_%{application}.service",
              puma_systemd_socket: "puma_%{application}.socket",
