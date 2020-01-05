@@ -11,7 +11,7 @@ commands:
   bundle_install:
     description: Install Ruby dependencies
     steps:
-      - run: gem install bundler -v 2.1.2
+      - run: gem install bundler -v 2.1.3
       - run: bundle install --jobs=4 --retry=3
   pip_install:
     description: Install Python dependencies
