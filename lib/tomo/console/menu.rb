@@ -2,7 +2,7 @@ require "forwardable"
 require "io/console"
 
 module Tomo
-  module Console
+  class Console
     class Menu
       ARROW_UP = "\e[A".freeze
       ARROW_DOWN = "\e[B".freeze
