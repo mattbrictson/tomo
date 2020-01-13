@@ -1,5 +1,3 @@
-require "forwardable"
-
 module Tomo
   class TaskLibrary
     include TaskAPI
