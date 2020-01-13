@@ -3,7 +3,7 @@ require "io/console"
 require "time"
 
 module Tomo
-  module Console
+  class Console
     class KeyReader
       extend Forwardable
 
