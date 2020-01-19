@@ -14,6 +14,7 @@ module Tomo::Plugin::Env
       modify_bashrc
     end
 
+    # rubocop:disable Metrics/MethodLength
     def update
       return if settings[:env_vars].empty?
 
@@ -21,11 +22,15 @@ module Tomo::Plugin::Env
         settings[:env_vars].each do |name, value|
           next if value == :prompt && contains_entry?(env, name)
 
-          value = prompt_for(name) if value == :prompt
+          value = prompt_for(name, message: <<~MSG) if value == :prompt
+            The remote host needs a value for the $#{name} environment variable.
+            Please provide a value at the prompt.
+          MSG
           replace_entry(env, name, value)
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def set
       return if settings[:run_args].empty?
@@ -88,11 +93,12 @@ module Tomo::Plugin::Env
       text.match?(/^export #{Regexp.quote(name.to_s.shellescape)}=/)
     end
 
-    def prompt_for(name)
+    def prompt_for(name, message: nil)
       synchronize do
         @answers ||= {}
         next @answers[name] if @answers.key?(name)
 
+        logger.info(message) if message
         @answers[name] = Tomo::Console.prompt("#{name}? ")
       end
     end
