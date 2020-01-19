@@ -5,6 +5,7 @@ module Tomo
   class Console
     autoload :KeyReader, "tomo/console/key_reader"
     autoload :Menu, "tomo/console/menu"
+    autoload :NonInteractiveError, "tomo/console/non_interactive_error"
 
     class << self
       extend Forwardable
@@ -65,13 +66,10 @@ module Tomo
     end
 
     def raise_non_interactive
-      raise "An interactive console is required" unless ci?
-
-      env_var = (env.keys & CI_VARS).first
-      raise <<~ERROR
-        This appears to be a CI environment because the #{env_var} env var is set.
-        Tomo::Console cannot be used in a non-interactive CI environment.
-      ERROR
+      NonInteractiveError.raise_with(
+        task: Runtime::Current.task,
+        ci_var: (env.keys & CI_VARS).first
+      )
     end
   end
 end
