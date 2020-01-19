@@ -46,14 +46,13 @@ module Tomo
     CI_VARS = %w[
       JENKINS_HOME
       JENKINS_URL
+      GITHUB_ACTION
       TRAVIS
       CIRCLECI
-      CI
       TEAMCITY_VERSION
-      GO_PIPELINE_NAME
       bamboo_buildKey
       GITLAB_CI
-      XCS
+      CI
     ].freeze
     private_constant :CI_VARS
 
