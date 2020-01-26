@@ -109,15 +109,15 @@ The entry point for a tomo plugin gem is the `lib/tomo/plugin/<name>.rb` file. T
 2. Tasks
 3. Helpers
 
-For our "cron" plugin it looks like this:
+For our "cron" plugin, the entry point generated from the template looks like this:
 
 ```ruby
 # lib/tomo/plugin/cron.rb
 
 require "tomo"
-require "tomo/plugin/cron/helpers"
-require "tomo/plugin/cron/tasks"
-require "tomo/plugin/cron/version"
+require_relative "cron/helpers"
+require_relative "cron/tasks"
+require_relative "cron/version"
 
 module Tomo::Plugin::Cron
   extend Tomo::PluginDSL
@@ -188,7 +188,7 @@ Helpers extend the `remote` DSL in tomo. This is an advanced feature that most p
 - Delete `lib/tomo/plugin/cron/helpers.rb`
 - Delete `test/tomo/plugin/cron/helpers_test.rb`
 - Remove the following lines from `lib/tomo/plugin/cron.rb`
-  - `require "tomo/plugin/cron/helpers"`
+  - `require_relative "cron/helpers"`
   - `helpers Tomo::Plugin::Cron::Helpers`
 
 ## Write tests
@@ -318,7 +318,7 @@ end
 Commit the changes:
 
 ```plain
-$ git commit -a -m "Releasing v0.2.0"
+$ git commit -a -m "Release v0.2.0"
 ```
 
 And then release:
