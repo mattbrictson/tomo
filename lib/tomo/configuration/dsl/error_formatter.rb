@@ -50,8 +50,6 @@ module Tomo
           HINT
         end
 
-        # rubocop:disable Metrics/AbcSize
-        # rubocop:disable Metrics/MethodLength
         def highlighted_lines
           first = [1, error_line_no - 1].max
           last = [dsl_lines.length, error_line_no + 1].min
@@ -68,8 +66,6 @@ module Tomo
                       end
           end
         end
-        # rubocop:enable Metrics/AbcSize
-        # rubocop:enable Metrics/MethodLength
       end
     end
   end
