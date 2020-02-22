@@ -14,7 +14,6 @@ module Tomo::Plugin::Env
       modify_bashrc
     end
 
-    # rubocop:disable Metrics/MethodLength
     def update
       return if settings[:env_vars].empty?
 
@@ -30,7 +29,6 @@ module Tomo::Plugin::Env
         end
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
     def set
       return if settings[:run_args].empty?

@@ -9,7 +9,7 @@ module Tomo
       end
 
       def success?
-        status == true || status == 0 # rubocop:disable Style/NumericPredicate
+        status == true || status == 0
       end
     end
   end

@@ -15,7 +15,6 @@ module Tomo::Plugin::Git
       end
     end
 
-    # rubocop:disable Metrics/MethodLength
     def create_release
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
@@ -32,7 +31,6 @@ module Tomo::Plugin::Git
         )
       end
     end
-    # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
     private
