@@ -19,25 +19,18 @@ You can change the default mocking behavior by using [mock_script_result][], lik
 ```ruby
 require "tomo/testing"
 
-def setup
-  @tester = Tomo::Testing::MockPluginTester.new(
-    "bundler",
-    "puma",
-    settings: {
-      current_path: "/app/current",
-      puma_control_url: "tcp://127.0.0.1:9293",
-      puma_control_token: "test"
-    }
+def test_install
+  tester = Tomo::Testing::MockPluginTester.new(
+    "bundler", settings: { release_path: "/app/release" }
   )
-end
-
-def test_restart_starts_puma_if_pumactl_fails
-  @tester.mock_script_result(/pumactl/, exit_status: 1)
-  @tester.run_task("puma:restart")
+  tester.mock_script_result(/bundle check/, exit_status: 1)
+  tester.run_task("bundler:install")
   assert_equal(
-    "cd /app/current && bundle exec puma --daemon "\
-    "--control-url tcp://127.0.0.1:9293 --control-token test",
-    @tester.executed_scripts.last
+    [
+      "cd /app/release && bundle check",
+      "cd /app/release && bundle install"
+    ],
+    tester.executed_scripts
   )
 end
 ```
@@ -58,12 +51,10 @@ Any `settings` that are specified will be applied _after_ the defaults settings 
 require "tomo/testing"
 
 tester = Tomo::Testing::MockPluginTester.new(
-  "bundler",
   "puma",
   settings: {
-    current_path: "/app/current",
-    puma_control_url: "tcp://127.0.0.1:9293",
-    puma_control_token: "test"
+    application: "test",
+    current_path: "/app/current"
   }
 )
 ```
@@ -122,10 +113,10 @@ tester.mock_script_result("readlink /app/current", stdout: <<~OUT)
 OUT
 ```
 
-Here, any script that includes `pumactl` will fail with an exit status of 1:
+Here, any script that includes `systemctl` will fail with an exit status of 1:
 
 ```ruby
-tester.mock_script_result(/pumactl/, exit_status: 1)
+tester.mock_script_result(/systemctl/, exit_status: 1)
 ```
 
 This mocks _all_ scripts to fail with exit status of 255 and stderr of "oh no!":
