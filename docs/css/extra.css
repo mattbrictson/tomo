@@ -64,3 +64,7 @@ img[src$="create-new-repo%402x.png"] {
   border-radius: 2px;
   width: 595px;
 }
+
+.wy-table-responsive table td {
+  white-space: normal;
+}
