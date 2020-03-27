@@ -47,19 +47,19 @@ td > code {
   white-space: nowrap;
 }
 
-img[src$="ubuntu-18-lts@2x.png"] {
+img[src$="ubuntu-18-lts%402x.png"] {
   border: 1px solid #ccc;
   border-radius: 2px;
   width: 300px;
 }
 
-img[src$="ssh-auth@2x.png"] {
+img[src$="ssh-auth%402x.png"] {
   border: 1px solid #ccc;
   border-radius: 2px;
   width: 399px;
 }
 
-img[src$="create-new-repo@2x.png"] {
+img[src$="create-new-repo%402x.png"] {
   border: 1px solid #ccc;
   border-radius: 2px;
   width: 595px;
