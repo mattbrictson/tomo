@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/tomo.svg)](https://rubygems.org/gems/tomo)
 [![Travis](https://img.shields.io/travis/mattbrictson/tomo.svg?label=travis)](https://travis-ci.org/mattbrictson/tomo)
-[![Circle](https://circleci.com/gh/mattbrictson/tomo.svg?style=shield)](https://circleci.com/gh/mattbrictson/tomo)
+[![Circle](https://circleci.com/gh/mattbrictson/tomo.svg?style=shield)](https://app.circleci.com/pipelines/github/mattbrictson/tomo?branch=master)
 [![Code Climate](https://codeclimate.com/github/mattbrictson/tomo/badges/gpa.svg)](https://codeclimate.com/github/mattbrictson/tomo)
 
 Tomo is a friendly command-line tool for deploying Rails apps. It is a new alternative to Capistrano, Mina, and Shipit that aims for simplicity and developer happiness.
