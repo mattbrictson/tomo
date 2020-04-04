@@ -1,4 +1,4 @@
-FROM circleci/ruby:2.7.0-node-browsers
+FROM circleci/ruby:2.7.1-node-browsers
 ARG DOCKER_MACHINE_NAME
 ARG DOCKER_TLS_VERIFY
 ARG DOCKER_HOST
