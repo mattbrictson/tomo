@@ -21,7 +21,7 @@ Note that the settings listed here only take effect if you run the [bundler:conf
 
 ### bundler:upgrade_bundler
 
-Installs the version of bundler specified by the `:bundler_version` setting, if specified. If `:bundler_version` is `nil` (the default), this task will automatically determine the version of bundler required by the app that is being deployed by looking at the `BUNDLED WITH` entry within the app’s `Gemfile.lock`. If `:bundler_version` is `nil` and the app is missing a lockfile, then this task does nothing. Bundler will be installed withing this command:
+Installs the version of bundler specified by the `:bundler_version` setting, if specified. If `:bundler_version` is `nil` (the default), this task will automatically determine the version of bundler required by the app that is being deployed by looking at the `BUNDLED WITH` entry within the app’s `Gemfile.lock`. Bundler will be installed withing this command:
 
 ```
 gem install bundler --conservative --no-document -v VERSION
