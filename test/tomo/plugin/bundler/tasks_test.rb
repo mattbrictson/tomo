@@ -90,10 +90,13 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
     )
   end
 
-  def test_upgrade_bundler_skips_installation_if_lock_file_is_absent
-    tester = configure
+  def test_dies_if_lock_file_is_absent_and_no_version_specified
+    tester = configure(bundler_version: nil)
     tester.mock_script_result(/^tail .*Gemfile\.lock/, exit_status: 1)
-    tester.run_task("bundler:upgrade_bundler")
+    error = assert_raises(Tomo::Runtime::TaskAbortedError) do
+      tester.run_task("bundler:upgrade_bundler")
+    end
+    assert_match(/Gemfile\.lock/, error.message)
     assert_match(/tail .*Gemfile\.lock/, tester.executed_script)
   end
 

@@ -30,7 +30,6 @@ module Tomo::Plugin::Bundler
 
     def upgrade_bundler
       needed_bundler_ver = version_setting || extract_bundler_ver_from_lockfile
-      return if needed_bundler_ver.nil?
 
       remote.run(
         "gem", "install", "bundler",
@@ -61,7 +60,13 @@ module Tomo::Plugin::Bundler
         "tail", "-n", "10", paths.release.join("Gemfile.lock"),
         raise_on_error: false
       )
-      lockfile_tail[/BUNDLED WITH\n   (\S+)$/, 1]
+      version = lockfile_tail[/BUNDLED WITH\n   (\S+)$/, 1]
+      return version if version
+
+      die <<~REASON
+        Could not guess bundler version from Gemfile.lock.
+        Use the :bundler_version setting to specify the version of bundler to install.
+      REASON
     end
   end
 end
