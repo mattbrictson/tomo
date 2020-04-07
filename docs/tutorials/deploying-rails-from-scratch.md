@@ -101,8 +101,8 @@ Now it is time to configure tomo to deploy this Rails app. Inside the `rails-new
 $ cd rails-new
 
 $ gem install tomo
-Fetching tomo-0.4.1.gem
-Successfully installed tomo-0.4.1
+Fetching tomo-1.0.0.gem
+Successfully installed tomo-1.0.0
 1 gem installed
 
 $ tomo init

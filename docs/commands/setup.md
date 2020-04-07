@@ -50,7 +50,7 @@ Then a setup would produce:
 
 ```plain
 $ tomo setup
-tomo setup v0.9.0
+tomo setup v1.0.0
 → Connecting to deployer@localhost:32829
 • env:setup
 Writing 314 bytes to /var/www/rails-new/envrc

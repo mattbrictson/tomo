@@ -79,7 +79,7 @@ Then a deploy would produce:
 
 ```plain
 $ tomo deploy
-tomo deploy v0.9.0
+tomo deploy v1.0.0
 → Connecting to deployer@localhost:32829
 • env:update
 • git:create_release
