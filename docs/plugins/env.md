@@ -54,7 +54,7 @@ The first time `env:update` is run, tomo will prompt for the value:
 
 ```
 $ tomo deploy
-tomo deploy v0.1.0
+tomo deploy v1.0.0
 → Connecting to user@app.example.com
 • env:update
 SECRET_KEY_BASE?
@@ -94,7 +94,7 @@ Display the contents of the remote envrc file. This task is intended for use wit
 
 ```plain
 $ tomo run env:show
-tomo run v0.4.1
+tomo run v1.0.0
 → Connecting to deployer@app.example.com
 • env:show
 RAILS_ENV=production

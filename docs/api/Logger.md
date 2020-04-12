@@ -4,7 +4,7 @@ Provides a simple interface for logging messages to stdout and stderr. In multi-
 
 ```
 $ tomo run bundler:clean
-tomo run v0.1.0
+tomo run v1.0.0
 [1] → Connecting to deployer@web1.example.com
 [2] → Connecting to deployer@web2.example.com
 [1] • bundler:clean
@@ -18,7 +18,7 @@ If tomo is run in `--dry-run` mode, log messages are prefixed with a `*` to indi
 
 ```
 $ tomo run bundler:clean --dry-run
-tomo run v0.1.0
+tomo run v1.0.0
 * [1] → Connecting to deployer@web1.example.com
 * [2] → Connecting to deployer@web2.example.com
 * [1] • bundler:clean
