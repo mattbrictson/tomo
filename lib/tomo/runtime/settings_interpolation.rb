@@ -35,9 +35,7 @@ module Tomo
       end
 
       def symbolize(hash)
-        hash.each_with_object({}) do |(key, value), symbolized|
-          symbolized[key.to_sym] = value
-        end
+        hash.transform_keys(&:to_sym)
       end
 
       def dump_settings(hash)

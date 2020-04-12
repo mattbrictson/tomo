@@ -44,13 +44,11 @@ module Tomo
 
       def start_io_thread(source, buffer)
         new_thread_inheriting_current_vars do
-          begin
-            while (line = source.gets)
-              on_data&.call(line)
-              buffer << line
-            end
-          rescue IOError # rubocop:disable Lint/SuppressedException
+          while (line = source.gets)
+            on_data&.call(line)
+            buffer << line
           end
+        rescue IOError # rubocop:disable Lint/SuppressedException
         end
       end
 

@@ -53,8 +53,7 @@ module Tomo
       attr_reader :helper_modules, :tasks_by_name
 
       def ssh_options
-        # TODO: replace with Hash#slice after dropping Ruby 2.4 support
-        settings.select { |key| SSH::Options::DEFAULTS.key?(key) }
+        settings.slice(*SSH::Options::DEFAULTS.keys)
       end
     end
   end
