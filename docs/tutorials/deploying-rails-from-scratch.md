@@ -1,8 +1,8 @@
 # Deploying Rails From Scratch
 
-In this tutorial we will use tomo to deploy a [sample Rails project](https://github.com/mattbrictson/rails-new) to a virtual private server (VPS). These instructions use [DigitalOcean](https://www.digitalocean.com) as the hosting provider, but any provider that offers an Ubuntu 18.04 LTS VPS should work in a similar way. Here are the steps involved (step 1 is the only part that is DigitalOcean-specific):
+In this tutorial we will use tomo to deploy a [sample Rails project](https://github.com/mattbrictson/rails-new) to a virtual private server (VPS). These instructions use [DigitalOcean](https://www.digitalocean.com) as the hosting provider, but any provider that offers an Ubuntu 18.04 or 20.04 LTS VPS should work in a similar way. Here are the steps involved (step 1 is the only part that is DigitalOcean-specific):
 
-1. [Create an Ubuntu 18.04 LTS VPS](#create-an-ubuntu-18-lts-vps)
+1. [Create an Ubuntu VPS](#create-an-ubuntu-vps)
 2. [Install necessary apt packages](#install-necessary-apt-packages)
 3. [Set up a deployer user](#set-up-a-deployer-user)
 4. [Configure tomo](#configure-tomo)
@@ -11,13 +11,13 @@ In this tutorial we will use tomo to deploy a [sample Rails project](https://git
 
 This is a basic tutorial that skips over DNS, TLS, load balancing, PostgreSQL, etc. If you have suggestions for expanding this guide, consider [opening an issue or pull request on GitHub](https://github.com/mattbrictson/tomo). Thanks for reading!
 
-## Create an Ubuntu 18.04 LTS VPS
+## Create an Ubuntu VPS
 
 Log into [DigitalOcean](https://www.digitalocean.com) and create a "Droplet" (aka a VPS). If this is your first time using DigitalOcean, check out their [Droplet QuickStart](https://www.digitalocean.com/docs/droplets/quickstart/) guide for an introduction to the service.
 
-When creating the Droplet, make sure to choose **Ubuntu 18.04 (LTS) x64**:
+When creating the Droplet, make sure to choose **Ubuntu 18.04 or 20.04 (LTS) x64**:
 
-![Ubuntu 18.04 LTS](./ubuntu-18-lts@2x.png)
+![Ubuntu 20.04 LTS](./ubuntu-20-lts@2x.png)
 
 And use **SSH keys** for authentication (tomo does not work with password authentication):
 
