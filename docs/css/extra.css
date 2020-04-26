@@ -45,19 +45,22 @@ table {
   white-space: nowrap;
 }
 
-img[src$="ubuntu-18-lts%402x.png"] {
+img[src$="ubuntu-20-lts%402x.png"] {
+  box-sizing: content-box;
   border: 1px solid #ccc;
   border-radius: 2px;
-  width: 300px;
+  width: 305px;
 }
 
 img[src$="ssh-auth%402x.png"] {
+  box-sizing: content-box;
   border: 1px solid #ccc;
   border-radius: 2px;
   width: 399px;
 }
 
 img[src$="create-new-repo%402x.png"] {
+  box-sizing: content-box;
   border: 1px solid #ccc;
   border-radius: 2px;
   width: 595px;
