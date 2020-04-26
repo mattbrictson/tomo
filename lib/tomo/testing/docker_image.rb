@@ -74,8 +74,8 @@ module Tomo
       attr_reader :container_id, :image_id, :private_key_path
 
       def pull_base_image_if_needed
-        images = Local.capture('docker images --format "{{.ID}}" ubuntu:18.04')
-        Local.capture("docker pull ubuntu:18.04") if images.strip.empty?
+        images = Local.capture('docker images --format "{{.ID}}" ubuntu:20.04')
+        Local.capture("docker pull ubuntu:20.04") if images.strip.empty?
       end
 
       def set_up_private_key

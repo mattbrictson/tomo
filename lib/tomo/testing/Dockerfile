@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 WORKDIR /provision
 COPY ./tomo_test_ed25519.pub /root/.ssh/authorized_keys
 COPY ./ubuntu_setup.sh ./
