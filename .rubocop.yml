@@ -27,6 +27,9 @@ Layout/LineLength:
 Layout/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
 
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
 Lint/RaiseException:
   Enabled: true
 
@@ -75,6 +78,9 @@ Style/DoubleNegation:
 
 Style/EmptyMethod:
   Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: true
 
 Style/FormatStringToken:
   Enabled: false
