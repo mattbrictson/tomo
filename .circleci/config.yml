@@ -70,17 +70,6 @@ jobs:
       - store_test_results:
           path: ./reports
 
-  test_docker:
-    executor: ruby
-    steps:
-      - checkout
-      - setup_remote_docker
-      - docker_build
-      - run:
-          name: bundle exec rake test:docker (within docker container)
-          command: |
-            docker run --name tomo -it tomo:$CIRCLE_BUILD_NUM bundle exec rake test:docker
-
   test_e2e:
     executor: ruby
     steps:
@@ -108,14 +97,12 @@ workflows:
                 - master
       - rubocop
       - test_unit
-      - test_docker
       - test_e2e
   cron-workflow:
     jobs:
       - mkdocs_build
       - rubocop
       - test_unit
-      - test_docker
       - test_e2e
     triggers:
       - schedule:

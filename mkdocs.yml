@@ -44,4 +44,3 @@ nav:
       - "Tomo::Result": api/Result.md
       - "Tomo::TaskLibrary": api/TaskLibrary.md
       - "Tomo::Testing::MockPluginTester": api/testing/MockPluginTester.md
-      - "Tomo::Testing::DockerPluginTester": api/testing/DockerPluginTester.md

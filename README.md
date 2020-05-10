@@ -191,7 +191,6 @@ Read the [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom
   - [Result](https://tomo-deploy.com/api/Result/)
   - [TaskLibrary](https://tomo-deploy.com/api/TaskLibrary/)
   - [Testing::MockPluginTester](https://tomo-deploy.com/api/testing/MockPluginTester/)
-  - [Testing::DockerPluginTester](https://tomo-deploy.com/api/testing/DockerPluginTester/)
 
 ## FAQ
 
