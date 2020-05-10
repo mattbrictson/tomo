@@ -12,8 +12,7 @@ Rake::TestTask.new("test:unit") do |t|
   t.libs << "test"
   t.libs << "lib"
   t.test_files = FileList["test/**/*_test.rb"] -
-                 FileList["test/**/*_e2e_test.rb"] -
-                 FileList["test/**/*_docker_test.rb"]
+                 FileList["test/**/*_e2e_test.rb"]
 end
 
 Rake::TestTask.new("test:e2e") do |t|
