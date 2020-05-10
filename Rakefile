@@ -4,7 +4,7 @@ require "rubocop/rake_task"
 
 task default: %i[test rubocop]
 desc "Run all tests"
-task test: %w[test:unit test:docker]
+task test: %w[test:unit]
 
 RuboCop::RakeTask.new
 
@@ -12,28 +12,13 @@ Rake::TestTask.new("test:unit") do |t|
   t.libs << "test"
   t.libs << "lib"
   t.test_files = FileList["test/**/*_test.rb"] -
-                 FileList["test/**/*_e2e_test.rb"] -
-                 FileList["test/**/*_docker_test.rb"]
+                 FileList["test/**/*_e2e_test.rb"]
 end
 
-if system("docker version > /dev/null")
-  Rake::TestTask.new("test:docker") do |t|
-    t.libs << "test"
-    t.libs << "lib"
-    t.test_files = FileList["test/**/*_docker_test.rb"]
-  end
-  Rake::TestTask.new("test:e2e") do |t|
-    t.libs << "test"
-    t.libs << "lib"
-    t.test_files = FileList["test/**/*_e2e_test.rb"]
-  end
-else
-  task "test:docker" do
-    warn "!!\n!! docker not available; docker tests will be skipped.\n!!"
-  end
-  task "test:e2e" do
-    warn "!!\n!! docker not available; e2e tests will be skipped.\n!!"
-  end
+Rake::TestTask.new("test:e2e") do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList["test/**/*_e2e_test.rb"]
 end
 
 task bump: %w[bump:bundler bump:ruby bump:year]

@@ -96,6 +96,23 @@ class Tomo::Plugin::Core::HelpersTest < Minitest::Test
     assert_equal("rm -rf /one/file /two/file", @tester.executed_script)
   end
 
+  def test_list_files
+    @tester.mock_script_result("ls -A1 /path/to/dir", stdout: <<~OUT)
+      .hidden
+      README.md
+      bar
+      foo
+    OUT
+    result = @tester.call_helper(:list_files, "/path/to/dir")
+    assert_equal("ls -A1 /path/to/dir", @tester.executed_script)
+    assert_equal(%w[.hidden README.md bar foo], result)
+  end
+
+  def test_list_files_with_no_arg
+    @tester.call_helper(:list_files)
+    assert_equal("ls -A1", @tester.executed_script)
+  end
+
   def test_command_available?
     result = @tester.call_helper(:command_available?, "ruby")
     assert_equal("which ruby", @tester.executed_script)

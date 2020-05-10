@@ -27,7 +27,6 @@ Ideas for new tomo features are appreciated!
 
 ### Working on code
 
-- You will need docker to run the full suite of tests (although this is not required)
 - Run `bundle install` to install dependencies
 - `bin/console` opens an irb console if you need a REPL to try things out
 - `bundle exec tomo` will run your working copy of tomo

@@ -22,12 +22,7 @@ module Tomo
       end
       @running_images = []
 
-      attr_accessor :setup_script
       attr_reader :host
-
-      def initialize
-        @setup_script = "#!/bin/bash\n"
-      end
 
       def build_and_run
         raise "Already running!" if frozen?
@@ -121,8 +116,6 @@ module Tomo
         FILES_TO_COPY.each do |file|
           FileUtils.cp(File.expand_path(file, __dir__), build_dir)
         end
-        IO.write(File.join(build_dir, "custom_setup.sh"), setup_script)
-        FileUtils.chmod(0o755, File.join(build_dir, "custom_setup.sh"))
       end
 
       def build_dir
