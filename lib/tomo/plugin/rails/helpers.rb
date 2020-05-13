@@ -7,7 +7,7 @@ module Tomo::Plugin::Rails
     end
 
     def rake(*args, **opts)
-      prepend("exec", "rails") do
+      prepend("exec", "rake") do
         bundle(*args, **opts)
       end
     end
