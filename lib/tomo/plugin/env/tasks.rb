@@ -82,7 +82,7 @@ module Tomo::Plugin::Env
 
     def prepend_entry(text, name, value)
       text.prepend("\n") unless text.start_with?("\n")
-      text.prepend("export #{name.to_s.shellescape}=#{value.shellescape}")
+      text.prepend("export #{name.to_s.shellescape}=#{value.to_s.shellescape}")
     end
 
     def contains_entry?(text, name)
