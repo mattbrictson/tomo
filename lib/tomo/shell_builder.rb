@@ -45,9 +45,7 @@ module Tomo
     end
 
     def build(*command, default_chdir: nil)
-      if @chdir.empty? && default_chdir
-        return chdir(default_chdir) { build(*command) }
-      end
+      return chdir(default_chdir) { build(*command) } if @chdir.empty? && default_chdir
 
       command_string = command_to_string(*command)
       modifiers = [cd_chdir, unset_env, export_env, set_umask].compact.flatten
@@ -97,11 +95,7 @@ module Tomo
     def set_umask
       return if @umask.nil?
 
-      umask_value = if @umask.is_a?(Integer)
-                      @umask.to_s(8).rjust(4, "0")
-                    else
-                      @umask
-                    end
+      umask_value = @umask.is_a?(Integer) ? @umask.to_s(8).rjust(4, "0") : @umask
       "umask #{umask_value.to_s.shellescape}"
     end
   end

@@ -3,16 +3,13 @@ module Tomo
     autoload :DSL, "tomo/configuration/dsl"
     autoload :Environment, "tomo/configuration/environment"
     autoload :Glob, "tomo/configuration/glob"
-    autoload :PluginFileNotFoundError,
-             "tomo/configuration/plugin_file_not_found_error"
+    autoload :PluginFileNotFoundError, "tomo/configuration/plugin_file_not_found_error"
     autoload :PluginsRegistry, "tomo/configuration/plugins_registry"
     autoload :ProjectNotFoundError, "tomo/configuration/project_not_found_error"
     autoload :RoleBasedTaskFilter, "tomo/configuration/role_based_task_filter"
-    autoload :UnknownEnvironmentError,
-             "tomo/configuration/unknown_environment_error"
+    autoload :UnknownEnvironmentError, "tomo/configuration/unknown_environment_error"
     autoload :UnknownPluginError, "tomo/configuration/unknown_plugin_error"
-    autoload :UnspecifiedEnvironmentError,
-             "tomo/configuration/unspecified_environment_error"
+    autoload :UnspecifiedEnvironmentError, "tomo/configuration/unspecified_environment_error"
 
     def self.from_config_rb(path=DEFAULT_CONFIG_PATH)
       ProjectNotFoundError.raise_with(path: path) unless File.file?(path)
@@ -27,8 +24,7 @@ module Tomo
       raise DSL::ErrorFormatter.decorate(e, path, config_rb&.lines)
     end
 
-    attr_accessor :environments, :deploy_tasks, :setup_tasks, :hosts, :plugins,
-                  :settings, :task_filter, :path
+    attr_accessor :environments, :deploy_tasks, :setup_tasks, :hosts, :plugins, :settings, :task_filter, :path
 
     def initialize
       @environments = {}
@@ -116,9 +112,7 @@ module Tomo
     end
 
     def raise_unknown_environment(environ)
-      UnknownEnvironmentError.raise_with(
-        name: environ, known_environments: environments.keys
-      )
+      UnknownEnvironmentError.raise_with(name: environ, known_environments: environments.keys)
     end
   end
 end

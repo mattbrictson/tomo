@@ -7,8 +7,7 @@ module Tomo
           self
         end
 
-        def host(address, port: 22, roles: [],
-                 log_prefix: nil, privileged_user: "root")
+        def host(address, port: 22, roles: [], log_prefix: nil, privileged_user: "root")
           @config.hosts << Host.parse(
             address,
             privileged_user: privileged_user,

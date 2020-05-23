@@ -77,10 +77,7 @@ module Tomo
       def build_plan(tasks, task_filter)
         tasks.each_with_object([]) do |task, result|
           steps = hosts.map do |host|
-            HostExecutionStep.new(
-              tasks: task, host: host,
-              task_filter: task_filter, task_runner: task_runner
-            )
+            HostExecutionStep.new(tasks: task, host: host, task_filter: task_filter, task_runner: task_runner)
           end
           steps.reject!(&:empty?)
           result << steps unless steps.empty?

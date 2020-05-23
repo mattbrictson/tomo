@@ -14,10 +14,7 @@ class Tomo::TaskAPITest < Minitest::Test
   def test_merge_template_with_path_relative_to_config
     config_path = File.expand_path("../../.tomo/config.rb", __dir__)
     rel_path = "../test/fixtures/template.erb"
-    subject = configure(
-      application: "test-app",
-      tomo_config_file_path: config_path
-    )
+    subject = configure(application: "test-app", tomo_config_file_path: config_path)
     merged = subject.send(:merge_template, rel_path)
     assert_equal("Hello, test-app!\n", merged)
   end

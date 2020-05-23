@@ -4,10 +4,7 @@ begin
   gem "concurrent-ruby", concurrent_ver
   require "concurrent"
 rescue LoadError => e
-  Tomo::Runtime::ConcurrentRubyLoadError.raise_with(
-    e.message,
-    version: concurrent_ver
-  )
+  Tomo::Runtime::ConcurrentRubyLoadError.raise_with(e.message, version: concurrent_ver)
 end
 
 module Tomo

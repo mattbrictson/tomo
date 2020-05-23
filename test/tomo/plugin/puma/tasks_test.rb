@@ -13,10 +13,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
   end
 
   def test_setup_systemd
-    @tester.mock_script_result(
-      "ls -A1 /var/lib/systemd/linger",
-      stdout: "testing\n"
-    )
+    @tester.mock_script_result("ls -A1 /var/lib/systemd/linger", stdout: "testing\n")
     expected_scripts = [
       "ls -A1 /var/lib/systemd/linger",
       "mkdir -p .config/systemd/user",
@@ -33,10 +30,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
   end
 
   def test_setup_systemd_dies_if_linger_is_disabled
-    @tester.mock_script_result(
-      "ls -A1 /var/lib/systemd/linger",
-      stdout: "some_other_user\n"
-    )
+    @tester.mock_script_result("ls -A1 /var/lib/systemd/linger", stdout: "some_other_user\n")
     error = assert_raises(Tomo::Runtime::TaskAbortedError) do
       @tester.run_task("puma:setup_systemd")
     end
@@ -45,26 +39,17 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
 
   def test_start
     @tester.run_task("puma:start")
-    assert_equal(
-      "systemctl --user start puma_test.socket puma_test.service",
-      @tester.executed_script
-    )
+    assert_equal("systemctl --user start puma_test.socket puma_test.service", @tester.executed_script)
   end
 
   def test_stop
     @tester.run_task("puma:stop")
-    assert_equal(
-      "systemctl --user stop puma_test.socket puma_test.service",
-      @tester.executed_script
-    )
+    assert_equal("systemctl --user stop puma_test.socket puma_test.service", @tester.executed_script)
   end
 
   def test_status
     @tester.run_task("puma:status")
-    assert_equal(
-      "systemctl --user status puma_test.socket puma_test.service",
-      @tester.executed_script
-    )
+    assert_equal("systemctl --user status puma_test.socket puma_test.service", @tester.executed_script)
   end
 
   def test_restart
@@ -79,10 +64,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
   end
 
   def test_check_active_shows_logs_and_dies_if_serivce_is_inactive
-    @tester.mock_script_result(
-      "systemctl --user is-active puma_test.service",
-      exit_status: 1
-    )
+    @tester.mock_script_result("systemctl --user is-active puma_test.service", exit_status: 1)
     error = assert_raises(Tomo::Runtime::TaskAbortedError) do
       @tester.run_task("puma:check_active")
     end

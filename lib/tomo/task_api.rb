@@ -9,11 +9,7 @@ module Tomo
     def_delegators :context, :paths, :settings
 
     def die(reason)
-      Runtime::TaskAbortedError.raise_with(
-        reason,
-        task: context.current_task,
-        host: remote.host
-      )
+      Runtime::TaskAbortedError.raise_with(reason, task: context.current_task, host: remote.host)
     end
 
     def dry_run?
@@ -26,13 +22,9 @@ module Tomo
 
     def merge_template(path)
       working_path = paths.tomo_config_file&.dirname
-      if working_path && path.start_with?(".")
-        path = File.expand_path(path, working_path)
-      end
+      path = File.expand_path(path, working_path) if working_path && path.start_with?(".")
 
-      unless File.file?(path)
-        Runtime::TemplateNotFoundError.raise_with(path: path)
-      end
+      Runtime::TemplateNotFoundError.raise_with(path: path) unless File.file?(path)
       template = IO.read(path)
       ERB.new(template).result(binding)
     end
@@ -49,10 +41,7 @@ module Tomo
       missing = names.flatten.select { |sett| settings[sett].nil? }
       return if missing.empty?
 
-      Runtime::SettingsRequiredError.raise_with(
-        settings: missing,
-        task: context.current_task
-      )
+      Runtime::SettingsRequiredError.raise_with(settings: missing, task: context.current_task)
     end
     alias require_settings require_setting
   end

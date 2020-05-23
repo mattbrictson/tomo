@@ -29,12 +29,7 @@ class Tomo::HostTest < Minitest::Test
   end
 
   def test_parse_with_options
-    host = Tomo::Host.parse(
-      "deployer@app.example.com",
-      port: 8022,
-      log_prefix: "one",
-      roles: %w[db web]
-    )
+    host = Tomo::Host.parse("deployer@app.example.com", port: 8022, log_prefix: "one", roles: %w[db web])
     assert_equal("app.example.com", host.address)
     assert_equal(8022, host.port)
     assert_equal("deployer", host.user)

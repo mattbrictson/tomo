@@ -20,8 +20,7 @@ module Tomo
         freeze
       end
 
-      # rubocop:disable Metrics/AbcSize
-      def build_args(host, script, control_path, verbose)
+      def build_args(host, script, control_path, verbose) # rubocop:disable Metrics/AbcSize
         args = [verbose ? "-v" : ["-o", "LogLevel=ERROR"]]
         args << "-A" if forward_agent
         args << connect_timeout_option
@@ -34,13 +33,11 @@ module Tomo
 
         [executable, args, script.to_s].flatten
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 
       attr_writer :executable
-      attr_accessor :connect_timeout, :extra_opts, :forward_agent,
-                    :reuse_connections, :strict_host_key_checking
+      attr_accessor :connect_timeout, :extra_opts, :forward_agent, :reuse_connections, :strict_host_key_checking
 
       def control_opts(path, verbose)
         opts = [

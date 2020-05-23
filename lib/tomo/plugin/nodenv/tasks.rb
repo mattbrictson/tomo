@@ -34,9 +34,7 @@ module Tomo::Plugin::Nodenv
       require_setting :nodenv_node_version
       node_version = settings[:nodenv_node_version]
 
-      unless node_installed?(node_version)
-        remote.run "nodenv install #{node_version.shellescape}"
-      end
+      remote.run "nodenv install #{node_version.shellescape}" unless node_installed?(node_version)
       remote.run "nodenv global #{node_version.shellescape}"
     end
 

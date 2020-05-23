@@ -18,10 +18,7 @@ module Tomo
     end
 
     def interactive?
-      input.respond_to?(:raw) &&
-        input.respond_to?(:tty?) &&
-        input.tty? &&
-        !ci?
+      input.respond_to?(:raw) && input.respond_to?(:tty?) && input.tty? && !ci?
     end
 
     def prompt(question)
@@ -66,10 +63,7 @@ module Tomo
     end
 
     def raise_non_interactive
-      NonInteractiveError.raise_with(
-        task: Runtime::Current.task,
-        ci_var: (env.keys & CI_VARS).first
-      )
+      NonInteractiveError.raise_with(task: Runtime::Current.task, ci_var: (env.keys & CI_VARS).first)
     end
   end
 end

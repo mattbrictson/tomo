@@ -2,11 +2,7 @@ module Tomo
   class Script
     attr_reader :script
 
-    def initialize(script,
-                   echo: true,
-                   pty: false,
-                   raise_on_error: true,
-                   silent: false)
+    def initialize(script, echo: true, pty: false, raise_on_error: true, silent: false)
       @script = script
       @echo = echo
       @pty = pty

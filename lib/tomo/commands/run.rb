@@ -3,9 +3,7 @@ module Tomo
     class Run < CLI::Command
       include CLI::DeployOptions
 
-      option :privileged,
-             "--[no-]privileged",
-             "Run the task using a privileged user (e.g. root)"
+      option :privileged, "--[no-]privileged", "Run the task using a privileged user (e.g. root)"
 
       include CLI::ProjectOptions
       include CLI::CommonOptions

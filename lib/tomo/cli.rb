@@ -55,8 +55,7 @@ module Tomo
       argv << "" if argv.shift == "--complete"
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def lookup_command(argv)
+    def lookup_command(argv) # rubocop:disable Metrics/CyclomaticComplexity
       command_name = argv.first unless Completions.active? && argv.length == 1
       command_name = Abbrev.abbrev(COMMANDS.keys)[command_name]
       argv.shift if command_name
@@ -65,7 +64,6 @@ module Tomo
       command = COMMANDS[command_name] || Tomo::Commands::Default
       [command, command_name]
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
 
     def task_format?(arg)
       arg.to_s.match?(/\A\S+:\S*\z/)

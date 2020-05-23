@@ -30,17 +30,12 @@ module Tomo
       end
 
       def result
-        Result.new(
-          exit_status: exit_status,
-          stdout: stdout_buffer.string,
-          stderr: stderr_buffer.string
-        )
+        Result.new(exit_status: exit_status, stdout: stdout_buffer.string, stderr: stderr_buffer.string)
       end
 
       private
 
-      attr_reader :command, :exit_status, :on_data,
-                  :stdout_buffer, :stderr_buffer
+      attr_reader :command, :exit_status, :on_data, :stdout_buffer, :stderr_buffer
 
       def start_io_thread(source, buffer)
         new_thread_inheriting_current_vars do

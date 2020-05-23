@@ -12,8 +12,7 @@ module Tomo
       extend Forwardable
       include Colors
 
-      def initialize(question, options, key_reader: KeyReader.new,
-                     output: $stdout)
+      def initialize(question, options, key_reader: KeyReader.new, output: $stdout)
         @question = question
         @options = options
         @position = 0

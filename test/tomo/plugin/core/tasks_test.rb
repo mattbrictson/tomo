@@ -11,9 +11,7 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
   def test_setup_directories
     @tester.run_task("core:setup_directories")
     assert_equal(
-      "mkdir -p /var/www/testing "\
-               "/var/www/testing/releases "\
-               "/var/www/testing/shared",
+      "mkdir -p /var/www/testing /var/www/testing/releases /var/www/testing/shared",
       @tester.executed_script
     )
   end
@@ -29,10 +27,8 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     @tester.run_task("core:symlink_shared")
     assert_equal(
       [
-        "mkdir -p /var/www/testing/shared/config "\
-                 "/var/www/testing/current/config",
-        "ln -sfn /var/www/testing/shared/config/database.yml "\
-                "/var/www/testing/current/config/database.yml",
+        "mkdir -p /var/www/testing/shared/config /var/www/testing/current/config",
+        "ln -sfn /var/www/testing/shared/config/database.yml /var/www/testing/current/config/database.yml",
         "ln -sfn /var/www/testing/shared/.env /var/www/testing/current/.env"
       ],
       @tester.executed_scripts
@@ -48,10 +44,8 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
                  "/var/www/testing/shared/public/assets " \
                  "/var/www/testing/current/public",
         "cd /var/www/testing/current && rm -rf .bundle public/assets",
-        "ln -sf /var/www/testing/shared/.bundle "\
-               "/var/www/testing/current/.bundle",
-        "ln -sf /var/www/testing/shared/public/assets "\
-               "/var/www/testing/current/public/assets"
+        "ln -sf /var/www/testing/shared/.bundle /var/www/testing/current/.bundle",
+        "ln -sf /var/www/testing/shared/public/assets /var/www/testing/current/public/assets"
       ],
       @tester.executed_scripts
     )
@@ -165,10 +159,7 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
         "revision": "65eda21"
       }
     JSON
-    assert_equal(
-      "echo -n #{expected.shellescape} > /app/release.json",
-      @tester.executed_script
-    )
+    assert_equal("echo -n #{expected.shellescape} > /app/release.json", @tester.executed_script)
   end
 
   def test_log_revision
@@ -186,10 +177,7 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     )
     @tester.run_task("core:log_revision")
     expected = "#{now} - 65eda21 (master) deployed by matt\n"
-    assert_equal(
-      "echo -n #{expected.shellescape} >> /app/revision.log",
-      @tester.executed_script
-    )
+    assert_equal("echo -n #{expected.shellescape} >> /app/revision.log", @tester.executed_script)
   end
 
   private

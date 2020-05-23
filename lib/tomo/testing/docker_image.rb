@@ -74,14 +74,8 @@ module Tomo
       end
 
       def set_up_private_key
-        @private_key_path = File.join(
-          Dir.tmpdir,
-          "tomo_test_ed25519_#{SecureRandom.hex(8)}"
-        )
-        FileUtils.cp(
-          File.expand_path("tomo_test_ed25519", __dir__),
-          private_key_path
-        )
+        @private_key_path = File.join(Dir.tmpdir, "tomo_test_ed25519_#{SecureRandom.hex(8)}")
+        FileUtils.cp(File.expand_path("tomo_test_ed25519", __dir__), private_key_path)
         FileUtils.chmod(0o600, private_key_path)
       end
 

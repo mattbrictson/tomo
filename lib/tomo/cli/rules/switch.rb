@@ -1,10 +1,6 @@
 class Tomo::CLI::Rules
   class Switch
-    def initialize(key,
-                   *switches,
-                   required: false,
-                   callback_proc:,
-                   &convert_proc)
+    def initialize(key, *switches, required: false, callback_proc:, &convert_proc)
       @key = key
       @switches = switches
       @callback_proc = callback_proc

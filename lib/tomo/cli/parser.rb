@@ -46,12 +46,7 @@ module Tomo
       attr_reader :rules, :usage, :after_parse_methods
 
       def evaluate(argv, state, literal:)
-        RulesEvaluator.evaluate(
-          rules: rules.to_a,
-          argv: argv,
-          state: state,
-          literal: literal
-        )
+        RulesEvaluator.evaluate(rules: rules.to_a, argv: argv, state: state, literal: literal)
       end
 
       def check_required_rules(state)

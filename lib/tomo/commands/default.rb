@@ -42,9 +42,7 @@ module Tomo
         # do anything, so if we got this far, something has gone wrong.
 
         if options.any?
-          raise CLI::Error,
-                "Options must be specified after the command: " +
-                yellow("tomo #{args.first} [options]")
+          raise CLI::Error, "Options must be specified after the command: " + yellow("tomo #{args.first} [options]")
         end
 
         raise_unrecognized_command(args.first)

@@ -36,10 +36,7 @@ module Tomo
       end
 
       def suggestions
-        @_suggestions ||= Error::Suggestions.new(
-          dictionary: known_environments,
-          word: name
-        )
+        @_suggestions ||= Error::Suggestions.new(dictionary: known_environments, word: name)
       end
     end
   end

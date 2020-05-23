@@ -6,12 +6,7 @@ module Tomo
   module SSH
     class Connection
       def self.dry_run(host, options)
-        new(
-          host,
-          options,
-          exec_proc: proc { CLI.exit },
-          child_proc: proc { Result.empty_success }
-        )
+        new(host, options, exec_proc: proc { CLI.exit }, child_proc: proc { Result.empty_success })
       end
 
       attr_reader :host
@@ -38,9 +33,7 @@ module Tomo
         result = child_proc.call(*ssh_args, on_data: handle_data)
         logger.script_end(script, result)
 
-        if result.failure? && script.raise_on_error?
-          raise_run_error(script, ssh_args, result)
-        end
+        raise_run_error(script, ssh_args, result) if result.failure? && script.raise_on_error?
 
         result
       end
@@ -69,13 +62,7 @@ module Tomo
       end
 
       def raise_run_error(script, ssh_args, result)
-        ScriptError.raise_with(
-          result.output,
-          host: host,
-          result: result,
-          script: script,
-          ssh_args: ssh_args
-        )
+        ScriptError.raise_with(result.output, host: host, result: result, script: script, ssh_args: ssh_args)
       end
     end
   end

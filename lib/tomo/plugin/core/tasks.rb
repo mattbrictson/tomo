@@ -34,8 +34,7 @@ module Tomo::Plugin::Core
       remote.run "mv", "-fT", tmp_link, paths.current
     end
 
-    # rubocop:disable Metrics/AbcSize
-    def clean_releases
+    def clean_releases # rubocop:disable Metrics/AbcSize
       desired_count = settings[:keep_releases].to_i
       return if desired_count < 1
 
@@ -49,15 +48,13 @@ module Tomo::Plugin::Core
         remote.rm_rf(*releases.take(releases.length - desired_count))
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def write_release_json
       json = JSON.pretty_generate(remote.release)
       remote.write(text: "#{json}\n", to: paths.release_json)
     end
 
-    # rubocop:disable Metrics/AbcSize
-    def log_revision
+    def log_revision # rubocop:disable Metrics/AbcSize
       ref = remote.release[:ref]
       revision = remote.release[:revision]
 
@@ -69,7 +66,6 @@ module Tomo::Plugin::Core
 
       remote.write(text: message, to: paths.revision_log, append: true)
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 
@@ -123,12 +119,7 @@ module Tomo::Plugin::Core
     end
 
     def read_current_release
-      result = remote.run(
-        "readlink",
-        paths.current,
-        raise_on_error: false,
-        silent: true
-      )
+      result = remote.run("readlink", paths.current, raise_on_error: false, silent: true)
       return nil if result.failure?
 
       result.stdout.strip[%r{/(#{RELEASE_REGEXP})$}, 1]

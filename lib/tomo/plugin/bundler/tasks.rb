@@ -30,12 +30,7 @@ module Tomo::Plugin::Bundler
 
     def upgrade_bundler
       needed_bundler_ver = version_setting || extract_bundler_ver_from_lockfile
-
-      remote.run(
-        "gem", "install", "bundler",
-        "--conservative", "--no-document",
-        "-v", needed_bundler_ver
-      )
+      remote.run("gem", "install", "bundler", "--conservative", "--no-document", "-v", needed_bundler_ver)
     end
 
     private

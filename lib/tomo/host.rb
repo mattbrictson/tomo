@@ -13,8 +13,7 @@ module Tomo
       new(**{ user: user, address: address }.merge(kwargs))
     end
 
-    def initialize(address:, port: nil, log_prefix: nil, roles: nil,
-                   user: nil, privileged_user: "root")
+    def initialize(address:, port: nil, log_prefix: nil, roles: nil, user: nil, privileged_user: "root")
       @user = user.freeze
       @port = (port || 22).to_i.freeze
       @address = address.freeze

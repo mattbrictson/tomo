@@ -51,8 +51,7 @@ class Tomo::CLI::Rules
     end
 
     def raise_missing_value(switch)
-      raise Tomo::CLI::Error,
-            "Please specify a value for the #{yellow(switch)} option."
+      raise Tomo::CLI::Error, "Please specify a value for the #{yellow(switch)} option."
     end
   end
 end
