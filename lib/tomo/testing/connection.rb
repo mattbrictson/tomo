@@ -2,12 +2,7 @@ module Tomo
   module Testing
     class Connection < Tomo::SSH::Connection
       def initialize(host, options)
-        super(
-          host,
-          options,
-          exec_proc: proc { raise MockedExecError },
-          child_proc: method(:mock_child_process)
-        )
+        super(host, options, exec_proc: proc { raise MockedExecError }, child_proc: method(:mock_child_process))
       end
 
       def ssh_exec(script)

@@ -65,10 +65,7 @@ module Tomo::Plugin::Env
     end
 
     def read_existing
-      remote.capture(
-        "cat", paths.env,
-        raise_on_error: false, echo: false, silent: true
-      )
+      remote.capture("cat", paths.env, raise_on_error: false, echo: false, silent: true)
     end
 
     def replace_entry(text, name, value)

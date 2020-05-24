@@ -41,11 +41,7 @@ module Tomo
       def complete_if_needed(matched_rules, *matched_args)
         return unless Completions.active?
 
-        completions.print_completions_and_exit(
-          matched_rules,
-          *matched_args,
-          state: state
-        )
+        completions.print_completions_and_exit(matched_rules, *matched_args, state: state)
       end
 
       def remaining_rules
@@ -56,15 +52,9 @@ module Tomo
 
       def raise_unrecognized_args
         problem_arg = argv.first
-        type = if literal || !problem_arg.start_with?("-")
-                 "arg"
-               else
-                 "option"
-               end
+        type = literal || !problem_arg.start_with?("-") ? "arg" : "option"
 
-        raise CLI::Error,
-              "#{Colors.yellow(problem_arg)} is not a recognized #{type} "\
-              "for this tomo command."
+        raise CLI::Error, "#{Colors.yellow(problem_arg)} is not a recognized #{type} for this tomo command."
       end
     end
   end

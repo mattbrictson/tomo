@@ -19,11 +19,7 @@ module Tomo
       def validate_task!(name)
         return if tasks_by_name.key?(name)
 
-        UnknownTaskError.raise_with(
-          name,
-          unknown_task: name,
-          known_tasks: tasks_by_name.keys
-        )
+        UnknownTaskError.raise_with(name, unknown_task: name, known_tasks: tasks_by_name.keys)
       end
 
       def run(task:, remote:)

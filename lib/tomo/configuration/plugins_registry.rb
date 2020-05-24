@@ -1,8 +1,7 @@
 module Tomo
   class Configuration
     class PluginsRegistry
-      autoload :FileResolver,
-               "tomo/configuration/plugins_registry/file_resolver"
+      autoload :FileResolver, "tomo/configuration/plugins_registry/file_resolver"
       autoload :GemResolver, "tomo/configuration/plugins_registry/gem_resolver"
 
       attr_reader :helper_modules, :settings

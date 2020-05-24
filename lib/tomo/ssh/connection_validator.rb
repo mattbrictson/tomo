@@ -27,10 +27,7 @@ module Tomo
       end
 
       def assert_valid_connection!
-        script = Script.new(
-          "echo hi",
-          silent: !Tomo.debug?, echo: false, raise_on_error: false
-        )
+        script = Script.new("echo hi", silent: !Tomo.debug?, echo: false, raise_on_error: false)
         res = connection.ssh_subprocess(script, verbose: Tomo.debug?)
         raise_connection_failure(res) if res.exit_status == 255
         raise_unknown_error(res) if res.failure? || res.stdout.chomp != "hi"

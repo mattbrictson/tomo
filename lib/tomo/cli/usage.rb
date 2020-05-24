@@ -18,9 +18,7 @@ module Tomo
       end
 
       def to_s
-        indent([
-          "", banner_proc.call, "Options:", "", indent(options_help), "\n"
-        ].join("\n"))
+        indent(["", banner_proc.call, "Options:", "", indent(options_help), "\n"].join("\n"))
       end
 
       private

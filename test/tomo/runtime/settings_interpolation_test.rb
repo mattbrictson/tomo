@@ -33,11 +33,7 @@ class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
         current_path: "%{deploy_to}/current"
       )
     end
-    assert_match(
-      "Circular dependency detected in settings: "\
-      "deploy_to -> current_path -> deploy_to",
-      exception.message
-    )
+    assert_match("Circular dependency detected in settings: deploy_to -> current_path -> deploy_to", exception.message)
   end
 
   def test_no_longer_supports_old_syntax
@@ -45,10 +41,7 @@ class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
       application: "default",
       deploy_to: "/var/www/%<application>"
     )
-    assert_equal(
-      { application: "default", deploy_to: "/var/www/%<application>" },
-      interpolated
-    )
+    assert_equal({ application: "default", deploy_to: "/var/www/%<application>" }, interpolated)
   end
 
   private

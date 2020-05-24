@@ -3,7 +3,6 @@ require "time"
 
 module Tomo::Plugin::Git
   class Tasks < Tomo::TaskLibrary
-    # rubocop:disable Metrics/AbcSize
     def clone
       require_setting :git_url
 
@@ -15,7 +14,7 @@ module Tomo::Plugin::Git
       end
     end
 
-    def create_release
+    def create_release # rubocop:disable Metrics/AbcSize
       remote.chdir(paths.git_repo) do
         remote.git("remote update --prune")
       end
@@ -31,7 +30,6 @@ module Tomo::Plugin::Git
         )
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 
@@ -64,19 +62,13 @@ module Tomo::Plugin::Git
       exclusions = settings[:git_exclusions] || []
       attributes = exclusions.map { |excl| "#{excl} export-ignore" }.join("\n")
 
-      remote.write(
-        text: attributes,
-        to: paths.git_repo.join("info/attributes")
-      )
+      remote.write(text: attributes, to: paths.git_repo.join("info/attributes"))
     end
 
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
-    def store_release_info
+    def store_release_info # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       log = remote.chdir(paths.git_repo) do
         remote.git(
-          'log -n1 --date=iso --pretty=format:"%H/%cd/%ae" '\
-          "#{ref.shellescape} --",
+          %Q(log -n1 --date=iso --pretty=format:"%H/%cd/%ae" #{ref.shellescape} --),
           silent: true
         ).stdout.strip
       end
@@ -90,7 +82,5 @@ module Tomo::Plugin::Git
       remote.release[:deploy_date] = Time.now.to_s
       remote.release[:deploy_user] = settings.fetch(:local_user)
     end
-    # rubocop:enable Metrics/MethodLength
-    # rubocop:enable Metrics/AbcSize
   end
 end

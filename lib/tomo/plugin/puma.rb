@@ -5,8 +5,6 @@ module Tomo::Plugin
     extend Tomo::PluginDSL
 
     tasks Tomo::Plugin::Puma::Tasks
-
-    # rubocop:disable Layout/LineLength
     defaults puma_check_timeout: 15,
              puma_host: "0.0.0.0",
              puma_port: "3000",
@@ -16,6 +14,5 @@ module Tomo::Plugin
              puma_systemd_socket_path: ".config/systemd/user/%{puma_systemd_socket}",
              puma_systemd_service_template_path: File.expand_path("puma/systemd/service.erb", __dir__),
              puma_systemd_socket_template_path: File.expand_path("puma/systemd/socket.erb", __dir__)
-    # rubocop:enable Layout/LineLength
   end
 end

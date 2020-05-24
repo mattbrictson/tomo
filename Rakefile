@@ -11,8 +11,7 @@ RuboCop::RakeTask.new
 Rake::TestTask.new("test:unit") do |t|
   t.libs << "test"
   t.libs << "lib"
-  t.test_files = FileList["test/**/*_test.rb"] -
-                 FileList["test/**/*_e2e_test.rb"]
+  t.test_files = FileList["test/**/*_test.rb"] - FileList["test/**/*_e2e_test.rb"]
 end
 
 Rake::TestTask.new("test:e2e") do |t|
@@ -44,12 +43,9 @@ namespace :bump do
 
     replace_in_file "tomo.gemspec", /ruby_version = ">= (.*)"/ => lowest
     replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest_minor
-    replace_in_file ".circleci/config.yml",
-                    %r{circleci/ruby:([\d\.]+)} => latest
-    replace_in_file ".circleci/Dockerfile",
-                    %r{circleci/ruby:([\d\.]+)} => latest
-    replace_in_file "docs/comparisons.md",
-                    /ruby version\s*\|\s*([\d\.]+)/i => lowest_minor
+    replace_in_file ".circleci/config.yml", %r{circleci/ruby:([\d\.]+)} => latest
+    replace_in_file ".circleci/Dockerfile", %r{circleci/ruby:([\d\.]+)} => latest
+    replace_in_file "docs/comparisons.md", /ruby version\s*\|\s*([\d\.]+)/i => lowest_minor
 
     travis = YAML.safe_load(open(".travis.yml"))
     travis["rvm"] = RubyVersions.latest_supported_patches + ["ruby-head"]
@@ -100,9 +96,7 @@ module RubyVersions
 
     def versions
       @_versions ||= begin
-        yaml = URI.open(
-          "https://raw.githubusercontent.com/ruby/www.ruby-lang.org/master/_data/downloads.yml"
-        )
+        yaml = URI.open("https://raw.githubusercontent.com/ruby/www.ruby-lang.org/master/_data/downloads.yml")
         YAML.safe_load(yaml, symbolize_names: true)
       end
     end

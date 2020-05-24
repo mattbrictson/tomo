@@ -2,8 +2,7 @@ module Tomo::Plugin::Puma
   class Tasks < Tomo::TaskLibrary
     SystemdUnit = Struct.new(:name, :template, :path)
 
-    # rubocop:disable Metrics/AbcSize
-    def setup_systemd
+    def setup_systemd # rubocop:disable Metrics/AbcSize
       linger_must_be_enabled!
 
       setup_directories
@@ -13,7 +12,6 @@ module Tomo::Plugin::Puma
       remote.run "systemctl --user daemon-reload"
       remote.run "systemctl", "--user", "enable", service.name, socket.name
     end
-    # rubocop:enable Metrics/AbcSize
 
     %i[start stop status].each do |action|
       define_method(action) do
@@ -37,9 +35,7 @@ module Tomo::Plugin::Puma
     end
 
     def log
-      remote.attach "journalctl", "-q",
-                    raw("--user-unit=#{service.name.shellescape}"),
-                    *settings[:run_args]
+      remote.attach "journalctl", "-q", raw("--user-unit=#{service.name.shellescape}"), *settings[:run_args]
     end
 
     private
@@ -102,22 +98,17 @@ module Tomo::Plugin::Puma
     end
 
     def assert_active!
-      return true if remote.run? "systemctl", "--user", "is-active",
-                                 service.name,
-                                 silent: true, raise_on_error: false
+      return true if remote.run? "systemctl", "--user", "is-active", service.name, silent: true, raise_on_error: false
 
-      remote.run "systemctl", "--user", "status", service.name,
-                 raise_on_error: false
-      remote.run "journalctl -q -n 50 --user-unit=#{service.name.shellescape}",
-                 raise_on_error: false
+      remote.run "systemctl", "--user", "status", service.name, raise_on_error: false
+      remote.run "journalctl -q -n 50 --user-unit=#{service.name.shellescape}", raise_on_error: false
 
       die "puma failed to start (see previous systemctl and journalctl output)"
     end
 
     def listening?
       test_url = "http://localhost:#{port}"
-      remote.run? "curl -sS --connect-timeout 1 --max-time 10 #{test_url}"\
-                  " > /dev/null"
+      remote.run? "curl -sS --connect-timeout 1 --max-time 10 #{test_url} > /dev/null"
     end
   end
 end

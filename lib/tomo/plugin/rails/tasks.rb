@@ -40,11 +40,9 @@ module Tomo::Plugin::Rails
 
     def db_structure_load
       if !structure_sql_present?
-        logger.warn "db/structure.sql is not present; "\
-                    "skipping db:structure:load."
+        logger.warn "db/structure.sql is not present; skipping db:structure:load."
       elsif database_schema_loaded?
-        logger.info "Database structure already loaded; "\
-                    "skipping db:structure:load."
+        logger.info "Database structure already loaded; skipping db:structure:load."
       else
         remote.rake("db:structure:load")
       end

@@ -75,19 +75,13 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
          2.0.2
     OUT
     tester.run_task("bundler:upgrade_bundler")
-    assert_equal(
-      "gem install bundler --conservative --no-document -v 2.0.2",
-      tester.executed_scripts.last
-    )
+    assert_equal("gem install bundler --conservative --no-document -v 2.0.2", tester.executed_scripts.last)
   end
 
   def test_upgrade_bundler_uses_setting_for_version
     tester = configure(bundler_version: "2.0.1")
     tester.run_task("bundler:upgrade_bundler")
-    assert_equal(
-      "gem install bundler --conservative --no-document -v 2.0.1",
-      tester.executed_script
-    )
+    assert_equal("gem install bundler --conservative --no-document -v 2.0.1", tester.executed_script)
   end
 
   def test_upgrade_bundler_dies_if_lock_file_is_absent_and_no_version_specified

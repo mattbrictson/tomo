@@ -3,8 +3,7 @@ require "time"
 module Tomo
   class Runtime
     autoload :ConcurrentRubyLoadError, "tomo/runtime/concurrent_ruby_load_error"
-    autoload :ConcurrentRubyThreadPool,
-             "tomo/runtime/concurrent_ruby_thread_pool"
+    autoload :ConcurrentRubyThreadPool, "tomo/runtime/concurrent_ruby_thread_pool"
     autoload :Context, "tomo/runtime/context"
     autoload :Current, "tomo/runtime/current"
     autoload :ExecutionPlan, "tomo/runtime/execution_plan"
@@ -28,8 +27,7 @@ module Tomo
 
     attr_reader :tasks
 
-    def initialize(deploy_tasks:, setup_tasks:, hosts:, task_filter:,
-                   settings:, plugins_registry:)
+    def initialize(deploy_tasks:, setup_tasks:, hosts:, task_filter:, settings:, plugins_registry:)
       @deploy_tasks = deploy_tasks.freeze
       @setup_tasks = setup_tasks.freeze
       @hosts = hosts.freeze
@@ -68,8 +66,7 @@ module Tomo
 
     private
 
-    attr_reader :deploy_tasks, :setup_tasks, :hosts, :task_filter, :settings,
-                :plugins_registry
+    attr_reader :deploy_tasks, :setup_tasks, :hosts, :task_filter, :settings, :plugins_registry
 
     def new_task_runner(release_type, args)
       run_settings = { release_path: release_path_for(release_type) }

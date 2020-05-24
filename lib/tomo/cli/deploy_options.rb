@@ -1,8 +1,7 @@
 module Tomo
   class CLI
     module DeployOptions
-      # rubocop:disable Metrics/MethodLength
-      def self.included(mod)
+      def self.included(mod) # rubocop:disable Metrics/MethodLength
         mod.class_eval do
           option :environment,
                  "-e, --environment ENVIRONMENT",
@@ -23,7 +22,6 @@ module Tomo
           after_parse :prompt_for_environment
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 
@@ -49,10 +47,7 @@ module Tomo
         return if envs.empty?
         return unless Console.interactive?
 
-        options[:environment] = Console.menu(
-          "Choose an environment:",
-          choices: envs
-        )
+        options[:environment] = Console.menu("Choose an environment:", choices: envs)
       end
     end
   end

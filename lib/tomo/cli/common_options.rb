@@ -1,22 +1,15 @@
 module Tomo
   class CLI
     module CommonOptions
-      # rubocop:disable Metrics/MethodLength
-      def self.included(mod)
+      def self.included(mod) # rubocop:disable Metrics/MethodLength
         mod.class_eval do
-          option :color,
-                 "--[no-]color",
-                 "Enable/disable color output" do |color|
+          option :color, "--[no-]color", "Enable/disable color output" do |color|
             Colors.enabled = color
           end
-          option :debug,
-                 "--[no-]debug",
-                 "Enable/disable verbose debug logging" do |debug|
+          option :debug, "--[no-]debug", "Enable/disable verbose debug logging" do |debug|
             Tomo.debug = debug
           end
-          option :trace,
-                 "--[no-]trace",
-                 "Display full backtrace on error" do |trace|
+          option :trace, "--[no-]trace", "Display full backtrace on error" do |trace|
             CLI.show_backtrace = trace
           end
           option :help, "-h, --help", "Print this documentation" do |_help|
@@ -27,7 +20,6 @@ module Tomo
           after_parse :dump_runtime_info
         end
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 

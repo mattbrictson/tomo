@@ -17,10 +17,7 @@ module Tomo
       private
 
       def spelling_suggestion
-        sugg = Error::Suggestions.new(
-          dictionary: known_tasks,
-          word: unknown_task
-        )
+        sugg = Error::Suggestions.new(dictionary: known_tasks, word: unknown_task)
         sugg.to_console if sugg.any?
       end
 

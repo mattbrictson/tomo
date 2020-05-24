@@ -1,6 +1,4 @@
-unless defined?(Tomo::Testing)
-  raise "The testing plugin cannot be used outside of unit tests"
-end
+raise "The testing plugin cannot be used outside of unit tests" unless defined?(Tomo::Testing)
 
 module Tomo::Plugin
   class Testing < Tomo::TaskLibrary

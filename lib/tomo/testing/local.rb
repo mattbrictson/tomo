@@ -41,9 +41,7 @@ module Tomo
           progress(command_str) do
             output, status = Open3.capture2e(*command)
 
-            if raise_on_error && !status.success?
-              raise "Command failed: #{command_str}\n#{output}"
-            end
+            raise "Command failed: #{command_str}\n#{output}" if raise_on_error && !status.success?
 
             output
           end
