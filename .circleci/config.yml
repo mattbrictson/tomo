@@ -9,10 +9,21 @@ executors:
 
 commands:
   bundle_install:
-    description: Install Ruby dependencies
+    description: Install Ruby dependencies with Bundler
     steps:
-      - run: gem install bundler -v 2.1.4
-      - run: bundle install --jobs=4 --retry=3
+      - restore_cache:
+          keys:
+            - bundle-v1-{{ arch }}
+      - run:
+          name: Install Ruby Dependencies
+          command: |
+            gem install bundler -v 2.1.4 --conservative --no-document
+            bundle config --local path vendor/bundle
+            bundle check || (bundle install --jobs=4 --retry=3 && bundle clean)
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: bundle-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
   pip_install:
     description: Install Python dependencies
     steps:
