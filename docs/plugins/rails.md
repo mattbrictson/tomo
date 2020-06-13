@@ -32,6 +32,20 @@ Will run this remote script:
 cd /var/www/my-app/current && bundle exec rails console --sandbox
 ```
 
+### rails:db_console
+
+Starts an interactive database console (e.g. psql) for the primary Rails database via SSH to the remote host. This task is intended for use as a [run](../commands/run.md) task. The `include-password` option is passed automatically.
+
+```
+$ tomo run rails:db_console
+```
+
+Will run this remote script:
+
+```
+cd /var/www/my-app/current && bundle exec rails dbconsole --include-password
+```
+
 ### rails:db_migrate
 
 Migrates the database by running:
