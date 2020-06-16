@@ -7,7 +7,7 @@ module Tomo::Plugin
 
     helpers Tomo::Plugin::Git::Helpers
     tasks Tomo::Plugin::Git::Tasks
-    defaults git_branch:     "master",
+    defaults git_branch:     nil,
              git_repo_path:  "%{deploy_to}/git_repo",
              git_exclusions: [],
              git_env:        { GIT_SSH_COMMAND: "ssh -o PasswordAuthentication=no -o StrictHostKeyChecking=no" },

@@ -75,7 +75,7 @@ Writes a JSON file to the location specified by the `:release_json_path` setting
 
 ```json
 {
-  "branch": "master",
+  "branch": "main",
   "author": "matt@example.com",
   "revision": "0d1cb3212e2f9c43aa49fb172d8d9c726163cecf",
   "revision_date": "2019-06-01 17:23:48 -0700",
@@ -89,7 +89,7 @@ Writes a JSON file to the location specified by the `:release_json_path` setting
 Appends a message to a log file specified by the `:revision_log_path` setting. The message contains information about the release. Here is an example entry:
 
 ```
-2019-06-05 19:00:26 -0700 - 0d1cb3212e2f9c43aa49fb172d8d9c726163cecf (master) deployed by mbrictson
+2019-06-05 19:00:26 -0700 - 0d1cb3212e2f9c43aa49fb172d8d9c726163cecf (main) deployed by mbrictson
 ```
 
 ## Helpers

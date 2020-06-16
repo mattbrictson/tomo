@@ -67,10 +67,10 @@ Warning: Permanently added 'github.com,192.30.255.113' (RSA) to the list of know
 • git:create_release
 cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git remote update --prune
 Fetching origin
-cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git log -n1 --date=iso --pretty=format:"%H/%cd/%ae" master --
+cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git log -n1 --date=iso --pretty=format:"%H/%cd/%ae" main --
 Writing 60 bytes to /var/www/rails-new/git_repo/info/attributes
 mkdir -p /tmp/tomo/20191019200138
-cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git archive master | tar -x -f - -C /tmp/tomo/20191019200138
+cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git archive main | tar -x -f - -C /tmp/tomo/20191019200138
 • core:symlink_shared
 mkdir -p /var/www/rails-new/shared/log /var/www/rails-new/shared/node_modules /var/www/rails-new/shared/public/assets /var/www/rails-new/shared/tmp/cache /var/www/rails-new/shared/tmp/pids /var/www/rails-new/shared/tmp/sockets /tmp/tomo/20191019200138/public /tmp/tomo/20191019200138/tmp
 cd /tmp/tomo/20191019200138 && rm -rf log node_modules public/assets tmp/cache tmp/pids tmp/sockets
