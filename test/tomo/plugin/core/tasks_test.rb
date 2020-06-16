@@ -144,7 +144,7 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
         release_json_path: "/app/release.json"
       },
       release: {
-        ref: "master",
+        ref: "main",
         deploy_date: now,
         deploy_user: "matt",
         revision: "65eda21"
@@ -153,7 +153,7 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     @tester.run_task("core:write_release_json")
     expected = <<~JSON
       {
-        "ref": "master",
+        "ref": "main",
         "deploy_date": #{now.to_s.inspect},
         "deploy_user": "matt",
         "revision": "65eda21"
@@ -169,14 +169,14 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
         revision_log_path: "/app/revision.log"
       },
       release: {
-        ref: "master",
+        ref: "main",
         deploy_date: now,
         deploy_user: "matt",
         revision: "65eda21"
       }
     )
     @tester.run_task("core:log_revision")
-    expected = "#{now} - 65eda21 (master) deployed by matt\n"
+    expected = "#{now} - 65eda21 (main) deployed by matt\n"
     assert_equal("echo -n #{expected.shellescape} >> /app/revision.log", @tester.executed_script)
   end
 

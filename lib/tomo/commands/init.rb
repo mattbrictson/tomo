@@ -70,6 +70,14 @@ module Tomo
         nil
       end
 
+      def git_branch
+        return unless File.file?(".git/config")
+
+        `git rev-parse --abbrev-ref HEAD`.chomp
+      rescue SystemCallError
+        nil
+      end
+
       def node_version
         `node --version`.chomp.sub(/^v/i, "")
       rescue SystemCallError

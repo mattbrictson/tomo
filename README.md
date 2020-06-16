@@ -64,7 +64,7 @@ host "user@hostname.or.ip.address"
 set application: "my-rails-app"
 set deploy_to: "/var/www/%{application}"
 set git_url: "git@github.com:my-username/my-rails-app.git"
-set git_branch: "master"
+set git_branch: "main"
 # ...
 
 setup do
