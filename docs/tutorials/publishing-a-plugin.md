@@ -275,7 +275,7 @@ Run `bundle install` and now your plugin will be available via `bundle exec tomo
 
 ## Write a good README
 
-The tomo-plugin template will create a basic README but it is up to you to fill in the details. In particular users will be interested to know what tasks your plugin provides and how to configure it. Make sure to fill in the Settings and Tasks sections of the README. In the case of our hypothetical cron plugin, we'd want to specify installation instructions as well, to explain that the `cron:install` task should be listed part of the `setup` tasks. Check out [tomo-plugin-sidekiq](https://github.com/mattbrictson/tomo-plugin-sidekiq/blob/master/README.md) for an example README.
+The tomo-plugin template will create a basic README but it is up to you to fill in the details. In particular users will be interested to know what tasks your plugin provides and how to configure it. Make sure to fill in the Settings and Tasks sections of the README. In the case of our hypothetical cron plugin, we'd want to specify installation instructions as well, to explain that the `cron:install` task should be listed part of the `setup` tasks. Check out [tomo-plugin-sidekiq](https://github.com/mattbrictson/tomo-plugin-sidekiq/blob/main/README.md) for an example README.
 
 ## Set up CI
 

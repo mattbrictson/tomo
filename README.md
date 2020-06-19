@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/tomo.svg)](https://rubygems.org/gems/tomo)
 [![Travis](https://img.shields.io/travis/mattbrictson/tomo.svg?label=travis)](https://travis-ci.org/mattbrictson/tomo)
-[![Circle](https://circleci.com/gh/mattbrictson/tomo.svg?style=shield)](https://app.circleci.com/pipelines/github/mattbrictson/tomo?branch=master)
+[![Circle](https://circleci.com/gh/mattbrictson/tomo/tree/main.svg?style=shield)](https://app.circleci.com/pipelines/github/mattbrictson/tomo?branch=main)
 [![Code Climate](https://codeclimate.com/github/mattbrictson/tomo/badges/gpa.svg)](https://codeclimate.com/github/mattbrictson/tomo)
 
 Tomo is a friendly command-line tool for deploying Rails apps. It is a new alternative to Capistrano, Mina, and Shipit that aims for simplicity and developer happiness.
@@ -225,7 +225,7 @@ Next run `tomo setup` for _both_ apps; this will set everything up for both user
 
 ## Support
 
-This project is a labor of love and I can only spend a few hours a week maintaining it, at most. If you'd like to help by submitting a pull request, or if you've discovered a bug that needs my attention, please let me know. Check out [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/master/CONTRIBUTING.md) to get started. Happy hacking! —Matt
+This project is a labor of love and I can only spend a few hours a week maintaining it, at most. If you'd like to help by submitting a pull request, or if you've discovered a bug that needs my attention, please let me know. Check out [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/main/CONTRIBUTING.md) to get started. Happy hacking! —Matt
 
 ## License
 
@@ -233,8 +233,8 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of conduct
 
-Everyone interacting in the Tomo project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/mattbrictson/tomo/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Tomo project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/mattbrictson/tomo/blob/main/CODE_OF_CONDUCT.md).
 
 ## Contribution guide
 
-Interested in filing a bug report, feature request, or opening a PR? Excellent! Please read the short [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/master/CONTRIBUTING.md) guidelines before you dive in.
+Interested in filing a bug report, feature request, or opening a PR? Excellent! Please read the short [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/main/CONTRIBUTING.md) guidelines before you dive in.

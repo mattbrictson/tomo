@@ -367,4 +367,4 @@ This tutorial introduced you to writing custom tasks in tomo, but there is much 
 - [Tomo::Paths](../api/Paths.md)
 - [core plugin helpers](../plugins/core.md#helpers) (additional methods mixed into the Remote API)
 
-And for inspiration, look no further than tomo itself, which has several built-in plugins in [lib/tomo/plugin](https://github.com/mattbrictson/tomo/tree/master/lib/tomo/plugin).
+And for inspiration, look no further than tomo itself, which has several built-in plugins in [lib/tomo/plugin](https://github.com/mattbrictson/tomo/tree/main/lib/tomo/plugin).
