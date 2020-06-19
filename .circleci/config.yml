@@ -100,12 +100,12 @@ workflows:
           filters:
             branches:
               ignore:
-                - master
+                - main
       - mkdocs_deploy:
           filters:
             branches:
               only:
-                - master
+                - main
       - rubocop
       - test_unit
       - test_e2e
@@ -121,4 +121,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main

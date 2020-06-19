@@ -24,8 +24,8 @@ The tomo puma plugin assumes that your puma server will listen on a single TCP p
 | `puma_systemd_socket`                | Name of the systemd socket that is used for [socket activation][socket-activation] of the puma service                      | `"puma_%{application}.socket"`                                                                           |
 | `puma_systemd_service_path`          | Path on the remote host where the systemd puma service configuration file will be created                                   | `".config/systemd/user/%{puma_systemd_service}"`                                                         |
 | `puma_systemd_socket_path`           | Path on the remote host where the systemd puma socket configuration file will be created                                    | `".config/systemd/user/%{puma_systemd_socket}"`                                                          |
-| `puma_systemd_service_template_path` | Local path of the ERB template to use to create the the systemd puma service configuration file                             | [service.erb](https://github.com/mattbrictson/tomo/blob/master/lib/tomo/plugin/puma/systemd/service.erb) |
-| `puma_systemd_socket_template_path`  | Local path of the ERB template to use to create the the systemd puma socket configuration file                              | [socket.erb](https://github.com/mattbrictson/tomo/blob/master/lib/tomo/plugin/puma/systemd/socket.erb)   |
+| `puma_systemd_service_template_path` | Local path of the ERB template to use to create the the systemd puma service configuration file                             | [service.erb](https://github.com/mattbrictson/tomo/blob/main/lib/tomo/plugin/puma/systemd/service.erb) |
+| `puma_systemd_socket_template_path`  | Local path of the ERB template to use to create the the systemd puma socket configuration file                              | [socket.erb](https://github.com/mattbrictson/tomo/blob/main/lib/tomo/plugin/puma/systemd/socket.erb)   |
 
 ## Tasks
 

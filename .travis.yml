@@ -3,7 +3,7 @@ language: ruby
 cache: bundler
 branches:
   only:
-  - master
+  - main
 rvm:
 - 2.5.8
 - 2.6.6
