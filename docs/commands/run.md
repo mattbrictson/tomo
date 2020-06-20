@@ -45,17 +45,17 @@ Given the following configuration:
 
 ```ruby
 plugin "puma"
-host "deployer@localhost", port: 32811
+host "deployer@app.example.com"
 ```
 
 Then we could run [puma:restart](../plugins/puma.md#pumarestart) like this:
 
 ```plain
 $ tomo run puma:restart
-tomo run v0.14.0
+tomo run v1.1.2
 → Connecting to deployer@app.example.com
 • puma:restart
-systemctl --user start puma_visionbot.socket
-systemctl --user restart puma_visionbot.service
+systemctl --user start puma_example.socket
+systemctl --user restart puma_example.service
 ✔ Ran puma:restart on deployer@app.example.com
 ```
