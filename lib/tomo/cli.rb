@@ -55,7 +55,7 @@ module Tomo
       argv << "" if argv.shift == "--complete"
     end
 
-    def lookup_command(argv) # rubocop:disable Metrics/CyclomaticComplexity
+    def lookup_command(argv)
       command_name = argv.first unless Completions.active? && argv.length == 1
       command_name = Abbrev.abbrev(COMMANDS.keys)[command_name]
       argv.shift if command_name
