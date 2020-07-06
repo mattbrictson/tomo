@@ -94,10 +94,21 @@ module Tomo
         File.exist?(".rubocop.yml")
       end
 
+      def erb_2_2_or_later?
+        erb_version = Gem::Version.new(ERB.version[/\d[\d.]+/])
+        Gem::Requirement.new(">= 2.2").satisfied_by?(erb_version)
+      end
+
       def config_rb_template(app)
         path = File.expand_path("../templates/config.rb.erb", __dir__)
         template = IO.read(path)
-        ERB.new(template, trim_mode: "-").result(binding)
+
+        # TODO: remove once we drop Ruby 2.5 support?
+        if erb_2_2_or_later?
+          ERB.new(template, trim_mode: "-").result(binding)
+        else
+          ERB.new(template, nil, "-").result(binding)
+        end
       end
     end
   end
