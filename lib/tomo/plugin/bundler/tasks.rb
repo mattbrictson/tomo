@@ -56,7 +56,7 @@ module Tomo::Plugin::Bundler
         raise_on_error: false
       )
       version = lockfile_tail[/BUNDLED WITH\n   (\S+)$/, 1]
-      return version if version
+      return version if version || dry_run?
 
       die <<~REASON
         Could not guess bundler version from Gemfile.lock.
