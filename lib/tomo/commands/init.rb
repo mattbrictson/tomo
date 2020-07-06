@@ -90,10 +90,14 @@ module Tomo
         nil
       end
 
+      def rubocop?
+        File.exist?(".rubocop.yml")
+      end
+
       def config_rb_template(app)
         path = File.expand_path("../templates/config.rb.erb", __dir__)
         template = IO.read(path)
-        ERB.new(template).result(binding)
+        ERB.new(template, trim_mode: "-").result(binding)
       end
     end
   end
