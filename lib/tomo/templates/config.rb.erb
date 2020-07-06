@@ -1,3 +1,6 @@
+<% if rubocop? -%>
+# rubocop:disable Style/FormatStringToken
+<% end -%>
 plugin "git"
 plugin "env"
 plugin "bundler"
@@ -72,3 +75,6 @@ deploy do
   run "bundler:clean"
   run "core:log_revision"
 end
+<% if rubocop? -%>
+# rubocop:enable Style/FormatStringToken
+<% end -%>
