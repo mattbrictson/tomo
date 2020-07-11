@@ -39,7 +39,7 @@ module Tomo
       def constantize(path)
         parts = path.split("/")
         parts.reduce(Object) do |parent, part|
-          child = part.gsub(/^[a-z]|_[a-z]/) { |str| str.chars.last.upcase }
+          child = part.gsub(/^[a-z]|_[a-z]/) { |str| str[-1].upcase }
           parent.const_get(child, false)
         end
       end
