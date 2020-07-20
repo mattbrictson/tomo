@@ -1,7 +1,7 @@
 require "monitor"
 
 module Tomo::Plugin::Env
-  class Tasks < Tomo::TaskLibrary
+  class Tasks < Tomo::TaskLibrary # rubocop:disable Metrics/ClassLength
     include MonitorMixin
 
     def show
@@ -10,8 +10,8 @@ module Tomo::Plugin::Env
     end
 
     def setup
-      update
       modify_bashrc
+      update
     end
 
     def update
@@ -103,12 +103,37 @@ module Tomo::Plugin::Env
       existing_rc = remote.capture("cat", paths.bashrc, raise_on_error: false)
       return if existing_rc.include?(". #{env_path}")
 
+      fail_if_different_app_already_configured!(existing_rc)
+
       remote.write(text: <<~BASHRC + existing_rc, to: paths.bashrc)
-        if [ -f #{env_path} ]; then
-          . #{env_path}
-        fi
+        if [ -f #{env_path} ]; then  # DO NOT MODIFY THESE LINES
+          . #{env_path}              # ENV MAINTAINED BY TOMO
+        fi                #{' ' * env_path.to_s.length}# END TOMO ENV
 
       BASHRC
+    end
+
+    def fail_if_different_app_already_configured!(bashrc)
+      existing_env_path = bashrc[/\s*\.\s+(.+)\s+# ENV MAINTAINED BY TOMO/, 1]
+      return if existing_env_path.nil?
+
+      die <<~REASON
+        Based on the contents of #{paths.bashrc}, it looks like another application
+        is already being deployed via tomo to this host, using the following envrc
+        path:
+
+          #{existing_env_path}
+
+        Tomo is designed such that only one application can be deployed to a given
+        user@host. To deploy multiple applications to the same host, use a separate
+        deployer user per app. Refer to the tomo FAQ for details:
+
+          https://tomo-deploy.com/#faq
+
+        You may be receiving this message in error if you recently renamed or
+        reconfigured your application. In this case, remove the references to the
+        old envrc path in the host's #{paths.bashrc} and re-run env:setup.
+      REASON
     end
   end
 end
