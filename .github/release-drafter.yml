@@ -15,7 +15,7 @@ version-resolver:
   minor:
     labels:
       - "⚠️ Breaking"
-      - "✨ New Features"
+      - "✨ Feature"
   default: patch
 change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
 no-changes-template: "- No changes"
