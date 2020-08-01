@@ -46,6 +46,9 @@ Metrics/MethodLength:
 Metrics/ParameterLists:
   Max: 6
 
+Minitest/MultipleAssertions:
+  Max: 5
+
 Naming/MemoizedInstanceVariableName:
   Enabled: false
 
