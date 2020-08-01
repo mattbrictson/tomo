@@ -13,34 +13,34 @@ class Tomo::ConsoleTest < Minitest::Test
     refute Tomo::Console.new({}, non_tty).interactive?
   end
 
-  def prompt_answer_does_not_contain_newline
+  def test_prompt_answer_does_not_contain_newline
     console = Tomo::Console.new({}, tty("yes\n"))
     answer = console.prompt("Are you sure? ")
     assert_equal("yes", answer)
   end
 
-  def prompt_raises_if_not_tty
+  def test_prompt_raises_if_not_tty
     console = Tomo::Console.new({}, non_tty("yes\n"))
-    error = assert_raises { console.prompt("Are you sure? ") }
-    assert_match(/interactive console is required/i, error.message)
+    error = assert_raises(Tomo::Console::NonInteractiveError) { console.prompt("Are you sure? ") }
+    assert_match(/requires an interactive console/i, error.to_console)
   end
 
-  def prompt_raises_if_ci
+  def test_prompt_raises_if_ci
     console = Tomo::Console.new({ "CIRCLECI" => "1" }, tty("yes\n"))
-    error = assert_raises { console.prompt("Are you sure? ") }
-    assert_match(/appears to be a CI environment/i, error.message)
+    error = assert_raises(Tomo::Console::NonInteractiveError) { console.prompt("Are you sure? ") }
+    assert_match(/appears to be a non-interactive CI environment/i, error.to_console)
   end
 
-  def menu_raises_if_not_tty
+  def test_menu_raises_if_not_tty
     console = Tomo::Console.new({}, non_tty("yes\n"))
-    error = assert_raises { console.menu("Are you sure? ", choices: %w[y n]) }
-    assert_match(/interactive console is required/i, error.message)
+    error = assert_raises(Tomo::Console::NonInteractiveError) { console.menu("Are you sure? ", choices: %w[y n]) }
+    assert_match(/requires an interactive console/i, error.to_console)
   end
 
-  def menu_raises_if_ci
+  def test_menu_raises_if_ci
     console = Tomo::Console.new({ "CIRCLECI" => "1" }, tty("yes\n"))
-    error = assert_raises { console.menu("Are you sure? ", choices: %w[y n]) }
-    assert_match(/appears to be a CI environment/i, error.message)
+    error = assert_raises(Tomo::Console::NonInteractiveError) { console.menu("Are you sure? ", choices: %w[y n]) }
+    assert_match(/appears to be a non-interactive CI environment/i, error.to_console)
   end
 
   private
