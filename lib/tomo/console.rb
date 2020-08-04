@@ -12,9 +12,10 @@ module Tomo
       def_delegators :@instance, :interactive?, :prompt, :menu
     end
 
-    def initialize(env=ENV, input=$stdin)
+    def initialize(env=ENV, input=$stdin, output=$stdout)
       @env = env
       @input = input
+      @output = output
     end
 
     def interactive?
@@ -24,7 +25,7 @@ module Tomo
     def prompt(question)
       assert_interactive
 
-      print question
+      output.print question
       line = input.gets
       raise_non_interactive if line.nil?
 
@@ -39,7 +40,7 @@ module Tomo
 
     private
 
-    attr_reader :env, :input
+    attr_reader :env, :input, :output
 
     CI_VARS = %w[
       JENKINS_HOME
