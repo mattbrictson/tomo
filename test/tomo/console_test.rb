@@ -14,8 +14,10 @@ class Tomo::ConsoleTest < Minitest::Test
   end
 
   def test_prompt_answer_does_not_contain_newline
-    console = Tomo::Console.new({}, tty("yes\n"))
+    stdout = StringIO.new
+    console = Tomo::Console.new({}, tty("yes\n"), stdout)
     answer = console.prompt("Are you sure? ")
+    assert_equal("Are you sure? ", stdout.string)
     assert_equal("yes", answer)
   end
 
