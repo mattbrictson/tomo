@@ -1,2 +1,7 @@
 require "minitest/reporters"
-Minitest::Reporters.use!(Minitest::Reporters::SpecReporter.new, ENV, Minitest.backtrace_filter)
+
+if ENV["CI"]
+  Minitest::Reporters.use!(Minitest::Reporters::SpecReporter.new)
+else
+  Minitest::Reporters.use!(Minitest::Reporters::DefaultReporter.new)
+end
