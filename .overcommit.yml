@@ -1,0 +1,33 @@
+# Overcommit hooks run automatically on certain git operations, like "git commit".
+# For a complete list of options that you can use to customize hooks, see:
+# https://github.com/sds/overcommit
+
+gemfile: false
+verify_signatures: false
+
+PreCommit:
+  BundleCheck:
+    enabled: true
+
+  FixMe:
+    enabled: true
+    keywords: ["FIXME"]
+    exclude:
+      - .overcommit.yml
+      - lib/tomo/templates/config.rb.erb
+
+  LocalPathsInGemfile:
+    enabled: true
+
+  RuboCop:
+    enabled: true
+    required_executable: bundle
+    command: ["bundle", "exec", "rubocop"]
+    on_warn: fail
+
+  YamlSyntax:
+    enabled: true
+
+PostCheckout:
+  ALL:
+    quiet: true
