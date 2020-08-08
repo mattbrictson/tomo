@@ -1,8 +1,13 @@
 version: 2.1
 executors:
   ruby:
+    parameters:
+      version:
+        description: "Ruby version number"
+        default: "2.7.1"
+        type: string
     docker:
-      - image: circleci/ruby:2.7.1
+      - image: circleci/ruby:<< parameters.version >>
   python:
     docker:
       - image: circleci/python:3
@@ -10,10 +15,15 @@ executors:
 commands:
   bundle_install:
     description: Install Ruby dependencies with Bundler
+    parameters:
+      version:
+        description: "Ruby version number"
+        default: "2.7.1"
+        type: string
     steps:
       - restore_cache:
           keys:
-            - bundle-v1-{{ arch }}
+            - bundle-v1-{{ arch }}-<< parameters.version >>
       - run:
           name: Install Ruby Dependencies
           command: |
@@ -23,7 +33,7 @@ commands:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: bundle-v1-{{ arch }}-{{ checksum "Gemfile.lock" }}
+          key: bundle-v1-{{ arch }}-<< parameters.version >>-{{ checksum "Gemfile.lock" }}
   pip_install:
     description: Install Python dependencies
     steps:
@@ -73,10 +83,18 @@ jobs:
       - run: bundle exec rubocop
 
   test_unit:
-    executor: ruby
+    parameters:
+      version:
+        description: "Ruby version number"
+        default: "2.7.1"
+        type: string
+    executor:
+      name: ruby
+      version: << parameters.version >>
     steps:
       - checkout
-      - bundle_install
+      - bundle_install:
+          version: << parameters.version >>
       - run: bundle exec rake test:unit TESTOPTS="--ci-dir=./reports"
       - store_test_results:
           path: ./reports
@@ -107,13 +125,19 @@ workflows:
               only:
                 - main
       - rubocop
-      - test_unit
+      - test_unit:
+          matrix:
+            parameters:
+              version: ["2.5.8", "2.6.6", "2.7.1"]
       - test_e2e
   cron-workflow:
     jobs:
       - mkdocs_build
       - rubocop
-      - test_unit
+      - test_unit:
+          matrix:
+            parameters:
+              version: ["2.5.8", "2.6.6", "2.7.1"]
       - test_e2e
     triggers:
       - schedule:

@@ -40,16 +40,14 @@ namespace :bump do
     lowest = RubyVersions.lowest_supported
     lowest_minor = RubyVersions.lowest_supported_minor
     latest = RubyVersions.latest
+    latest_patches = RubyVersions.latest_supported_patches
 
     replace_in_file "tomo.gemspec", /ruby_version = .*">= (.*)"/ => lowest
     replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest_minor
-    replace_in_file ".circleci/config.yml", %r{circleci/ruby:([\d.]+)} => latest
+    replace_in_file ".circleci/config.yml", /default: "([\d.]+)"/ => latest
+    replace_in_file ".circleci/config.yml", /version: (\[.+\])/ => latest_patches.inspect
     replace_in_file ".circleci/Dockerfile", %r{circleci/ruby:([\d.]+)} => latest
     replace_in_file "docs/comparisons.md", /ruby version\s*\|\s*([\d.]+)/i => lowest_minor
-
-    travis = YAML.safe_load(open(".travis.yml"))
-    travis["rvm"] = RubyVersions.latest_supported_patches + ["ruby-head"]
-    IO.write(".travis.yml", YAML.dump(travis))
   end
 
   task :year do
