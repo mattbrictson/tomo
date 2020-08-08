@@ -1,6 +1,7 @@
 module Tomo
   module PluginDSL
     def self.extended(mod)
+      super
       mod.instance_variable_set(:@helper_modules, [])
       mod.instance_variable_set(:@default_settings, {})
       mod.instance_variable_set(:@tasks_classes, [])

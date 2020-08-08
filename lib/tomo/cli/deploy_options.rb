@@ -2,6 +2,7 @@ module Tomo
   class CLI
     module DeployOptions
       def self.included(mod) # rubocop:disable Metrics/MethodLength
+        super
         mod.class_eval do
           option :environment,
                  "-e, --environment ENVIRONMENT",

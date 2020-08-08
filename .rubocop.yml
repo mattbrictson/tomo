@@ -79,6 +79,9 @@ Style/FrozenStringLiteralComment:
 Style/NumericPredicate:
   Enabled: false
 
+Style/StringConcatenation:
+  Enabled: false
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 

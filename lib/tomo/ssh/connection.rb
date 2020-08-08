@@ -26,7 +26,7 @@ module Tomo
       end
 
       def ssh_subprocess(script, verbose: false)
-        ssh_args = build_args(script, verbose)
+        ssh_args = build_args(script, verbose: verbose)
         handle_data = ->(data) { logger.script_output(script, data) }
 
         logger.script_start(script)
@@ -50,7 +50,7 @@ module Tomo
         Tomo.logger
       end
 
-      def build_args(script, verbose=false)
+      def build_args(script, verbose: false)
         options.build_args(host, script, control_path, verbose)
       end
 
