@@ -7,7 +7,7 @@ module Tomo
         @concurrency = concurrency
       end
 
-      def to_s # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+      def to_s # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         desc = []
         threads = [applicable_hosts.length, concurrency].min
         desc << "CONCURRENTLY (#{threads} THREADS):" if threads > 1

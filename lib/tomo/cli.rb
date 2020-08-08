@@ -20,7 +20,7 @@ module Tomo
     class << self
       attr_accessor :show_backtrace
 
-      def exit(status=true)
+      def exit(status=true) # rubocop:disable Style/OptionalBooleanParameter
         Process.exit(status)
       end
     end

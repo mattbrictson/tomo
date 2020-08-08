@@ -2,6 +2,7 @@ module Tomo
   class CLI
     module ProjectOptions
       def self.included(mod)
+        super
         mod.class_eval do
           option :project, "-c, --config PATH", "Location of project config (default: #{DEFAULT_CONFIG_PATH})"
         end
