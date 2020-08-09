@@ -75,7 +75,7 @@ Writes a JSON file to the location specified by the `:release_json_path` setting
 
 ```json
 {
-  "branch": "main",
+  "ref": "main",
   "author": "matt@example.com",
   "revision": "0d1cb3212e2f9c43aa49fb172d8d9c726163cecf",
   "revision_date": "2019-06-01 17:23:48 -0700",
