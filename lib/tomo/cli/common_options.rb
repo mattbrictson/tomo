@@ -2,7 +2,6 @@ module Tomo
   class CLI
     module CommonOptions
       def self.included(mod) # rubocop:disable Metrics/MethodLength
-        super
         mod.class_eval do
           option :color, "--[no-]color", "Enable/disable color output" do |color|
             Colors.enabled = color
