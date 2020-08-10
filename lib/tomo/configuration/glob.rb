@@ -6,12 +6,12 @@ module Tomo
         regexp_parts = @spec.split(/(\*)/).map do |part|
           part == "*" ? ".*" : Regexp.quote(part)
         end
-        @pattern = Regexp.new(regexp_parts.join).freeze
+        @regexp = Regexp.new(regexp_parts.join).freeze
         freeze
       end
 
       def match?(str)
-        pattern.match?(str)
+        regexp.match?(str)
       end
 
       def to_s
@@ -20,7 +20,7 @@ module Tomo
 
       private
 
-      attr_reader :pattern, :spec
+      attr_reader :regexp, :spec
     end
   end
 end
