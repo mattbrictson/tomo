@@ -12,7 +12,7 @@ module Tomo::Plugin::Core
       result.success?
     end
 
-    def write(text: nil, template: nil, to:, append: false, **run_opts)
+    def write(to:, text: nil, template: nil, append: false, **run_opts)
       assert_text_or_template_required!(text, template)
       text = merge_template(template) unless template.nil?
       message = "Writing #{text.bytesize} bytes to #{to}"

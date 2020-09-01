@@ -1,6 +1,6 @@
 class Tomo::CLI::Rules
   class Argument
-    def initialize(label, multiple: false, required: false, values_proc:)
+    def initialize(label, values_proc:, multiple: false, required: false)
       @label = label
       @multiple = multiple
       @required = required
@@ -15,7 +15,7 @@ class Tomo::CLI::Rules
       state.parsed_arg(arg)
     end
 
-    def candidates(literal: false, state:)
+    def candidates(state:, literal: false)
       values(state).reject { |val| literal && val.start_with?("-") }
     end
 
