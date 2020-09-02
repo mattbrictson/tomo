@@ -28,7 +28,7 @@ class Tomo::CLI::Rules
       state.parsed_option(key, value)
     end
 
-    def candidates(switch=nil, literal: false, state:)
+    def candidates(switch=nil, state:, literal: false)
       return [] if literal
 
       vals = values(state)
