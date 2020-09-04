@@ -46,7 +46,7 @@ namespace :bump do
     replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest_minor
     replace_in_file ".circleci/config.yml", /default: "([\d.]+)"/ => latest
     replace_in_file ".circleci/config.yml", /version: (\[.+\])/ => latest_patches.inspect
-    replace_in_file ".circleci/Dockerfile", %r{circleci/ruby:([\d.]+)} => latest
+    replace_in_file ".circleci/Dockerfile", %r{cimg/ruby:([\d.]+)} => latest
     replace_in_file "docs/comparisons.md", /ruby version\s*\|\s*([\d.]+)/i => lowest_minor
   end
 

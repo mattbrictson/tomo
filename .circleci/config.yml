@@ -7,10 +7,10 @@ executors:
         default: "2.7.1"
         type: string
     docker:
-      - image: circleci/ruby:<< parameters.version >>
+      - image: cimg/ruby:<< parameters.version >>
   python:
     docker:
-      - image: circleci/python:3
+      - image: cimg/python:3.8
 
 commands:
   bundle_install:
@@ -37,7 +37,7 @@ commands:
   pip_install:
     description: Install Python dependencies
     steps:
-      - run: sudo pip install -r requirements.txt
+      - run: pip install -r requirements.txt
   docker_build:
     description: Build docker image
     steps:
