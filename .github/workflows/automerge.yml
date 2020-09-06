@@ -28,3 +28,4 @@ jobs:
           MERGE_LABELS: automerge
           MERGE_METHOD: squash
           MERGE_DELETE_BRANCH: true
+          MERGE_RETRY_SLEEP: 300000
