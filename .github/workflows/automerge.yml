@@ -16,7 +16,6 @@ on:
   check_suite:
     types:
       - completed
-  status: {}
 jobs:
   automerge:
     runs-on: ubuntu-latest
@@ -29,3 +28,4 @@ jobs:
           MERGE_METHOD: squash
           MERGE_DELETE_BRANCH: true
           MERGE_RETRY_SLEEP: 300000
+          UPDATE_RETRY_SLEEP: 300000
