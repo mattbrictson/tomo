@@ -90,7 +90,7 @@ module Tomo
       plugins_registry = PluginsRegistry.new
 
       (["core"] + plugins.uniq).each do |plug|
-        if %w[. /].include?(plug[0])
+        if plug.start_with?(".", "/")
           plug = File.expand_path(plug, File.dirname(path)) unless path.nil?
           plugins_registry.load_plugin_from_path(plug)
         else
