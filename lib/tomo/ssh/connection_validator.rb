@@ -15,10 +15,10 @@ module Tomo
 
       def assert_valid_executable!
         result = begin
-                   ChildProcess.execute(executable, "-V")
-                 rescue StandardError => e
-                   handle_bad_executable(e)
-                 end
+          ChildProcess.execute(executable, "-V")
+        rescue StandardError => e
+          handle_bad_executable(e)
+        end
 
         Tomo.logger.debug(result.output)
         return if result.success? && supported?(result.output)
