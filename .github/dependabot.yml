@@ -1,18 +1,29 @@
 version: 2
 updates:
-- package-ecosystem: bundler
-  directory: "/"
-  schedule:
-    interval: monthly
-    time: "06:00"
-    timezone: America/Los_Angeles
-  open-pull-requests-limit: 10
-  labels:
-  - "\U0001F3E0 Housekeeping"
-- package-ecosystem: pip
-  directory: "/"
-  schedule:
-    interval: monthly
-    time: "06:00"
-    timezone: America/Los_Angeles
-  open-pull-requests-limit: 10
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "06:00"
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 10
+    labels:
+      - "🏠 Housekeeping"
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "06:00"
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 10
+    labels:
+      - "🏠 Housekeeping"
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "06:00"
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 10
+    labels:
+      - "🏠 Housekeeping"
