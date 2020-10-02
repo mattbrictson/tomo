@@ -4,7 +4,7 @@ executors:
     parameters:
       version:
         description: "Ruby version number"
-        default: "2.7.1"
+        default: "2.7.2"
         type: string
     docker:
       - image: cimg/ruby:<< parameters.version >>
@@ -18,7 +18,7 @@ commands:
     parameters:
       version:
         description: "Ruby version number"
-        default: "2.7.1"
+        default: "2.7.2"
         type: string
     steps:
       - restore_cache:
@@ -86,7 +86,7 @@ jobs:
     parameters:
       version:
         description: "Ruby version number"
-        default: "2.7.1"
+        default: "2.7.2"
         type: string
     executor:
       name: ruby
@@ -128,7 +128,7 @@ workflows:
       - test_unit:
           matrix:
             parameters:
-              version: ["2.5.8", "2.6.6", "2.7.1"]
+              version: ["2.5.8", "2.6.6", "2.7.2"]
       - test_e2e
   cron-workflow:
     jobs:
@@ -137,7 +137,7 @@ workflows:
       - test_unit:
           matrix:
             parameters:
-              version: ["2.5.8", "2.6.6", "2.7.1"]
+              version: ["2.5.8", "2.6.6", "2.7.2"]
       - test_e2e
     triggers:
       - schedule:
