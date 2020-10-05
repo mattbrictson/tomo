@@ -80,9 +80,9 @@ module Tomo
       end
 
       def build_image
-        Local.capture(
-          "docker build #{build_dir}"
-        )[/Successfully built (\S+)$/i, 1]
+        tag = "tomo_testing:latest"
+        Local.capture("docker build --tag #{tag} #{build_dir}")
+        tag
       end
 
       def start_container
