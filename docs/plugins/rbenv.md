@@ -4,9 +4,9 @@ The rbenv plugin provides a way to install and run a desired version of ruby. Th
 
 ## Settings
 
-| Name                 | Purpose                                      | Default     |
-| -------------------- | -------------------------------------------- | ----------- |
-| `bashrc_path`        | Location of the deploy user’s `.bashrc` file | `".bashrc"` |
+| Name                 | Purpose                                                                                        | Default     |
+| -------------------- | ---------------------------------------------------------------------------------------------- | ----------- |
+| `bashrc_path`        | Location of the deploy user’s `.bashrc` file                                                   | `".bashrc"` |
 | `rbenv_ruby_version` | Version of ruby to install. if nil (the default), determine the version based on .ruby-version | `nil`       |
 
 ## Tasks
