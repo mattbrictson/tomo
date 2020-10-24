@@ -57,7 +57,8 @@ module Tomo::Plugin::Rbenv
 
     def extract_ruby_ver_from_version_file
       path = paths.release.join(".ruby-version")
-      return File.read(path).strip if File.exist?(path)
+      version = remote.capture("cat", path, raise_on_error: false).strip
+      return version unless version.empty?
 
       die <<~REASON
         Could not guess ruby version from .ruby-version file.
