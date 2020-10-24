@@ -31,8 +31,7 @@ module Tomo::Plugin::Rbenv
     end
 
     def compile_ruby
-      require_setting :rbenv_ruby_version
-      ruby_version = settings[:rbenv_ruby_version]
+      ruby_version = version_setting || extract_ruby_ver_from_version_file
 
       unless ruby_installed?(ruby_version)
         logger.info(
@@ -50,6 +49,20 @@ module Tomo::Plugin::Rbenv
         return true
       end
       false
+    end
+
+    def version_setting
+      settings[:rbenv_ruby_version]
+    end
+
+    def extract_ruby_ver_from_version_file
+      path = paths.release.join(".ruby-version")
+      return File.read(path).strip if File.exist?(path)
+
+      die <<~REASON
+        Could not guess ruby version from .ruby-version file.
+        Use the :rbenv_ruby_version setting to specify the version of ruby to install.
+      REASON
     end
   end
 end
