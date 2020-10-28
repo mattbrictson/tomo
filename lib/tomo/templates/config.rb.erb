@@ -14,6 +14,9 @@ host "user@hostname.or.ip.address"
 
 set application: <%= app.inspect %>
 set deploy_to: "/var/www/%{application}"
+<% unless ruby_version_file? -%>
+set rbenv_ruby_version: <%= RUBY_VERSION.inspect %>
+<% end -%>
 set nodenv_node_version: <%= node_version&.inspect || "nil # FIXME" %>
 set nodenv_yarn_version: <%= yarn_version.inspect %>
 set git_url: <%= git_origin_url&.inspect || "nil # FIXME" %>

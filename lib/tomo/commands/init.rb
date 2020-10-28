@@ -99,6 +99,10 @@ module Tomo
         Gem::Requirement.new(">= 2.2").satisfied_by?(erb_version)
       end
 
+      def ruby_version_file?
+        File.exist?(".ruby-version")
+      end
+
       def config_rb_template(app)
         path = File.expand_path("../templates/config.rb.erb", __dir__)
         template = IO.read(path)
