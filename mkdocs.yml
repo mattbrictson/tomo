@@ -12,6 +12,7 @@ markdown_extensions:
   - markdown_include.include:
       base_path: docs/include
 repo_url: https://github.com/mattbrictson/tomo/
+edit_uri: edit/main/docs/
 nav:
   - Home: index.md
   - Comparisons: comparisons.md
