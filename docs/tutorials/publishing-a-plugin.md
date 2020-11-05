@@ -283,7 +283,7 @@ The tomo-plugin template will set your gem project up with Travis, Circle CI, an
 
 - [Circle CI](https://circleci.com/): Log in via your GitHub account and then click **Add Projects**.
 - [Code Climate](https://codeclimate.com): Log into the Quality product via your GitHub account, click **Open Source**, then **Add a repository**.
-- [Travis CI](https://travis-ci.org/): Log into travis-ci.org via your GitHub account, go to **Settings**, then enable your gem project in the **Repositories** section.
+- [Travis CI](https://travis-ci.com/): Log into travis-ci.com via your GitHub account, go to **Account Settings**, then enable your gem project in the [Repositories](https://travis-ci.com/account/repositories) section.
 
 These services will build and test your project on every push and PR and update the status badges in your README.
 
