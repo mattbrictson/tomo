@@ -60,6 +60,8 @@ module Tomo::Plugin::Rbenv
       version = remote.capture("cat", path, raise_on_error: false).strip
       return version unless version.empty?
 
+      return RUBY_VERSION.inspect if dry_run?
+
       die <<~REASON
         Could not guess ruby version from .ruby-version file.
         Use the :rbenv_ruby_version setting to specify the version of ruby to install.
