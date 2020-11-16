@@ -60,7 +60,7 @@ module Tomo::Plugin::Rbenv
       version = remote.capture("cat", path, raise_on_error: false).strip
       return version unless version.empty?
 
-      return RUBY_VERSION.inspect if dry_run?
+      return RUBY_VERSION if dry_run?
 
       die <<~REASON
         Could not guess ruby version from .ruby-version file.
