@@ -82,7 +82,7 @@ module Tomo
     end
 
     def export_env
-      exports = @env.reject { |_, value| value.nil? }
+      exports = @env.compact
       return if exports.empty?
 
       [
