@@ -55,7 +55,7 @@ module Tomo
 
       def scan_for_plugins
         Gem.find_latest_files("#{PLUGIN_PREFIX}/*.rb").map do |file|
-          file[%r{#{PLUGIN_PREFIX}/(.+).rb$}, 1].tr("/", "-")
+          file[%r{#{PLUGIN_PREFIX}/(.+).rb$}o, 1].tr("/", "-")
         end.uniq.sort
       end
     end

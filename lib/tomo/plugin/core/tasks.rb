@@ -41,7 +41,7 @@ module Tomo::Plugin::Core
       current = read_current_release
 
       remote.chdir(paths.releases) do
-        releases = remote.list_files.grep(/^#{RELEASE_REGEXP}$/).sort
+        releases = remote.list_files.grep(/^#{RELEASE_REGEXP}$/o).sort
         desired_count -= 1 if releases.delete(current)
         return if releases.length <= desired_count
 
@@ -122,7 +122,7 @@ module Tomo::Plugin::Core
       result = remote.run("readlink", paths.current, raise_on_error: false, silent: true)
       return nil if result.failure?
 
-      result.stdout.strip[%r{/(#{RELEASE_REGEXP})$}, 1]
+      result.stdout.strip[%r{/(#{RELEASE_REGEXP})$}o, 1]
     end
   end
 end
