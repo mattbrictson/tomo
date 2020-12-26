@@ -1,4 +1,5 @@
 require "erb"
+require "fileutils"
 
 module Tomo
   module Commands
