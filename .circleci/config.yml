@@ -4,7 +4,7 @@ executors:
     parameters:
       version:
         description: "Ruby version number"
-        default: "2.7.2"
+        default: "3.0.0"
         type: string
     docker:
       - image: cimg/ruby:<< parameters.version >>
@@ -18,7 +18,7 @@ commands:
     parameters:
       version:
         description: "Ruby version number"
-        default: "2.7.2"
+        default: "3.0.0"
         type: string
     steps:
       - restore_cache:
@@ -27,7 +27,7 @@ commands:
       - run:
           name: Install Ruby Dependencies
           command: |
-            gem install bundler -v 2.1.4 --conservative --no-document
+            gem install bundler -v 2.2.3 --conservative --no-document
             bundle config --local path vendor/bundle
             bundle check || (bundle install --jobs=4 --retry=3 && bundle clean)
       - save_cache:
@@ -86,7 +86,7 @@ jobs:
     parameters:
       version:
         description: "Ruby version number"
-        default: "2.7.2"
+        default: "3.0.0"
         type: string
     executor:
       name: ruby
@@ -128,7 +128,7 @@ workflows:
       - test_unit:
           matrix:
             parameters:
-              version: ["2.5.8", "2.6.6", "2.7.2"]
+              version: ["2.5.8", "2.6.6", "2.7.2", "3.0.0"]
       - test_e2e
   cron-workflow:
     jobs:
@@ -137,7 +137,7 @@ workflows:
       - test_unit:
           matrix:
             parameters:
-              version: ["2.5.8", "2.6.6", "2.7.2"]
+              version: ["2.5.8", "2.6.6", "2.7.2", "3.0.0"]
       - test_e2e
     triggers:
       - schedule:
