@@ -11,7 +11,7 @@ module Tomo::Plugin
     defaults bundler_config_path: ".bundle/config",
              bundler_deployment:  true,
              bundler_gemfile:     nil,
-             bundler_jobs:        "4",
+             bundler_jobs:        nil,
              bundler_path:        "%{shared_path}/bundle",
              bundler_retry:       "3",
              bundler_version:     nil,
