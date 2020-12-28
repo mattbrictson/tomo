@@ -103,7 +103,8 @@ jobs:
     executor: ruby
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - docker_build
       - run:
           name: bundle exec rake test:e2e (within docker container)
