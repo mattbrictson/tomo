@@ -11,7 +11,7 @@ $ tomo setup [--dry-run] [options]
 Prepare the remote host for its first deploy by sequentially running the
 [setup](../configuration.md#setupblock) list of tasks specified in `.tomo/config.rb`. These tasks typically create directories, initialize data stores, install prerequisite tools, and perform other one-time actions that are necessary before a deploy can take place.
 
-During setup, tomo will initialize the `:release_path` setting to be a temporary directory based on the current date and time (e.g. `/tmp/tomo/20190616214752`). This means setup tasks (e.g. [rails:db_create](../plugins/rails.md#railsdb_create), [rails:db_schema_load](../plugins/rails.md#railsdb_schema_load)) run in a location that won't be deployed as an actual release.
+During setup, tomo will initialize the `:release_path` setting to be a temporary directory based on the current date and time (e.g. `/tmp/tomo-a4DBHX0P/20190616214752`). This means setup tasks (e.g. [rails:db_create](../plugins/rails.md#railsdb_create), [rails:db_schema_load](../plugins/rails.md#railsdb_schema_load)) run in a location that won't be deployed as an actual release.
 
 ## Options
 
@@ -69,17 +69,17 @@ cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthen
 Fetching origin
 cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git log -n1 --date=iso --pretty=format:"%H/%cd/%ae" main --
 Writing 60 bytes to /var/www/rails-new/git_repo/info/attributes
-mkdir -p /tmp/tomo/20191019200138
-cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git archive main | tar -x -f - -C /tmp/tomo/20191019200138
+mkdir -p /tmp/tomo-a4DBHX0P/20191019200138
+cd /var/www/rails-new/git_repo && export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no && git archive main | tar -x -f - -C /tmp/tomo-a4DBHX0P/20191019200138
 • core:symlink_shared
-mkdir -p /var/www/rails-new/shared/log /var/www/rails-new/shared/node_modules /var/www/rails-new/shared/public/assets /var/www/rails-new/shared/tmp/cache /var/www/rails-new/shared/tmp/pids /var/www/rails-new/shared/tmp/sockets /tmp/tomo/20191019200138/public /tmp/tomo/20191019200138/tmp
-cd /tmp/tomo/20191019200138 && rm -rf log node_modules public/assets tmp/cache tmp/pids tmp/sockets
-ln -sf /var/www/rails-new/shared/log /tmp/tomo/20191019200138/log
-ln -sf /var/www/rails-new/shared/node_modules /tmp/tomo/20191019200138/node_modules
-ln -sf /var/www/rails-new/shared/public/assets /tmp/tomo/20191019200138/public/assets
-ln -sf /var/www/rails-new/shared/tmp/cache /tmp/tomo/20191019200138/tmp/cache
-ln -sf /var/www/rails-new/shared/tmp/pids /tmp/tomo/20191019200138/tmp/pids
-ln -sf /var/www/rails-new/shared/tmp/sockets /tmp/tomo/20191019200138/tmp/sockets
+mkdir -p /var/www/rails-new/shared/log /var/www/rails-new/shared/node_modules /var/www/rails-new/shared/public/assets /var/www/rails-new/shared/tmp/cache /var/www/rails-new/shared/tmp/pids /var/www/rails-new/shared/tmp/sockets /tmp/tomo-a4DBHX0P/20191019200138/public /tmp/tomo-a4DBHX0P/20191019200138/tmp
+cd /tmp/tomo-a4DBHX0P/20191019200138 && rm -rf log node_modules public/assets tmp/cache tmp/pids tmp/sockets
+ln -sf /var/www/rails-new/shared/log /tmp/tomo-a4DBHX0P/20191019200138/log
+ln -sf /var/www/rails-new/shared/node_modules /tmp/tomo-a4DBHX0P/20191019200138/node_modules
+ln -sf /var/www/rails-new/shared/public/assets /tmp/tomo-a4DBHX0P/20191019200138/public/assets
+ln -sf /var/www/rails-new/shared/tmp/cache /tmp/tomo-a4DBHX0P/20191019200138/tmp/cache
+ln -sf /var/www/rails-new/shared/tmp/pids /tmp/tomo-a4DBHX0P/20191019200138/tmp/pids
+ln -sf /var/www/rails-new/shared/tmp/sockets /tmp/tomo-a4DBHX0P/20191019200138/tmp/sockets
 • nodenv:install
 export PATH=$HOME/.nodenv/bin:$HOME/.nodenv/shims:$PATH && curl -fsSL https://github.com/nodenv/nodenv-installer/raw/master/bin/nodenv-installer | bash
 Installing nodenv with git...
@@ -194,7 +194,7 @@ Installed ruby-2.6.5 to /home/deployer/.rbenv/versions/2.6.5
 
 rbenv global 2.6.5
 • bundler:upgrade_bundler
-tail -n 10 /tmp/tomo/20191019200138/Gemfile.lock
+tail -n 10 /tmp/tomo-a4DBHX0P/20191019200138/Gemfile.lock
 gem install bundler --conservative --no-document -v 2.0.2
 Successfully installed bundler-2.0.2
 1 gem installed
@@ -202,7 +202,7 @@ Successfully installed bundler-2.0.2
 mkdir -p .bundle
 Writing 146 bytes to .bundle/config
 • bundler:install
-cd /tmp/tomo/20191019200138 && bundle check
+cd /tmp/tomo-a4DBHX0P/20191019200138 && bundle check
 The dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
 The following gems are missing
  * rake (13.0.0)
@@ -264,7 +264,7 @@ The following gems are missing
  * turbolinks (5.2.1)
  * webpacker (4.0.7)
 Install missing gems with `bundle install`
-cd /tmp/tomo/20191019200138 && bundle install
+cd /tmp/tomo-a4DBHX0P/20191019200138 && bundle install
 The dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
 Fetching gem metadata from https://rubygems.org/............
 Fetching rake 13.0.0
@@ -414,13 +414,13 @@ Ruby Sass has reached end-of-life and should no longer be used.
   https://sass-lang.com/blog/posts/7828841
 
 • rails:db_create
-cd /tmp/tomo/20191019200138 && bundle exec rails db:version
+cd /tmp/tomo-a4DBHX0P/20191019200138 && bundle exec rails db:version
 Database already exists; skipping db:create.
 • rails:db_schema_load
-[ -f /tmp/tomo/20191019200138/db/schema.rb ]
+[ -f /tmp/tomo-a4DBHX0P/20191019200138/db/schema.rb ]
 WARNING: db/schema.rb is not present; skipping schema:load.
 • rails:db_seed
-cd /tmp/tomo/20191019200138 && bundle exec rails db:seed
+cd /tmp/tomo-a4DBHX0P/20191019200138 && bundle exec rails db:seed
 • puma:setup_systemd
 loginctl user-status deployer
 mkdir -p .config/systemd/user

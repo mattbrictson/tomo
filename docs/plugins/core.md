@@ -25,7 +25,7 @@ The core plugin provides tasks, settings, and helpers that are the fundamental b
 | `ssh_forward_agent`            | Whether to forward authentication when connecting via SSH; needed for seamless git+ssh                                                                                                                    | `true`                                 |
 | `ssh_reuse_connections`        | Whether to use `ControlMaster` to keep connections open across multiple invocations of ssh; setting this to `false` will slow down tomo significantly                                                     | `true`                                 |
 | `ssh_strict_host_key_checking` | Use `"accept-new"` for a good compromise of security and convenience, `true` for most security, `false` for most convenience; note that older versions of ssh do not understand the `"accept-new"` option | `"accept-new"`                         |
-| `tmp_path`                     | Directory where the [setup](../commands/setup.md) command stages temporary files                                                                                                                          | `"/tmp/tomo"`                          |
+| `tmp_path`                     | Directory where the [setup](../commands/setup.md) command stages temporary files                                                                                                                          | `"/tmp/tomo-#{SecureRandom.alphanumeric(8)}"`                          |
 | `tomo_config_file_path`        | A special read-only setting containing the path to the `config.rb` file that was used to configure tomo                                                                                                   | `"/path/to/.tomo/config.rb"`           |
 
 ## Tasks
@@ -158,7 +158,7 @@ Deletes one or more files or directories on the remote host.
 
 ```ruby
 remote.rm_rf(paths.tmp)
-# $ rm -rf /tmp/tomo
+# $ rm -rf /tmp/tomo-a4DBHX0P
 ```
 
 ### remote.list_files(directory=nil, \*\*options) → [String]

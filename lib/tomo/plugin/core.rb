@@ -21,7 +21,7 @@ module Tomo::Plugin
       releases_path:         "%{deploy_to}/releases",
       revision_log_path:     "%{deploy_to}/revisions.log",
       shared_path:           "%{deploy_to}/shared",
-      tmp_path:              "/tmp/tomo",
+      tmp_path:              "/tmp/tomo-#{SecureRandom.alphanumeric(8)}",
       tomo_config_file_path: nil, # determined at runtime
       run_args:              [] # determined at runtime
     )
