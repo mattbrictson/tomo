@@ -6,5 +6,5 @@ branches:
   - main
 rvm:
 - ruby-head
-before_install: gem install bundler -v 2.2.3
+before_install: gem install bundler -v 2.2.4
 script: bundle exec rake test:unit
