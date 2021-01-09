@@ -100,8 +100,13 @@ module Tomo
         Gem::Requirement.new(">= 2.2").satisfied_by?(erb_version)
       end
 
-      def ruby_version_file?
-        File.exist?(".ruby-version")
+      # Does a .ruby-version file exist match the executing RUBY_VERSION?
+      def using_ruby_version_file?
+        return false unless File.exist?(".ruby-version")
+
+        IO.read(".ruby-version").rstrip == RUBY_VERSION
+      rescue IOError
+        false
       end
 
       def config_rb_template(app)
