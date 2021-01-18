@@ -17,11 +17,22 @@ module Tomo
       private
 
       def gem_suggestion
-        if Tomo.bundled?
-          "\nYou may need to add #{yellow(gem_name)} to your Gemfile."
-        else
-          "\nYou may need to install the #{yellow(gem_name)} gem."
+        return "\nYou may need to add #{yellow(gem_name)} to your Gemfile." if Tomo.bundled?
+
+        messages = ["\nYou may need to install the #{yellow(gem_name)} gem."]
+        if present_in_gemfile?
+          messages << "\nTry prefixing the tomo command with #{blue('bundle exec')} to fix this error."
         end
+
+        messages.join
+      end
+
+      def present_in_gemfile?
+        return false unless File.file?("Gemfile")
+
+        IO.read("Gemfile").match?(/^\s*gem ['"]#{Regexp.quote(gem_name)}['"]/)
+      rescue IOError
+        false
       end
     end
   end
