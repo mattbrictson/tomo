@@ -118,4 +118,8 @@ Will run this remote script:
 journalctl -q --user-unit=puma.service -f
 ```
 
+### puma:tail_log
+
+A convenience method for tailing the puma logs. Equivalent to `tomo run -- puma:log -f`
+
 [socket-activation]: https://github.com/puma/puma/blob/master/docs/systemd.md#socket-activation

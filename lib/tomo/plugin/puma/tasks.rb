@@ -38,6 +38,10 @@ module Tomo::Plugin::Puma
       remote.attach "journalctl", "-q", raw("--user-unit=#{service.name.shellescape}"), *settings[:run_args]
     end
 
+    def tail_log
+      remote.attach "journalctl -q --user-unit=#{service.name.shellescape} -f"
+    end
+
     private
 
     def port

@@ -89,4 +89,14 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
       @tester.executed_script
     )
   end
+
+  def test_tail_log
+    assert_raises(Tomo::Testing::MockedExecError) do
+      @tester.run_task("puma:tail_log")
+    end
+    assert_equal(
+      "journalctl -q --user-unit\=puma_test.service -f",
+      @tester.executed_script
+    )
+  end
 end
