@@ -29,6 +29,10 @@ module Tomo::Plugin::Git
           "tar -x -f - -C #{paths.release.shellescape}"
         )
       end
+
+      remote.chdir(paths.release) do
+        remote.git("--work-tree=. --git-dir=#{paths.git_repo} submodule update --init --recursive --depth=1")
+      end
     end
 
     private
