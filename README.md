@@ -1,7 +1,6 @@
 # Tomo
 
 [![Gem Version](https://badge.fury.io/rb/tomo.svg)](https://rubygems.org/gems/tomo)
-[![Travis](https://img.shields.io/travis/com/mattbrictson/tomo.svg?label=travis)](https://travis-ci.com/github/mattbrictson/tomo)
 [![Circle](https://circleci.com/gh/mattbrictson/tomo/tree/main.svg?style=shield)](https://app.circleci.com/pipelines/github/mattbrictson/tomo?branch=main)
 [![Code Climate](https://codeclimate.com/github/mattbrictson/tomo/badges/gpa.svg)](https://codeclimate.com/github/mattbrictson/tomo)
 
