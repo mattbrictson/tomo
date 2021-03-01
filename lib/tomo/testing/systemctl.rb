@@ -165,7 +165,7 @@ class Service < Unit
   end
 
   def parse
-    config = Hash[spec.scan(/^([^\s=]+)=\s*(\S.*?)\s*$/)]
+    config = spec.scan(/^([^\s=]+)=\s*(\S.*?)\s*$/).to_h
     working_dir = config["WorkingDirectory"] || File.expand_path("~")
     executable = config.fetch("ExecStart") do
       raise "#{name} is missing ExecStart attribute"

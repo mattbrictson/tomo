@@ -10,7 +10,7 @@ module Tomo
       end
 
       def call
-        hash = Hash[settings.keys.map { |name| [name, fetch(name)] }]
+        hash = settings.keys.map { |name| [name, fetch(name)] }.to_h
         dump_settings(hash) if Tomo.debug?
         hash
       end
