@@ -113,9 +113,7 @@ module Tomo
       end
 
       def build_dir
-        @_build_dir ||= begin
-          File.join(Dir.tmpdir, "tomo_docker_#{SecureRandom.hex(8)}")
-        end
+        @_build_dir ||= File.join(Dir.tmpdir, "tomo_docker_#{SecureRandom.hex(8)}")
       end
     end
   end

@@ -11,15 +11,13 @@ module Tomo
       end
 
       def to_a
-        @_suggestions ||= begin
-          if defined?(DidYouMean::SpellChecker)
-            checker = DidYouMean::SpellChecker.new(dictionary: dictionary)
-            suggestions = checker.correct(word)
-            suggestions || []
-          else
-            []
-          end
-        end
+        @_suggestions ||= if defined?(DidYouMean::SpellChecker)
+                            checker = DidYouMean::SpellChecker.new(dictionary: dictionary)
+                            suggestions = checker.correct(word)
+                            suggestions || []
+                          else
+                            []
+                          end
       end
 
       def to_console
