@@ -78,7 +78,7 @@ module Tomo
         return [argv, []] if index == argv.length - 1 && Completions.active?
 
         before = argv[0...index]
-        after = argv[(index + 1)..-1]
+        after = argv[(index + 1)..]
 
         [before, after]
       end
