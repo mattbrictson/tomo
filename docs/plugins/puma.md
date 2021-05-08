@@ -1,6 +1,6 @@
 # puma
 
-The puma plugin provides a [systemd](https://en.wikipedia.org/wiki/Systemd)-based solution for starting, stopping, and restarting puma using [socket activation][socket-activation] for zero-downtime restarts. It is based on the best practices in the [official puma documentation](https://github.com/puma/puma/blob/master/docs/systemd.md).
+The puma plugin provides a [systemd](https://en.wikipedia.org/wiki/Systemd)-based solution for starting, stopping, and restarting puma using [socket activation][socket-activation] for zero-downtime restarts. It is based on the best practices in the [official puma documentation](https://github.com/puma/puma/blob/HEAD/docs/systemd.md).
 
 Tomo's implementation installs puma as a _user-level_ service using `systemctl --user`. This allows puma to be installed, started, stopped, and restarted without a root user or `sudo`. However, when provisioning the host you must make sure to run the following command as root to allow the puma process to continue running even after the tomo deploy user disconnects:
 
@@ -122,4 +122,4 @@ journalctl -q --user-unit=puma.service -f
 
 A convenience method for tailing the puma logs. Equivalent to `tomo run -- puma:log -f`
 
-[socket-activation]: https://github.com/puma/puma/blob/master/docs/systemd.md#socket-activation
+[socket-activation]: https://github.com/puma/puma/blob/HEAD/docs/systemd.md#socket-activation

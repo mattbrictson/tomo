@@ -125,7 +125,7 @@ module RubyVersions
 
     def versions
       @_versions ||= begin
-        yaml = URI.open("https://raw.githubusercontent.com/ruby/www.ruby-lang.org/master/_data/downloads.yml")
+        yaml = URI.open("https://raw.githubusercontent.com/ruby/www.ruby-lang.org/HEAD/_data/downloads.yml")
         YAML.safe_load(yaml, symbolize_names: true)
       end
     end

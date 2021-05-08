@@ -12,7 +12,7 @@ module Tomo::Plugin::Nodenv
     private
 
     def run_installer
-      install_url = "https://github.com/nodenv/nodenv-installer/raw/master/bin/nodenv-installer"
+      install_url = "https://github.com/nodenv/nodenv-installer/raw/HEAD/bin/nodenv-installer"
       remote.env PATH: raw("$HOME/.nodenv/bin:$HOME/.nodenv/shims:$PATH") do
         remote.run("curl -fsSL #{install_url.shellescape} | bash")
       end
