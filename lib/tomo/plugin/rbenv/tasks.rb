@@ -11,7 +11,7 @@ module Tomo::Plugin::Rbenv
     private
 
     def run_installer
-      install_url = "https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer"
+      install_url = "https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer"
       remote.env PATH: raw("$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH") do
         remote.run("curl -fsSL #{install_url.shellescape} | bash")
       end
