@@ -15,8 +15,7 @@ module Tomo
     def debug_suggestion
       return if Tomo.debug?
 
-      "For more troubleshooting info, run tomo again using the "\
-      "#{blue('--debug')} option."
+      "For more troubleshooting info, run tomo again using the #{blue('--debug')} option."
     end
   end
 end

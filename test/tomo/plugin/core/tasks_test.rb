@@ -41,8 +41,8 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     assert_equal(
       [
         "mkdir -p /var/www/testing/shared/.bundle "\
-                 "/var/www/testing/shared/public/assets " \
-                 "/var/www/testing/current/public",
+        "/var/www/testing/shared/public/assets " \
+        "/var/www/testing/current/public",
         "cd /var/www/testing/current && rm -rf .bundle public/assets",
         "ln -sf /var/www/testing/shared/.bundle /var/www/testing/current/.bundle",
         "ln -sf /var/www/testing/shared/public/assets /var/www/testing/current/public/assets"
