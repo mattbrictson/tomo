@@ -18,7 +18,7 @@ set deploy_to: "/var/www/%{application}"
 set rbenv_ruby_version: <%= RUBY_VERSION.inspect %>
 <% end -%>
 set nodenv_node_version: <%= node_version&.inspect || "nil # FIXME" %>
-set nodenv_yarn_version: <%= yarn_version.inspect %>
+set nodenv_install_yarn: <%= yarn_version ? "true" : "false" %>
 set git_url: <%= git_origin_url&.inspect || "nil # FIXME" %>
 set git_branch: <%= git_branch&.inspect || "nil # FIXME" %>
 set git_exclusions: %w[
