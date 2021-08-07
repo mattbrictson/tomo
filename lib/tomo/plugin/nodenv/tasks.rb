@@ -39,10 +39,14 @@ module Tomo::Plugin::Nodenv
     end
 
     def install_yarn
-      version = settings[:nodenv_yarn_version]
-      return remote.run "npm i -g yarn@#{version.shellescape}" if version
+      unless settings[:nodenv_install_yarn]
+        logger.info ":nodenv_install_yarn is false; skipping yarn installation."
+        return
+      end
 
-      logger.info "No :nodenv_yarn_version specified; skipping yarn installation."
+      version = settings[:nodenv_yarn_version]
+      yarn_spec = version ? "yarn@#{version.shellescape}" : "yarn"
+      remote.run "npm i -g #{yarn_spec}"
     end
 
     def node_installed?(version)

@@ -57,6 +57,12 @@ class Tomo::Plugin::Nodenv::TasksTest < Minitest::Test
     refute_empty tester.executed_scripts.grep("nodenv global 10.15.3")
   end
 
+  def test_install_uses_npm_to_install_yarn_by_default
+    tester = configure(nodenv_node_version: "10.15.3")
+    tester.run_task("nodenv:install")
+    refute_empty tester.executed_scripts.grep("npm i -g yarn")
+  end
+
   def test_install_uses_npm_to_install_specified_version_of_yarn
     tester = configure(
       nodenv_node_version: "10.15.3",
@@ -66,8 +72,11 @@ class Tomo::Plugin::Nodenv::TasksTest < Minitest::Test
     refute_empty tester.executed_scripts.grep("npm i -g yarn@1.17.3")
   end
 
-  def test_install_skips_yarn_if_no_yarn_version_specified
-    tester = configure(nodenv_node_version: "10.15.3")
+  def test_install_skips_yarn_if_explicitly_disabled
+    tester = configure(
+      nodenv_node_version: "10.15.3",
+      nodenv_install_yarn: false
+    )
     tester.run_task("nodenv:install")
     assert_empty tester.executed_scripts.grep(/yarn/)
   end
