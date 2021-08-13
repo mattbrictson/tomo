@@ -71,7 +71,7 @@ namespace :bump do
     latest = RubyVersions.latest
     latest_patches = RubyVersions.latest_supported_patches
 
-    replace_in_file "tomo.gemspec", /ruby_version = .*">= (.*)"/ => lowest
+    replace_in_file "tomo.gemspec", /ruby_version = ">= (.*)"/ => lowest
     replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest_minor
     replace_in_file ".circleci/config.yml", /default: "([\d.]+)"/ => latest
     replace_in_file ".circleci/config.yml", /version: (\[.+\])/ => latest_patches.inspect
