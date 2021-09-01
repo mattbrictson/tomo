@@ -20,7 +20,7 @@ module Tomo
 
       def filter(tasks, host:)
         roles = host.roles
-        roles = roles.empty? ? [""] : roles
+        roles = [""] if roles.empty?
         tasks.select do |task|
           roles.any? { |role| match?(task, role) }
         end
