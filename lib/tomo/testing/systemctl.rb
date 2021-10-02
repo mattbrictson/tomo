@@ -63,9 +63,9 @@ class Unit
   def self.find(name)
     path = File.join(File.expand_path("~/.config/systemd/user/"), name)
     raise "Unknown unit: #{name}" unless File.file?(path)
-    return Service.new(name, IO.read(path)) if name.end_with?(".service")
+    return Service.new(name, File.read(path)) if name.end_with?(".service")
 
-    new(name, IO.read(path))
+    new(name, File.read(path))
   end
 
   def initialize(name, spec)

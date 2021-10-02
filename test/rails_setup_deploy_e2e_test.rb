@@ -18,19 +18,19 @@ class RailsSetupDeployE2ETest < Minitest::Test
   def test_rails_setup_deploy
     in_cloned_rails_repo do # rubocop:disable Metrics/BlockLength
       bundle_exec("tomo init")
-      config = IO.read(".tomo/config.rb")
+      config = File.read(".tomo/config.rb")
       config.sub!(
         /host ".*"/,
         %Q(host "#{@docker.host.user}@#{@docker.host.address}", port: #{@docker.host.port})
       )
       config.sub!(
         /set rbenv_ruby_version:\s*\S+/,
-        "set rbenv_ruby_version: #{IO.read('.ruby-version').strip.inspect}"
+        "set rbenv_ruby_version: #{File.read('.ruby-version').strip.inspect}"
       )
       config << <<~CONFIG
         set(#{@docker.ssh_settings.inspect})
       CONFIG
-      IO.write(".tomo/config.rb", config)
+      File.write(".tomo/config.rb", config)
 
       bundle_exec(
         "tomo run env:set "\

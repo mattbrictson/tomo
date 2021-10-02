@@ -31,7 +31,7 @@ module Tomo
       attr_reader :globs
 
       def match?(task, role)
-        task_globs = globs.keys.select { |glob| glob.match?(task) }
+        task_globs = globs.keys.select { |glob| glob.match?(task) } # rubocop:disable Style/SelectByRegexp
         return true if task_globs.empty?
 
         roles = globs.values_at(*task_globs).flatten

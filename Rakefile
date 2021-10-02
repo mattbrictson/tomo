@@ -89,7 +89,7 @@ require "open-uri"
 require "yaml"
 
 def replace_in_file(path, replacements)
-  contents = IO.read(path)
+  contents = File.read(path)
   orig_contents = contents.dup
   replacements.each do |regexp, text|
     raise "Can't find #{regexp} in #{path}" unless regexp.match?(contents)
@@ -99,7 +99,7 @@ def replace_in_file(path, replacements)
       match
     end
   end
-  IO.write(path, contents) if contents != orig_contents
+  File.write(path, contents) if contents != orig_contents
 end
 
 module RubyVersions
