@@ -35,7 +35,7 @@ module Tomo
         # TODO: use a template for this file
         FileUtils.touch(".tomo/plugins/#{app}.rb")
 
-        IO.write(DEFAULT_CONFIG_PATH, config_rb_template(app))
+        File.write(DEFAULT_CONFIG_PATH, config_rb_template(app))
 
         logger.info(green("✔ Created #{DEFAULT_CONFIG_PATH}"))
       end
@@ -99,14 +99,14 @@ module Tomo
       def using_ruby_version_file?
         return false unless File.exist?(".ruby-version")
 
-        IO.read(".ruby-version").rstrip == RUBY_VERSION
+        File.read(".ruby-version").rstrip == RUBY_VERSION
       rescue IOError
         false
       end
 
       def config_rb_template(app)
         path = File.expand_path("../templates/config.rb.erb", __dir__)
-        template = IO.read(path)
+        template = File.read(path)
         ERB.new(template, trim_mode: "-").result(binding)
       end
     end

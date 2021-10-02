@@ -98,7 +98,7 @@ module Tomo
       def visible_range
         max_visible = [8, options.length].min
 
-        offset = [0, position - max_visible / 2].max
+        offset = [0, position - (max_visible / 2)].max
         adjusted_offset = [offset, options.length - max_visible].min
 
         adjusted_offset...(adjusted_offset + max_visible)

@@ -13,7 +13,7 @@ module Tomo
         raise_file_not_found(path) unless File.file?(path)
 
         Tomo.logger.debug("Loading plugin from #{path.inspect}")
-        script = IO.read(path)
+        script = File.read(path)
         plugin = define_anonymous_plugin_class
         plugin.class_eval(script, path.to_s, 1)
 

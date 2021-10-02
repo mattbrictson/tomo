@@ -20,7 +20,7 @@ class Tomo::CLITest < Minitest::Test
   def test_prints_error_when_config_has_syntax_error
     @tester.in_temp_dir do
       FileUtils.mkdir_p(".tomo")
-      IO.write(".tomo/config.rb", <<~CONFIG)
+      File.write(".tomo/config.rb", <<~CONFIG)
         plugin "git"
         deploy do
           run "git:clone
@@ -43,7 +43,7 @@ class Tomo::CLITest < Minitest::Test
   def test_prints_error_when_config_dsl_is_used_incorrectly
     @tester.in_temp_dir do
       FileUtils.mkdir_p(".tomo")
-      IO.write(".tomo/config.rb", <<~CONFIG)
+      File.write(".tomo/config.rb", <<~CONFIG)
         plugin "git"
         deploy do
           run

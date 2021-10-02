@@ -14,7 +14,7 @@ module Tomo
     def self.from_config_rb(path=DEFAULT_CONFIG_PATH)
       ProjectNotFoundError.raise_with(path: path) unless File.file?(path)
       Tomo.logger.debug("Loading configuration from #{path.inspect}")
-      config_rb = IO.read(path)
+      config_rb = File.read(path)
 
       new.tap do |config|
         config.path = File.expand_path(path)

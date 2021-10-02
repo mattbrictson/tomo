@@ -30,7 +30,7 @@ module Tomo
       def present_in_gemfile?
         return false unless File.file?("Gemfile")
 
-        IO.read("Gemfile").match?(/^\s*gem ['"]#{Regexp.quote(gem_name)}['"]/)
+        File.read("Gemfile").match?(/^\s*gem ['"]#{Regexp.quote(gem_name)}['"]/)
       rescue IOError
         false
       end
