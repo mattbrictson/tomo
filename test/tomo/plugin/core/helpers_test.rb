@@ -38,7 +38,7 @@ class Tomo::Plugin::Core::HelpersTest < Minitest::Test
 
   def test_write_replaces_the_file
     @tester.call_helper(:write, text: "hello there", to: "/a/file")
-    assert_equal('echo -n hello\ there > /a/file', @tester.executed_script)
+    assert_equal("echo -n hello\\ there > /a/file", @tester.executed_script)
   end
 
   def test_write_appends_to_the_file
@@ -85,7 +85,7 @@ class Tomo::Plugin::Core::HelpersTest < Minitest::Test
 
   def test_mkdir_p
     @tester.call_helper(:mkdir_p, "/a/path", "/another/file name")
-    assert_equal('mkdir -p /a/path /another/file\ name', @tester.executed_script)
+    assert_equal("mkdir -p /a/path /another/file\\ name", @tester.executed_script)
   end
 
   def test_rm_rf
