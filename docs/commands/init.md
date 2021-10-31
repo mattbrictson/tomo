@@ -13,7 +13,7 @@ Set up a new tomo project named `APP`. If `APP` is not specified, the name of th
 `tomo init` will make educated guesses about your project and fill in some configuration settings for you:
 
 - `nodenv_node_version` based on `node --version`
-- `nodenv_yarn_version` based on `yarn --version`
+- `nodenv_install_yarn` based on whether `yarn` is present
 - `git_url` based on metadata in `.git/` for this project, if present
 - `rbenv_ruby_version` based on the version of Ruby being used to run tomo
 
