@@ -22,7 +22,8 @@ Gem::Specification.new do |spec|
     "changelog_uri" => "https://github.com/mattbrictson/tomo/releases",
     "source_code_uri" => "https://github.com/mattbrictson/tomo",
     "homepage_uri" => spec.homepage,
-    "documentation_uri" => "https://tomo-deploy.com/"
+    "documentation_uri" => "https://tomo-deploy.com/",
+    "rubygems_mfa_required" => "true"
   }
 
   # Specify which files should be added to the gem when it is released.
