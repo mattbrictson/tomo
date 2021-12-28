@@ -1,10 +1,10 @@
-FROM cimg/ruby:3.0.3-node
+FROM cimg/ruby:3.1.0-node
 ARG DOCKER_MACHINE_NAME
 ARG DOCKER_TLS_VERIFY
 ARG DOCKER_HOST
 WORKDIR /tomo
 USER root
-RUN gem install bundler -v 2.2.32
+RUN gem install bundler -v 2.3.3
 COPY . .
 RUN bundle install --jobs=4 --retry=3
 RUN chown -R circleci:circleci .
