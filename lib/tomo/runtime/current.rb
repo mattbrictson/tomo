@@ -29,7 +29,7 @@ module Tomo
         private
 
         def slice(*keys)
-          keys.map { |key| [key, fiber_locals[key]] }.to_h
+          keys.to_h { |key| [key, fiber_locals[key]] }
         end
 
         def fiber_locals
