@@ -3,6 +3,14 @@ require "time"
 
 module Tomo::Plugin::Git
   class Tasks < Tomo::TaskLibrary
+    def config
+      user_name = settings[:git_user_name] || remote.host.user
+      user_email = settings[:git_user_email] || "#{remote.host.user}@example.com"
+
+      remote.git("config", "--global", "user.name", user_name)
+      remote.git("config", "--global", "user.email", user_email)
+    end
+
     def clone
       require_setting :git_url
 
