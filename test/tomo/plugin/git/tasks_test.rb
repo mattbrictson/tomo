@@ -2,6 +2,33 @@ require "test_helper"
 require "tomo/plugin/git"
 
 class Tomo::Plugin::Git::TasksTest < Minitest::Test
+  def test_config_sets_name_and_email_with_user_by_default
+    tester = configure
+    tester.run_task("git:config")
+    assert_equal(
+      [
+        "git config --global user.name testing",
+        "git config --global user.email testing@example.com"
+      ],
+      tester.executed_scripts
+    )
+  end
+
+  def test_config_sets_name_and_email_based_on_settings
+    tester = configure(
+      git_user_name: "ahoy user",
+      git_user_email: "hello@test.biz"
+    )
+    tester.run_task("git:config")
+    assert_equal(
+      [
+        "git config --global user.name ahoy\\ user",
+        "git config --global user.email hello@test.biz"
+      ],
+      tester.executed_scripts
+    )
+  end
+
   def test_create_release_uses_branch_if_specified
     tester = configure(git_branch: "develop")
     tester.run_task("git:create_release")

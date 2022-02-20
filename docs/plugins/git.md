@@ -12,8 +12,23 @@ The git plugin uses git running on the remote host to fetch the code of the app 
 | `git_env`        | Environment variables that will be set when issuing git commands (hash)                                                                                                                                               | `{ GIT_SSH_COMMAND: "ssh -o PasswordAuthentication=no -o StrictHostKeyChecking=no" }` |
 | `git_ref`        | The commit SHA or tag to deploy (overrides `:git_branch`)                                                                                                                                                             | `nil`                                                                                 |
 | `git_url`        | URL of the git repository; always use the SSH form like `git@github.com:username/repo.git` (not HTTPS)                                                                                                                | `nil`                                                                                 |
+| `git_user_name`        | The value to use for git's `user.name` config                                                                                                                | `nil`                                                                                 |
+| `git_user_email`        | The value to use for git's `user.email` config                                                                                                            | `nil`                                                                                 |
 
 ## Tasks
+
+### git:config
+
+Globally (for the deployer user) configures git with values for `user.name` and `user.email` so that certain git commands are able to function. By default, tomo will use the deployer username and append `@example.com` to generate these values, like this:
+
+```
+git config --global user.name deployer
+git config --global user.email deployer@example.com
+```
+
+If you wish to customize the name and email values, use the `git_user_name` and `git_user_email` settings.
+
+`git:config` is intended for use as a [setup](../commands/setup.md) task.
 
 ### git:clone
 

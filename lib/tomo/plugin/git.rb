@@ -12,6 +12,8 @@ module Tomo::Plugin
              git_exclusions: [],
              git_env:        { GIT_SSH_COMMAND: "ssh -o PasswordAuthentication=no -o StrictHostKeyChecking=no" },
              git_ref:        nil,
-             git_url:        nil
+             git_url:        nil,
+             git_user_name:  nil,
+             git_user_email: nil
   end
 end
