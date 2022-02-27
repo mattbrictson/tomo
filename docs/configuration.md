@@ -176,6 +176,7 @@ Define the list of tasks that will be run by the [`tomo setup`](commands/setup.m
 setup do
   run "env:setup"
   run "core:setup_directories"
+  run "git:config"
   run "git:clone"
   run "git:create_release"
   run "core:symlink_shared"
