@@ -2,15 +2,15 @@ require "test_helper"
 
 class Tomo::ConsoleTest < Minitest::Test
   def test_interactive_is_true_for_tty
-    assert Tomo::Console.new({}, tty).interactive?
+    assert_predicate Tomo::Console.new({}, tty), :interactive?
   end
 
   def test_interactive_is_false_for_ci_env
-    refute Tomo::Console.new({ "CIRCLECI" => "1" }, tty).interactive?
+    refute_predicate Tomo::Console.new({ "CIRCLECI" => "1" }, tty), :interactive?
   end
 
   def test_interactive_is_false_non_tty
-    refute Tomo::Console.new({}, non_tty).interactive?
+    refute_predicate Tomo::Console.new({}, non_tty), :interactive?
   end
 
   def test_prompt_answer_does_not_contain_newline
