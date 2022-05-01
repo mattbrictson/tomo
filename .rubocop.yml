@@ -75,6 +75,9 @@ Style/DoubleNegation:
 Style/EmptyMethod:
   Enabled: false
 
+Style/FetchEnvVar:
+  Enabled: false
+
 Style/FormatStringToken:
   Enabled: false
 
