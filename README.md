@@ -240,6 +240,10 @@ host "app2@example.com"
 
 Next run `tomo setup` for _both_ apps; this will set everything up for both users on the remote host (environment variables, rbenv, etc.). You can now deploy both apps to the same host, with the confidence that their configurations will be kept cleanly separated.
 
+#### Does tomo support git submodules?
+
+No, not out of the box. However, you can extend tomo with an additional task for submodules; see the solution in [PR #220](https://github.com/mattbrictson/tomo/pull/220#pullrequestreview-979249573) suggested by [@numbcoder](https://github.com/numbcoder).
+
 ## Support
 
 This project is a labor of love and I can only spend a few hours a week maintaining it, at most. If you'd like to help by submitting a pull request, or if you've discovered a bug that needs my attention, please let me know. Check out [CONTRIBUTING.md](https://github.com/mattbrictson/tomo/blob/main/CONTRIBUTING.md) to get started. Happy hacking! —Matt
