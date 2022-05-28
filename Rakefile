@@ -117,7 +117,7 @@ module RubyVersions
     end
 
     def latest_supported_patches
-      patches = [versions[:stable], versions[:security_maintenance]].flatten
+      patches = [versions[:stable], versions[:security_maintenance], versions[:eol]].compact.flatten
       patches.map { |p| Gem::Version.new(p) }.sort.map(&:to_s)
     end
 
