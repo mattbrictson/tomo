@@ -61,22 +61,18 @@ namespace :bump do
   task :bundler do
     version = Gem.latest_version_for("bundler").to_s
     replace_in_file ".circleci/config.yml", /bundler -v (\S+)/ => version
-    replace_in_file ".circleci/Dockerfile", /bundler -v (\S+)/ => version
-    replace_in_file "Gemfile.lock", /^BUNDLED WITH\n\s+([\d.]+)$/ => version
+    replace_in_file "Gemfile.lock", /^BUNDLED WITH\n\s+(\d\S+)$/ => version
   end
 
   task :ruby do
-    lowest = RubyVersions.lowest_supported
-    lowest_minor = RubyVersions.lowest_supported_minor
+    lowest = RubyVersions.lowest
     latest = RubyVersions.latest
-    latest_patches = RubyVersions.latest_supported_patches
+    all_supported = RubyVersions.all_supported
 
-    replace_in_file "tomo.gemspec", /ruby_version = ">= (.*)"/ => lowest
-    replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest_minor
+    replace_in_file "tomo.gemspec", /ruby_version = .*">= (.*)"/ => lowest
+    replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest
     replace_in_file ".circleci/config.yml", /default: "([\d.]+)"/ => latest
-    replace_in_file ".circleci/config.yml", /version: (\[.+\])/ => latest_patches.inspect
-    replace_in_file ".circleci/Dockerfile", %r{cimg/ruby:([\d.]+)} => latest
-    replace_in_file "docs/comparisons.md", /ruby version\s*\|\s*([\d.]+)/i => lowest_minor
+    replace_in_file ".circleci/config.yml", /version: (\[.+\])/ => all_supported.inspect
   end
 
   task :year do
@@ -104,21 +100,17 @@ end
 
 module RubyVersions
   class << self
-    def lowest_supported
-      "#{lowest_supported_minor}.0"
-    end
-
-    def lowest_supported_minor
-      latest_supported_patches.first[/\d+\.\d+/]
+    def lowest
+      all_supported.first
     end
 
     def latest
-      latest_supported_patches.last
+      all_supported.last
     end
 
-    def latest_supported_patches
+    def all_supported
       patches = versions.values_at(:stable, :security_maintenance, :eol).compact.flatten
-      patches.map { |p| Gem::Version.new(p) }.sort.map(&:to_s)
+      patches.map { |p| Gem::Version.new(p[/\d+\.\d+/]) }.sort.map(&:to_s)
     end
 
     private
