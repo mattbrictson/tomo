@@ -31,8 +31,7 @@ module Tomo::Plugin::Nodenv
     end
 
     def install_node
-      require_setting :nodenv_node_version
-      node_version = settings[:nodenv_node_version]
+      node_version = settings[:nodenv_node_version] || extract_node_ver_from_version_file
 
       remote.run "nodenv install #{node_version.shellescape}" unless node_installed?(node_version)
       remote.run "nodenv global #{node_version.shellescape}"
@@ -56,6 +55,17 @@ module Tomo::Plugin::Nodenv
         return true
       end
       false
+    end
+
+    def extract_node_ver_from_version_file
+      path = paths.release.join(".node-version")
+      version = remote.capture("cat", path, raise_on_error: false).strip
+      return version unless version.empty?
+
+      die <<~REASON
+        Could not guess node version from .node-version file.
+        Use the :nodenv_node_version setting to specify the version of node to install.
+      REASON
     end
   end
 end

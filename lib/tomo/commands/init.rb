@@ -104,6 +104,16 @@ module Tomo
         false
       end
 
+      # Does a .node-version file exist match `node --version`?
+      def using_node_version_file?
+        return false unless File.exist?(".node-version")
+
+        version = File.read(".node-version").rstrip
+        !version.empty? && version == node_version
+      rescue IOError
+        false
+      end
+
       def config_rb_template(app)
         path = File.expand_path("../templates/config.rb.erb", __dir__)
         template = File.read(path)
