@@ -8,7 +8,7 @@ The nodenv plugin installs node and yarn. This allows you to deploy an app with 
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------- |
 | `bashrc_path`         | Location of the deploy user’s `.bashrc` file                                                                                   | `".bashrc"` |
 | `nodenv_install_yarn` | Whether to install yarn globally via `npm i -g yarn`                                                                           | `true`      |
-| `nodenv_node_version` | Version of node to install                                                                                                     | `nil`       |
+| `nodenv_node_version` | Version of node to install; if nil (the default), determine the version based on .node-version                                 | `nil`       |
 | `nodenv_yarn_version` | A value of `nil` (the default) means install the latest; specify this only if you need a specific 1.y.z global version of yarn | `nil`       |
 
 ## Tasks
@@ -17,7 +17,7 @@ The nodenv plugin installs node and yarn. This allows you to deploy an app with 
 
 Installs nodenv, uses nodenv to install node, and makes the desired version of node the global default version for the deploy user. During installation, the user’s bashrc file is modified so that nodenv is automatically loaded for interactive and non-interactive shells.
 
-You must supply a value for the `nodenv_node_version` setting for this task to work.
+You must supply a value for the `nodenv_node_version` setting or have a `.node-version` file in your project for this task to work.
 
 By default, yarn is also installed globally via npm. This can be disabled by setting `nodenv_install_yarn` to `false`.
 
