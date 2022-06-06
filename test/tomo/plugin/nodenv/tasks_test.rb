@@ -81,11 +81,20 @@ class Tomo::Plugin::Nodenv::TasksTest < Minitest::Test
     assert_empty tester.executed_scripts.grep(/yarn/)
   end
 
-  def test_install_raises_if_nodenv_node_version_is_not_specified
+  def test_install_fails_with_message_if_nodenv_node_version_is_not_specified
     tester = configure
-    assert_raises(Tomo::Runtime::SettingsRequiredError) do
+    tester.mock_script_result("cat /tmp/tomo/20201027184921/.node-version", exit_status: 1)
+    error = assert_raises(Tomo::Runtime::TaskAbortedError) do
       tester.run_task("nodenv:install")
     end
+    assert_match(/could not guess node version/i, error.message)
+  end
+
+  def test_install_uses_node_version_file_for_node_version
+    tester = configure(release_path: "/tmp/tomo/20201027184921")
+    tester.mock_script_result("cat /tmp/tomo/20201027184921/.node-version", stdout: "16.15.0\n")
+    tester.run_task("nodenv:install")
+    assert_includes(tester.executed_scripts, "nodenv install 16.15.0")
   end
 
   private
