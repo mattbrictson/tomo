@@ -1,6 +1,6 @@
 # Deploying Rails From Scratch
 
-In this tutorial we will use tomo to deploy a [sample Rails project](https://github.com/mattbrictson/rails-new) to a virtual private server (VPS). These instructions use [DigitalOcean](https://www.digitalocean.com) as the hosting provider, but any provider that offers an Ubuntu 18.04 or 20.04 LTS VPS should work in a similar way. Here are the steps involved (step 1 is the only part that is DigitalOcean-specific):
+In this tutorial we will use tomo to deploy a [sample Rails project](https://github.com/mattbrictson/rails-new) to a virtual private server (VPS). These instructions use [DigitalOcean](https://www.digitalocean.com) as the hosting provider, but any provider that offers an Ubuntu 20.04 or 22.04 LTS VPS should work in a similar way. Here are the steps involved (step 1 is the only part that is DigitalOcean-specific):
 
 1. [Create an Ubuntu VPS](#create-an-ubuntu-vps)
 2. [Install necessary apt packages](#install-necessary-apt-packages)
@@ -15,7 +15,7 @@ This is a basic tutorial that skips over DNS, TLS, load balancing, PostgreSQL, e
 
 Log into [DigitalOcean](https://www.digitalocean.com) and create a "Droplet" (aka a VPS). If this is your first time using DigitalOcean, check out their [Droplet QuickStart](https://www.digitalocean.com/docs/droplets/quickstart/) guide for an introduction to the service.
 
-When creating the Droplet, make sure to choose **Ubuntu 18.04 or 20.04 (LTS) x64**:
+When creating the Droplet, make sure to choose **Ubuntu 20.04 or 22.04 (LTS) x64**:
 
 ![Ubuntu 20.04 LTS](./ubuntu-20-lts@2x.png)
 
