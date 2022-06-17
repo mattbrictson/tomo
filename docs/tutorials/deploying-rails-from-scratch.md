@@ -84,25 +84,15 @@ We will be deploying [this basic Rails app](https://github.com/mattbrictson/rail
 $ git clone https://github.com/mattbrictson/rails-new
 ```
 
-Rails requires Node and Yarn, so make sure they are working:
-
-```sh
-# Run on your local machine
-$ rails-new/bin/yarn -v
-1.16.0
-```
-
-If you get an error, install Node and Yarn before continuing.
-
-Now it is time to configure tomo to deploy this Rails app. Inside the `rails-new` directory, install tomo and run `tomo init`. This will set up a deploy configuration with a good set of defaults:
+Inside the `rails-new` directory, install tomo and run `tomo init`. This will set up a deploy configuration with a good set of defaults:
 
 ```sh
 # Run on your local machine
 $ cd rails-new
 
 $ gem install tomo
-Fetching tomo-1.0.0.gem
-Successfully installed tomo-1.0.0
+Fetching tomo-1.11.0.gem
+Successfully installed tomo-1.11.0
 1 gem installed
 
 $ tomo init
