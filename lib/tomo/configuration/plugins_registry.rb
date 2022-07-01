@@ -55,10 +55,7 @@ module Tomo
       end
 
       def register_task_library(namespace, library_class)
-        Tomo.logger.debug(
-          "Registering task library #{library_class}"\
-          " (#{namespace.inspect} namespace)"
-        )
+        Tomo.logger.debug("Registering task library #{library_class} (#{namespace.inspect} namespace)")
         namespaced_classes << [namespace, library_class]
       end
     end

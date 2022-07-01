@@ -33,8 +33,8 @@ class RailsSetupDeployE2ETest < Minitest::Test
       File.write(".tomo/config.rb", config)
 
       bundle_exec(
-        "tomo run env:set "\
-        "DATABASE_URL=sqlite3:/var/www/rails-new/shared/production.sqlite3 "\
+        "tomo run env:set " \
+        "DATABASE_URL=sqlite3:/var/www/rails-new/shared/production.sqlite3 " \
         "SECRET_KEY_BASE=#{SecureRandom.hex(64)}"
       )
       bundle_exec("tomo setup")

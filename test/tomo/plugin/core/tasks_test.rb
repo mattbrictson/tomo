@@ -40,7 +40,7 @@ class Tomo::Plugin::Core::TasksTest < Minitest::Test
     @tester.run_task("core:symlink_shared")
     assert_equal(
       [
-        "mkdir -p /var/www/testing/shared/.bundle "\
+        "mkdir -p /var/www/testing/shared/.bundle " \
         "/var/www/testing/shared/public/assets " \
         "/var/www/testing/current/public",
         "cd /var/www/testing/current && rm -rf .bundle public/assets",
