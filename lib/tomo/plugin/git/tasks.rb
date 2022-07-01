@@ -32,10 +32,7 @@ module Tomo::Plugin::Git
       remote.mkdir_p(paths.release)
 
       remote.chdir(paths.git_repo) do
-        remote.git(
-          "archive #{ref.shellescape} | "\
-          "tar -x -f - -C #{paths.release.shellescape}"
-        )
+        remote.git("archive #{ref.shellescape} | tar -x -f - -C #{paths.release.shellescape}")
       end
     end
 
@@ -53,8 +50,8 @@ module Tomo::Plugin::Git
       return unless settings[:git_ref] && settings[:git_branch]
 
       logger.warn(
-        ":git_ref (#{settings[:git_ref]}) and "\
-        ":git_branch (#{settings[:git_branch]}) are both specified. "\
+        ":git_ref (#{settings[:git_ref]}) and " \
+        ":git_branch (#{settings[:git_branch]}) are both specified. " \
         "Ignoring :git_branch."
       )
       @ref_override_warning = true
