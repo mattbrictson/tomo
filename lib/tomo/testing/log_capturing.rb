@@ -1,3 +1,5 @@
+require "stringio"
+
 module Tomo
   module Testing
     module LogCapturing

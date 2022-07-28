@@ -1,4 +1,4 @@
-require "forwardable"
+require "delegate"
 require "pathname"
 
 module Tomo

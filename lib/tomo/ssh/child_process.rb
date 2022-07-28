@@ -1,5 +1,6 @@
 require "open3"
 require "shellwords"
+require "stringio"
 
 module Tomo
   module SSH

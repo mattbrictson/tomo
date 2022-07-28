@@ -1,4 +1,5 @@
 require "test_helper"
+require "stringio"
 
 class Tomo::ConsoleTest < Minitest::Test
   def test_interactive_is_true_for_tty
