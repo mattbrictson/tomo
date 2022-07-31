@@ -70,9 +70,9 @@ module Tomo
 
     def new_task_runner(release_type, args)
       run_settings = { release_path: release_path_for(release_type) }
-                     .merge(local_user: Runtime.local_user)
-                     .merge(settings)
-                     .merge(run_args: args)
+        .merge(local_user: Runtime.local_user)
+        .merge(settings)
+        .merge(run_args: args)
 
       TaskRunner.new(plugins_registry: plugins_registry, settings: run_settings)
     end

@@ -15,6 +15,18 @@ AllCops:
     - "tmp/**/*"
     - "vendor/**/*"
 
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+
 Layout/HashAlignment:
   EnforcedColonStyle:
     - table
@@ -22,6 +34,18 @@ Layout/HashAlignment:
   EnforcedHashRocketStyle:
     - table
     - key
+
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 Layout/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space

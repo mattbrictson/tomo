@@ -21,9 +21,10 @@ module Tomo
         return if failure?
 
         promises << future_on(executor, *args, &block)
-                    .on_rejection_using(executor) do |reason|
-                      self.failure = reason
-                    end
+          .on_rejection_using(executor) do |reason|
+            self.failure = reason
+          end
+
         nil
       end
 

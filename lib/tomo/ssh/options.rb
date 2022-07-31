@@ -41,8 +41,10 @@ module Tomo
 
       def control_opts(path, verbose)
         opts = [
-          "-o", "ControlMaster=auto",
-          "-o", "ControlPath=#{path}",
+          "-o",
+          "ControlMaster=auto",
+          "-o",
+          "ControlPath=#{path}",
           "-o"
         ]
         opts << (verbose ? "ControlPersist=1s" : "ControlPersist=30s")

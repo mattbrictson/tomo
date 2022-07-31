@@ -57,8 +57,10 @@ module Tomo
         hosts_file = File.join(Dir.tmpdir, "tomo_#{SecureRandom.hex(8)}_hosts")
         {
           ssh_extra_opts: [
-            "-o", "UserKnownHostsFile=#{hosts_file}",
-            "-o", "IdentityFile=#{private_key_path}"
+            "-o",
+            "UserKnownHostsFile=#{hosts_file}",
+            "-o",
+            "IdentityFile=#{private_key_path}"
           ],
           ssh_strict_host_key_checking: false
         }
