@@ -107,3 +107,12 @@ Like `rake` but returns `true` if the command succeeds (exit status 0), otherwis
 ```ruby
 remote.rake?("db:migrate") # => true
 ```
+
+### remote.thor(\*args, \*\*options) → [Tomo::Result](../api/Result.md)
+
+Runs `bundle exec thor` in within `paths.release` by default.
+
+```ruby
+remote.thor("user:create")
+# $ cd /var/www/my-app/releases/20190604204415 && bundle exec thor user:create
+```

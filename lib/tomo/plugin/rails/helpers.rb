@@ -16,5 +16,11 @@ module Tomo::Plugin::Rails
       result = rake(*args, **opts.merge(raise_on_error: false))
       result.success?
     end
+
+    def thor(*args, **opts)
+      prepend("exec", "thor") do
+        bundle(*args, **opts)
+      end
+    end
   end
 end
