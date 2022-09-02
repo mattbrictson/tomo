@@ -11,6 +11,13 @@ class Tomo::CLITest < Minitest::Test
     assert_match "Simulated bundler:install", @tester.stdout
   end
 
+  def test_dash_t_is_alias_for_tasks
+    @tester.run "init"
+    @tester.run "-T"
+    assert_match "core:clean_releases", @tester.stdout
+    assert_match "core:setup_directories", @tester.stdout
+  end
+
   def test_suggests_installing_missing_plugin
     @tester.run "init"
     @tester.run "foo:setup", raise_on_error: false

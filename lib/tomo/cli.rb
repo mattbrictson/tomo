@@ -32,6 +32,7 @@ module Tomo
       "run" => Tomo::Commands::Run,
       "setup" => Tomo::Commands::Setup,
       "tasks" => Tomo::Commands::Tasks,
+      "-T" => Tomo::Commands::Tasks,
       "version" => Tomo::Commands::Version,
       "completion-script" => Tomo::Commands::CompletionScript
     }.freeze
