@@ -23,7 +23,7 @@ module Tomo
       def determine_color_support
         if ENV["CLICOLOR_FORCE"] == "1"
           true
-        elsif ENV["TERM"] == "dumb"
+        elsif ENV["TERM"] == "dumb" || !ENV["NO_COLOR"].to_s.empty?
           false
         else
           tty?($stdout) && tty?($stderr)
