@@ -12,19 +12,23 @@ class Tomo::ColorsTest < Minitest::Test
 
   def test_enabled_by_default_if_tty
     with_tty(true) do
-      assert_predicate(Tomo::Colors, :enabled?)
+      with_env({}) do
+        assert_predicate(Tomo::Colors, :enabled?)
+      end
     end
   end
 
   def test_disabled_by_default_if_not_tty
     with_tty(false) do
-      refute_predicate(Tomo::Colors, :enabled?)
+      with_env({}) do
+        refute_predicate(Tomo::Colors, :enabled?)
+      end
     end
   end
 
   def test_enabled_by_clicolor_force
     with_tty(false) do
-      with_env("CLICOLOR_FORCE", "1") do
+      with_env("CLICOLOR_FORCE" => "1") do
         assert_predicate(Tomo::Colors, :enabled?)
       end
     end
@@ -32,7 +36,7 @@ class Tomo::ColorsTest < Minitest::Test
 
   def test_disabled_by_no_color
     with_tty(true) do
-      with_env("NO_COLOR", "1") do
+      with_env("NO_COLOR" => "1") do
         refute_predicate(Tomo::Colors, :enabled?)
       end
     end
@@ -40,7 +44,7 @@ class Tomo::ColorsTest < Minitest::Test
 
   def test_disabled_by_dumb_term
     with_tty(true) do
-      with_env("TERM", "dumb") do
+      with_env("TERM" => "dumb") do
         refute_predicate(Tomo::Colors, :enabled?)
       end
     end
@@ -52,7 +56,7 @@ class Tomo::ColorsTest < Minitest::Test
     $stdout.stub(:tty?, tty) { $stderr.stub(:tty?, tty, &block) }
   end
 
-  def with_env(key, value, &block)
-    ENV.stub(:[], ->(name) { value if name == key }, &block)
+  def with_env(env, &block)
+    ENV.stub(:[], ->(name) { env[name] }, &block)
   end
 end
