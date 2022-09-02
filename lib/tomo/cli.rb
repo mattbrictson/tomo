@@ -32,9 +32,12 @@ module Tomo
       "run" => Tomo::Commands::Run,
       "setup" => Tomo::Commands::Setup,
       "tasks" => Tomo::Commands::Tasks,
-      "-T" => Tomo::Commands::Tasks,
       "version" => Tomo::Commands::Version,
       "completion-script" => Tomo::Commands::CompletionScript
+    }.freeze
+
+    COMMAND_ALIASES = {
+      "-T" => Tomo::Commands::Tasks
     }.freeze
 
     def call(argv)
@@ -57,12 +60,14 @@ module Tomo
     end
 
     def lookup_command(argv)
+      commands = COMMANDS.merge(COMMAND_ALIASES)
+
       command_name = argv.first unless Completions.active? && argv.length == 1
-      command_name = Abbrev.abbrev(COMMANDS.keys)[command_name]
+      command_name = Abbrev.abbrev(commands.keys)[command_name]
       argv.shift if command_name
 
       command_name = "run" if command_name.nil? && task_format?(argv.first)
-      command = COMMANDS[command_name] || Tomo::Commands::Default
+      command = commands[command_name] || Tomo::Commands::Default
       [command, command_name]
     end
 
