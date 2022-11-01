@@ -72,6 +72,9 @@ Metrics/MethodLength:
 Metrics/ParameterLists:
   Max: 6
 
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
+
 Minitest/MultipleAssertions:
   Max: 5
 
