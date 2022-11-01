@@ -74,7 +74,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
       [
         "systemctl --user is-active puma_test.service",
         "systemctl --user status puma_test.service",
-        "journalctl -q -n 50 --user-unit\=puma_test.service"
+        "journalctl -q -n 50 --user-unit=puma_test.service"
       ],
       @tester.executed_scripts
     )
@@ -85,7 +85,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
       @tester.run_task("puma:log", "-f")
     end
     assert_equal(
-      "journalctl -q --user-unit\=puma_test.service -f",
+      "journalctl -q --user-unit=puma_test.service -f",
       @tester.executed_script
     )
   end
@@ -95,7 +95,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
       @tester.run_task("puma:tail_log")
     end
     assert_equal(
-      "journalctl -q --user-unit\=puma_test.service -f",
+      "journalctl -q --user-unit=puma_test.service -f",
       @tester.executed_script
     )
   end
