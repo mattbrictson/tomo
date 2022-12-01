@@ -29,7 +29,7 @@ module Tomo
         assert_no_tomo_project!
 
         app = args.first || current_dir_name || "default"
-        app = app.gsub(/([^\w\-]|_)+/, "_").downcase
+        app = app.gsub(/([^\w-]|_)+/, "_").downcase
         FileUtils.mkdir_p(".tomo/plugins")
 
         # TODO: use a template for this file

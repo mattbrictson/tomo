@@ -12,9 +12,9 @@ module Tomo
       }.freeze
 
       OPTION_PATTERNS = {
-        /\A--\[no-\]([\-a-z]+)\z/               => :on_off_switch_rule,
-        /\A(-[a-z]), (--[\-a-z]+)\z/            => :basic_switch_rule,
-        /\A(-[a-z]), (--[\-a-z]+) [A-Z=_\-]+\z/ => :value_switch_rule
+        /\A--\[no-\]([-a-z]+)\z/              => :on_off_switch_rule,
+        /\A(-[a-z]), (--[-a-z]+)\z/           => :basic_switch_rule,
+        /\A(-[a-z]), (--[-a-z]+) [A-Z=_-]+\z/ => :value_switch_rule
       }.freeze
 
       private_constant :ARG_PATTERNS, :OPTION_PATTERNS
