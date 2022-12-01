@@ -70,7 +70,7 @@ module Tomo
         thread_pool.run_to_completion
         yield(remotes)
       ensure
-        (remotes || {}).values.each(&:close)
+        (remotes || {}).each_value(&:close)
       end
 
       def build_plan(tasks, task_filter)
