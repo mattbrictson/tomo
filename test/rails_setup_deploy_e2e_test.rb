@@ -57,7 +57,7 @@ class RailsSetupDeployE2ETest < Minitest::Test
     with_tomo_gemfile do
       full_cmd = "bundle exec #{command}"
       puts ">>> #{full_cmd}"
-      system(full_cmd) || raise("Command failed")
+      system(full_cmd, exception: true)
     end
   end
 
