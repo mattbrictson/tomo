@@ -41,7 +41,8 @@ Rails requires certain operating system packages in order to build Ruby and inst
 # Run these commands as root on the VPS
 apt-get -y update
 apt-get -y install build-essential zlib1g-dev libssl-dev libreadline-dev \
-                   git-core curl locales libsqlite3-dev tzdata
+                   git-core curl locales libsqlite3-dev libyaml-dev \
+                   tzdata
 locale-gen en_US.UTF-8
 ```
 
