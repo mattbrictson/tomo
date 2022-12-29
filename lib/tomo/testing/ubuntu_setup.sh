@@ -17,8 +17,8 @@ touch /var/lib/systemd/linger/deployer
 
 # Packages needed for ruby, etc.
 apt-get -y update
-apt-get -y install build-essential zlib1g-dev libssl-dev libreadline-dev \
-                   git-core curl locales libsqlite3-dev libyaml-dev
+apt-get -y install build-essential pkg-config git-core curl locales \
+                   libffi-dev libreadline-dev libsqlite3-dev libssl-dev libyaml-dev zlib1g-dev
 
 apt-get -y install tzdata \
         -o DPkg::options::="--force-confdef" \
