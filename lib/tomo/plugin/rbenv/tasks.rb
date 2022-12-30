@@ -44,7 +44,7 @@ module Tomo::Plugin::Rbenv
 
     def ruby_installed?(version)
       versions = remote.capture("rbenv versions", raise_on_error: false)
-      if versions.include?(version)
+      if versions.match?(/^\*?\s*#{Regexp.quote(version)}\s/)
         logger.info("Ruby #{version} is already installed.")
         return true
       end
