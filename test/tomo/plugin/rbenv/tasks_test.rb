@@ -27,6 +27,40 @@ class Tomo::Plugin::Rbenv::TasksTest < Minitest::Test
     assert_match(/could not guess ruby version/i, error.message)
   end
 
+  def test_install_proceeds_if_similar_but_distinct_version_is_already_installed
+    tester = configure(release_path: "/tmp/tomo/20201027184921")
+    tester.mock_script_result("cat /tmp/tomo/20201027184921/.ruby-version", stdout: "3.2.0\n")
+    tester.mock_script_result("rbenv versions", stdout: <<~STDOUT)
+        system
+        2.7.5
+        3.0.5
+        3.1.0
+        3.1.3
+        3.2.0-preview3
+      * 3.2.0-rc1 (set by /home/deployer/.rbenv/version)
+    STDOUT
+    tester.run_task("rbenv:install")
+    assert_equal("CFLAGS=-O3 rbenv install 3.2.0", tester.executed_scripts[-2])
+  end
+
+  def test_install_is_skipped_if_version_is_already_installed
+    tester = configure(release_path: "/tmp/tomo/20201027184921")
+    tester.mock_script_result("cat /tmp/tomo/20201027184921/.ruby-version", stdout: "3.2.0-rc1\n")
+    tester.mock_script_result("rbenv versions", stdout: <<~STDOUT)
+        system
+        2.7.5
+        3.0.5
+        3.1.0
+        3.1.3
+        3.2.0-preview3
+        3.2.0-rc1
+      * 3.2.0 (set by /home/deployer/.rbenv/version)
+    STDOUT
+    tester.run_task("rbenv:install")
+    assert_empty(tester.executed_scripts.grep(/rbenv install/))
+    assert_includes(tester.stdout, "Ruby 3.2.0-rc1 is already installed")
+  end
+
   private
 
   def configure(settings={})
