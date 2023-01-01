@@ -86,7 +86,7 @@ module Tomo
       end
 
       def clear
-        height = 2 + visible_options.length
+        height = visible_options.length + 2
         esc_codes = Array.new(height) { "\e[2K\e[1G" }.join("\e[1A")
         print esc_codes
       end
