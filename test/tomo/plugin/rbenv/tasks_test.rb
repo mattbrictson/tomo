@@ -6,7 +6,7 @@ class Tomo::Plugin::Rbenv::TasksTest < Minitest::Test
     tester = configure(release_path: "/tmp/tomo/20201027184921")
     tester.mock_script_result("cat /tmp/tomo/20201027184921/.ruby-version", stdout: "2.7.1\n")
     tester.run_task("rbenv:install")
-    assert_equal("CFLAGS=-O3 rbenv install 2.7.1", tester.executed_scripts[-2])
+    assert_equal("CFLAGS=-O3 rbenv install 2.7.1 --verbose", tester.executed_scripts[-2])
   end
 
   def test_install_uses_rbenv_ruby_version_for_ruby_version
@@ -15,7 +15,7 @@ class Tomo::Plugin::Rbenv::TasksTest < Minitest::Test
       release_path: "/tmp/tomo/20201027184921"
     )
     tester.run_task("rbenv:install")
-    assert_equal("CFLAGS=-O3 rbenv install 2.6.6", tester.executed_scripts[-2])
+    assert_equal("CFLAGS=-O3 rbenv install 2.6.6 --verbose", tester.executed_scripts[-2])
   end
 
   def test_install_fails_with_message_if_no_ruby_version_specified
@@ -40,7 +40,7 @@ class Tomo::Plugin::Rbenv::TasksTest < Minitest::Test
       * 3.2.0-rc1 (set by /home/deployer/.rbenv/version)
     STDOUT
     tester.run_task("rbenv:install")
-    assert_equal("CFLAGS=-O3 rbenv install 3.2.0", tester.executed_scripts[-2])
+    assert_equal("CFLAGS=-O3 rbenv install 3.2.0 --verbose", tester.executed_scripts[-2])
   end
 
   def test_install_is_skipped_if_version_is_already_installed
