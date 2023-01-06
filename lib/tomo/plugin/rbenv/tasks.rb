@@ -34,10 +34,8 @@ module Tomo::Plugin::Rbenv
       ruby_version = version_setting || extract_ruby_ver_from_version_file
 
       unless ruby_installed?(ruby_version)
-        logger.info(
-          "Installing ruby #{ruby_version} -- this may take several minutes"
-        )
-        remote.run "CFLAGS=-O3 rbenv install #{ruby_version.shellescape}"
+        logger.info("Installing ruby #{ruby_version} -- this may take several minutes")
+        remote.run "CFLAGS=-O3 rbenv install #{ruby_version.shellescape} --verbose"
       end
       remote.run "rbenv global #{ruby_version.shellescape}"
     end
