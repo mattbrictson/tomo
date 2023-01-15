@@ -31,6 +31,8 @@ blocks:
             - pip install -r requirements.txt
             - mkdocs build
   - name: Deploy docs
+    secrets:
+      - name: tomo-gh-pages-credentials
     dependencies: []
     # run:
     #   when: "branch = 'main'"
