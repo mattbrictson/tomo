@@ -25,8 +25,23 @@ after_pipeline:
         commands:
           - test-results gen-pipeline-report
 blocks:
-  - name: Test Rails deploy via Docker
+  - name: Rubocop
     dependencies: []
+    task:
+      jobs:
+        - name: rubocop
+          commands:
+            - bundle exec rubocop
+  - name: Test
+    dependencies: []
+    task:
+      jobs:
+        - name: test
+          commands:
+            - bundle exec rake test TESTOPTS="--ci-dir=./reports"
+            - test-results publish ./reports
+  - name: Test Rails deploy via Docker
+    dependencies: ["Rubocop", "Test"]
     task:
       jobs:
         - name: test:e2e
