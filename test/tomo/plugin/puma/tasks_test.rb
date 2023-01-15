@@ -63,7 +63,7 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
     )
   end
 
-  def test_check_active_shows_logs_and_dies_if_serivce_is_inactive
+  def test_check_active_shows_logs_and_dies_if_service_is_inactive
     @tester.mock_script_result("systemctl --user is-active puma_test.service", exit_status: 1)
     error = assert_raises(Tomo::Runtime::TaskAbortedError) do
       @tester.run_task("puma:check_active")
