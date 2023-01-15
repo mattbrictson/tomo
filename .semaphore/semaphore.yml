@@ -19,8 +19,8 @@ global_job_config:
       - bundle check || bundle install
       - cache store "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-$(checksum Gemfile.lock)" vendor/bundle
 promotions:
-  - name: Automatically deploy docs
-    pipeline: deploy-docs.yml
+  - name: Deploy docs
+    pipeline_file: deploy-docs.yml
     auto_promote:
       when: "branch = 'main'"
 blocks:

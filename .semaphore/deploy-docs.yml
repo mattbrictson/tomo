@@ -1,17 +1,23 @@
+version: v1.0
 name: Deploy docs
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
 blocks:
   - name: Deploy docs
-    secrets:
-      - name: tomo-gh-pages-credentials
-    jobs:
-      - name: mkdocs gh-deploy
-        commands:
-          - sem-version python 3.10
-          - pip install -r requirements.txt
-          - git config --local user.name "Semaphore CI"
-          - git config --local user.email ci@mattbrictson.com
-          - cat README.md >> docs/index.md
-          - cp -R readme_images docs/
-          - git remote set-url --push origin "https://mattbrictson:${GITHUB_TOKEN}@github.com/mattbrictson/tomo.git"
-          - git fetch
-          - mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
+    task:
+      secrets:
+        - name: tomo-gh-pages-credentials
+      jobs:
+        - name: mkdocs gh-deploy
+          commands:
+            - sem-version python 3.10
+            - pip install -r requirements.txt
+            - git config --local user.name "Semaphore CI"
+            - git config --local user.email ci@mattbrictson.com
+            - cat README.md >> docs/index.md
+            - cp -R readme_images docs/
+            - git remote set-url --push origin "https://mattbrictson:${GITHUB_TOKEN}@github.com/mattbrictson/tomo.git"
+            - git fetch
+            - mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
