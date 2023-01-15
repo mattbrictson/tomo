@@ -35,6 +35,8 @@ blocks:
     # run:
     #   when: "branch = 'main'"
     task:
+      secrets:
+        - name: tomo-gh-pages-credentials
       jobs:
         - name: mkdocs gh-deploy
           commands:
