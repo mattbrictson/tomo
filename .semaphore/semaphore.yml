@@ -32,8 +32,8 @@ blocks:
             - mkdocs build
   - name: Deploy docs
     dependencies: []
-    # run:
-    #   when: "branch = 'main'"
+    run:
+      when: "branch = 'main'"
     task:
       secrets:
         - name: tomo-gh-pages-credentials
@@ -47,6 +47,7 @@ blocks:
             - cat README.md >> docs/index.md
             - cp -R readme_images docs/
             - git remote set-url --push origin "https://mattbrictson:${GITHUB_TOKEN}@github.com/mattbrictson/tomo.git"
+            - git fetch
             - mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
   - name: Rubocop
     dependencies: []
