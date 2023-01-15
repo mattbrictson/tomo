@@ -46,6 +46,7 @@ blocks:
             - git config --local user.email ci@mattbrictson.com
             - cat README.md >> docs/index.md
             - cp -R readme_images docs/
+            - git remote set-url --push origin "https://mattbrictson:${GITHUB_TOKEN}@github.com/mattbrictson/tomo.git"
             - mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
   - name: Rubocop
     dependencies: []
