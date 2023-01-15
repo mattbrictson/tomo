@@ -12,6 +12,7 @@ blocks:
       jobs:
         - name: mkdocs gh-deploy
           commands:
+            - checkout
             - sem-version python 3.10
             - pip install -r requirements.txt
             - git config --local user.name "Semaphore CI"
