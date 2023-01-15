@@ -18,6 +18,11 @@ global_job_config:
       - cache restore "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-,gems-${SEM_RUBY}-main-"
       - bundle check || bundle install
       - cache store "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-$(checksum Gemfile.lock)" vendor/bundle
+promotions:
+  - name: Automatically deploy docs
+    pipeline: deploy-docs.yml
+    auto_promote:
+      when: "branch = 'main'"
 blocks:
   - name: Build docs
     dependencies: []
@@ -30,25 +35,6 @@ blocks:
             - sem-version python 3.10
             - pip install -r requirements.txt
             - mkdocs build
-  - name: Deploy docs
-    dependencies: []
-    run:
-      when: "branch = 'main'"
-    task:
-      secrets:
-        - name: tomo-gh-pages-credentials
-      jobs:
-        - name: mkdocs gh-deploy
-          commands:
-            - sem-version python 3.10
-            - pip install -r requirements.txt
-            - git config --local user.name "Semaphore CI"
-            - git config --local user.email ci@mattbrictson.com
-            - cat README.md >> docs/index.md
-            - cp -R readme_images docs/
-            - git remote set-url --push origin "https://mattbrictson:${GITHUB_TOKEN}@github.com/mattbrictson/tomo.git"
-            - git fetch
-            - mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
   - name: Rubocop
     dependencies: []
     task:
