@@ -48,7 +48,7 @@ Here's how tomo compares with the most popular Ruby-based deployment tools: Capi
 | Automated host setup (ruby, bundler, yarn, etc.)                        | ✅ Yes                       | ❌ No                                                         | ❌ No                          |
 | Rollback command                                                        | ❌ No                        | ✅ Yes                                                        | ✅ Yes                         |
 | Manage host environment variables (SECRET_KEY_BASE, DATABASE_URL, etc.) | ✅ Yes                       | ❌ No                                                         | ❌ No                          |
-| Automated testing of deploying Rails end-to-end                         | ✅ Yes, via CircleCI         | ❌ No                                                         | ❌ No                          |
+| Automated testing of deploying Rails end-to-end                         | ✅ Yes                       | ❌ No                                                         | ❌ No                          |
 | Built-in Rails web server tasks                                         | ✅ Yes, puma with systemd    | ❌ No                                                         | ❌ No                          |
 | Built-in ruby version manager tasks                                     | ✅ Yes, rbenv                | ❌ No                                                         | ✅ Yes, chruby, rbenv, rvm, ry |
 | Built-in node version manager tasks                                     | ✅ Yes, nodenv               | ❌ No                                                         | ❌ No                          |
