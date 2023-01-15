@@ -19,6 +19,16 @@ global_job_config:
       - bundle check || bundle install
       - cache store "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-$(checksum Gemfile.lock)" vendor/bundle
 blocks:
+  - name: Build docs
+    dependencies: []
+    skip:
+      when: "branch = 'main'"
+    task:
+      jobs:
+        - name: mkdocs build
+          commands:
+            - pip install -r requirements.txt
+            - mkdocs build
   - name: Rubocop
     dependencies: []
     task:
