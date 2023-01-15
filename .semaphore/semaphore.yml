@@ -1,0 +1,35 @@
+version: v1.0
+name: CI
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+global_job_config:
+  env_vars:
+    - name: BUNDLE_CLEAN
+      value: "true"
+    - name: BUNDLE_PATH
+      value: "./vendor/bundle"
+  prologue:
+    commands:
+      - checkout
+      - export SEM_RUBY=${SEM_RUBY:-3.2.0}
+      - sem-version ruby $SEM_RUBY
+      - cache restore "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-,gems-${SEM_RUBY}-main-"
+      - bundle check || bundle install
+      - cache store "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-$(checksum Gemfile.lock)" vendor/bundle
+after_pipeline:
+  task:
+    jobs:
+      - name: Publish Results
+        commands:
+          - test-results gen-pipeline-report
+blocks:
+  - name: Test Rails deploy via Docker
+    dependencies: []
+    task:
+      jobs:
+        - name: test:e2e
+          commands:
+            - bundle exec rake test:e2e TESTOPTS="--ci-dir=./reports"
+            - test-results publish ./reports
