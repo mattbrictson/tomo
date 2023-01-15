@@ -32,8 +32,8 @@ blocks:
             - mkdocs build
   - name: Deploy docs
     dependencies: []
-    run:
-      when: "branch = 'main'"
+    # run:
+    #   when: "branch = 'main'"
     task:
       jobs:
         - name: mkdocs gh-deploy
