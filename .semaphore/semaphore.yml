@@ -27,6 +27,7 @@ blocks:
       jobs:
         - name: mkdocs build
           commands:
+            - sem-version python 3.11.1
             - pip install -r requirements.txt
             - mkdocs build
   - name: Rubocop
