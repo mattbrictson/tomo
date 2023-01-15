@@ -18,12 +18,6 @@ global_job_config:
       - cache restore "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-,gems-${SEM_RUBY}-main-"
       - bundle check || bundle install
       - cache store "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-$(checksum Gemfile.lock)" vendor/bundle
-after_pipeline:
-  task:
-    jobs:
-      - name: Publish Results
-        commands:
-          - test-results gen-pipeline-report
 blocks:
   - name: Rubocop
     dependencies: []
