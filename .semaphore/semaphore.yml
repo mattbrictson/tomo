@@ -15,9 +15,9 @@ global_job_config:
       - checkout
       - export SEM_RUBY=${SEM_RUBY:-3.2.0}
       - sem-version ruby $SEM_RUBY
-      - cache restore "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-,gems-${SEM_RUBY}-main-"
+      - cache restore "gems-${SEM_RUBY}-${SEMAPHORE_GIT_WORKING_BRANCH}-,gems-${SEM_RUBY}-main-"
       - bundle check || bundle install
-      - cache store "gems-${SEM_RUBY}-${SEMAPHORE_GIT_BRANCH}-$(checksum Gemfile.lock)" vendor/bundle
+      - cache store "gems-${SEM_RUBY}-${SEMAPHORE_GIT_WORKING_BRANCH}-$(checksum Gemfile.lock)" vendor/bundle
 promotions:
   - name: Deploy docs
     pipeline_file: deploy-docs.yml
