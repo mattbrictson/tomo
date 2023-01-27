@@ -44,8 +44,6 @@ module Tomo
       end
 
       def puma_port
-        return 3000 if ENV["_TOMO_CONTAINER"]
-
         Local.capture("docker port #{container_id} 3000")[/:(\d+)/, 1].to_i
       end
 
@@ -88,13 +86,7 @@ module Tomo
       end
 
       def start_container
-        host_container = ENV["_TOMO_CONTAINER"]
-        args = "--detach --init #{image_id}"
-        if host_container
-          args.prepend("--network=container:#{host_container} ")
-        else
-          args.prepend("--publish-all ")
-        end
+        args = "--publish-all --detach --init #{image_id}"
         Local.capture("docker run #{args}")[/\S+/].tap do
           # Allow some time for the container to finish booting
           sleep 0.1
@@ -102,8 +94,6 @@ module Tomo
       end
 
       def find_ssh_port
-        return 22 if ENV["_TOMO_CONTAINER"]
-
         Local.capture("docker port #{container_id} 22")[/:(\d+)/, 1].to_i
       end
 
