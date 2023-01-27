@@ -78,7 +78,7 @@ module Tomo
         end
 
         def interactive?
-          Tomo::Console.interactive? && !ENV["_TOMO_CONTAINER"]
+          Tomo::Console.interactive?
         end
 
         def wait_for_exit(thread, seconds=nil)
