@@ -9,3 +9,4 @@
 /spec/reports/
 /tmp/
 /Gemfile.lock
+.python-version
