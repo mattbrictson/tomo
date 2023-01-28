@@ -66,6 +66,14 @@ img[src$="create-new-repo%402x.png"] {
   width: 595px;
 }
 
+
+img[src$="smallest-viable-droplet%402x.png"] {
+  box-sizing: content-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 400px;
+}
+
 .wy-table-responsive table td {
   white-space: normal;
 }
