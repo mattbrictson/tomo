@@ -25,7 +25,7 @@ And use **SSH keys** for authentication (tomo does not work with password authen
 
 And select a Droplet size with at least **1GB RAM**, or Ruby may fail to compile:
 
-![Smallest Viable Droplet](./smallest-viable-droplet.png)
+![Smallest Viable Droplet](./smallest-viable-droplet@2x.png)
 
 Once the Droplet is created, confirm that you are able to connect to it (substitute `IPADDR` with the IP address provided in the DigitalOcean control panel for the new Droplet):
 
