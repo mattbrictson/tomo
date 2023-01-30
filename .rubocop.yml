@@ -1,4 +1,5 @@
 require:
+  - rubocop-md
   - rubocop-minitest
   - rubocop-packaging
   - rubocop-performance
@@ -109,6 +110,9 @@ Style/FormatStringToken:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/NumericLiterals:
   Enabled: false
 
 Style/NumericPredicate:
