@@ -1,3 +1,3 @@
 module Tomo
-  VERSION = "1.14.1".freeze
+  VERSION = "1.15.0".freeze
 end
