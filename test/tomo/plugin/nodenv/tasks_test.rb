@@ -21,7 +21,7 @@ class Tomo::Plugin::Nodenv::TasksTest < Minitest::Test
   end
 
   def test_install_does_not_modify_bashrc_if_already_modified
-    bashrc = <<~'SH'
+    bashrc = <<~SH
       if [ -d $HOME/.nodenv ]; then
         export PATH="$HOME/.nodenv/bin:$PATH"
         eval "$(nodenv init -)"
