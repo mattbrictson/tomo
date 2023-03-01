@@ -36,7 +36,7 @@ class Tomo::CLITest < Minitest::Test
       CONFIG
     end
     @tester.run "deploy", raise_on_error: false
-    assert_match(<<~'OUTPUT'.strip, @tester.stderr.gsub(/^  /, ""))
+    assert_match(<<~OUTPUT.strip, @tester.stderr.gsub(/^  /, ""))
       ERROR: Configuration syntax error in .tomo/config.rb at line 4.
 
         3:   run "git:clone
@@ -59,7 +59,7 @@ class Tomo::CLITest < Minitest::Test
       CONFIG
     end
     @tester.run "deploy", raise_on_error: false
-    assert_equal(<<~'OUTPUT', @tester.stderr.gsub(/^  /, ""))
+    assert_equal(<<~OUTPUT, @tester.stderr.gsub(/^  /, ""))
 
       ERROR: Configuration syntax error in .tomo/config.rb at line 3.
 
