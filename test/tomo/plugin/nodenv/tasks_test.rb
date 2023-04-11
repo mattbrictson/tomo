@@ -97,6 +97,15 @@ class Tomo::Plugin::Nodenv::TasksTest < Minitest::Test
     assert_includes(tester.executed_scripts, "nodenv install 16.15.0")
   end
 
+  def test_install_uses_a_placeholder_node_version_during_dry_run_so_it_runs_without_error
+    Tomo.dry_run = true
+    tester = configure(release_path: "/tmp/tomo/20201027184921")
+    tester.run_task("nodenv:install")
+    assert_includes(tester.executed_scripts, "nodenv install DRY_RUN_PLACEHOLDER")
+  ensure
+    Tomo.dry_run = false
+  end
+
   private
 
   def configure(settings={})
