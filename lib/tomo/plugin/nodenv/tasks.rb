@@ -62,6 +62,8 @@ module Tomo::Plugin::Nodenv
       version = remote.capture("cat", path, raise_on_error: false).strip
       return version unless version.empty?
 
+      return "DRY_RUN_PLACEHOLDER" if dry_run?
+
       die <<~REASON
         Could not guess node version from .node-version file.
         Use the :nodenv_node_version setting to specify the version of node to install.
