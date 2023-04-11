@@ -17,12 +17,16 @@ module Tomo
         options = Options.new(options) unless options.is_a?(Options)
 
         Tomo.logger.connect(host)
-        return Connection.dry_run(host, options) if Tomo.dry_run?
+        return build_dry_run_connection(host, options) if Tomo.dry_run?
 
         build_connection(host, options)
       end
 
       private
+
+      def build_dry_run_connection(host, options)
+        Connection.dry_run(host, options)
+      end
 
       def build_connection(host, options)
         conn = Connection.new(host, options)

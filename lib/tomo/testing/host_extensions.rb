@@ -20,6 +20,8 @@ module Tomo
 
       def result_for(script)
         match = mocks.find { |regexp, _| regexp.match?(script.to_s) }
+        raise "Scripts cannot be mocked during dry_run" if match && Tomo.dry_run?
+
         match&.last || Result.empty_success
       end
     end
