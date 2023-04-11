@@ -38,7 +38,7 @@ Here's how tomo compares with the most popular Ruby-based deployment tools: Capi
 | ----------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------- | ------------------------------ |
 | First release                                                           | 2019                         | 2009                                                          | 2012                           |
 | Required gem dependencies                                               | 0                            | 7                                                             | 2                              |
-| Minimum supported ruby version                                          | 2.6                          | 2.0                                                           | 2.0                            |
+| Minimum supported ruby version                                          | 2.7                          | 2.0                                                           | 2.0                            |
 | Configuration files                                                     | 1 (.tomo/config.rb)          | 3+ (Capfile, config/deploy.rb, config/deploy/\*.rb per stage) | 1 (config/deploy.rb)           |
 | Deploy in parallel to multiple hosts                                    | ✅ Yes                       | ✅ Yes                                                        | ❌ No                          |
 | Configure multiple environments/stages                                  | ✅ Yes                       | ✅ Yes                                                        | ✅ Yes, via custom rake tasks  |
