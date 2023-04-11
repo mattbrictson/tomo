@@ -9,7 +9,7 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   NewCops: enable
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   Exclude:
     - "lib/tomo/templates/config.rb"
     - "readme_images/**/*"
