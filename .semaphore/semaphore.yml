@@ -52,7 +52,7 @@ blocks:
         - name: test
           matrix:
             - env_var: SEM_RUBY
-              values: ["2.7.8", "3.0.6", "3.1.4", "3.2.2"]
+              values: ["3.0.6", "3.1.4", "3.2.2"]
           commands:
             - bundle exec rake test TESTOPTS="--ci-dir=./reports"
             - test-results publish ./reports
