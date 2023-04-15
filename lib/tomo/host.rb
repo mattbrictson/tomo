@@ -1,6 +1,6 @@
 module Tomo
   class Host
-    PATTERN = /^(?:(\S+)@)?(\S*?)$/.freeze
+    PATTERN = /^(?:(\S+)@)?(\S*?)$/
     private_constant :PATTERN
 
     attr_reader :address, :log_prefix, :user, :port, :roles, :as_privileged

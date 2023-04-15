@@ -3,7 +3,7 @@ require "securerandom"
 
 module Tomo::Plugin::Core
   class Tasks < Tomo::TaskLibrary
-    RELEASE_REGEXP = /\d{14}/.freeze
+    RELEASE_REGEXP = /\d{14}/
     private_constant :RELEASE_REGEXP
 
     def setup_directories
