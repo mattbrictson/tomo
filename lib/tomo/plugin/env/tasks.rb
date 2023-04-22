@@ -62,6 +62,7 @@ module Tomo::Plugin::Env
 
       remote.mkdir_p(paths.env.dirname) if original.empty?
       remote.write(text: env, to: paths.env)
+      remote.run("chmod", "600", paths.env) if original.empty?
     end
 
     def read_existing
