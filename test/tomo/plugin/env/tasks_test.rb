@@ -79,4 +79,19 @@ class Tomo::Plugin::Env::TasksTest < Minitest::Test
     assert_match("only one application can be deployed", error.message)
     assert_match("/var/www/oldapp/envrc", error.message)
   end
+
+  def test_executes_chmod_to_reduce_visibility_of_envrc_file_upon_creation
+    tester = Tomo::Testing::MockPluginTester.new(
+      "env",
+      settings: {
+        env_path: "/app/envrc",
+        env_vars: {
+          RAILS_ENV: "production",
+          RAILS_MAX_THREADS: 6
+        }
+      }
+    )
+    tester.run_task("env:setup")
+    assert_equal("chmod 600 /app/envrc", tester.executed_scripts.last)
+  end
 end
