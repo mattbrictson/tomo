@@ -3,13 +3,7 @@ require "tomo/plugin/puma"
 
 class Tomo::Plugin::Puma::TasksTest < Minitest::Test
   def setup
-    @tester = Tomo::Testing::MockPluginTester.new(
-      "puma",
-      settings: {
-        application: "test",
-        current_path: "/app/current"
-      }
-    )
+    configure
   end
 
   def test_setup_systemd
@@ -27,6 +21,21 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
     expected_scripts.zip(@tester.executed_scripts).each do |expected, actual|
       assert_match(expected, actual)
     end
+  end
+
+  def test_setup_systemd_uses_notify_type_by_default
+    @tester.mock_script_result("ls -A1 /var/lib/systemd/linger", stdout: "testing\n")
+    @tester.run_task("puma:setup_systemd")
+
+    assert_match("Type\\=notify", @tester.executed_scripts[3])
+  end
+
+  def test_setup_systemd_can_be_configured_to_use_simple_type
+    configure(puma_systemd_service_type: "simple")
+    @tester.mock_script_result("ls -A1 /var/lib/systemd/linger", stdout: "testing\n")
+    @tester.run_task("puma:setup_systemd")
+
+    assert_match("Type\\=simple", @tester.executed_scripts[3])
   end
 
   def test_setup_systemd_dies_if_linger_is_disabled
@@ -97,6 +106,18 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
     assert_equal(
       "journalctl -q --user-unit=puma_test.service -f",
       @tester.executed_script
+    )
+  end
+
+  private
+
+  def configure(settings={})
+    @tester = Tomo::Testing::MockPluginTester.new(
+      "puma",
+      settings: {
+        application: "test",
+        current_path: "/app/current"
+      }.merge(settings)
     )
   end
 end
