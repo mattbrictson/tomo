@@ -13,7 +13,14 @@ StandardInput=null
 StandardOutput=syslog
 SyslogIdentifier=%n
 TimeoutStopSec=5
+
+<% if settings[:puma_systemd_service_type].to_s == "notify" %>
+Type=notify
+WatchdogSec=10
+<% else %>
 Type=simple
+<% end %>
+
 WorkingDirectory=<%= paths.current %>
 # Helpful for debugging socket activation, etc.
 # Environment=PUMA_DEBUG=1
