@@ -67,6 +67,7 @@ Metrics/ClassLength:
 
 Metrics/MethodLength:
   Max: 12
+  CountAsOne: ["heredoc"]
   Exclude:
     - "test/**/*"
 
