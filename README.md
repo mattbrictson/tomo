@@ -1,8 +1,9 @@
 # Tomo
 
-[![Gem Version](https://badge.fury.io/rb/tomo.svg)](https://rubygems.org/gems/tomo)
-[![Build Status](https://mattbrictson.semaphoreci.com/badges/tomo/branches/main.svg?style=shields)](https://mattbrictson.semaphoreci.com/projects/tomo)
-[![Code Climate](https://codeclimate.com/github/mattbrictson/tomo/badges/gpa.svg)](https://codeclimate.com/github/mattbrictson/tomo)
+[![Gem Version](https://img.shields.io/gem/v/tomo)](https://rubygems.org/gems/tomo)
+[![Gem Downloads](https://img.shields.io/gem/dt/tomo)](https://www.ruby-toolbox.com/projects/tomo)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/mattbrictson/tomo/ci.yml)](https://github.com/mattbrictson/tomo/actions/workflows/ci.yml)
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/mattbrictson/tomo)](https://codeclimate.com/github/mattbrictson/tomo)
 
 Tomo is a friendly command-line tool for deploying Rails apps.
 
