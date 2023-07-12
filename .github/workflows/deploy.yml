@@ -1,0 +1,22 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+      - chores/github-actions
+jobs:
+  docs:
+    name: "Docs"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - run: cat README.md >> docs/index.md
+      - run: cp -R readme_images docs/
+      - run: git config --local user.name 'github-actions[bot]'
+      - run: git config --local user.email 'github-actions[bot]@users.noreply.github.com'
+      - run: mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
