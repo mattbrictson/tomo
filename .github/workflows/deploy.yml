@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v3
         with:
           python-version: "3.10"
@@ -19,4 +21,4 @@ jobs:
       - run: cp -R readme_images docs/
       - run: git config --local user.name 'github-actions[bot]'
       - run: git config --local user.email 'github-actions[bot]@users.noreply.github.com'
-      - run: mkdocs gh-deploy --force -m 'Deployed {sha} with mkdocs {version} [ci skip]'
+      - run: mkdocs gh-deploy -m 'Deployed {sha} with mkdocs {version} [ci skip]'
