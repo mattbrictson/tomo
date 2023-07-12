@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>deploy - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "deploy";
+        var mkdocs_page_input_path = "commands/deploy.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">deploy</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#options">Options</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example">Example</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Commands &raquo;</li>
+        
+      
+    
+    <li>deploy</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/commands/deploy.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="deploy">deploy</h1>
+<p>Deploy the current project to remote host(s).</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-plain">$ tomo deploy [--dry-run] [options]
+</code></pre>
+<p>Sequentially run the <a href="../../configuration/#deployblock">deploy</a> list of tasks specified in <code>.tomo/config.rb</code> to deploy the project to a remote host. In practice, a deploy will usually consist of the following steps:</p>
+<ol>
+<li>Create a release (using the <a href="../../plugins/git/#gitcreate_release">git:create_release</a> task)</li>
+<li>Build the project (e.g. <a href="../../plugins/bundler/#bundlerinstall">bundler:install</a>, <a href="../../plugins/rails/#railsassets_precompile">rails:assets_precompile</a>)</li>
+<li>Migrate data to the meet the requirements of the new release (e.g. <a href="../../plugins/rails/#railsdb_migrate">rails:db_migrate</a>)</li>
+<li>Make the new release the &ldquo;current&rdquo; one (<a href="../../plugins/core/#coresymlink_current">core:symlink_current</a>)</li>
+<li>Restart the app to use the new current release (e.g. <a href="../../plugins/puma/#pumarestart">puma:restart</a>)</li>
+<li>Perform any cleanup (e.g. <a href="../../plugins/bundler/#bundlerclean">bundler:clean</a>)</li>
+</ol>
+<p>During a deploy, tomo will initialize the <code>:release_path</code> setting based on the current date and time (e.g. <code>/var/www/my-app/releases/20190616214752</code>). Any tasks that copy files into a release (<a href="../../plugins/git/#gitcreate_release">git:create_release</a>), or run inside the release (<a href="../../plugins/bundler/#bundlerinstall">bundler:install</a>, <a href="../../plugins/rails/#railsassets_precompile">rails:assets_precompile</a>, <a href="../../plugins/rails/#railsdb_migrate">rails:db_migrate</a>, etc.) will operate using this path. As a result, every <code>tomo deploy</code> will create a new entry in the releases directory, and the <code>current</code> symlink will point to the release that is currently active, i.e. the most recent successful deploy.</p>
+<p>The directory structure on the remote host looks like this:</p>
+<pre><code class="language-plain">/var/www/my-app
+├── git_repo/
+├── releases/
+|   ├── 20190614192115/
+|   ├── 20190615034736/
+|   └── 20190616214752/
+├── shared/
+|   ├── bundle/
+|   ├── log/
+|   ├── node_modules/
+|   └── public/
+|       └── assets/
+├── current -&gt; /var/www/my-app/releases/20190616214752
+└── revisions.log
+</code></pre>
+<p>This structure is customizable; see the <a href="../../plugins/core/#settings">core plugin settings</a> for details.</p>
+<p>Tip: run <code>tomo deploy --debug --dry-run</code> to see an in-depth explanation of the settings and execution plan that will be used for the deployment.</p>
+<h2 id="options">Options</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-e ENVIRONMENT</code>, <code>--environment ENVIRONMENT</code></td>
+<td>If the configuration contains multiple <a href="../../configuration/#environmentname-block">environments</a>, specify the ENVIRONMENT that should be used (e.g. production). The host(s) and settings can be different per environment.</td>
+</tr>
+<tr>
+<td><code>-s NAME=VALUE</code>, <code>--setting NAME=VALUE</code></td>
+<td>Override the setting NAME with the given VALUE. Refer to the <a href="../../configuration/#overrides">settings overrides</a> documentation for a detailed explanation.</td>
+</tr>
+<tr>
+<td><code>--[no-]dry-run</code></td>
+<td>Simulate running tasks instead of using real SSH.</td>
+</tr>
+<tr>
+<td><code>-c PATH</code>, <code>--config PATH</code></td>
+<td>Override the PATH where the <a href="../../configuration/">configuration</a> file is loaded from. (Default: <code>.tomo/config.rb</code>).</td>
+</tr>
+<tr>
+<td><code>--[no-]color</code></td>
+<td>By default, tomo automatically determines whether to use color output based on the capabilities of the terminal. Use this option to override this behavior and force tomo to enable or disable color output.</td>
+</tr>
+<tr>
+<td><code>--[no-]debug</code></td>
+<td>Enables verbose logging output that is helpful for troubleshooting. This includes runtime information such as the environment variables on the remote host and all tomo settings. Each SSH command executed by tomo is also logged in detail.</td>
+</tr>
+<tr>
+<td><code>--[no-]trace</code></td>
+<td>Normally if a tomo command fails, a concise and helpful error message is printed. If <code>--trace</code> is specified, tomo will also print the full backtrace.</td>
+</tr>
+<tr>
+<td><code>-h</code>, <code>--help</code></td>
+<td>Prints the help for this tomo command, similar to what you see on this page.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example">Example</h2>
+<p>Given the following configuration:</p>
+<pre><code class="language-ruby">host &quot;deployer@localhost&quot;, port: 32809
+
+deploy do
+  run &quot;env:update&quot;
+  run &quot;git:create_release&quot;
+  run &quot;core:symlink_shared&quot;
+  run &quot;core:write_release_json&quot;
+  run &quot;bundler:install&quot;
+  run &quot;rails:db_migrate&quot;
+  run &quot;rails:db_seed&quot;
+  run &quot;rails:assets_precompile&quot;
+  run &quot;core:symlink_current&quot;
+  run &quot;puma:restart&quot;
+  run &quot;puma:check_active&quot;
+  run &quot;core:clean_releases&quot;
+  run &quot;bundler:clean&quot;
+  run &quot;core:log_revision&quot;
+end
+</code></pre>
+<p>Then a deploy would produce:</p>
+<pre><code class="language-plain">$ tomo deploy
+tomo deploy v1.0.0
+→ Connecting to deployer@localhost:32829
+• env:update
+• git:create_release
+cd /var/www/rails-new/git_repo &amp;&amp; export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no &amp;&amp; git remote update --prune
+Fetching origin
+cd /var/www/rails-new/git_repo &amp;&amp; export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no &amp;&amp; git log -n1 --date=iso --pretty=format:&quot;%H/%cd/%ae&quot; main --
+Writing 60 bytes to /var/www/rails-new/git_repo/info/attributes
+mkdir -p /var/www/rails-new/releases/20191019200551
+cd /var/www/rails-new/git_repo &amp;&amp; export GIT_SSH_COMMAND=ssh\ -o\ PasswordAuthentication\=no\ -o\ StrictHostKeyChecking\=no &amp;&amp; git archive main | tar -x -f - -C /var/www/rails-new/releases/20191019200551
+• core:symlink_shared
+mkdir -p /var/www/rails-new/shared/log /var/www/rails-new/shared/node_modules /var/www/rails-new/shared/public/assets /var/www/rails-new/shared/tmp/cache /var/www/rails-new/shared/tmp/pids /var/www/rails-new/shared/tmp/sockets /var/www/rails-new/releases/20191019200551/public /var/www/rails-new/releases/20191019200551/tmp
+cd /var/www/rails-new/releases/20191019200551 &amp;&amp; rm -rf log node_modules public/assets tmp/cache tmp/pids tmp/sockets
+ln -sf /var/www/rails-new/shared/log /var/www/rails-new/releases/20191019200551/log
+ln -sf /var/www/rails-new/shared/node_modules /var/www/rails-new/releases/20191019200551/node_modules
+ln -sf /var/www/rails-new/shared/public/assets /var/www/rails-new/releases/20191019200551/public/assets
+ln -sf /var/www/rails-new/shared/tmp/cache /var/www/rails-new/releases/20191019200551/tmp/cache
+ln -sf /var/www/rails-new/shared/tmp/pids /var/www/rails-new/releases/20191019200551/tmp/pids
+ln -sf /var/www/rails-new/shared/tmp/sockets /var/www/rails-new/releases/20191019200551/tmp/sockets
+• core:write_release_json
+Writing 299 bytes to /var/www/rails-new/releases/20191019200551/.tomo_release.json
+• bundler:install
+cd /var/www/rails-new/releases/20191019200551 &amp;&amp; bundle check
+The dependency tzinfo-data (&gt;= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
+The Gemfile's dependencies are satisfied
+• rails:db_migrate
+cd /var/www/rails-new/releases/20191019200551 &amp;&amp; bundle exec rails db:migrate
+• rails:db_seed
+cd /var/www/rails-new/releases/20191019200551 &amp;&amp; bundle exec rails db:seed
+• rails:assets_precompile
+cd /var/www/rails-new/releases/20191019200551 &amp;&amp; bundle exec rails assets:precompile
+yarn install v1.16.0
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+info fsevents@1.2.9: The platform &quot;linux&quot; is incompatible with this module.
+info &quot;fsevents@1.2.9&quot; is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+warning &quot; &gt; webpack-dev-server@3.8.1&quot; has unmet peer dependency &quot;webpack@^4.0.0&quot;.
+warning &quot;webpack-dev-server &gt; webpack-dev-middleware@3.7.2&quot; has unmet peer dependency &quot;webpack@^4.0.0&quot;.
+[4/4] Building fresh packages...
+Done in 30.68s.
+I, [2019-10-19T20:06:30.645395 #33263]  INFO -- : Writing /var/www/rails-new/releases/20191019200551/public/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css
+I, [2019-10-19T20:06:30.645832 #33263]  INFO -- : Writing /var/www/rails-new/releases/20191019200551/public/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css.gz
+Compiling…
+Compiled all packs in /var/www/rails-new/releases/20191019200551/public/packs
+
+WARNING: We noticed you're using the `useBuiltIns` option without declaring a core-js version. Currently, we assume version 2.x when no version is passed. Since this default version will likely change in future versions of Babel, we recommend explicitly setting the core-js version you are using via the `corejs` option.
+
+You should also be sure that the version you pass to the `corejs` option matches the version specified in your `package.json`'s `dependencies` section. If it doesn't, you need to run one of the following commands:
+
+  npm install --save core-js@2    npm install --save core-js@3
+  yarn add core-js@2              yarn add core-js@3
+
+
+• core:symlink_current
+ln -sf /var/www/rails-new/releases/20191019200551 /var/www/rails-new/current-0d3d2f7a6648294a
+mv -fT /var/www/rails-new/current-0d3d2f7a6648294a /var/www/rails-new/current
+• puma:restart
+systemctl --user start puma_rails-new.socket
+systemctl --user restart puma_rails-new.service
+• puma:check_active
+Checking if puma is active and listening on port 3000...
+systemctl --user is-active puma_rails-new.service
+curl -sS --connect-timeout 1 --max-time 10 http://localhost:3000 &gt; /dev/null
+systemctl --user status puma_rails-new.service
+● puma_rails-new.service
+   Loaded: loaded (enabled; vendor preset: enabled)
+   Active: active (running)
+• core:clean_releases
+readlink /var/www/rails-new/current
+cd /var/www/rails-new/releases &amp;&amp; ls -A1
+• bundler:clean
+cd /var/www/rails-new/releases/20191019200551 &amp;&amp; bundle clean
+The dependency tzinfo-data (&gt;= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
+• core:log_revision
+Writing 100 bytes to /var/www/rails-new/revisions.log
+✔ Deployed rails-new to deployer@localhost:32829
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../setup/" class="btn btn-neutral float-left" title="setup"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../run/" class="btn btn-neutral float-right" title="run">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../setup/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../run/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

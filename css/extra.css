@@ -1,0 +1,79 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend,
+.btn {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+code {
+  border-radius: 2px;
+  color: inherit;
+}
+
+code,
+.rst-content tt {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
+}
+
+pre {
+  border-radius: 2px;
+  margin-bottom: 22px;
+}
+
+pre + h2,
+pre + h3 {
+  margin-top: 30px;
+}
+
+.rst-content pre > code,
+.hljs {
+  line-height: 1.5;
+}
+
+table {
+  border-radius: 2px;
+}
+
+.rst-content td > code {
+  white-space: nowrap;
+}
+
+img[src$="ubuntu-20-lts%402x.png"] {
+  box-sizing: content-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 305px;
+}
+
+img[src$="ssh-auth%402x.png"] {
+  box-sizing: content-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 399px;
+}
+
+img[src$="create-new-repo%402x.png"] {
+  box-sizing: content-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 595px;
+}
+
+
+img[src$="smallest-viable-droplet%402x.png"] {
+  box-sizing: content-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  width: 400px;
+}
+
+.wy-table-responsive table td {
+  white-space: normal;
+}

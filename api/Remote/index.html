@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Tomo::Remote - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Tomo::Remote";
+        var mkdocs_page_input_path = "api/Remote.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Tomo::Remote</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#instance-methods">Instance methods</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#runcommand-options-tomoresult">run(*command, **options) → Tomo::Result</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#attachcommand-options">attach(*command, **options)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#chdirdir-block-obj">chdir(dir, &amp;block) → obj</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#envhash-block-obj">env(hash, &amp;block) → obj</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prependcommand-block-obj">prepend(*command, &amp;block) → obj</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#umaskmask-block-obj">umask(mask, &amp;block) → obj</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#host-tomohost">host → Tomo::Host</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#release-hash">release → Hash</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>Tomo::Remote</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/api/Remote.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="tomoremote">Tomo::Remote</h1>
+<p>A Remote represents an SSH connection to a remote host and provides a façade for building and running shell scripts on that host. A Remote instance is always implicitly available within the context of a task implementation as <code>remote</code>. The tomo framework takes care of initializing the SSH connection and setting this reference.</p>
+<p>The most basic use of Remote is the <a href="#run42command-4242options-tomoresult">run</a> method, which executes a script on the remote host:</p>
+<pre><code class="language-ruby">remote.run &quot;echo&quot;, &quot;hello world&quot;
+</code></pre>
+<p>For building more complex scripts, Remote offers a variety of builder methods: <a href="#chdirdir-block-obj">chdir</a>, <a href="#envhash-block-obj">env</a>, <a href="#prepend42command-block-obj">prepend</a>, and <a href="#umaskmask-block-obj">umask</a>. Here is an example of some of them:</p>
+<pre><code class="language-ruby">remote.chdir(paths.current) do
+  remote.prepend(&quot;bundle exec&quot;) do
+    remote.env(DISABLE_SPRING: &quot;1&quot;) do
+      remote.run(&quot;rails&quot;, &quot;db:prepare&quot;)
+    end
+  end
+end
+# $ cd /var/www/my-app/current &amp;&amp; export DISABLE_SPRING=1 &amp;&amp; bundle exec rails db:prepare
+</code></pre>
+<h2 id="instance-methods">Instance methods</h2>
+<p>In addition the methods listed here, all <a href="../../plugins/core/#helpers">helpers provided by the core plugin</a> are also available, as are helpers from any other plugins that have been explicitly loaded in <code>.tomo/config.rb</code>. Refer to the documentation for each plugin for details.</p>
+<h3 id="runcommand-options-tomoresult">run(*command, **options) → <a href="../Result/">Tomo::Result</a></h3>
+<p>Runs a shell script on the remote host via SSH.</p>
+<p>The <code>command</code> can take one of two forms. If given as a single string, the <code>command</code> is executed as a shell script directly; no escaping is performed. This is useful if your script needs to specify output redirection (<code>&gt;</code> or <code>&gt;&gt;</code>), pipes, or other shell logic (<code>&amp;&amp;</code> or <code>||</code>). For example:</p>
+<pre><code class="language-ruby">remote.run &quot;bundle exec rails db:prepare &gt; /dev/null &amp;&amp; echo 'All set!'&quot;
+# $ bundle exec rails db:prepare &gt; /dev/null &amp;&amp; echo 'All set!'
+</code></pre>
+<p>If the <code>command</code> is given as multiple string arguments, then each argument is individually shell-escaped and then assembled into a shell script. This is the preferred way to safely run scripts, especially if the script relies on settings or other user input. For example:</p>
+<pre><code class="language-ruby">settings[:greeting] # =&gt; &quot;&lt;this&gt; is safe &amp; easy&quot;
+remote.run &quot;echo&quot;, settings[:greeting]
+# $ echo \&lt;this\&gt;\ is\ safe\ \&amp;\ easy
+</code></pre>
+<p>When a script is run it is first echoed to the console and all of its output (stdout and stderr) is streamed to the console as well. If the script fails then an exception will be raised. If the script succeeds, a <a href="../Result/">Result</a> object will be returned.</p>
+<p>This behavior can be customized by specifying <code>options</code>, which can include:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:echo</code></td>
+<td>Similar to <code>-x</code> in bash, setting <code>echo: true</code> will cause the script to be printed to the logger before it is run. If <code>false</code>, the script will be run without being printed. If a string is provided, the string will be printed <em>instead</em> of the actual script. This can be useful for redacting or abbreviating sensitive or very long scripts.</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>:silent</code></td>
+<td>Normally stdout and stderr of the remote script are printed to the logger. Setting <code>silent: true</code> will silence this output. Note that even if silenced, the output can still be accessed via the <a href="../Result/">Result</a>.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>:raise_on_error</code></td>
+<td>By default, if the remote script fails (i.e. returns an exit status other than 0), tomo will raise an exception, stopping execution. If the script being executed is expected to fail, or you would like to take action based on failure, set <code>raise_on_error: false</code>. In this case a failed script will return a <a href="../Result/">Result</a> with <code>failure?</code> set to <code>true</code>.</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>:default_chdir</code></td>
+<td>The working directory where the script will be run by default, if <a href="#chdirdir-block-obj">chdir</a> is not used. If not specified, the working directory is based on the SSH server&rsquo;s default login directory (almost always this is the user&rsquo;s home directory).</td>
+<td><code>nil</code></td>
+</tr>
+<tr>
+<td><code>:attach</code></td>
+<td>Setting <code>attach: true</code> will cause the script to be run as if <a href="#attach42command-4242options">attach</a> had been called instead.</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>:pty</code></td>
+<td>Setting <code>pty: true</code> will instruct the SSH client to allocate a pseudo-tty when running the script.</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="attachcommand-options">attach(*command, **options)</h3>
+<p>Runs a script on the remote host via SSH, just like <a href="#run42command-4242options-tomoresult">run</a>, except the Ruby process will be replaced with the SSH process and control completely handed over to SSH (this is done via <code>Process.exec</code>). In other words, tomo will immediately stop and it will be like you had run SSH directly.</p>
+<p>This is useful for things like running a Rails console, where you would like to &ldquo;attach&rdquo; stdin/stdout to the remote process. Calling <code>attach</code> also implies <code>pty: true</code>.</p>
+<pre><code class="language-ruby">remote.attach &quot;bundle exec rails console&quot;
+</code></pre>
+<p><code>attach</code> accepts the same options as <a href="#run42command-4242options-tomoresult">run</a> (except for <code>:attach</code>, which is redundant).</p>
+<h3 id="chdirdir-block-obj">chdir(dir, &amp;block) → obj</h3>
+<p>Changes into the specified <code>dir</code> when executing a script via <a href="#run42command-4242options-tomoresult">run</a> or <a href="#attach42command-4242options">attach</a>. Must be used with a block. This causes <code>cd &lt;dir&gt; &amp;&amp;</code> to be prepended to the script.</p>
+<pre><code class="language-ruby">remote.chdir &quot;/opt/data&quot; do
+  remote.run &quot;ls -al&quot;
+end
+# $ cd /opt/data &amp;&amp; ls -al
+</code></pre>
+<p><code>chdir</code> returns the value of its block.</p>
+<h3 id="envhash-block-obj">env(hash, &amp;block) → obj</h3>
+<p>Sets environment variables when executing a script via <a href="#run42command-4242options-tomoresult">run</a> or <a href="#attach42command-4242options">attach</a>. Must be used with a block. This causes <code>export VAR1=value VAR2=value ... &amp;&amp;</code> to be prepended to the script. The environment variables are specified as a Ruby hash.</p>
+<pre><code class="language-ruby">remote.env(CLICOLOR_FORCE: &quot;1&quot;, RAILS_ENV: &quot;production&quot;) do
+  remote.run &quot;bundle exec sidekiq&quot;
+end
+# $ export CLICOLOR_FORCE=1 RAILS_ENV=production &amp;&amp; bundle exec sidekiq
+</code></pre>
+<p><code>env</code> returns the value of its block.</p>
+<h3 id="prependcommand-block-obj">prepend(*command, &amp;block) → obj</h3>
+<p>Prepends an arbitrary <code>command</code> when executing a script via <a href="#run42command-4242options-tomoresult">run</a> or <a href="#attach42command-4242options">attach</a>. Must be used with a block.</p>
+<pre><code class="language-ruby">remote.prepend &quot;bundle&quot;, &quot;exec&quot; do
+  remote.run &quot;rails routes&quot;
+end
+# $ bundle exec rails routes
+</code></pre>
+<p><code>prepend</code> returns the value of its block.</p>
+<h3 id="umaskmask-block-obj">umask(mask, &amp;block) → obj</h3>
+<p>Sets a umask when executing a script via <a href="#run42command-4242options-tomoresult">run</a> or <a href="#attach42command-4242options">attach</a>. Must be used with a block. This causes <code>umask ... &amp;&amp;</code> to be prepended to the script. The <code>mask</code> can be an Integer (typically expressed in octal) or a String.</p>
+<pre><code class="language-ruby">remote.umask 0o077 do
+  remote.run &quot;touch a_file&quot;
+end
+# $ umask 0077 &amp;&amp; touch a_file
+</code></pre>
+<p><code>umask</code> returns the value of its block.</p>
+<h3 id="host-tomohost">host → <a href="../Host/">Tomo::Host</a></h3>
+<p>The remote SSH host that scripts will be run on.</p>
+<h3 id="release-hash">release → Hash</h3>
+<p>A mutable Hash that can be used to share data about the release that is being deployed. Data stored in this Hash can be read by other tasks. In practice this is used by the <a href="../../plugins/git/#gitcreate_release">git:create_release</a> task to store the branch, author, SHA, date, etc. of the release. This data can then be accessed by other tasks that are interested in this information.</p>
+<pre><code class="language-ruby">result = remote.run('git log -n1 --pretty=format:&quot;%ae&quot;')
+remote.release[:author] = result.stdout.chomp
+# remote.release[:author] can now be read by other tasks that connect to this host
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../PluginDSL/" class="btn btn-neutral float-left" title="Tomo::PluginDSL"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Result/" class="btn btn-neutral float-right" title="Tomo::Result">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../PluginDSL/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Result/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+| `-c PATH`, `--config PATH` | Override the PATH where the [configuration](../configuration.md) file is loaded from. (Default: `.tomo/config.rb`). |

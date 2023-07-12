@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Writing Custom Tasks - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Writing Custom Tasks";
+        var mkdocs_page_input_path = "tutorials/writing-custom-tasks.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Writing Custom Tasks</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-plugin">What is a plugin?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-task">What is a task?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#what-can-a-task-do">What can a task do?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#when-are-tasks-run">When are tasks run?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-do-tasks-connect-to-remote-hosts">How do tasks connect to remote hosts?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tutorial">Tutorial</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#objective">Objective</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cronshow">cron:show</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#croninstall">cron:install</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#templates">Templates</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#the-result">The result</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#next-steps">Next steps</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>Writing Custom Tasks</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/tutorials/writing-custom-tasks.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="writing-custom-tasks">Writing Custom Tasks</h1>
+<p>In this tutorial we will build a &ldquo;cron&rdquo; plugin to demonstrate how to write custom tasks in tomo. Here are the main takeaways:</p>
+<ul>
+<li>Use <code>.tomo/plugins/*.rb</code> to define plugins</li>
+<li>A task is any public Ruby method within a plugin</li>
+<li>Tasks can access the <a href="../../api/TaskLibrary/#instance-methods">TaskLibrary</a> API</li>
+<li>Use <a href="../../api/Remote/#run42command-4242options-tomoresult">remote.run</a> to execute scripts on the remote host</li>
+</ul>
+<p>Here&rsquo;s the final product:</p>
+<pre><code class="language-ruby"># .tomo/config.rb
+plugin &quot;./plugins/cron.rb&quot;
+</code></pre>
+<pre><code class="language-ruby"># .tomo/plugins/cron.rb
+def show
+  remote.run &quot;crontab -l&quot;, raise_on_error: false
+end
+
+def install
+  template_path = File.expand_path(&quot;../templates/crontab.erb&quot;, __dir__)
+  crontab = merge_template(template_path)
+  remote.run &quot;echo #{crontab.shellescape} | crontab -&quot;,
+             echo: &quot;echo [template:.tomo/templates/crontab.erb] | crontab -&quot;
+end
+</code></pre>
+<pre><code class="language-sh"># .tomo/templates/crontab.erb
+SHELL=/bin/bash
+0 6 * * * . $HOME/.bashrc; cd &lt;%= paths.current %&gt;; bundle exec rails runner PeriodicTask.call &gt; &lt;%= paths.shared.join(&quot;log/periodic-task.log&quot;) %&gt; 2&gt;&amp;1
+</code></pre>
+<p>Before we get there, let&rsquo;s review the basics.</p>
+<h2 id="what-is-a-plugin">What is a plugin?</h2>
+<p>Plugins extend tomo by providing some or all of these three things: tasks, helpers, and default settings. Plugins are either built into tomo (e.g. <a href="../../plugins/git/">git</a>, <a href="../../plugins/rails/">rails</a>), provided by gems (e.g. <a href="https://github.com/mattbrictson/tomo-plugin-sidekiq">tomo-plugin-sidekiq</a>), or loaded from <code>./tomo/plugins/*.rb</code> within a tomo project. This tutorial will focus on project-specific plugins, which are the easiest to write. Once you are ready to share your plugin amongst multiple projects (or with the larger tomo community), check out the <a href="../publishing-a-plugin/">Publishing a Plugin</a> tutorial to learn how to package a plugin as a gem.</p>
+<h2 id="what-is-a-task">What is a task?</h2>
+<p><strong>In tomo, a task is a plain Ruby method provided by a plugin.</strong> Task methods take zero arguments. Here is a trivial example:</p>
+<pre><code class="language-ruby"># .tomo/plugins/foo.rb
+
+# This defines a foo:hello task
+def hello
+  logger.info &quot;hello, world!&quot;
+end
+</code></pre>
+<p>The name of the plugin is set automatically based on the name of the <code>.rb</code> file, which in this case is &ldquo;foo&rdquo;. Any public method defined in <code>foo.rb</code> becomes a tomo task. So the example above defines a <code>foo:hello</code> task that prints &ldquo;hello, world!&rdquo; to the console.</p>
+<h2 id="what-can-a-task-do">What can a task do?</h2>
+<p>Behind the scenes, the Ruby methods you define in your plugin are actually methods on a subclass of <a href="../../api/TaskLibrary/">TaskLibrary</a>. That means you have full access to the TaskLibrary API within your task method, which includes:</p>
+<ul>
+<li><a href="../../api/TaskLibrary/#logger-tomologger">logger</a> for printing output (as seen in the example above)</li>
+<li><a href="../../api/TaskLibrary/#remote-tomoremote">remote</a> for running scripts on the remote host</li>
+<li><a href="../../api/TaskLibrary/#settings-hash">settings</a> for accessing project configuration</li>
+<li><a href="../../api/TaskLibrary/#paths-tomopaths">paths</a> for convenient access to filesystem paths on the remote host</li>
+<li>and <a href="../../api/TaskLibrary/#instance-methods">more…</a></li>
+</ul>
+<p>For example, a simplified, annotated version of the <code>git:clone</code> task that is built into tomo looks like this:</p>
+<pre><code class="language-ruby">def clone
+  # Halt tomo with an error message if the :git_url setting is nil/unspecified
+  require_setting :git_url
+
+  # Run &quot;mkdir -p&quot; on the remote host to create the parent directory
+  # of the :git_repo_path setting
+  remote.mkdir_p(paths.git_repo.dirname)
+
+  # Run &quot;git clone ...&quot; on the remote host to clone the repo into :git_repo_path
+  remote.run(&quot;git&quot;, &quot;clone&quot;, &quot;--mirror&quot;, settings[:git_url], paths.git_repo)
+end
+</code></pre>
+<h2 id="when-are-tasks-run">When are tasks run?</h2>
+<p>Tomo does not have hooks and tasks cannot invoke other tasks. That means that tasks only run when explicitly requested by the user. There are three ways to run a task:</p>
+<ul>
+<li><a href="../../commands/deploy/">deploy</a></li>
+<li><a href="../../commands/setup/">setup</a></li>
+<li><a href="../../commands/run/">run</a></li>
+</ul>
+<p>For deploy and setup, users invoke your task by including it in the <a href="../../configuration/#deployblock">deploy</a> or <a href="../../configuration/#setupblock">setup</a> list of tasks in <code>.tomo/config.rb</code>. Additionally, any task can be run on-demand from the command line, like this:</p>
+<pre><code class="language-plain">$ tomo run foo:hello
+</code></pre>
+<p>In the command line case, users can optionally pass arguments to a task. These arguments become available to the task via the <code>:run_args</code> setting. For example, the <code>rails:console</code> task supports command line arguments like this:</p>
+<pre><code class="language-ruby">def console
+  # If this task is run like `tomo run -- rails:console --sandbox`
+  # then settings[:run_args] will be [&quot;--sandbox&quot;]
+  args = settings[:run_args]
+
+  remote.chdir(paths.current) do
+    remote.run(&quot;bundle&quot;, &quot;exec&quot;, &quot;rails&quot;, &quot;console&quot;, *args, attach: true)
+  end
+end
+</code></pre>
+<h2 id="how-do-tasks-connect-to-remote-hosts">How do tasks connect to remote hosts?</h2>
+<p>Notice that none of the examples in this tutorial makes any mention of opening/closing connections or specifying hosts or roles. That is because tomo takes care of connecting to remote hosts and automatically decides which tasks should run on which hosts based on project configuration. By the time a task method is invoked, any necessary SSH connection is already established; <code>remote</code> implicitly refers to that connection.</p>
+<p>In other words, as a tomo task author you only need to be concerned about <em>what</em> remote scripts to run, not <em>where</em> or <em>how</em> they are executed. For a more in-depth explanation of how configuration drives tomo’s behavior, refer to the <a href="../../configuration/">configuration docs</a>.</p>
+<h2 id="tutorial">Tutorial</h2>
+<p>Let&rsquo;s build something using this knowledge of how tomo tasks work.</p>
+<h3 id="objective">Objective</h3>
+<p>Say we have a Rails app that needs to run code – <code>PeriodicTask.call</code>, for example – every day at 06:00. We&rsquo;d like to do this with a cron job and use tomo to install that cron job on the remote host. For troubleshooting purposes it would be nice to view the list of cron jobs with tomo as well. That sounds like two distinct tomo tasks:</p>
+<ol>
+<li><code>cron:install</code> to install the cron job</li>
+<li><code>cron:show</code> to list the currently installed cron jobs</li>
+</ol>
+<p>We want <code>cron:install</code> to be run when we initially set up the remote host. In other words, it should run as part of <code>tomo setup</code>. On the other hand, <code>cron:show</code> is a utility that we can use on the CLI when needed.</p>
+<h3 id="cronshow">cron:show</h3>
+<p>We&rsquo;ll start by building the simpler of the two tasks: <code>cron:show</code>. First, let&rsquo;s try to run that task:</p>
+<pre><code class="language-plain">$ tomo run cron:show
+tomo run v1.0.0
+
+  ERROR: cron:show is not a recognized task.
+  To see a list of all available tasks, run tomo tasks.
+</code></pre>
+<p>We haven&rsquo;t written the task yet, so this error makes sense. Let&rsquo;s build a skeleton of the <code>cron:show</code> task to fix this error. Create a <code>.tomo/plugins/cron.rb</code> task like this:</p>
+<pre><code class="language-ruby"># .tomo/plugins/cron.rb
+
+def show
+  logger.info &quot;Hi&quot;
+end
+</code></pre>
+<p>And don&rsquo;t forget to load the plugin in <code>.tomo/config.rb</code>:</p>
+<pre><code class="language-ruby"># .tomo/config.rb
+
+plugin &quot;./plugins/cron.rb&quot;
+</code></pre>
+<p>Now we can try again:</p>
+<pre><code class="language-plain">$ tomo run cron:show
+tomo run v1.0.0
+→ Connecting to deployer@app.example.com
+• cron:show
+Hi
+✔ Ran cron:show on deployer@app.example.com
+</code></pre>
+<p>Great! To get a list of cron jobs, we need to run <code>crontab -l</code> on the remote host:</p>
+<pre><code class="language-ruby">def show
+  remote.run &quot;crontab -l&quot;
+end
+</code></pre>
+<p>One more try:</p>
+<pre><code class="language-plain">$ tomo run cron:show
+tomo run v1.0.0
+→ Connecting to deployer@app.example.com
+• cron:show
+crontab -l
+no crontab for deployer
+
+  ERROR: The following script failed on deployer@app.example.com (exit status 1).
+
+    crontab -l
+
+  You can manually re-execute the script via SSH as follows:
+
+    ssh -o LogLevel\=ERROR -A -o ConnectTimeout\=5 -o StrictHostKeyChecking\=accept-new -o ControlMaster\=auto -o ControlPath\=/var/folders/_v/j_5kgc6n1nz5pb7kfkzz3r5c0000gn/T/tomo_ssh_1f061db77f81ae9e -o ControlPersist\=30s -o PasswordAuthentication\=no deployer@app.example.com -- crontab\ -l
+
+  For more troubleshooting info, run tomo again using the --debug option.
+
+  no crontab for deployer
+</code></pre>
+<p>Uh oh. There are no cron jobs installed yet, so <code>crontab -l</code> exits with an error. By default, tomo assumes that any remote command the exits with an error status is considered fatal. In this case we just want to see the error output from the <code>crontab</code> command and continue without complaint; that&rsquo;s where the <code>raise_on_error: false</code> option comes into play:</p>
+<pre><code class="language-ruby">def show
+  remote.run &quot;crontab -l&quot;, raise_on_error: false
+end
+</code></pre>
+<p>Now we&rsquo;re all good:</p>
+<pre><code class="language-plain">$ tomo run cron:show
+tomo run v1.0.0
+→ Connecting to deployer@app.example.com
+• cron:show
+crontab -l
+no crontab for deployer
+✔ Ran cron:show on deployer@app.example.com
+</code></pre>
+<h3 id="croninstall">cron:install</h3>
+<p>Before we said that we want a <code>cron:install</code> task that runs as part of <code>tomo setup</code>. Let&rsquo;s start by adding that task to the list of setup tasks in <code>.tomo/config.rb</code>:</p>
+<pre><code class="language-ruby"># .tomo/config.rb
+
+setup do
+  # ... other tasks omitted for brevity
+  run &quot;cron:install&quot;
+end
+</code></pre>
+<p>If we try to run <code>tomo setup</code> at this point, we&rsquo;ll get an error as expected:</p>
+<pre><code class="language-plain">$ tomo setup
+tomo setup v1.0.0
+
+  ERROR: cron:install is not a recognized task.
+  To see a list of all available tasks, run tomo tasks.
+
+  Did you mean rbenv:install?
+</code></pre>
+<p>Cron jobs can be installed by piping a list of cron definitions to <code>crontab -</code> (the <code>-</code> means to read the definitions from stdin). We can take advantage of this to write a simple <code>cron:install</code> task:</p>
+<pre><code class="language-ruby">def install
+  crontab = &lt;&lt;~CRONTAB
+    SHELL=/bin/bash
+    0 6 * * * . $HOME/.bashrc; cd /var/www/my-app/current; bundle exec rails runner PeriodicTask.call &gt; /var/www/my-app/shared/log/periodic-task.log 2&gt;&amp;1
+  CRONTAB
+  remote.run &quot;echo #{crontab.shellescape} | crontab -&quot;
+end
+</code></pre>
+<p>Note that we are using <code>shellescape</code> as part of Ruby&rsquo;s built-in <a href="https://ruby-doc.org/stdlib-2.6.3/libdoc/shellwords/rdoc/Shellwords.html">shellwords</a> library to safely build the script.</p>
+<p>We can see what this task does without actually affecting the remote host by using <code>--dry-run</code> option:</p>
+<pre><code class="language-plain">$ tomo run cron:install --dry-run
+tomo run v1.0.0
+* → Connecting to deployer@app.example.com
+* • cron:install
+* echo SHELL\=/bin/bash'
+* '0\ 6\ \*\ \*\ \*\ .\ \$HOME/.bashrc\;\ cd\ /var/www/my-app/current\;\ bundle\ exec\ rails\ runner\ PeriodicTask.call\ \&gt;\ /var/www/my-app/shared/log/periodic-task.log\ 2\&gt;\&amp;1'
+* ' | crontab -
+* Simulated cron:install on deployer@app.example.com (dry run)
+</code></pre>
+<p>Looks good! But we if we made it more powerful with some ERB templating?</p>
+<h3 id="templates">Templates</h3>
+<p>Tomo offers a convenient way to use ERB templates with it’s built-in <a href="../../api/TaskLibrary/#merge_templatepath-string">merge_template</a> and <a href="../../plugins/core/#remotewritetexttemplate-to-append-false-4242options-tomoresult">write</a> methods. We can use <code>merge_template</code> instead of a hard-coding the cron job:</p>
+<pre><code class="language-ruby">def install
+  template_path = File.expand_path(&quot;../templates/crontab.erb&quot;, __dir__)
+  crontab = merge_template(template_path)
+  remote.run &quot;echo #{crontab.shellescape} | crontab -&quot;
+end
+</code></pre>
+<p>The ERB template has access to all the same APIs as our task methods; that means we can remove the hard-coded paths from our original cron job specification and use tomo&rsquo;s <code>paths</code> helper. So our ERB template file (<code>.tomo/templates/crontab.erb</code>) could look like this:</p>
+<pre><code class="language-sh"># .tomo/templates/crontab.erb
+SHELL=/bin/bash
+0 6 * * * . $HOME/.bashrc; cd &lt;%= paths.current %&gt;; bundle exec rails runner PeriodicTask.call &gt; &lt;%= paths.shared.join(&quot;log/periodic-task.log&quot;) %&gt; 2&gt;&amp;1
+</code></pre>
+<p>Let&rsquo;s check that it still works:</p>
+<pre><code class="language-plain">$ tomo run cron:install --dry-run
+tomo run v1.0.0
+* → Connecting to deployer@app.example.com
+* • cron:install
+* echo SHELL\=/bin/bash'
+* '0\ 6\ \*\ \*\ \*\ .\ \$HOME/.bashrc\;\ cd\ /var/www/my-app/current\;\ bundle\ exec\ rails\ runner\ PeriodicTask.call\ \&gt;\ /var/www/my-app/shared/log/periodic-task.log\ 2\&gt;\&amp;1'
+* ' | crontab -
+* Simulated cron:install on deployer@app.example.com (dry run)
+</code></pre>
+<p>That&rsquo;s great, but the output is really verbose. Do we really need to see the full contents of the crontab being echoed? What if our template becomes really large? In tomo, you can mute this output using <code>echo: false</code>, but you can also provide an echo string to show instead of the command. We can use this to echo an abbreviated version:</p>
+<pre><code class="language-ruby">def install
+  template_path = File.expand_path(&quot;../templates/crontab.erb&quot;, __dir__)
+  crontab = merge_template(template_path)
+  remote.run &quot;echo #{crontab.shellescape} | crontab -&quot;,
+             echo: &quot;echo [template:.tomo/templates/crontab.erb] | crontab -&quot;
+end
+</code></pre>
+<p>And then try it:</p>
+<pre><code class="language-plain">$ tomo run cron:install --dry-run
+tomo run v1.0.0
+* → Connecting to deployer@app.example.com
+* • cron:install
+* echo [template:.tomo/templates/crontab.erb] | crontab -
+* Simulated cron:install on deployer@app.example.com (dry run)
+</code></pre>
+<p>Ah, much cleaner!</p>
+<h3 id="the-result">The result</h3>
+<p>We now have a <code>cron:install</code> task that will automatically run as part of <code>tomo setup</code>, or can be run manually using <code>tomo run cron:install</code>. Let&rsquo;s try it for real:</p>
+<pre><code class="language-plain">$ tomo setup
+... [snip] ...
+• cron:install
+echo [template:.tomo/templates/crontab.erb] | crontab -
+✔ Performed setup of my-app on deployer@app.example.com
+</code></pre>
+<p>And we can see what is installed with our <code>cron:show</code> task:</p>
+<pre><code class="language-plain">$ tomo run cron:show
+tomo run v1.0.0
+→ Connecting to deployer@app.example.com
+• cron:show
+crontab -l
+SHELL=/bin/bash
+0 6 * * * . $HOME/.bashrc; cd /home/deployer/apps/my-app/current; bundle exec rails runner PeriodicTask.call &gt; /home/deployer/apps/my-app/shared/log/periodic-task.log 2&gt;&amp;1
+
+✔ Ran cron:show on deployer@app.example.com
+</code></pre>
+<h2 id="next-steps">Next steps</h2>
+<p>This tutorial introduced you to writing custom tasks in tomo, but there is much more to explore. For next steps, check out these APIs:</p>
+<ul>
+<li><a href="../../api/TaskLibrary/">Tomo::TaskLibrary</a></li>
+<li><a href="../../api/Remote/">Tomo::Remote</a></li>
+<li><a href="../../api/Result/">Tomo::Result</a></li>
+<li><a href="../../api/Paths/">Tomo::Paths</a></li>
+<li><a href="../../plugins/core/#helpers">core plugin helpers</a> (additional methods mixed into the Remote API)</li>
+</ul>
+<p>And for inspiration, look no further than tomo itself, which has several built-in plugins in <a href="https://github.com/mattbrictson/tomo/tree/main/lib/tomo/plugin">lib/tomo/plugin</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../deploying-rails-from-scratch/" class="btn btn-neutral float-left" title="Deploying Rails From Scratch"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../publishing-a-plugin/" class="btn btn-neutral float-right" title="Publishing a Plugin">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../deploying-rails-from-scratch/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../publishing-a-plugin/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Publishing a Plugin - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Publishing a Plugin";
+        var mkdocs_page_input_path = "tutorials/publishing-a-plugin.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Publishing a Plugin</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#create-the-gem">Create the gem</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#choose-a-name">Choose a name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#use-the-tomo-plugin-template">Use the tomo-plugin template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run-the-rename_templaterb-script">Run the rename_template.rb script</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#define-the-plugin">Define the plugin</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#default-settings">Default settings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#helpers">Helpers</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#write-tests">Write tests</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#try-it-out">Try it out</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#write-a-good-readme">Write a good README</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-up-ci">Set up CI</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#publish-to-rubygemsorg">Publish to rubygems.org</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#releasing-a-new-version">Releasing a new version</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>Publishing a Plugin</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/tutorials/publishing-a-plugin.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="publishing-a-plugin">Publishing a Plugin</h1>
+<p>In this tutorial we will package a tomo plugin so that it can be shared with the community as a Ruby gem. Here is a quick reference to the steps involved in creating a plugin gem:</p>
+<ul>
+<li>Start with a <a href="../writing-custom-tasks/">project-based plugin</a> to prove real-world usage</li>
+<li>Use the <a href="https://github.com/mattbrictson/tomo-plugin">tomo-plugin GitHub template</a> to package your plugin as a Ruby gem</li>
+<li>Write unit tests for your tasks using <a href="../../api/testing/MockPluginTester/">MockPluginTester</a></li>
+<li>Add docs and continuous integration (CI) to help your users and contributors</li>
+<li>Publish to <a href="https://rubygems.org">rubygems.org</a></li>
+</ul>
+<p>To keep things simple, we&rsquo;ll package the example cron plugin that we created in the <a href="../writing-custom-tasks/">Writing Custom Tasks tutorial</a>. Check out that article for more details on writing plugins and tasks. Here we will focus just on the gem packaging part.</p>
+<h2 id="create-the-gem">Create the gem</h2>
+<p>While it is easy to get started writing tasks with a project-based plugin, this ad-hoc style does not have test coverage and is not packaged in a way that makes it easy to share with other projects and the larger tomo community. This is why it is useful to package your plugin in its own Ruby gem project.</p>
+<h3 id="choose-a-name">Choose a name</h3>
+<p>Before packaging your plugin, choose a name. Your gem will be named <code>tomo-plugin-NAME</code> where <code>NAME</code> is the name of your plugin. Decide on a plugin name that is concise and whose gem name is not already taken at <a href="https://rubygems.org">rubygems.org</a>. For example the &ldquo;sidekiq&rdquo; plugin corresponds to the <a href="https://rubygems.org/gems/tomo-plugin-sidekiq">tomo-plugin-sidekiq</a> gem at rubygems.org.</p>
+<h3 id="use-the-tomo-plugin-template">Use the tomo-plugin template</h3>
+<p>Tomo provides a GitHub template that does most of the work of setting up the gem project.</p>
+<ol>
+<li>Navigate to the <a href="https://github.com/mattbrictson/tomo-plugin">tomo-plugin</a> template on GitHub</li>
+<li>Press <a href="https://github.com/mattbrictson/tomo-plugin/generate">Use this template</a></li>
+<li>Name the repo <code>tomo-plugin-NAME</code> where <code>NAME</code> is the name of the plugin</li>
+</ol>
+<p><img alt="GitHub: Create a new repository from tomo-plugin" src="../create-new-repo%402x.png" /></p>
+<p>For this example we will use &ldquo;cron&rdquo; as the plugin name.</p>
+<h3 id="run-the-rename_templaterb-script">Run the rename_template.rb script</h3>
+<p>Use git to clone the resulting GitHub repo. Inside the repo, run:</p>
+<pre><code class="language-plain">$ ruby rename_template.rb
+</code></pre>
+<p>This will prompt for some information needed to set up the project. Press enter to accept the default values, which should be sufficient for each question.</p>
+<pre><code class="language-plain">&gt;&gt;&gt;&gt; git remote -v
+&gt;&gt;&gt;&gt; git remote get-url origin
+&gt;&gt;&gt;&gt; git config user.email
+&gt;&gt;&gt;&gt; git config user.name
+Plugin name? [cron]
+Gem summary (&lt; 60 chars)? [cron tasks for tomo]
+Author email? [opensource@mattbrictson.com]
+Author name? [Matt Brictson]
+GitHub repository? [mattbrictson/tomo-plugin-cron]
+Create GitHub labels? [Y/n]
+
+I need to ask for your GitHub credentials in order to create labels.
+Don't worry, your GitHub credentials will NOT be saved.
+
+GitHub username? [mattbrictson]
+GitHub password?
+2FA token? 012345
+Created labels: ⚠️ Breaking, 🐛 Bug Fix, 📚 Docs, ✨ Feature, 🏠 Housekeeping
+&gt;&gt;&gt;&gt; git mv .github/workflows/push.yml.dist .github/workflows/push.yml
+&gt;&gt;&gt;&gt; git add LICENSE.txt
+&gt;&gt;&gt;&gt; git add Rakefile
+&gt;&gt;&gt;&gt; git add README.md
+&gt;&gt;&gt;&gt; git add CHANGELOG.md
+&gt;&gt;&gt;&gt; git add CODE_OF_CONDUCT.md
+&gt;&gt;&gt;&gt; git add bin/console
+&gt;&gt;&gt;&gt; git add example.gemspec
+&gt;&gt;&gt;&gt; git mv example.gemspec tomo-plugin-cron.gemspec
+&gt;&gt;&gt;&gt; git add lib/tomo/plugin/example.rb
+&gt;&gt;&gt;&gt; git mv lib/tomo/plugin/example.rb lib/tomo/plugin/cron.rb
+&gt;&gt;&gt;&gt; git add lib/tomo/plugin/example/version.rb
+&gt;&gt;&gt;&gt; git add lib/tomo/plugin/example/helpers.rb
+&gt;&gt;&gt;&gt; git mv lib/tomo/plugin/example/helpers.rb lib/tomo/plugin/cron/helpers.rb
+&gt;&gt;&gt;&gt; git add lib/tomo/plugin/example/tasks.rb
+&gt;&gt;&gt;&gt; git mv lib/tomo/plugin/example/tasks.rb lib/tomo/plugin/cron/tasks.rb
+&gt;&gt;&gt;&gt; git add lib/tomo/plugin/example/version.rb
+&gt;&gt;&gt;&gt; git mv lib/tomo/plugin/example/version.rb lib/tomo/plugin/cron/version.rb
+&gt;&gt;&gt;&gt; git add lib/tomo/plugin/cron.rb
+&gt;&gt;&gt;&gt; git add lib/tomo/plugin/cron/version.rb
+&gt;&gt;&gt;&gt; git add test/tomo/plugin/example_test.rb
+&gt;&gt;&gt;&gt; git mv test/tomo/plugin/example_test.rb test/tomo/plugin/cron_test.rb
+&gt;&gt;&gt;&gt; git add test/tomo/plugin/example/helpers_test.rb
+&gt;&gt;&gt;&gt; git add test/tomo/plugin/example/helpers_test.rb
+&gt;&gt;&gt;&gt; git mv test/tomo/plugin/example/helpers_test.rb test/tomo/plugin/cron/helpers_test.rb
+&gt;&gt;&gt;&gt; git add test/tomo/plugin/example/tasks_test.rb
+&gt;&gt;&gt;&gt; git add test/tomo/plugin/example/tasks_test.rb
+&gt;&gt;&gt;&gt; git mv test/tomo/plugin/example/tasks_test.rb test/tomo/plugin/cron/tasks_test.rb
+&gt;&gt;&gt;&gt; git add test/test_helper.rb
+&gt;&gt;&gt;&gt; git rm rename_template.rb
+
+All set!
+
+The project has been renamed to &quot;tomo-plugin-cron&quot;.
+Review the changes and then run:
+
+  git commit &amp;&amp; git push
+
+</code></pre>
+<p>Don&rsquo;t forget to <code>git commit</code> and <code>git push</code> the changes.</p>
+<h2 id="define-the-plugin">Define the plugin</h2>
+<p>The entry point for a tomo plugin gem is the <code>lib/tomo/plugin/&lt;name&gt;.rb</code> file. This file defines the plugin by extending <a href="../../api/PluginDSL/">Tomo::PluginDSL</a> to provide the following three pieces of information:</p>
+<ol>
+<li>Default settings</li>
+<li>Tasks</li>
+<li>Helpers</li>
+</ol>
+<p>For our &ldquo;cron&rdquo; plugin, the entry point generated from the template looks like this:</p>
+<pre><code class="language-ruby"># lib/tomo/plugin/cron.rb
+
+require &quot;tomo&quot;
+require_relative &quot;cron/helpers&quot;
+require_relative &quot;cron/tasks&quot;
+require_relative &quot;cron/version&quot;
+
+module Tomo::Plugin::Cron
+  extend Tomo::PluginDSL
+
+  # TODO: initialize this plugin's settings with default values
+  # defaults cron_setting: &quot;foo&quot;,
+  #          cron_another_setting: &quot;bar&quot;
+
+  tasks Tomo::Plugin::Cron::Tasks
+  helpers Tomo::Plugin::Cron::Helpers
+end
+</code></pre>
+<h3 id="default-settings">Default settings</h3>
+<p>It is a good practice to provide default values for <em>all</em> settings that your plugin relies on. If there is truly no default value for a setting, declare it as <code>nil</code>. This at least informs tomo the name of the setting that the plugin is expecting.</p>
+<p>Our cron plugin needs a crontab template that has no default value (the user of the plugin will need to provide it):</p>
+<pre><code class="language-ruby">defaults cron_template_path: nil
+</code></pre>
+<p>Notice how we&rsquo;ve named the setting starting with <code>cron_</code>. This is a convention that makes it clear to users which settings correspond to which plugin, and reduces the unintended collisions.</p>
+<h3 id="tasks">Tasks</h3>
+<p>By default, the tasks of the plugin are defined in a file <code>lib/tomo/plugin/&lt;name&gt;/tasks.rb</code>. It looks like this:</p>
+<pre><code class="language-ruby"># lib/tomo/plugin/cron/tasks.rb
+
+module Tomo::Plugin::Cron
+  class Tasks &lt; Tomo::TaskLibrary
+    # tasks go here
+  end
+end
+</code></pre>
+<p>We can copy the tasks from the <a href="../writing-custom-tasks/">Writing Custom Tasks tutorial</a> into this file with a few modifications to use the new <code>:cron_template_path</code> setting we just defined:</p>
+<pre><code class="language-ruby"># lib/tomo/plugin/cron/tasks.rb
+
+module Tomo::Plugin::Cron
+  class Tasks &lt; Tomo::TaskLibrary
+    def show
+      remote.run &quot;crontab -l&quot;, raise_on_error: false
+    end
+
+    def install
+      require_setting :cron_template_path
+
+      crontab = merge_template(settings[:cron_template_path])
+      remote.run &quot;echo #{crontab.shellescape} | crontab -&quot;,
+                 echo: &quot;echo [template:.tomo/templates/crontab.erb] | crontab -&quot;
+    end
+  end
+end
+</code></pre>
+<p>Note the <code>require_setting</code> line will check that the user has provided a value for the <code>:cron_template_path</code> setting and will show a helpful error message if it is missing.</p>
+<h3 id="helpers">Helpers</h3>
+<p>Helpers extend the <code>remote</code> DSL in tomo. This is an advanced feature that most plugins will not use. We can remove it from our plugin:</p>
+<ul>
+<li>Delete <code>lib/tomo/plugin/cron/helpers.rb</code></li>
+<li>Delete <code>test/tomo/plugin/cron/helpers_test.rb</code></li>
+<li>Remove the following lines from <code>lib/tomo/plugin/cron.rb</code><ul>
+<li><code>require_relative "cron/helpers"</code></li>
+<li><code>helpers Tomo::Plugin::Cron::Helpers</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="write-tests">Write tests</h2>
+<p>Tomo makes it easy to write tests in a plugin gem using the <a href="../../api/testing/MockPluginTester/">MockPluginTester</a>. MockPluginTester works by mocking the underlying SSH connection so that no actual remote SSH scripts are run. By default, the tester will simulate that the script runs successfully (exit status of 0) with empty stdout and stderr. You can then write assertions verifying that the script was run as expected.</p>
+<p>Here&rsquo;s what tests look like for the tasks of our hypothetical cron plugin:</p>
+<pre><code class="language-ruby"># test/tomo/plugin/cron/tasks_test.rb
+
+require &quot;test_helper&quot;
+require &quot;tempfile&quot;
+
+class Tomo::Plugin::Cron::TasksTest &lt; Minitest::Test
+  def test_show
+    tester = Tomo::Testing::MockPluginTester.new(&quot;cron&quot;)
+    tester.run_task(&quot;cron:show&quot;)
+    assert_equal(&quot;crontab -l&quot;, tester.executed_script)
+  end
+
+  def test_install
+    # Create a sample crontab template for use in the test
+    crontab = &quot;0 6 * * * echo hi\n&quot;
+    crontab_file = Tempfile.new
+    crontab_file &lt;&lt; crontab
+    crontab_file.close
+
+    tester = Tomo::Testing::MockPluginTester.new(
+      &quot;cron&quot;, settings: { cron_template_path: crontab_file.path }
+    )
+
+    tester.run_task(&quot;cron:install&quot;)
+
+    assert_equal(
+      &quot;echo #{crontab.shellescape} | crontab -&quot;,
+      tester.executed_script
+    )
+  end
+end
+</code></pre>
+<p>To run the tests:</p>
+<pre><code class="language-plain">$ bundle exec rake
+Started with run options --seed 29280
+
+Tomo::Plugin::CronTest
+  test_that_it_has_a_version_number                               PASS (0.00s)
+
+Tomo::Plugin::Cron::TasksTest
+  test_install                                                    PASS (0.03s)
+  test_show                                                       PASS (0.00s)
+
+Finished in 0.03056s
+3 tests, 3 assertions, 0 failures, 0 errors, 0 skips
+Running RuboCop...
+Inspecting 12 files
+............
+
+12 files inspected, no offenses detected
+</code></pre>
+<h2 id="try-it-out">Try it out</h2>
+<p>Unit tests are valuable but no substitute for trying out your plugin gem in a real-world scenario. There are two easy ways to try your gem before publishing.</p>
+<p>One option is to install the gem into your local Ruby environment like this:</p>
+<pre><code class="language-plain">$ bundle exec rake install
+</code></pre>
+<p>Now your plugin will be available anywhere you use <code>tomo</code> on your local system.</p>
+<p>However, that won&rsquo;t work for a project where you are managing tomo gems via Bundler. In that case, edit the Gemfile of the project to reference your plugin by <code>path</code>:</p>
+<pre><code class="language-ruby">gem &quot;tomo-plugin-cron&quot;, path: &quot;../tomo-plugin-cron&quot;
+</code></pre>
+<p>Run <code>bundle install</code> and now your plugin will be available via <code>bundle exec tomo</code>.</p>
+<h2 id="write-a-good-readme">Write a good README</h2>
+<p>The tomo-plugin template will create a basic README but it is up to you to fill in the details. In particular users will be interested to know what tasks your plugin provides and how to configure it. Make sure to fill in the Settings and Tasks sections of the README. In the case of our hypothetical cron plugin, we&rsquo;d want to specify installation instructions as well, to explain that the <code>cron:install</code> task should be listed part of the <code>setup</code> tasks. Check out <a href="https://github.com/mattbrictson/tomo-plugin-sidekiq/blob/main/README.md">tomo-plugin-sidekiq</a> for an example README.</p>
+<h2 id="set-up-ci">Set up CI</h2>
+<p>The tomo-plugin template will set your gem project up with Travis, Circle CI, and Code Climate out of the box, but it is up to you to log into those services and turn them on. Here are some links to get you started:</p>
+<ul>
+<li><a href="https://circleci.com/">Circle CI</a>: Log in via your GitHub account and then click <strong>Add Projects</strong>.</li>
+<li><a href="https://codeclimate.com">Code Climate</a>: Log into the Quality product via your GitHub account, click <strong>Open Source</strong>, then <strong>Add a repository</strong>.</li>
+<li><a href="https://travis-ci.com/">Travis CI</a>: Log into travis-ci.com via your GitHub account, go to <strong>Account Settings</strong>, then enable your gem project in the <a href="https://travis-ci.com/account/repositories">Repositories</a> section.</li>
+</ul>
+<p>These services will build and test your project on every push and PR and update the status badges in your README.</p>
+<h2 id="publish-to-rubygemsorg">Publish to rubygems.org</h2>
+<p>Once you are ready to share your gem with the world, <a href="https://rubygems.org/sign_up">create a rubygems.org account</a> if you haven&rsquo;t already. Then ensure you are logged in via the <code>gem</code> CLI:</p>
+<pre><code class="language-plain">$ gem signin
+</code></pre>
+<p>To publish, run:</p>
+<pre><code class="language-plain">$ bundle exec rake release
+</code></pre>
+<p>Finally, don&rsquo;t forget to document your release with release notes in the Releases section of your project on GitHub.</p>
+<h3 id="releasing-a-new-version">Releasing a new version</h3>
+<p>If you&rsquo;ve already published your gem and want to release a new version, first edit the <code>version.rb</code> file:</p>
+<pre><code class="language-ruby"># lib/tomo/plugin/cron/version.rb
+
+module Tomo::Plugin::Cron
+  VERSION = &quot;0.2.0&quot;.freeze
+end
+</code></pre>
+<p>Commit the changes:</p>
+<pre><code class="language-plain">$ git commit -a -m &quot;Release v0.2.0&quot;
+</code></pre>
+<p>And then release:</p>
+<pre><code class="language-plain">$ bundle exec rake release
+</code></pre>
+<p>Once again, don&rsquo;t forget the release notes on GitHub.</p>
+<p>That&rsquo;s it!</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../writing-custom-tasks/" class="btn btn-neutral float-left" title="Writing Custom Tasks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../api/Host/" class="btn btn-neutral float-right" title="Tomo::Host">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../writing-custom-tasks/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../api/Host/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>core - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "core";
+        var mkdocs_page_input_path = "plugins/core.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">core</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#settings">Settings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tasks">Tasks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#coresetup_directories">core:setup_directories</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#coresymlink_shared">core:symlink_shared</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#coresymlink_current">core:symlink_current</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#coreclean_releases">core:clean_releases</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#corewrite_release_json">core:write_release_json</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#corelog_revision">core:log_revision</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpers">Helpers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#remotecapturecommand-options-string">remote.capture(*command, **options) → String</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remoteruncommand-options-true-or-false">remote.run?(*command, **options) → true or false</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remotewritetexttemplate-to-append-false-options-tomoresult">remote.write(text:/template:, to:, append: false, **options) → Tomo::Result</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remoteln_sftarget-link-options-tomoresult">remote.ln_sf(target, link, **options) → Tomo::Result</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remoteln_sfntarget-link-options-tomoresult">remote.ln_sfn(target, link, **options) → Tomo::Result</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remotemkdir_pdirectories-options-tomoresult">remote.mkdir_p(*directories, **options) → Tomo::Result</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remoterm_rfpaths-options-tomoresult">remote.rm_rf(*paths, **options) → Tomo::Result</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remotelist_filesdirectorynil-options-string">remote.list_files(directory=nil, **options) → [String]</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remotecommand_availablecommand_name-options-true-or-false">remote.command_available?(command_name, **options) → true or false</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remotefilefile-options-true-or-false">remote.file?(file, **options) → true or false</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remoteexecutablefile-options-true-or-false">remote.executable?(file, **options) → true or false</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remotedirectorydirectory-options-true-or-false">remote.directory?(directory, **options) → true or false</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Plugins &raquo;</li>
+        
+      
+    
+    <li>core</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/plugins/core.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="core">core</h1>
+<p>The core plugin provides tasks, settings, and helpers that are the fundamental building blocks for most tomo deployments. This plugin is always loaded and available, even if it is not explicitly declared in the configuration file.</p>
+<h2 id="settings">Settings</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>application</code></td>
+<td>The name of the application being deployed</td>
+<td><code>"default"</code></td>
+</tr>
+<tr>
+<td><code>concurrency</code></td>
+<td>The maximum number of threads to use when deploying to multiple hosts at once</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>current_path</code></td>
+<td>Location of the symlink that points to the currently deployed release</td>
+<td><code>"%{deploy_to}/current"</code></td>
+</tr>
+<tr>
+<td><code>deploy_to</code></td>
+<td>The root directory under which all tomo data, releases, etc. are stored</td>
+<td><code>"/var/www/%{application}"</code></td>
+</tr>
+<tr>
+<td><code>keep_releases</code></td>
+<td>Number of releases to keep when pruning old releases with the <a href="#coreclean_releases">core:clean_releases</a> task</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>linked_dirs</code></td>
+<td>Array of directory names that will be symlinked from the shared directory into each release by the <a href="#coresymlink_shared">core:symlink_shared</a> task</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>linked_files</code></td>
+<td>Array of file names that will be symlinked from the shared directory into each release by the <a href="#coresymlink_shared">core:symlink_shared</a> task</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>local_user</code></td>
+<td>User name that will be written to the revision log and the release JSON file as the &ldquo;deploy user&rdquo;.</td>
+<td><code>$USER</code>, <code>$USERNAME</code>, or <code>whoami</code></td>
+</tr>
+<tr>
+<td><code>releases_path</code></td>
+<td>Directory where the <a href="../../commands/deploy/">deploy</a> command creates releases</td>
+<td><code>"%{deploy_to}/releases"</code></td>
+</tr>
+<tr>
+<td><code>release_json_path</code></td>
+<td>Path where the <a href="#corewrite_release_json">core:write_release_json</a> task will write a JSON file describing the release</td>
+<td><code>"%{release_path}/.tomo_release.json"</code></td>
+</tr>
+<tr>
+<td><code>revision_log_path</code></td>
+<td>Path where the <a href="#corelog_revision">core:log_revision</a> task will append a log message with the date and time of the release</td>
+<td><code>"%{deploy_to}/revisions.log"</code></td>
+</tr>
+<tr>
+<td><code>run_args</code></td>
+<td>A special read-only setting where tomo places any extra arguments that are passed to the <a href="../../commands/run/">run</a> command</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>shared_path</code></td>
+<td>Directory where files shared between releases are stored; used by <a href="#coresymlink_shared">core:symlink_shared</a></td>
+<td><code>"%{deploy_to}/shared"</code></td>
+</tr>
+<tr>
+<td><code>ssh_connect_timeout</code></td>
+<td>The number of seconds tomo will wait before it gives up when trying to open an SSH connection</td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>ssh_executable</code></td>
+<td>The name (or full path) of the ssh executable</td>
+<td><code>"ssh"</code></td>
+</tr>
+<tr>
+<td><code>ssh_extra_opts</code></td>
+<td>An array of extra command line arguments that tomo will pass to every invocation of the ssh executable</td>
+<td><code>["-o", "PasswordAuthentication=no"]</code></td>
+</tr>
+<tr>
+<td><code>ssh_forward_agent</code></td>
+<td>Whether to forward authentication when connecting via SSH; needed for seamless git+ssh</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>ssh_reuse_connections</code></td>
+<td>Whether to use <code>ControlMaster</code> to keep connections open across multiple invocations of ssh; setting this to <code>false</code> will slow down tomo significantly</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>ssh_strict_host_key_checking</code></td>
+<td>Use <code>"accept-new"</code> for a good compromise of security and convenience, <code>true</code> for most security, <code>false</code> for most convenience; note that older versions of ssh do not understand the <code>"accept-new"</code> option</td>
+<td><code>"accept-new"</code></td>
+</tr>
+<tr>
+<td><code>tmp_path</code></td>
+<td>Directory where the <a href="../../commands/setup/">setup</a> command stages temporary files</td>
+<td><code>"/tmp/tomo-#{SecureRandom.alphanumeric(8)}"</code></td>
+</tr>
+<tr>
+<td><code>tomo_config_file_path</code></td>
+<td>A special read-only setting containing the path to the <code>config.rb</code> file that was used to configure tomo</td>
+<td><code>"/path/to/.tomo/config.rb"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tasks">Tasks</h2>
+<h3 id="coresetup_directories">core:setup_directories</h3>
+<p>Creates the <code>:deploy_to</code>, <code>:shared_path</code>, and <code>:releases_path</code> directories so that other tasks that rely on these directories can work. This is one of the first tasks that should be run as part of <a href="../../commands/setup/">setup</a>.</p>
+<h3 id="coresymlink_shared">core:symlink_shared</h3>
+<p>Creates a symlink for each directory listed in the <code>:linked_dirs</code> setting and each file in <code>:linked_files</code>. The symlink will point to the directory or file of the same name inside the shared directory. This allows these directories and files to be shared across all releases. Note that if a directory or file already exists in the release, that directory or file will be deleted or overwritten prior to creating the link.</p>
+<p>For example, given this configuration:</p>
+<pre><code class="language-ruby">set linked_dirs: [&quot;public/assets&quot;]
+set linked_files: [&quot;config/database.yml&quot;]
+</code></pre>
+<p>Calling this task will run:</p>
+<pre><code>mkdir -p /var/www/my-app/shared/public/assets \
+         /var/www/my-app/releases/20190604204415/public
+cd /var/www/my-app/releases/20190604204415 &amp;&amp; rm -rf public/assets
+ln -sf /var/www/my-app/shared/public/assets \
+       /var/www/my-app/releases/20190604204415/public/assets
+ln -sfn /var/www/my-app/shared/config/database.yml \
+        /var/www/my-app/releases/20190604204415/config/database.yml
+</code></pre>
+<p><code>core:symlink_shared</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task. If <code>:linked_dirs</code> and <code>:linked_files</code> are both empty, running this task has no effect.</p>
+<h3 id="coresymlink_current">core:symlink_current</h3>
+<p>Promotes the release that is currently being deployed to become the &ldquo;current&rdquo; release by updating the current symlink. <code>core:symlink_shared</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task. It is typically run after all build steps have completed (<a href="../bundler/#bundlerinstall">bundler:install</a>, <a href="../rails/#railsdb_migrate">rails:db_migrate</a>, <a href="../rails/#railsassets_precompile">rails:assets_precompile</a>, etc.).</p>
+<h3 id="coreclean_releases">core:clean_releases</h3>
+<p>Deletes old releases while maintaining the most recent releases and keeping the current release. The total number of releases kept will be based on the <code>:keep_releases</code> setting. If this setting is absent or zero, running this task has no effect. If you are continuously deploying your application in an automated fashion, the releases can quickly fill up disk space if they are not pruned; hence the need for this task.</p>
+<p><code>core:clean_releases</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task. It is typically run at the end of a deployment once everything else has succeeded.</p>
+<h3 id="corewrite_release_json">core:write_release_json</h3>
+<p>Writes a JSON file to the location specified by the <code>:release_json_path</code> setting. This file will contain a JSON object with properties that describe the release. Here is an example:</p>
+<pre><code class="language-json">{
+  &quot;ref&quot;: &quot;main&quot;,
+  &quot;author&quot;: &quot;matt@example.com&quot;,
+  &quot;revision&quot;: &quot;0d1cb3212e2f9c43aa49fb172d8d9c726163cecf&quot;,
+  &quot;revision_date&quot;: &quot;2019-06-01 17:23:48 -0700&quot;,
+  &quot;deploy_date&quot;: &quot;2019-06-05 19:00:26 -0700&quot;,
+  &quot;deploy_user&quot;: &quot;mbrictson&quot;
+}
+</code></pre>
+<h3 id="corelog_revision">core:log_revision</h3>
+<p>Appends a message to a log file specified by the <code>:revision_log_path</code> setting. The message contains information about the release. Here is an example entry:</p>
+<pre><code>2019-06-05 19:00:26 -0700 - 0d1cb3212e2f9c43aa49fb172d8d9c726163cecf (main) deployed by mbrictson
+</code></pre>
+<h2 id="helpers">Helpers</h2>
+<p>All of these methods are available on instances of <a href="../../api/Remote/">Remote</a> and accept the same <code>options</code> as <a href="../../api/Remote/#run42command-4242options-tomoresult">Remote#run</a>.</p>
+<h3 id="remotecapturecommand-options-string">remote.capture(*command, **options) → String</h3>
+<p>Run the given command, returning the stdout of that command. If the command did not write to stdout, then return an empty String. Note that stderr is ignored, and an exception will be thrown if the command fails.</p>
+<pre><code class="language-ruby">remote.capture(&quot;echo&quot;, &quot;hello&quot;) # =&gt; &quot;hello\n&quot;
+</code></pre>
+<h3 id="remoteruncommand-options-true-or-false">remote.run?(*command, **options) → true or false</h3>
+<p>Run the given command, returning <code>true</code> if the command succeeded (exit status of 0) or <code>false</code> otherwise.</p>
+<pre><code class="language-ruby"># If java is not installed in the $PATH
+remote.run?(&quot;which&quot;, &quot;java&quot;) # =&gt; false
+</code></pre>
+<h3 id="remotewritetexttemplate-to-append-false-options-tomoresult">remote.write(text:/template:, to:, append: false, **options) → <a href="../../api/Result/">Tomo::Result</a></h3>
+<p>Write the given <code>text</code> (a String) or the text resulting from merging the given <code>template</code> (a local path to an ERB template file) to the remote path specified by <code>to:</code>. Refer to the <a href="../../api/TaskLibrary/#merge_templatepath-string">merge_template</a> documentation for details on tomo’s ERB templating behavior.</p>
+<p>If <code>append</code> is <code>false</code> (the default), the remote file will completely replaced; if <code>true</code>, the file will be appended to. This is designed for small amounts of text (e.g. configuration files), not large or binary data.</p>
+<pre><code class="language-ruby">remote.write text: &quot;hello world!\n&quot;,
+             to: paths.shared.join(&quot;greetings.txt&quot;),
+             append: true
+</code></pre>
+<pre><code class="language-ruby">remote.write template: File.expand_path(&quot;unicorn.service.erb&quot;, __dir__),
+             to: &quot;.config/systemd/user/unicorn.service&quot;
+</code></pre>
+<h3 id="remoteln_sftarget-link-options-tomoresult">remote.ln_sf(target, link, **options) → <a href="../../api/Result/">Tomo::Result</a></h3>
+<p>Create a symlink on the remote host at the path specified at <code>link</code> that points to <code>target</code>. Deletes any existing file that already exists at the <code>link</code> path prior to creating the symlink.</p>
+<pre><code class="language-ruby">remote.ln_sf(paths.shared.join(&quot;.env&quot;), paths.release.join(&quot;.env&quot;))
+# $ ln -sf /var/www/my-app/shared/.env /var/www/my-app/releases/20190604204415/.env
+</code></pre>
+<h3 id="remoteln_sfntarget-link-options-tomoresult">remote.ln_sfn(target, link, **options) → <a href="../../api/Result/">Tomo::Result</a></h3>
+<p>Like <code>ln_sf</code> but also passes the <code>-n</code> flag, which allows an existing <code>link</code> to be deleted even if it is a symlink to a directory.</p>
+<h3 id="remotemkdir_pdirectories-options-tomoresult">remote.mkdir_p(*directories, **options) → <a href="../../api/Result/">Tomo::Result</a></h3>
+<p>Creates one or more directories on the remote host.</p>
+<pre><code class="language-ruby">remote.mkdir_p(paths.current.dirname, paths.shared)
+# $ mkdir -p /var/www/my-app /var/www/my-app/shared
+</code></pre>
+<h3 id="remoterm_rfpaths-options-tomoresult">remote.rm_rf(*paths, **options) → <a href="../../api/Result/">Tomo::Result</a></h3>
+<p>Deletes one or more files or directories on the remote host.</p>
+<pre><code class="language-ruby">remote.rm_rf(paths.tmp)
+# $ rm -rf /tmp/tomo-a4DBHX0P
+</code></pre>
+<h3 id="remotelist_filesdirectorynil-options-string">remote.list_files(directory=nil, **options) → [String]</h3>
+<p>Lists non-hidden files in the specified directory. If <code>directory</code> is omitted, the default SSH login directory is used (typically the deploy user’s home directory). The result will be an array of the directory contents.</p>
+<pre><code class="language-ruby">remote.list_files(&quot;/var/www/my-app&quot;) # =&gt; [&quot;current&quot;, &quot;releases&quot;, &quot;revision.log&quot;, shared&quot;]
+</code></pre>
+<h3 id="remotecommand_availablecommand_name-options-true-or-false">remote.command_available?(command_name, **options) → true or false</h3>
+<p>Runs <code>which</code> on the remote host to determine whether the given <code>command_name</code> is an available executable. Returns <code>true</code> if an executable exists, <code>false</code> otherwise.</p>
+<pre><code class="language-ruby">remote.command_available?(&quot;java&quot;) # =&gt; false
+</code></pre>
+<h3 id="remotefilefile-options-true-or-false">remote.file?(file, **options) → true or false</h3>
+<p>Uses the shell expression <code>[ -f ]</code> to test whether the given <code>file</code> exists on the remote host. Returns <code>true</code> if the path exists and is a normal file, <code>false</code> otherwise.</p>
+<pre><code class="language-ruby">remote.file?(&quot;.bashrc&quot;) # =&gt; true
+</code></pre>
+<h3 id="remoteexecutablefile-options-true-or-false">remote.executable?(file, **options) → true or false</h3>
+<p>Uses the shell expression <code>[ -x ]</code> to test whether the given <code>file</code> exists on the remote host. Returns <code>true</code> if the path exists and is executable, <code>false</code> otherwise.</p>
+<pre><code class="language-ruby">remote.executable?(&quot;/usr/bin/git&quot;) # =&gt; true
+</code></pre>
+<h3 id="remotedirectorydirectory-options-true-or-false">remote.directory?(directory, **options) → true or false</h3>
+<p>Uses the shell expression <code>[ -d ]</code> to test whether the given <code>directory</code> exists on the remote host. Returns <code>true</code> if the path exists and is a directory, <code>false</code> otherwise.</p>
+<pre><code class="language-ruby">remote.directory?(&quot;/opt&quot;) # =&gt; true
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../commands/tasks/" class="btn btn-neutral float-left" title="tasks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../bundler/" class="btn btn-neutral float-right" title="bundler">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../commands/tasks/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../bundler/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

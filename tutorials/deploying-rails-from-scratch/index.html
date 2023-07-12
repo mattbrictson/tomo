@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Deploying Rails From Scratch - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Deploying Rails From Scratch";
+        var mkdocs_page_input_path = "tutorials/deploying-rails-from-scratch.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Deploying Rails From Scratch</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#create-an-ubuntu-vps">Create an Ubuntu VPS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#install-necessary-apt-packages">Install necessary apt packages</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-up-a-deployer-user">Set up a deployer user</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configure-tomo">Configure tomo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-tomo-setup">Run tomo setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#run-tomo-deploy">Run tomo deploy</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>Deploying Rails From Scratch</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/tutorials/deploying-rails-from-scratch.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="deploying-rails-from-scratch">Deploying Rails From Scratch</h1>
+<p>In this tutorial we will use tomo to deploy a <a href="https://github.com/mattbrictson/rails-new">sample Rails project</a> to a virtual private server (VPS). These instructions use <a href="https://www.digitalocean.com">DigitalOcean</a> as the hosting provider, but any provider that offers an Ubuntu 20.04 or 22.04 LTS VPS should work in a similar way. Here are the steps involved (step 1 is the only part that is DigitalOcean-specific):</p>
+<ol>
+<li><a href="#create-an-ubuntu-vps">Create an Ubuntu VPS</a></li>
+<li><a href="#install-necessary-apt-packages">Install necessary apt packages</a></li>
+<li><a href="#set-up-a-deployer-user">Set up a deployer user</a></li>
+<li><a href="#configure-tomo">Configure tomo</a></li>
+<li><a href="#run-tomo-setup">Run tomo setup</a></li>
+<li><a href="#run-tomo-deploy">Run tomo deploy</a></li>
+</ol>
+<p>This is a basic tutorial that skips over DNS, TLS, load balancing, PostgreSQL, etc. If you have suggestions for expanding this guide, consider <a href="https://github.com/mattbrictson/tomo">opening an issue or pull request on GitHub</a>. Thanks for reading!</p>
+<h2 id="create-an-ubuntu-vps">Create an Ubuntu VPS</h2>
+<p>Log into <a href="https://www.digitalocean.com">DigitalOcean</a> and create a &ldquo;Droplet&rdquo; (aka a VPS). If this is your first time using DigitalOcean, check out their <a href="https://www.digitalocean.com/docs/droplets/quickstart/">Droplet QuickStart</a> guide for an introduction to the service.</p>
+<p>When creating the Droplet, make sure to choose <strong>Ubuntu 20.04 or 22.04 (LTS) x64</strong>:</p>
+<p><img alt="Ubuntu 20.04 LTS" src="../ubuntu-20-lts%402x.png" /></p>
+<p>And use <strong>SSH keys</strong> for authentication (tomo does not work with password authentication):</p>
+<p><img alt="SSH Authentication" src="../ssh-auth%402x.png" /></p>
+<p>And select a Droplet size with at least <strong>1GB RAM</strong>, or Ruby may fail to compile:</p>
+<p><img alt="Smallest Viable Droplet" src="../smallest-viable-droplet%402x.png" /></p>
+<p>Once the Droplet is created, confirm that you are able to connect to it (substitute <code>IPADDR</code> with the IP address provided in the DigitalOcean control panel for the new Droplet):</p>
+<pre><code class="language-sh"># Run on your local machine
+$ ssh -o PasswordAuthentication=no root@IPADDR echo &quot;authenticated as root!&quot;
+authenticated as root!
+</code></pre>
+<p>You may need to type <code>yes</code> when prompted to trust the host fingerprint.</p>
+<h2 id="install-necessary-apt-packages">Install necessary apt packages</h2>
+<p>Rails requires certain operating system packages in order to build Ruby and install various gems that have native extensions. Connect to the VPS as root and install the following:</p>
+<pre><code class="language-sh"># Run these commands as root on the VPS
+apt-get -y update
+apt-get -y install autoconf \
+                   bison \
+                   build-essential \
+                   curl \
+                   git-core \
+                   libdb-dev \
+                   libffi-dev \
+                   libgdbm-dev \
+                   libgdbm6 \
+                   libgmp-dev \
+                   libncurses5-dev \
+                   libreadline6-dev \
+                   libsqlite3-dev \
+                   libssl-dev \
+                   libyaml-dev \
+                   locales \
+                   patch \
+                   pkg-config \
+                   rustc \
+                   uuid-dev \
+                   zlib1g-dev \
+                   tzdata
+locale-gen en_US.UTF-8
+</code></pre>
+<p>It may take a minute or two for all the packages to install.</p>
+<h2 id="set-up-a-deployer-user">Set up a deployer user</h2>
+<p>Running a Rails app as <code>root</code> is a security risk; we need to create a non-privileged user for this purpose. Run the following script to create a
+<code>deployer</code> user that:</p>
+<ul>
+<li>has access to write to a <code>/var/www</code> directory, which is the default location where tomo will deploy our app; and</li>
+<li>can &ldquo;linger&rdquo;, i.e. run long-running processes like the puma web server</li>
+</ul>
+<pre><code class="language-sh"># Run these commands as root on the VPS
+adduser --disabled-password deployer &lt; /dev/null
+mkdir -p /home/deployer/.ssh
+cp /root/.ssh/authorized_keys /home/deployer/.ssh
+chown -R deployer:deployer /home/deployer/.ssh
+chmod 600 /home/deployer/.ssh/authorized_keys
+mkdir -p /var/www
+chown deployer:deployer /var/www
+loginctl enable-linger deployer
+</code></pre>
+<p>For convenience, the <code>deployer</code> user will accept the same SSH key that you are already using to authenticate when connecting as <code>root</code>. Test that it works:</p>
+<pre><code class="language-sh"># Run on your local machine
+$ ssh -o PasswordAuthentication=no deployer@IPADDR echo &quot;authenticated as deployer!&quot;
+authenticated as deployer!
+</code></pre>
+<h2 id="configure-tomo">Configure tomo</h2>
+<p>We will be deploying <a href="https://github.com/mattbrictson/rails-new">this basic Rails app</a>. Clone the repository to get started:</p>
+<pre><code class="language-sh"># Run on your local machine
+$ git clone https://github.com/mattbrictson/rails-new
+</code></pre>
+<p>Inside the <code>rails-new</code> directory, install tomo and run <code>tomo init</code>. This will set up a deploy configuration with a good set of defaults:</p>
+<pre><code class="language-sh"># Run on your local machine
+$ cd rails-new
+
+$ gem install tomo
+Fetching tomo-1.11.0.gem
+Successfully installed tomo-1.11.0
+1 gem installed
+
+$ tomo init
+✔ Created .tomo/config.rb
+</code></pre>
+<p>The <code>.tomo/config.rb</code> configuration is ready right out of the box. All you will need to change is the <code>host</code> line, and be sure to replace <code>IPADDR</code> with the IP address of your VPS:</p>
+<pre><code class="language-ruby"># Modify the 'host' line of .tomo/config.rb
+host &quot;deployer@IPADDR&quot;
+</code></pre>
+<h2 id="run-tomo-setup">Run tomo setup</h2>
+<p>Tomo comes with a <code>setup</code> command that will prepare your VPS for its first deployment. This does things like install Node, Yarn, and Ruby. It also sets up some important environment variables. Just run:</p>
+<pre><code class="language-sh"># Run on your local machine
+$ tomo setup
+</code></pre>
+<p>You will be asked for two environment variables. Tomo will store these values on the VPS so that you only have to provide them once:</p>
+<ul>
+<li><strong>DATABASE_URL</strong> is needed to tell Rails how to connect to the database. The basic app we are deploying uses sqlite. Provide this value when prompted: <code>sqlite3:/var/www/rails-new/shared/production.sqlite3</code>. This will store the database in a shared location so that it doesn&rsquo;t change from release to release.</li>
+<li><strong>SECRET_KEY_BASE</strong> is needed by all Rails apps to securely encrypt session cookies and other important data. Run <code>ruby -rsecurerandom -e "puts SecureRandom.hex(64)"</code> to generate an appropriate value.</li>
+</ul>
+<p>Note that <code>tomo setup</code> compiles Ruby from source, which will take several minutes.</p>
+<h2 id="run-tomo-deploy">Run tomo deploy</h2>
+<p>Once <code>setup</code> completes, your VPS is ready to go. Deploying is now just a matter of running <code>tomo deploy</code>:</p>
+<pre><code class="language-sh"># Run on your local machine
+$ tomo deploy
+</code></pre>
+<p>When the deploy completes, the Rails app will be accessible on port 3000 of your VPS: <code>http://IPADDR:3000</code>.</p>
+<p>Congratulations!</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../plugins/rbenv/" class="btn btn-neutral float-left" title="rbenv"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../writing-custom-tasks/" class="btn btn-neutral float-right" title="Writing Custom Tasks">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../plugins/rbenv/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../writing-custom-tasks/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

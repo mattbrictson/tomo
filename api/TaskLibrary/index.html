@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Tomo::TaskLibrary - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Tomo::TaskLibrary";
+        var mkdocs_page_input_path = "api/TaskLibrary.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Tomo::TaskLibrary</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#instance-methods">Instance methods</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#paths-tomopaths">paths → Tomo::Paths</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#settings-hash">settings → Hash</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remote-tomoremote">remote → Tomo::Remote</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#require_settingname-nil">require_setting(name) → nil</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#require_settingsnames-nil">require_settings(*names) → nil</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#merge_templatepath-string">merge_template(path) → String</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dry_run-true-or-false">dry_run? → true or false</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logger-tomologger">logger → Tomo::Logger</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#diereason">die(reason)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rawstring-string">raw(string) → String</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>Tomo::TaskLibrary</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/api/TaskLibrary.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="tomotasklibrary">Tomo::TaskLibrary</h1>
+<p>This is the primary public API for extending tomo.</p>
+<p>A TaskLibrary defines tasks. Every public instance method of a TaskLibrary becomes accessible to tomo as a task of the same name, prefixed by the name of its plugin. For example, this is how the <code>git:clone</code> task is defined:</p>
+<pre><code class="language-ruby">module Tomo::Plugin::Git
+  class Tasks &lt; Tomo::TaskLibrary
+    # This becomes the implementation of the git:clone task
+    def clone
+      require_setting :git_url
+      # ...
+    end
+  end
+end
+</code></pre>
+<p>The TaskLibrary base class provides several useful private methods (detailed below) that allow task authors to run commands on the remote host, access tomo settings, and more. For more information on writing tasks, refer to the <a href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a> tutorial.</p>
+<h2 id="instance-methods">Instance methods</h2>
+<h3 id="paths-tomopaths">paths → <a href="../Paths/">Tomo::Paths</a></h3>
+<p>Returns a <a href="../Paths/">Paths</a> object that provides convenient access to settings representing file system paths.</p>
+<pre><code class="language-ruby">paths.current.join(&quot;lib&quot;) # =&gt; &quot;/var/www/my-app/current/lib&quot;
+# ...which is syntactic sugar for:
+Pathname.new(settings[:current_path]).join(&quot;lib&quot;)
+</code></pre>
+<h3 id="settings-hash">settings → Hash</h3>
+<p>Returns a frozen (i.e. read-only) Hash containing all of tomo’s settings. Any <a href="../../configuration/#interpolation">string interpolations</a> will have already been applied. The keys representing the setting names are always symbols.</p>
+<pre><code class="language-ruby">settings[:application]        # =&gt; &quot;my-app&quot;
+settings[:deploy_to]          # =&gt; &quot;/var/www/my-app&quot;
+settings[:non_existing]       # =&gt; nil
+settings.fetch(:non_existing) # =&gt; KeyError
+settings[:foo] = &quot;bar&quot;        # =&gt; FrozenError
+settings.key?(:application)   # =&gt; true
+settings.key?(:non_existing)  # =&gt; false
+</code></pre>
+<h3 id="remote-tomoremote">remote → <a href="../Remote/">Tomo::Remote</a></h3>
+<p>Returns the <a href="../Remote/">Remote</a> façade that allows scripts to be run on the remote host.</p>
+<pre><code class="language-ruby">remote.run(&quot;echo&quot;, &quot;hello world&quot;)
+</code></pre>
+<h3 id="require_settingname-nil">require_setting(name) → nil</h3>
+<p>Raises an exception if a setting with the given <code>name</code> is not present. In other words, it will raise if <code>settings[name]</code> is <code>nil</code>. This can be used as a guard clause to ensure that users provide all necessary settings before a task can be run.</p>
+<pre><code class="language-ruby">def clone
+  require_setting :git_url
+  remote.run &quot;git&quot;, &quot;clone&quot;, settings[:git_url]
+end
+</code></pre>
+<h3 id="require_settingsnames-nil">require_settings(*names) → nil</h3>
+<p>Like <code>require_setting</code>, except it accepts an arbitrary number of setting names. Raises if <em>any</em> of the settings are <code>nil</code>.</p>
+<pre><code class="language-ruby">require_settings :puma_control_token, :puma_control_url
+</code></pre>
+<h3 id="merge_templatepath-string">merge_template(path) → String</h3>
+<p>Given a local <code>path</code> to an <a href="https://ruby-doc.org/stdlib/libdoc/erb/rdoc/ERB.html">ERB</a> template, merge that template and return the resulting string. The ERB template can access the same API that tasks and helpers can access, namely: <code>settings</code>, <code>paths</code>, <code>remote</code>, and <code>raw</code>.</p>
+<p>Here is an example of an ERB template:</p>
+<pre><code class="language-erb">Hello, &lt;%= settings[:application] %&gt;!
+</code></pre>
+<p>If <code>path</code> begins with a <code>"."</code> it is interpreted as a path relative to the tomo configuration file. This allows for easy reference to project-specific templates. For example, given this directory structure:</p>
+<pre><code class="language-plain">.tomo
+├── config.rb
+└── templates
+    └── unicorn.service.erb
+</code></pre>
+<p>Then you could reference the template in a setting like this:</p>
+<pre><code class="language-ruby"># .tomo/config.rb
+
+set unicorn_service_template_path: &quot;./templates/unicorn.service.erb&quot;
+</code></pre>
+<p>And merge it in a task:</p>
+<pre><code class="language-ruby">merge_template(paths.unicorn_service_template)
+</code></pre>
+<h3 id="dry_run-true-or-false">dry_run? → true or false</h3>
+<p>Returns <code>true</code> if tomo was started with the <code>--dry-run</code> option. This is useful if there are certain code paths you want to ensure are taken during a dry run.</p>
+<pre><code class="language-ruby">def install
+  return if remote.bundle?(&quot;check&quot;, *check_options) &amp;&amp; !dry_run?
+
+  remote.bundle(&quot;install&quot;, *install_options)
+end
+</code></pre>
+<h3 id="logger-tomologger">logger → <a href="../Logger/">Tomo::Logger</a></h3>
+<p>Returns the global <a href="../Logger/">Logger</a> object that can be used to write messages to tomo’s output.</p>
+<pre><code class="language-ruby">logger.debug &quot;got here&quot;
+logger.info &quot;hi!&quot;
+logger.warn &quot;uh oh&quot;
+</code></pre>
+<h3 id="diereason">die(reason)</h3>
+<p>Immediately halt task execution by raising an exception. This will automatically print information to stderr about what task failed, on which host, and the <code>reason</code> for the failure.</p>
+<h3 id="rawstring-string">raw(string) → String</h3>
+<p>Mark a string as a &ldquo;raw&rdquo; value so that it is not automatically escaped. By default tomo applies shell escaping rules for safety. If you explicitly want to invoke shell behavior, use <code>raw</code> to prevent these escaping rules.</p>
+<pre><code class="language-ruby">remote.run &quot;ls&quot;, &quot;$HOME/.bashrc&quot;
+# $ ls $\HOME/.bashrc
+# &quot;$HOME/.bashrc&quot;: No such file or directory (os error 2)
+
+remote.run &quot;ls&quot;, raw(&quot;$HOME/.bashrc&quot;)
+# $ ls $HOME/.bashrc
+# /home/deployer/.bashrc
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Result/" class="btn btn-neutral float-left" title="Tomo::Result"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../testing/MockPluginTester/" class="btn btn-neutral float-right" title="Tomo::Testing::MockPluginTester">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../Result/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../testing/MockPluginTester/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

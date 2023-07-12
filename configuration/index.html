@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Configuration - Tomo</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Configuration";
+        var mkdocs_page_input_path = "configuration.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Configuration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#pluginname_or_relative_path">plugin(name_or_relative_path)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hostaddress-options">host(address, **options)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sethash">set(hash)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#interpolation">Interpolation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#custom-settings">Custom settings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#overrides">Overrides</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setupblock">setup(&amp;block)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#deployblock">deploy(&amp;block)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#environmentname-block">environment(name, &amp;block)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rolename-runs">role(name, runs:)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#batchblock">batch(&amp;block)</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Configuration</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/configuration.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="configuration">Configuration</h1>
+<p>Tomo is configured via a <code>.tomo/config.rb</code> file. This configuration file defines what tasks to run when executing a <a href="../commands/setup/">setup</a> or <a href="../commands/deploy/">deploy</a>, the settings that affect the behavior of those tasks, and the remote host or hosts where those tasks will be run.</p>
+<p>The format of tomo’s configuration file is designed to be simple and concise for basic deployments, with the flexibility to scale to more advanced setups that involve multiple roles, environments, and hosts.</p>
+<p>A basic deployment will typically use these configuration directives:</p>
+<ul>
+<li><a href="#pluginname_or_relative_path">plugin</a></li>
+<li><a href="#hostaddress-4242options">host</a></li>
+<li><a href="#sethash">set</a></li>
+<li><a href="#setupblock">setup</a></li>
+<li><a href="#deployblock">deploy</a></li>
+</ul>
+<p>Here&rsquo;s an abbreviated example:</p>
+<pre><code class="language-ruby">plugin &quot;git&quot;
+plugin &quot;bundler&quot;
+plugin &quot;rails&quot;
+# ...
+
+host &quot;deployer@app.example.com&quot;
+
+set application: &quot;my-rails-app&quot;
+set deploy_to: &quot;/var/www/%{application}&quot;
+set git_url: &quot;git@github.com:my-username/my-rails-app.git&quot;
+set git_branch: &quot;main&quot;
+# ...
+
+setup do
+  run &quot;git:clone&quot;
+  run &quot;git:create_release&quot;
+  run &quot;bundler:install&quot;
+  run &quot;rails:db_schema_load&quot;
+  # ...
+end
+
+deploy do
+  run &quot;git:create_release&quot;
+  run &quot;core:symlink_shared&quot;
+  run &quot;core:write_release_json&quot;
+  run &quot;bundler:install&quot;
+  run &quot;rails:assets_precompile&quot;
+  run &quot;rails:db_migrate&quot;
+  run &quot;core:symlink_current&quot;
+  # ...
+end
+</code></pre>
+<p>A more complex deployment may make use of these additional directives:</p>
+<ul>
+<li><a href="#environmentname-block">environment</a></li>
+<li><a href="#rolename-runs">role</a></li>
+<li><a href="#batchblock">batch</a></li>
+</ul>
+<h2 id="pluginname_or_relative_path">plugin(name_or_relative_path)</h2>
+<p>Load a tomo plugin by name or from a Ruby file by a relative path.</p>
+<p>Several plugins are built into tomo: <a href="../plugins/bundler/">bundler</a>, <a href="../plugins/env/">env</a>, <a href="../plugins/git/">git</a>, <a href="../plugins/nodenv/">nodenv</a>, <a href="../plugins/puma/">puma</a>, <a href="../plugins/rails/">rails</a>, and <a href="../plugins/rbenv/">rbenv</a>. If you want to use the tasks provided by one of these plugins, load it by name, like this:</p>
+<pre><code class="language-ruby">plugin &quot;git&quot;
+</code></pre>
+<p>Plugins can also be provided by gems installed on your system. For example, the <code>tomo-plugin-sidekiq</code> gem provides the &ldquo;sidekiq&rdquo; plugin. Make sure the gem is installed (e.g. in your Gemfile) and then reference the plugin by name to load it:</p>
+<pre><code class="language-ruby">plugin &quot;sidekiq&quot;
+</code></pre>
+<p>Note that the name of the plugin may not necessarily match the name of the gem. Refer to the gem’s documentation for installation instructions.</p>
+<p>Finally, if the argument to <code>plugin</code> starts with a dot (<code>.</code>) it is considered a relative path to a custom plugin. By convention, custom plugins are stored in <code>.tomo/plugins/</code> within the project that tomo is deploying. The name of the plugin is inferred from its file name. So for example, if the plugin is loaded from a file named <code>foo.rb</code>, then the name of the plugin is &ldquo;foo&rdquo; and all tasks it defines will be given the <code>foo:</code> namespace:</p>
+<pre><code class="language-ruby">plugin &quot;./plugins/foo.rb&quot;
+</code></pre>
+<h2 id="hostaddress-options">host(address, **options)</h2>
+<p>Specify the SSH host address (including username) that tomo will connect to. For example:</p>
+<pre><code class="language-ruby">host &quot;deployer@app.example.com&quot; # port 22 is implied
+</code></pre>
+<pre><code class="language-ruby">host &quot;admin@192.168.1.50&quot;, port: 8022 # port 8022
+</code></pre>
+<p>The following advanced <code>options</code> are supported:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>port</code></td>
+<td>SSH port number.</td>
+<td><code>22</code></td>
+</tr>
+<tr>
+<td><code>roles</code></td>
+<td>An array of String roles to assign to this host. Used with the <a href="#rolename-runs">role</a> directive for specifying which tasks should run on this host.</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>log_prefix</code></td>
+<td>A String prefix to print next to all log output for this host.</td>
+<td><code>nil</code></td>
+</tr>
+<tr>
+<td><code>privileged_user</code></td>
+<td>The SSH user to connect as when running privileged tasks. See <a href="#setupblock">setup</a> for an example.</td>
+<td><code>"root"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="sethash">set(hash)</h2>
+<p>Specify a value for a tomo setting. For example, to change the number of releases that tomo retains when pruning old releases:</p>
+<pre><code class="language-ruby">set keep_releases: 5
+</code></pre>
+<p>For a full list of settings that affect tomo’s core behavior, refer to the <a href="../plugins/core/">core plugin documentation</a>. Each plugin such as <a href="../plugins/bundler/">bundler</a> and <a href="../plugins/git/">git</a> also has its own specialized list of settings. Refer to the each plugin’s documentation for a full reference.</p>
+<h4 id="interpolation">Interpolation</h4>
+<p>It is possible to reference other settings when specifying a value. The format of a reference string is <code>%{name}</code> where <code>name</code> is the name of another setting. This is often used to build paths that are relative to the release that is being deployed, or for paths relative to tomo’s shared directory.</p>
+<p>In this example, the value will be interpolated to contain the release that is being deployed:</p>
+<pre><code class="language-ruby">set release_json_path: &quot;%{release_path}/.tomo_release.json&quot;
+# =&gt; &quot;/var/www/my-app/20190523234156/.tomo_release.json&quot;
+</code></pre>
+<p>Another common use case is the shared directory:</p>
+<pre><code class="language-ruby">set bundler_path: &quot;%{shared_path}/bundle&quot;
+# =&gt; &quot;/var/www/my-app/shared/bundle&quot;
+</code></pre>
+<p>Interpolation takes place after tomo has loaded all configuration, plugins, and overrides, just before tasks are run.</p>
+<h4 id="custom-settings">Custom settings</h4>
+<p><code>set</code> will define a setting if it does not already exist. This means you can create arbitrarily-named settings for your own purposes, such as for use within custom tasks.</p>
+<pre><code class="language-ruby">set my_setting_i_just_made_up: &quot;great&quot;
+</code></pre>
+<p>In practice most settings are strings, but any Ruby value is possible.</p>
+<pre><code class="language-ruby">set some_double: 0.57
+set my_hash: { urgent: true, message: &quot;hello&quot; }
+</code></pre>
+<h4 id="overrides">Overrides</h4>
+<p>Settings defined by <code>set</code> can be overridden when running a tomo command, e.g. <code>tomo deploy</code>, by way of environment variables and command-line arguments.</p>
+<p>Environment variable overrides take the form of <code>TOMO_*</code>. For example, this will override the <code>:git_branch</code> setting to be &ldquo;develop&rdquo;:</p>
+<pre><code>$ export TOMO_GIT_BRANCH=develop
+$ tomo deploy
+</code></pre>
+<p>On the command line, <code>-s</code> or <code>--setting</code> can be used. For example:</p>
+<pre><code>$ tomo deploy -s git_branch=develop
+</code></pre>
+<p>The precedence of overrides is as follows (higher in the list have higher precedence):</p>
+<ol>
+<li>Command-line overrides</li>
+<li>Environment variable overrides</li>
+<li><code>set</code></li>
+<li>Defaults (specified by plugins)</li>
+</ol>
+<h2 id="setupblock">setup(&amp;block)</h2>
+<p>Define the list of tasks that will be run by the <a href="../commands/setup/"><code>tomo setup</code></a> command, by providing a block containing <code>run</code> directives, like this:</p>
+<pre><code class="language-ruby">setup do
+  run &quot;env:setup&quot;
+  run &quot;core:setup_directories&quot;
+  run &quot;git:config&quot;
+  run &quot;git:clone&quot;
+  run &quot;git:create_release&quot;
+  run &quot;core:symlink_shared&quot;
+  run &quot;nodenv:install&quot;
+  run &quot;rbenv:install&quot;
+  run &quot;bundler:upgrade_bundler&quot;
+  run &quot;bundler:config&quot;
+  run &quot;bundler:install&quot;
+  run &quot;rails:db_create&quot;
+  run &quot;rails:db_schema_load&quot;
+  run &quot;rails:db_seed&quot;
+  run &quot;puma:setup_systemd&quot;
+end
+</code></pre>
+<p>Each <code>run</code> can optionally take a <code>privileged: true</code> option. When specified, the task will be run using the &ldquo;root&rdquo; user instead of the default user specified for each <code>host</code>.</p>
+<pre><code class="language-ruby">setup do
+  run &quot;apt:install&quot;, privileged: true
+end
+</code></pre>
+<h2 id="deployblock">deploy(&amp;block)</h2>
+<p>Define the list of tasks that will be run by the <a href="../commands/deploy/"><code>tomo deploy</code></a> command, by providing a block containing <code>run</code> directives, like this:</p>
+<pre><code class="language-ruby">deploy do
+  run &quot;env:update&quot;
+  run &quot;git:create_release&quot;
+  run &quot;core:symlink_shared&quot;
+  run &quot;core:write_release_json&quot;
+  run &quot;bundler:install&quot;
+  run &quot;rails:db_migrate&quot;
+  run &quot;rails:db_seed&quot;
+  run &quot;rails:assets_precompile&quot;
+  run &quot;core:symlink_current&quot;
+  run &quot;puma:restart&quot;
+  run &quot;puma:check_active&quot;
+  run &quot;core:clean_releases&quot;
+  run &quot;bundler:clean&quot;
+  run &quot;core:log_revision&quot;
+end
+</code></pre>
+<h2 id="environmentname-block">environment(name, &amp;block)</h2>
+<p>Define an environment so that tomo can be used to deploy the same project with more than one set of configuration. Each environment must have a unique name and can contain its own <a href="#hostaddress-4242options">host</a> and <a href="#sethash">set</a> directives. For example:</p>
+<pre><code class="language-ruby"># Top-level config is shared by both environments
+set git_url: &quot;git@github.com:username/repo.git&quot;
+
+environment :staging do
+  host &quot;deployer@staging.example.com&quot;
+  set git_branch: &quot;develop&quot;
+end
+
+environment :production do
+  host &quot;deployer@app.example.com&quot;
+  set git_branch: &quot;main&quot;
+end
+</code></pre>
+<p>Use the <code>-e</code> or <code>--environment</code> option when running tomo to select which environment to use.</p>
+<h2 id="rolename-runs">role(name, runs:)</h2>
+<p>Specify that certain task(s) are only allowed to run on hosts that have the role <code>name</code>. The <code>runs</code> option must be an array of Strings representing task names. Simple wildcards (glob rules using <code>*</code>) can be used to match multiple tasks.</p>
+<p>By default, every task that is listed in <a href="#setupblock">setup</a> and <a href="#deployblock">deploy</a> blocks is run on every host. In a multi-host deployment this is not always desirable. For example, the <code>rails:db_seed</code> and <code>rails:db_migrate</code> tasks should only be run once per deployment (i.e. on one host). To accomplish this, we can define a role named &ldquo;db&rdquo; that is responsible for running these tasks, like this:</p>
+<pre><code class="language-ruby">role &quot;db&quot;, runs: [&quot;rails:db_*&quot;]
+host &quot;deployer@app1.example.com&quot;, roles: [&quot;db&quot;]
+host &quot;deployer@app2.example.com&quot;, roles: []
+</code></pre>
+<p>The <code>role</code> directive in the example above tells tomo that any task matching the glob pattern <code>rails:db_*</code> should <em>only</em> run on hosts that are assigned the &ldquo;db&rdquo; role. That means that app1.example.com will run <code>rails:db_seed</code> and <code>rails:db_migrate</code>, but app2.example.com will not.</p>
+<h2 id="batchblock">batch(&amp;block)</h2>
+<p>Define a group tasks to run in parallel during a multi-host deploy. This allows one host to &ldquo;race ahead&rdquo; of other hosts and leads to potentially faster deployments.</p>
+<p>In a multi-host deployment, by default each task in a <a href="#setupblock">setup</a> and <a href="#deployblock">deploy</a> must complete on <em>all</em> hosts before tomo will move onto the next task. This means a deployment is limited by its slowest host. If a task is configured via <a href="#rolename-runs">role</a> to run on only one host (e.g. <code>rails:db_migrate</code>), other hosts must wait until the task is done.</p>
+<p>We can speed this up by using <code>batch</code>, as in this example:</p>
+<pre><code class="language-ruby">deploy do
+  # All tasks in this batch must complete before tomo will move onto
+  # core:symlink_current, but within the batch each host can &quot;race ahead&quot;
+  # independently in parallel.
+  batch do
+    run &quot;env:update&quot;
+    run &quot;git:create_release&quot;
+    run &quot;core:symlink_shared&quot;
+    run &quot;core:write_release_json&quot;
+    run &quot;bundler:install&quot;
+    run &quot;rails:assets_precompile&quot;
+    run &quot;rails:db_migrate&quot;
+  end
+  # This task must complete on all hosts before moving onto the next batch.
+  run &quot;core:symlink_current&quot;
+  # The tasks within this batch can run independently in parallel on each host.
+  batch do
+    run &quot;puma:restart&quot;
+    run &quot;core:clean_releases&quot;
+    run &quot;bundler:clean&quot;
+    run &quot;core:log_revision&quot;
+  end
+end
+</code></pre>
+<p>At runtime, tomo turns this configuration into an &ldquo;execution plan&rdquo;, which you can see by passing the <code>--debug</code> option to <code>tomo deploy</code>. Here&rsquo;s what the execution plan might look like for the above configuration with two hosts:</p>
+<pre><code>DEBUG: Execution plan:
+CONCURRENTLY (2 THREADS):
+  = CONNECT deployer@app1.example.com
+  = CONNECT deployer@app2.example.com
+CONCURRENTLY (2 THREADS):
+  = IN SEQUENCE:
+      RUN env:update ON deployer@app1.example.com
+      RUN git:create_release ON deployer@app1.example.com
+      RUN core:symlink_shared ON deployer@app1.example.com
+      RUN core:write_release_json ON deployer@app1.example.com
+      RUN bundler:install ON deployer@app1.example.com
+      RUN rails:assets_precompile ON deployer@app1.example.com
+      RUN rails:db_migrate ON deployer@app1.example.com
+  = IN SEQUENCE:
+      RUN env:update ON deployer@app2.example.com
+      RUN git:create_release ON deployer@app2.example.com
+      RUN core:symlink_shared ON deployer@app2.example.com
+      RUN core:write_release_json ON deployer@app2.example.com
+      RUN bundler:install ON deployer@app2.example.com
+      RUN rails:assets_precompile ON deployer@app2.example.com
+CONCURRENTLY (2 THREADS):
+  = RUN core:symlink_current ON deployer@app1.example.com
+  = RUN core:symlink_current ON deployer@app2.example.com
+CONCURRENTLY (2 THREADS):
+  = IN SEQUENCE:
+      RUN puma:restart ON deployer@app1.example.com
+      RUN core:clean_releases ON deployer@app1.example.com
+      RUN bundler:clean ON deployer@app1.example.com
+      RUN core:log_revision ON deployer@app1.example.com
+  = IN SEQUENCE:
+      RUN puma:restart ON deployer@app2.example.com
+      RUN core:clean_releases ON deployer@app2.example.com
+      RUN bundler:clean ON deployer@app2.example.com
+      RUN core:log_revision ON deployer@app2.example.com
+</code></pre>
+<p>As we can see, <code>core:symlink_current</code> is executed at the same time on both hosts, but before and after that, the other tasks can be executed out of sync.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../comparisons/" class="btn btn-neutral float-left" title="Comparisons"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../commands/init/" class="btn btn-neutral float-right" title="init">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../comparisons/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../commands/init/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../js/extra.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

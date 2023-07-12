@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>env - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "env";
+        var mkdocs_page_input_path = "plugins/env.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">env</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#settings">Settings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tasks">Tasks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#envsetup">env:setup</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#envupdate">env:update</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#envset">env:set</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#envunset">env:unset</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#envshow">env:show</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Plugins &raquo;</li>
+        
+      
+    
+    <li>env</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/plugins/env.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="env">env</h1>
+<p>The env plugin manages environment variables on the remote host. It does this by creating an <code>envrc</code> file on the remote host and modifying the <code>.bashrc</code> of the deploy user so that the envrc is always loaded (for both interactive and non-interactive SSH sessions). There are two ways to specify the environment variables that are stored in the envrc file:</p>
+<ol>
+<li>Use <a href="#envset">env:set</a> via the command line like <code>tomo run env:set NAME[=VALUE] ...</code> to explicitly set or modify environment variables</li>
+<li>Specify the <code>:env_vars</code> setting in the tomo configuration and then run the <a href="#envupdate">env:update</a> task</li>
+</ol>
+<p>Note that in order for these tasks to work, you must first run <a href="#envsetup">env:setup</a> to ensure the deploy user&rsquo;s <code>.bashrc</code> is properly configured to read from the envrc file that is managed by this plugin.</p>
+<h2 id="settings">Settings</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bashrc_path</code></td>
+<td>Location of the deploy user’s <code>.bashrc</code> file</td>
+<td><code>".bashrc"</code></td>
+</tr>
+<tr>
+<td><code>env_path</code></td>
+<td>Location of the envrc file on the remote host</td>
+<td><code>"%{deploy_to}/envrc"</code></td>
+</tr>
+<tr>
+<td><code>env_vars</code></td>
+<td>A hash of environment variable names and values that will configured on the remote host; see <a href="#envupdate">env:update</a> for details</td>
+<td><code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tasks">Tasks</h2>
+<h3 id="envsetup">env:setup</h3>
+<p>Performs an <a href="#envupdate">env:update</a> and then modifies the deploy user&rsquo;s bashrc so that the envrc is automatically loaded for all future SSH sessions. Specifically, this is what is added to the <em>top</em> of the <code>.bashrc</code> file:</p>
+<pre><code class="language-sh">if [ -f /var/www/my-app/envrc ]; then
+  . /var/www/my-app/envrc
+fi
+</code></pre>
+<p><code>env:setup</code> is intended for use as a <a href="../../commands/setup/">setup</a> task. It must be run before other env tasks.</p>
+<h3 id="envupdate">env:update</h3>
+<p>Ensures that all environment variables that are specified in the <code>:env_vars</code> setting are present in the envrc file on the remote host, modifying the envrc file if necessary. For example, given this config:</p>
+<pre><code class="language-ruby">set env_vars: { RAILS_ENV: &quot;production&quot;, PUMA_THREADS: 20 }
+</code></pre>
+<p>This task will ensure that the envrc file is updated to include:</p>
+<pre><code class="language-bash">export RAILS_ENV=production
+export PUMA_THREADS=20
+</code></pre>
+<p>For environment variables that are used for secrets or other sensitive data, you can specify <code>:prompt</code> instead of the actual value. In this case tomo will prompt interactively for the value the first time it is needed. For example:</p>
+<pre><code class="language-ruby">set env_vars: { SECRET_KEY_BASE: :prompt }
+</code></pre>
+<p>The first time <code>env:update</code> is run, tomo will prompt for the value:</p>
+<pre><code>$ tomo deploy
+tomo deploy v1.0.0
+→ Connecting to user@app.example.com
+• env:update
+SECRET_KEY_BASE?
+</code></pre>
+<p>Once the environment variable exists in the envrc file, tomo will no longer prompt for it.</p>
+<p><code>env:update</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task. It should be run at the beginning of a deploy to ensure that the environment has all the latest values before other tasks are run.</p>
+<h3 id="envset">env:set</h3>
+<p>Set one or more environment variables in the remote envrc file. This task is intended for use with <a href="../../commands/run/">run</a> and takes command-line arguments. There are two forms:</p>
+<pre><code class="language-sh"># Set the remote envrc var named KEY to have VALUE
+$ tomo run env:set KEY=VALUE
+</code></pre>
+<pre><code class="language-sh"># Prompt interactively for the value of KEY and then set it in the remote envrc
+$ tomo run env:set KEY
+KEY?
+</code></pre>
+<h3 id="envunset">env:unset</h3>
+<p>Remove one or more environment variables from the remote envrc file. This task is intended for use with <a href="../../commands/run/">run</a> and takes command-line arguments.</p>
+<pre><code class="language-sh"># Remove the remote envrc var named KEY
+$ tomo run env:unset KEY
+</code></pre>
+<h3 id="envshow">env:show</h3>
+<p>Display the contents of the remote envrc file. This task is intended for use with <a href="../../commands/run/">run</a>.</p>
+<pre><code class="language-plain">$ tomo run env:show
+tomo run v1.0.0
+→ Connecting to deployer@app.example.com
+• env:show
+RAILS_ENV=production
+SECRET_KEY_BASE=02d587d76e80b2266289adef13fc045dd8387ede92935bcc1d49aa89932e5f74c35ed25bbdc41d3cf6cfc7f5f7f1736199997be459251aec52e42797c5140743
+✔ Ran env:show on deployer@app.example.com
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../bundler/" class="btn btn-neutral float-left" title="bundler"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../git/" class="btn btn-neutral float-right" title="git">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../bundler/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../git/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

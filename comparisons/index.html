@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Comparisons - Tomo</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Comparisons";
+        var mkdocs_page_input_path = "comparisons.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Comparisons</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#code-example">Code example</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#features">Features</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Comparisons</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/comparisons.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="comparisons">Comparisons</h1>
+<p>Tomo is a SSH-based deployment tool written in Ruby, and so it is natural to compare it with the many other popular Ruby tools in that category. Here are some specific design choices that make tomo different.</p>
+<ul>
+<li><strong>Proven built-in Rails support.</strong> Tomo includes all the setup and deployment tasks you need to deploy a basic Rails app. On top of that, every release of tomo is automatically tested to verify that it can successfully deploy the latest versions of Rails, Bundler, and Ruby out of the box.</li>
+<li><strong>Opinionated defaults.</strong> The tasks built-into tomo provide a very opinionated deployment: rbenv and nodenv to install ruby and node, puma via systemd with socket activation for zero-downtime restarts, 12-factor style configuration (environment variables as opposed to configuration files), and so on. Tomo provides a strong set of production-tested conventions without you needing to piece together snippets from blog posts or tutorials.</li>
+<li><strong>Easy to extend.</strong> Unlike other Ruby deployment tools that layer DSL monkey patches on top of rake, tomo is built from the ground up with modern CLI conventions, testability, and simplicity in mind. Tomo takes care of SSH connection management for you, and the ordering of deployment and setup operations is purely configuration based. There are no complex chains of prerequisites or programmatic before/after hooks to deal with. All you have to do is write plain Ruby methods utilizing a concise API.</li>
+</ul>
+<h2 id="code-example">Code example</h2>
+<p>To get an idea of how much simpler tomo can be, here is an example of the same task implemented in capistrano vs tomo:</p>
+<pre><code class="language-ruby"># capistrano
+task :precompile do
+  on release_roles(fetch(:assets_roles)) do
+    within release_path do
+      with rails_env: fetch(:rails_env), rails_groups: fetch(:rails_assets_groups) do
+        execute :rake, &quot;assets:precompile&quot;
+      end
+    end
+  end
+end
+</code></pre>
+<pre><code class="language-ruby"># tomo
+def assets_precompile
+  remote.rake(&quot;assets:precompile&quot;)
+end
+</code></pre>
+<h2 id="features">Features</h2>
+<p>Here&rsquo;s how tomo compares with the most popular Ruby-based deployment tools: Capistrano and Mina.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Tomo</th>
+<th>Capistrano</th>
+<th>Mina</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First release</td>
+<td>2019</td>
+<td>2009</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>Required gem dependencies</td>
+<td>0</td>
+<td>7</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Minimum supported ruby version</td>
+<td>3.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Configuration files</td>
+<td>1 (.tomo/config.rb)</td>
+<td>3+ (Capfile, config/deploy.rb, config/deploy/*.rb per stage)</td>
+<td>1 (config/deploy.rb)</td>
+</tr>
+<tr>
+<td>Deploy in parallel to multiple hosts</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Configure multiple environments/stages</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes, via custom rake tasks</td>
+</tr>
+<tr>
+<td>Simulate a deploy (dry run)</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Customizable deploy command</td>
+<td>✅ Yes, via config</td>
+<td>✅ Yes, via rake tasks that attach before/after hooks</td>
+<td>✅ Yes, via rake task</td>
+</tr>
+<tr>
+<td>Built-in setup or “cold deploy” command</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Automated host setup (ruby, bundler, yarn, etc.)</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Rollback command</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Manage host environment variables (SECRET_KEY_BASE, DATABASE_URL, etc.)</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Automated testing of deploying Rails end-to-end</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Built-in Rails web server tasks</td>
+<td>✅ Yes, puma with systemd</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Built-in ruby version manager tasks</td>
+<td>✅ Yes, rbenv</td>
+<td>❌ No</td>
+<td>✅ Yes, chruby, rbenv, rvm, ry</td>
+</tr>
+<tr>
+<td>Built-in node version manager tasks</td>
+<td>✅ Yes, nodenv</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>SSH command execution</td>
+<td>One at a time</td>
+<td>One at a time</td>
+<td>Batched</td>
+</tr>
+<tr>
+<td>SSH implementation</td>
+<td>Native</td>
+<td>Ruby (net-ssh)</td>
+<td>Native</td>
+</tr>
+<tr>
+<td>SSH connection management</td>
+<td>Automatic</td>
+<td>Explicit</td>
+<td>Automatic</td>
+</tr>
+<tr>
+<td>Task framework</td>
+<td>Tomo-specific</td>
+<td>Rake</td>
+<td>Rake</td>
+</tr>
+<tr>
+<td>Tasks can invoke other tasks</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Tasks can modify settings on the fly</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Tasks can have before/after hooks</td>
+<td>❌ No</td>
+<td>✅ Yes, via DSL</td>
+<td>✅ Yes, via rake</td>
+</tr>
+<tr>
+<td>DSL availability</td>
+<td>Inside task definitions only</td>
+<td>Global mixin (monkey patch)</td>
+<td>Global mixin (monkey patch)</td>
+</tr>
+<tr>
+<td>DSL for running scripts locally (as opposed to on remote host)</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>DSL for uploading ERB templates</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../configuration/" class="btn btn-neutral float-right" title="Configuration">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../configuration/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../js/extra.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

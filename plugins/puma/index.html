@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>puma - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "puma";
+        var mkdocs_page_input_path = "plugins/puma.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">puma</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#settings">Settings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tasks">Tasks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#pumasetup_systemd">puma:setup_systemd</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pumarestart">puma:restart</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pumacheck_active">puma:check_active</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pumastart">puma:start</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pumastop">puma:stop</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pumastatus">puma:status</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pumalog">puma:log</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pumatail_log">puma:tail_log</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Plugins &raquo;</li>
+        
+      
+    
+    <li>puma</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/plugins/puma.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="puma">puma</h1>
+<p>The puma plugin provides a <a href="https://en.wikipedia.org/wiki/Systemd">systemd</a>-based solution for starting, stopping, and restarting puma using <a href="https://github.com/puma/puma/blob/HEAD/docs/systemd.md#socket-activation">socket activation</a> for zero-downtime restarts. It is based on the best practices in the <a href="https://github.com/puma/puma/blob/HEAD/docs/systemd.md">official puma documentation</a>.</p>
+<p>Tomo&rsquo;s implementation installs puma as a <em>user-level</em> service using <code>systemctl --user</code>. This allows puma to be installed, started, stopped, and restarted without a root user or <code>sudo</code>. However, when provisioning the host you must make sure to run the following command as root to allow the puma process to continue running even after the tomo deploy user disconnects:</p>
+<pre><code class="language-sh"># run as root
+$ loginctl enable-linger &lt;DEPLOY_USER&gt;
+</code></pre>
+<p>Stdout and stderr of the puma process will be routed to syslog, as is the convention for systemd services. For Rails, it is recommended that you set <code>RAILS_LOG_TO_STDOUT=1</code> so that all Rails logs are handled this way (<code>tomo init</code> configures this by default).</p>
+<p>The tomo puma plugin assumes that your puma server will listen on a single TCP port for HTTP (not HTTPS) traffic. In other words, HTTPS termination will be handled by e.g. Nginx or a separate load balancer.</p>
+<h2 id="settings">Settings</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>puma_check_timeout</code></td>
+<td>The number of seconds that the <a href="#pumacheck_active">puma:check_active</a> task will wait for puma to respond before timing out.</td>
+<td><code>15</code></td>
+</tr>
+<tr>
+<td><code>puma_host</code></td>
+<td>Hostname / IP address that puma should listen on</td>
+<td><code>0.0.0.0</code> (set to <code>127.0.0.1</code> to accept only internal connections)</td>
+</tr>
+<tr>
+<td><code>puma_port</code></td>
+<td>TCP port that puma should listen on</td>
+<td><code>3000</code></td>
+</tr>
+<tr>
+<td><code>puma_systemd_service</code></td>
+<td>Name of the systemd service that manages the puma server</td>
+<td><code>"puma_%{application}.service"</code></td>
+</tr>
+<tr>
+<td><code>puma_systemd_socket</code></td>
+<td>Name of the systemd socket that is used for <a href="https://github.com/puma/puma/blob/HEAD/docs/systemd.md#socket-activation">socket activation</a> of the puma service</td>
+<td><code>"puma_%{application}.socket"</code></td>
+</tr>
+<tr>
+<td><code>puma_systemd_service_path</code></td>
+<td>Path on the remote host where the systemd puma service configuration file will be created</td>
+<td><code>".config/systemd/user/%{puma_systemd_service}"</code></td>
+</tr>
+<tr>
+<td><code>puma_systemd_service_type</code></td>
+<td>If set to <code>"notify"</code>, Puma will automatically be restarted if it locks up; change to <code>"simple"</code> if using JRuby or Puma &lt; 5.1</td>
+<td><code>"notify"</code></td>
+</tr>
+<tr>
+<td><code>puma_systemd_socket_path</code></td>
+<td>Path on the remote host where the systemd puma socket configuration file will be created</td>
+<td><code>".config/systemd/user/%{puma_systemd_socket}"</code></td>
+</tr>
+<tr>
+<td><code>puma_systemd_service_template_path</code></td>
+<td>Local path of the ERB template to use to create the the systemd puma service configuration file</td>
+<td><a href="https://github.com/mattbrictson/tomo/blob/main/lib/tomo/plugin/puma/systemd/service.erb">service.erb</a></td>
+</tr>
+<tr>
+<td><code>puma_systemd_socket_template_path</code></td>
+<td>Local path of the ERB template to use to create the the systemd puma socket configuration file</td>
+<td><a href="https://github.com/mattbrictson/tomo/blob/main/lib/tomo/plugin/puma/systemd/socket.erb">socket.erb</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tasks">Tasks</h2>
+<h3 id="pumasetup_systemd">puma:setup_systemd</h3>
+<p>Configures systemd to manage puma. This means that puma will automatically be restarted if it crashes, or if the host is rebooted. This task essentially does three things:</p>
+<ol>
+<li>Installs a <code>puma.socket</code> systemd unit</li>
+<li>Installs a <code>puma.service</code> systemd unit that depends on the socket</li>
+<li>Enables these units using <code>systemctl --user enable</code></li>
+</ol>
+<p>Note that these units will be installed and run for the deploy user. You can use <code>:puma_systemd_socket_template_path</code> and <code>:puma_systemd_service_template_path</code> to provide your own templates and customize how puma and systemd are configured.</p>
+<p><code>puma:setup_systemd</code> is intended for use as a <a href="../../commands/setup/">setup</a> task. It must be run before puma can be started during a deploy.</p>
+<h3 id="pumarestart">puma:restart</h3>
+<p>Restarts the puma service via systemd. This starts puma if it isn&rsquo;t running already. The systemd socket remains running while puma itself is restarted. In other words, incoming requests will continue to connect and queue while puma restarts. This is a &ldquo;zero-downtime restart&rdquo;.</p>
+<p>Puma will be configured to listen on <code>:puma_port</code>, with the <code>config/puma.rb</code> file within the Rails app providing the remainder of the configuration. The default port is 3000. Puma is started using this command:</p>
+<pre><code>bundle exec --keep-file-descriptors puma -C config/puma.rb -b tcp://0.0.0.0:3000
+</code></pre>
+<p><code>puma:restart</code> is intended for use in a <a href="../../commands/deploy/">deploy</a>, immediately following <a href="../core/#coresymlink_current">core:symlink_current</a> to ensure that the new version of the Rails app is activated.</p>
+<h3 id="pumacheck_active">puma:check_active</h3>
+<p>This task queries systemd and executes a <code>curl</code> test to verify that puma is active and listening on <code>:puma_port</code>. Because puma is run in the background, it is not immediately obvious after starting or restarting puma via systemd as to whether it booted successfully, or if it crashed. This is where the <code>puma:check_active</code> task can help. If puma is not working it will fail and show puma&rsquo;s log output for easier troubleshooting.</p>
+<p><code>puma:check_active</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task, immediately following <a href="#pumarestart">puma:restart</a> to verify that puma restarted successfully.</p>
+<h3 id="pumastart">puma:start</h3>
+<p>Starts the puma socket and service via systemd, if they aren&rsquo;t running already. Equivalent to:</p>
+<pre><code>systemctl --user start puma.socket puma.service
+</code></pre>
+<h3 id="pumastop">puma:stop</h3>
+<p>Stops the puma socket and service via systemd. Equivalent to:</p>
+<pre><code>systemctl --user stop puma.socket puma.service
+</code></pre>
+<h3 id="pumastatus">puma:status</h3>
+<p>Reports the status of the puma socket and service via systemd. Equivalent to:</p>
+<pre><code>systemctl --user status puma.socket puma.service
+</code></pre>
+<p>Sample output:</p>
+<pre><code>$ tomo run puma:status
+tomo run v0.10.0
+→ Connecting to deployer@app.example.com
+• puma:status
+systemctl --user status puma_example.socket puma_example.service
+● puma_example.socket - Puma HTTP Server Accept Sockets for example
+   Loaded: loaded (/home/deployer/.config/systemd/user/puma_example.socket; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2019-10-24 09:41:53 UTC; 1 weeks 2 days ago
+   Listen: 0.0.0.0:3000 (Stream)
+
+● puma_example.service - Puma HTTP Server for example
+   Loaded: loaded (/home/deployer/.config/systemd/user/puma_example.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2019-11-01 15:46:10 UTC; 1 day 10h ago
+ Main PID: 14513 (bundle)
+   CGroup: /user.slice/user-1000.slice/user@1000.service/puma_example.service
+           └─14513 puma 4.2.1 (tcp://0.0.0.0:3000) [20191101154450]
+</code></pre>
+<h3 id="pumalog">puma:log</h3>
+<p>Uses <code>journalctl</code> (part of systemd) to view the log output of the puma service. This task is intended for use as a <a href="../../commands/run/">run</a> task and accepts command-line arguments. The arguments are passed through to the <code>journalctl</code> command. For example:</p>
+<pre><code>$ tomo run -- puma:log -f
+</code></pre>
+<p>Will run this remote script:</p>
+<pre><code>journalctl -q --user-unit=puma.service -f
+</code></pre>
+<h3 id="pumatail_log">puma:tail_log</h3>
+<p>A convenience method for tailing the puma logs. Equivalent to <code>tomo run -- puma:log -f</code></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../nodenv/" class="btn btn-neutral float-left" title="nodenv"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../rails/" class="btn btn-neutral float-right" title="rails">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../nodenv/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../rails/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

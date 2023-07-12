@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Tomo</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Home";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick start</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configuring-a-project">Configuring a project</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#next-steps">Next steps</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#tomo-setup">tomo setup</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tomo-deploy">tomo deploy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tomo-run-task">tomo run [TASK]</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#extending-tomo">Extending tomo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tutorials">Tutorials</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reference-documentation">Reference documentation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#what-does-the-unsupported-option-accept-new-error-mean">What does the unsupported option "accept-new" error mean?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#can-i-deploy-multiple-apps-to-a-single-host">Can I deploy multiple apps to a single host?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#does-tomo-support-git-submodules">Does tomo support git submodules?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#support">Support</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#license">License</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#code-of-conduct">Code of conduct</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#contribution-guide">Contribution guide</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/core/">core</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/bundler/">bundler</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="plugins/rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/README.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="tomo">Tomo</h1>
+<p><a href="https://rubygems.org/gems/tomo"><img alt="Gem Version" src="https://img.shields.io/gem/v/tomo" /></a>
+<a href="https://www.ruby-toolbox.com/projects/tomo"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/tomo" /></a>
+<a href="https://github.com/mattbrictson/tomo/actions/workflows/ci.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/mattbrictson/tomo/ci.yml" /></a>
+<a href="https://codeclimate.com/github/mattbrictson/tomo"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/mattbrictson/tomo" /></a></p>
+<p>Tomo is a friendly command-line tool for deploying Rails apps.</p>
+<p>💻 Rich command-line interface with built-in bash completions<br/>
+☁️ Multi-environment and role-based multi-host support<br/>
+💎 Everything you need to deploy a basic Rails app out of the box<br/>
+🔌 Easily extensible for polyglot projects (not just Rails!)<br/>
+📚 Quality documentation<br/>
+🔬 Minimal dependencies<br/></p>
+<p><a href="https://tomo-deploy.com/comparisons/">→ See how tomo compares to other Ruby deployment tools like Capistrano and Mina.</a></p>
+<hr />
+<ul>
+<li><a href="#quick-start">Quick start</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#extending-tomo">Extending tomo</a></li>
+<li><a href="#tutorials">Tutorials</a></li>
+<li><a href="#reference-documentation">Reference documentation</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#support">Support</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#code-of-conduct">Code of conduct</a></li>
+<li><a href="#contribution-guide">Contribution guide</a></li>
+</ul>
+<h2 id="quick-start">Quick start</h2>
+<h4 id="installation">Installation</h4>
+<p>Tomo is distributed as a ruby gem. To install:</p>
+<pre><code>$ gem install tomo
+</code></pre>
+<blockquote>
+<p>💡 <strong>Protip:</strong> run <code>tomo completion-script</code> for instructions on setting up bash completions.</p>
+</blockquote>
+<h4 id="configuring-a-project">Configuring a project</h4>
+<p>Tomo is configured via a <code>.tomo/config.rb</code> file in your project. To get started, run <code>tomo init</code> to generate a configuration that works for a basic Rails app.</p>
+<p><img alt="$ tomo init" src="readme_images/tomo-init.png" /></p>
+<p>An abbreviated version looks like this:</p>
+<pre><code class="language-ruby"># .tomo/config.rb
+
+plugin &quot;git&quot;
+plugin &quot;bundler&quot;
+plugin &quot;rails&quot;
+# ...
+
+host &quot;user@hostname.or.ip.address&quot;
+
+set application: &quot;my-rails-app&quot;
+set deploy_to: &quot;/var/www/%{application}&quot;
+set git_url: &quot;git@github.com:my-username/my-rails-app.git&quot;
+set git_branch: &quot;main&quot;
+# ...
+
+setup do
+  run &quot;git:clone&quot;
+  run &quot;git:create_release&quot;
+  run &quot;bundler:install&quot;
+  run &quot;rails:db_schema_load&quot;
+  # ...
+end
+
+deploy do
+  run &quot;git:create_release&quot;
+  run &quot;core:symlink_shared&quot;
+  run &quot;core:write_release_json&quot;
+  run &quot;bundler:install&quot;
+  run &quot;rails:assets_precompile&quot;
+  run &quot;rails:db_migrate&quot;
+  run &quot;core:symlink_current&quot;
+  # ...
+end
+</code></pre>
+<h4 id="next-steps">Next steps</h4>
+<p><a href="https://tomo-deploy.com/configuration/">→ The reference docs have a complete guide to tomo configuration.</a><br>
+<a href="https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/">→ Check out the <strong>Deploying Rails From Scratch</strong> tutorial for a step-by-step guide to using tomo with a real app.</a></p>
+<h2 id="usage">Usage</h2>
+<p>Once your project is configured, you can:</p>
+<ol>
+<li>Run <code>tomo setup</code> to prepare the remote host for its first deploy.</li>
+<li>Run <code>tomo deploy</code> to deploy your app.</li>
+<li>Use <code>tomo run</code> to invoke one-off tasks, like launching a Rails console.</li>
+</ol>
+<blockquote>
+<p>💡 <strong>Protip:</strong> add <code>-h</code> or <code>--help</code> when running any of these commands to see detailed docs and examples.</p>
+</blockquote>
+<h3 id="tomo-setup"><code>tomo setup</code></h3>
+<p><code>tomo setup</code> prepares the remote host for its first deploy by sequentially running the
+<code>setup</code> list of tasks specified in <code>.tomo/config.rb</code>. These tasks typically create directories, initialize data stores, install prerequisite tools, and perform other one-time actions that are necessary before a deploy can take place.</p>
+<p>Out of the box, tomo will:</p>
+<ul>
+<li>Configure necessary environment variables, like <code>RAILS_ENV</code> and <code>SECRET_KEY_BASE</code></li>
+<li>Install Ruby, Bundler, Node, Yarn, and dependencies</li>
+<li>Create all necessary deployment directories</li>
+<li>Create the Rails database, load the schema, and insert seed data</li>
+</ul>
+<p><a href="https://tomo-deploy.com/configuration#setupblock">→ Here is the default list of tasks invoked by the setup command.</a><br>
+<a href="https://tomo-deploy.com/commands/setup/">→ The <code>tomo setup</code> section of the reference docs explains supported command-line options.</a></p>
+<h3 id="tomo-deploy"><code>tomo deploy</code></h3>
+<p>Whereas <code>tomo setup</code> is typically run once, you can use <code>tomo deploy</code> every time you want to deploy a new version of your app. The deploy command will sequentially run the <code>deploy</code> list of tasks specified in <code>.tomo/config.rb</code>. You can customize this list to meet the needs of your app. By default, tomo runs these tasks:</p>
+<ol>
+<li>Create a release (using the <a href="https://tomo-deploy.com/plugins/git#gitcreate_release">git:create_release</a> task)</li>
+<li>Build the project (e.g. <a href="https://tomo-deploy.com/plugins/bundler#bundlerinstall">bundler:install</a>, <a href="https://tomo-deploy.com/plugins/rails#railsassets_precompile">rails:assets_precompile</a>)</li>
+<li>Migrate data to the meet the requirements of the new release (e.g. <a href="https://tomo-deploy.com/plugins/rails#railsdb_migrate">rails:db_migrate</a>)</li>
+<li>Make the new release the &ldquo;current&rdquo; one (<a href="https://tomo-deploy.com/plugins/core#coresymlink_current">core:symlink_current</a>)</li>
+<li>Restart the app to use the new current release (e.g. <a href="https://tomo-deploy.com/plugins/puma#pumarestart">puma:restart</a>)</li>
+<li>Perform any cleanup (e.g. <a href="https://tomo-deploy.com/plugins/bundler#bundlerclean">bundler:clean</a>)</li>
+</ol>
+<blockquote>
+<p>💡 <strong>Protip:</strong> you can abbreviate tomo commands, like <code>tomo d</code> for <code>tomo deploy</code> or <code>tomo s</code> for <code>tomo setup</code>.</p>
+</blockquote>
+<p><a href="https://tomo-deploy.com/configuration#deployblock">→ Here is the default list of tasks invoked by the deploy command.</a><br>
+<a href="https://tomo-deploy.com/commands/deploy/">→ The <code>tomo deploy</code> section of the reference docs explains supported command-line options, like <code>--dry-run</code>.</a></p>
+<h3 id="tomo-run-task"><code>tomo run [TASK]</code></h3>
+<p>Tomo can also <code>run</code> individual remote tasks on demand. You can use the <code>tasks</code> command to see the list of tasks tomo knows about.</p>
+<p><img alt="$ tomo tasks" src="readme_images/tomo-tasks.png" /></p>
+<p>One of the built-in Rails tasks is <code>rails:console</code>, which brings up a fully-interactive Rails console over SSH.</p>
+<p><img alt="$ tomo run rails:console" src="readme_images/tomo-run-rails-console.png" /></p>
+<blockquote>
+<p>💡 <strong>Protip:</strong> you can shorten this as <code>tomo rails:console</code> (the <code>run</code> command is implied).</p>
+</blockquote>
+<p><a href="https://tomo-deploy.com/commands/run/">→ The <code>tomo run</code> section of the reference docs explains supported command-line options and has more examples.</a></p>
+<h2 id="extending-tomo">Extending tomo</h2>
+<p>Tomo has a powerful plugin system that lets you extend tomo by installing Ruby gems (e.g. <a href="https://github.com/mattbrictson/tomo-plugin-sidekiq">tomo-plugin-sidekiq</a>). You can also define plugins on the fly within your project by adding simple <code>.rb</code> files to <code>.tomo/plugins/</code>. These plugins can define tasks as plain ruby methods. For example:</p>
+<pre><code class="language-ruby"># .tomo/plugins/my-plugin.rb
+
+def hello
+  remote.run &quot;echo&quot;, &quot;hello&quot;, settings[:application]
+end
+</code></pre>
+<p>Load your plugin in <code>config.rb</code> like this:</p>
+<pre><code class="language-ruby"># .tomo/config.rb
+
+plugin &quot;./plugins/my-plugin.rb&quot;
+</code></pre>
+<p>And run it!</p>
+<p><img alt="$ tomo run my-plugin:hello" src="readme_images/tomo-run-hello.png" /></p>
+<p><a href="https://tomo-deploy.com/tutorials/writing-custom-tasks/">→ The <strong>Writing Custom Tasks</strong> tutorial has an in-depth explanation of how plugins work.</a><br>
+<a href="https://tomo-deploy.com/api/TaskLibrary/">→ The <strong>TaskLibrary</strong> API is tomo&rsquo;s DSL for building tasks.</a><br>
+<a href="https://tomo-deploy.com/tutorials/publishing-a-plugin/">→ The <strong>Publishing a Plugin</strong> tutorial explains how to package your plugin as a Ruby gem to share it with the community.</a></p>
+<h2 id="tutorials">Tutorials</h2>
+<ul>
+<li><a href="https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a></li>
+<li><a href="https://tomo-deploy.com/tutorials/writing-custom-tasks/">Writing Custom Tasks</a></li>
+<li><a href="https://tomo-deploy.com/tutorials/publishing-a-plugin/">Publishing a Plugin</a></li>
+</ul>
+<h2 id="reference-documentation">Reference documentation</h2>
+<ul>
+<li><a href="https://tomo-deploy.com/configuration/">Configuration</a></li>
+<li>Commands<ul>
+<li><a href="https://tomo-deploy.com/commands/init/">init</a></li>
+<li><a href="https://tomo-deploy.com/commands/setup/">setup</a></li>
+<li><a href="https://tomo-deploy.com/commands/deploy/">deploy</a></li>
+<li><a href="https://tomo-deploy.com/commands/run/">run</a></li>
+<li><a href="https://tomo-deploy.com/commands/tasks/">tasks</a></li>
+</ul>
+</li>
+<li>Plugins<ul>
+<li><a href="https://tomo-deploy.com/plugins/core/">core</a></li>
+<li><a href="https://tomo-deploy.com/plugins/bundler/">bundler</a></li>
+<li><a href="https://tomo-deploy.com/plugins/env/">env</a></li>
+<li><a href="https://tomo-deploy.com/plugins/git/">git</a></li>
+<li><a href="https://tomo-deploy.com/plugins/nodenv/">nodenv</a></li>
+<li><a href="https://tomo-deploy.com/plugins/puma/">puma</a></li>
+<li><a href="https://tomo-deploy.com/plugins/rails/">rails</a></li>
+<li><a href="https://tomo-deploy.com/plugins/rbenv/">rbenv</a></li>
+</ul>
+</li>
+<li>API<ul>
+<li><a href="https://tomo-deploy.com/api/Host/">Host</a></li>
+<li><a href="https://tomo-deploy.com/api/Logger/">Logger</a></li>
+<li><a href="https://tomo-deploy.com/api/Paths/">Paths</a></li>
+<li><a href="https://tomo-deploy.com/api/PluginDSL/">PluginDSL</a></li>
+<li><a href="https://tomo-deploy.com/api/Remote/">Remote</a></li>
+<li><a href="https://tomo-deploy.com/api/Result/">Result</a></li>
+<li><a href="https://tomo-deploy.com/api/TaskLibrary/">TaskLibrary</a></li>
+<li><a href="https://tomo-deploy.com/api/testing/MockPluginTester/">Testing::MockPluginTester</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<h4 id="what-does-the-unsupported-option-accept-new-error-mean">What does the <code>unsupported option "accept-new"</code> error mean?</h4>
+<p>By default, tomo uses the <a href="https://www.openssh.com/txt/release-7.6">&ldquo;accept-new&rdquo;</a> value for the StrictHostKeyChecking option, which is supported by OpenSSH 7.6 and newer. If you are using an older version, this will cause an error. As a workaround, you can override tomo&rsquo;s default behavior like this:</p>
+<pre><code class="language-ruby"># Replace &quot;accept-new&quot; with something compatible with older versions of SSH
+set ssh_strict_host_key_checking: true # or false
+</code></pre>
+<h4 id="can-i-deploy-multiple-apps-to-a-single-host">Can I deploy multiple apps to a single host?</h4>
+<p>Tomo relies on the host user&rsquo;s bash profile for various things, like setting environment variables and initializing rbenv and nodenv. This makes it impractical to deploy multiple apps to a single host using the same deploy user.</p>
+<p>The solution is to create multiple users on the remote host, and then configure a different user for deploying each app. That way each user can have its own distinct environment variables and you can easily configure each app differently without risking conflicts. Refer to the <a href="https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/#set-up-a-deployer-user">tomo Rails tutorial</a> for instructions on creating a deploy user.</p>
+<p>E.g. app1 would be configured to deploy as:</p>
+<pre><code class="language-ruby">host &quot;app1@example.com&quot;
+</code></pre>
+<p>And app2 would be configured to deploy as:</p>
+<pre><code class="language-ruby">host &quot;app2@example.com&quot;
+</code></pre>
+<p>Next run <code>tomo setup</code> for <em>both</em> apps; this will set everything up for both users on the remote host (environment variables, rbenv, etc.). You can now deploy both apps to the same host, with the confidence that their configurations will be kept cleanly separated.</p>
+<h4 id="does-tomo-support-git-submodules">Does tomo support git submodules?</h4>
+<p>No, not out of the box. However, you can extend tomo with an additional task for submodules; see the solution in <a href="https://github.com/mattbrictson/tomo/pull/220#pullrequestreview-979249573">PR #220</a> suggested by <a href="https://github.com/numbcoder">@numbcoder</a>.</p>
+<h2 id="support">Support</h2>
+<p>This project is a labor of love and I can only spend a few hours a week maintaining it, at most. If you&rsquo;d like to help by submitting a pull request, or if you&rsquo;ve discovered a bug that needs my attention, please let me know. Check out <a href="https://github.com/mattbrictson/tomo/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> to get started. Happy hacking! —Matt</p>
+<h2 id="license">License</h2>
+<p>The gem is available as open source under the terms of the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+<h2 id="code-of-conduct">Code of conduct</h2>
+<p>Everyone interacting in the Tomo project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the <a href="https://github.com/mattbrictson/tomo/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
+<h2 id="contribution-guide">Contribution guide</h2>
+<p>Interested in filing a bug report, feature request, or opening a PR? Excellent! Please read the short <a href="https://github.com/mattbrictson/tomo/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> guidelines before you dive in.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="comparisons/" class="btn btn-neutral float-right" title="Comparisons">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="comparisons/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="js/extra.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.4.3
+Build Date UTC : 2023-07-12 22:25:42.909928+00:00
+-->

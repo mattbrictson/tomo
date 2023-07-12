@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>bundler - Tomo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "bundler";
+        var mkdocs_page_input_path = "plugins/bundler.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Tomo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../comparisons/">Comparisons</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../configuration/">Configuration</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Commands</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/init/">init</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/setup/">setup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/deploy/">deploy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/run/">run</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../commands/tasks/">tasks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Plugins</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../core/">core</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">bundler</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#settings">Settings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tasks">Tasks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#bundlerupgrade_bundler">bundler:upgrade_bundler</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bundlerconfig">bundler:config</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bundlerinstall">bundler:install</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bundlerclean">bundler:clean</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helpers">Helpers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#remotebundleargs-options-tomoresult">remote.bundle(*args, **options) → Tomo::Result</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remotebundleargs-options-true-or-false">remote.bundle?(*args, **options) → true or false</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../env/">env</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../git/">git</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nodenv/">nodenv</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../puma/">puma</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rails/">rails</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../rbenv/">rbenv</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/writing-custom-tasks/">Writing Custom Tasks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/publishing-a-plugin/">Publishing a Plugin</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Host/">Tomo::Host</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Logger/">Tomo::Logger</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Paths/">Tomo::Paths</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/PluginDSL/">Tomo::PluginDSL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Remote/">Tomo::Remote</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/Result/">Tomo::Result</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/TaskLibrary/">Tomo::TaskLibrary</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/testing/MockPluginTester/">Tomo::Testing::MockPluginTester</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Tomo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Plugins &raquo;</li>
+        
+      
+    
+    <li>bundler</li>
+    <li class="wy-breadcrumbs-aside">
+      
+          <a href="https://github.com/mattbrictson/tomo/edit/main/docs/plugins/bundler.md" class="icon icon-github"
+          > Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="bundler">bundler</h1>
+<p>The bundler plugin installs ruby gem dependencies using bundler. This is required for deploying Rails apps. It also provides conveniences for using <code>bundle exec</code>.</p>
+<h2 id="settings">Settings</h2>
+<p>Note that the settings listed here only take effect if you run the <a href="#bundlerconfig">bundler:config</a> task.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bundler_config_path</code></td>
+<td>Location where the <a href="#bundlerconfig">bundler:config</a> task will write bundler&rsquo;s configuration file</td>
+<td><code>".bundle/config"</code></td>
+</tr>
+<tr>
+<td><code>bundler_deployment</code></td>
+<td>Enables bundler&rsquo;s <a href="https://bundler.io/v2.0/man/bundle-install.1.html#DEPLOYMENT-MODE">deployment mode</a> (strongly recommended)</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>bundler_gemfile</code></td>
+<td>Optionally used to override the location of the Gemfile</td>
+<td><code>nil</code></td>
+</tr>
+<tr>
+<td><code>bundler_jobs</code></td>
+<td>Override bundler&rsquo;s default (number of processors) amount of concurrency used when downloading/installing gems</td>
+<td><code>nil</code></td>
+</tr>
+<tr>
+<td><code>bundler_path</code></td>
+<td>Directory where gems where be installed</td>
+<td><code>"%{shared_path}/bundle"</code></td>
+</tr>
+<tr>
+<td><code>bundler_retry</code></td>
+<td>Number of times to retry installing a gem if it fails to download</td>
+<td><code>"3"</code></td>
+</tr>
+<tr>
+<td><code>bundler_version</code></td>
+<td>The version of bundler to install, used by the <a href="#bundlerupgrade_bundler">bundler:upgrade_bundler</a> task; if <code>nil</code> (the default), determine the version based on <code>Gemfile.lock</code></td>
+<td><code>nil</code></td>
+</tr>
+<tr>
+<td><code>bundler_without</code></td>
+<td>Array of Gemfile groups to exclude from installation</td>
+<td><code>["development", "test"]</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tasks">Tasks</h2>
+<h3 id="bundlerupgrade_bundler">bundler:upgrade_bundler</h3>
+<p>Installs the version of bundler specified by the <code>:bundler_version</code> setting, if specified. If <code>:bundler_version</code> is <code>nil</code> (the default), this task will automatically determine the version of bundler required by the app that is being deployed by looking at the <code>BUNDLED WITH</code> entry within the app’s <code>Gemfile.lock</code>. Bundler will be installed withing this command:</p>
+<pre><code>gem install bundler --conservative --no-document -v VERSION
+</code></pre>
+<p><code>bundler:upgrade_bundler</code> is intended for use as a <a href="../../commands/setup/">setup</a> task. It should be run prior to <a href="#bundlerinstall">bundler:install</a> to ensure that the correct version bundler is present.</p>
+<h3 id="bundlerconfig">bundler:config</h3>
+<p>Writes a <code>.bundle/config</code> file with the configuration specified by the various <code>:bundler_*</code> tomo settings. This ensures that invocations of <code>bundle check</code>, <code>bundle install</code>, and most importantly <code>bundle exec</code> all consistently use the correct bundler configuration.</p>
+<p><code>bundler:config</code> is intended for use as a <a href="../../commands/setup/">setup</a> task. It should be run prior to <a href="#bundlerinstall">bundler:install</a> so that gems are installed in the proper location.</p>
+<h3 id="bundlerinstall">bundler:install</h3>
+<p>Runs <code>bundle install</code> to download and install all the dependencies specified by the Gemfile of the app that is being deployed. As a performance optimization, this task will run <code>bundle check</code> first to see if the app’s dependencies have already been installed. If so, <code>bundle install</code> is skipped.</p>
+<p><code>bundler:install</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task. It should be run prior to any tasks that rely on gems.</p>
+<h3 id="bundlerclean">bundler:clean</h3>
+<p>Runs <code>bundle clean</code> to delete any previously installed gems that are no longer needed by the current version of the app. Cleaning is generally good practice to save disk space and speed up app launch time.</p>
+<p><code>bundler:clean</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task. It should be run at the conclusion of the deploy after all other tasks.</p>
+<h2 id="helpers">Helpers</h2>
+<p>These helper methods become available on instances of <a href="../../api/Remote/">Remote</a> when the bundler plugin is loaded. They accept the same <code>options</code> as <a href="../../api/Remote/#run42command-4242options-tomoresult">Remote#run</a>.</p>
+<h3 id="remotebundleargs-options-tomoresult">remote.bundle(*args, **options) → <a href="../../api/Result/">Tomo::Result</a></h3>
+<p>Runs <code>bundle</code> within <code>release_path</code> by default.</p>
+<pre><code class="language-ruby">remote.bundle(&quot;exec&quot;, &quot;rails&quot;, &quot;console&quot;)
+# $ cd /var/www/my-app/current &amp;&amp; bundle exec rails console
+</code></pre>
+<h3 id="remotebundleargs-options-true-or-false">remote.bundle?(*args, **options) → true or false</h3>
+<p>Same as <code>bundle</code> but returns <code>true</code> if the command succeeded, <code>false</code> otherwise.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../core/" class="btn btn-neutral float-left" title="core"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../env/" class="btn btn-neutral float-right" title="env">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/mattbrictson/tomo/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../core/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../env/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../js/extra.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
