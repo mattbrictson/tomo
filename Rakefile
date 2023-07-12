@@ -64,15 +64,10 @@ namespace :bump do
   end
 
   task :ruby do
-    lowest_minor = RubyVersions.lowest_supported_minor
-    latest = RubyVersions.latest
-    latest_patches = RubyVersions.latest_supported_patches
-
-    replace_in_file "tomo.gemspec", /ruby_version = .*">= (.*)"/ => lowest_minor
-    replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => lowest_minor
-    replace_in_file ".semaphore/semaphore.yml", /SEM_RUBY:-([\d.]+)/ => latest
-    replace_in_file ".semaphore/semaphore.yml", /values: (\[.+\])/ => latest_patches.inspect
-    replace_in_file "docs/comparisons.md", /Minimum supported ruby version\s*\|\s*([\d.]+)/ => lowest_minor
+    replace_in_file "tomo.gemspec", /ruby_version = .*">= (.*)"/ => RubyVersions.lowest
+    replace_in_file ".rubocop.yml", /TargetRubyVersion: (.*)/ => RubyVersions.lowest
+    replace_in_file ".github/workflows/ci.yml", /ruby: (\[.+\])/ => RubyVersions.all.inspect
+    replace_in_file "docs/comparisons.md", /Minimum supported ruby version\s*\|\s*([\d.]+)/ => RubyVersions.lowest
   end
 
   task :year do
@@ -100,17 +95,14 @@ end
 
 module RubyVersions
   class << self
-    def lowest_supported_minor
-      latest_supported_patches.first[/\d+\.\d+/]
+    def lowest
+      all.first
     end
 
-    def latest
-      latest_supported_patches.last
-    end
-
-    def latest_supported_patches
+    def all
       patches = versions.values_at(:stable, :security_maintenance).compact.flatten
-      patches.map { |p| Gem::Version.new(p) }.sort.map(&:to_s)
+      sorted_minor_versions = patches.map { |p| p[/\d+\.\d+/] }.sort_by(&:to_f)
+      [*sorted_minor_versions, "head"]
     end
 
     private
