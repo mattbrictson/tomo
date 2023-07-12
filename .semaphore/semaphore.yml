@@ -27,17 +27,6 @@ promotions:
     auto_promote:
       when: "branch = 'main'"
 blocks:
-  - name: Build docs
-    dependencies: []
-    skip:
-      when: "branch = 'main'"
-    task:
-      jobs:
-        - name: mkdocs build
-          commands:
-            - sem-version python 3.10
-            - pip install -r requirements.txt
-            - mkdocs build
   - name: Test Rails deploy via Docker
     dependencies: []
     task:

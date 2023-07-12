@@ -5,6 +5,17 @@ on:
     branches:
       - main
 jobs:
+  build_docs:
+    name: "Build Docs"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - run: mkdocs build
   rubocop:
     name: "Rubocop"
     runs-on: ubuntu-latest
