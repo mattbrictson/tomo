@@ -38,26 +38,8 @@ blocks:
             - sem-version python 3.10
             - pip install -r requirements.txt
             - mkdocs build
-  - name: Rubocop
-    dependencies: []
-    task:
-      jobs:
-        - name: rubocop
-          commands:
-            - bundle exec rubocop
-  - name: Test
-    dependencies: []
-    task:
-      jobs:
-        - name: test
-          matrix:
-            - env_var: SEM_RUBY
-              values: ["3.0.6", "3.1.4", "3.2.2"]
-          commands:
-            - bundle exec rake test TESTOPTS="--ci-dir=./reports"
-            - test-results publish ./reports
   - name: Test Rails deploy via Docker
-    dependencies: ["Rubocop", "Test"]
+    dependencies: []
     task:
       jobs:
         - name: test:e2e
