@@ -20,6 +20,7 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
       bundler_config_path: ".bundle/config",
       bundler_deployment: true,
       bundler_gemfile: "Gemfile.prod",
+      bundler_ignore_messages: true,
       bundler_jobs: 12,
       bundler_path: "/app/bundle",
       bundler_retry: 2,
@@ -32,6 +33,7 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
       echo -n ---'
       'BUNDLE_DEPLOYMENT:\ \'true\''
       'BUNDLE_GEMFILE:\ Gemfile.prod'
+      'BUNDLE_IGNORE_MESSAGES:\ \'true\''
       'BUNDLE_JOBS:\ \'12\''
       'BUNDLE_PATH:\ \"/app/bundle\"'
       'BUNDLE_RETRY:\ \'2\''
@@ -45,6 +47,7 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
       bundler_config_path: ".bundle/config",
       bundler_deployment: false,
       bundler_gemfile: nil,
+      bundler_ignore_messages: false,
       bundler_jobs: nil,
       bundler_path: "/app/bundle",
       bundler_retry: nil,
@@ -55,6 +58,7 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
     assert_equal(<<~'SCRIPT'.strip, tester.executed_scripts.last)
       echo -n ---'
       'BUNDLE_DEPLOYMENT:\ \'false\''
+      'BUNDLE_IGNORE_MESSAGES:\ \'false\''
       'BUNDLE_PATH:\ \"/app/bundle\"'
       ' > .bundle/config
     SCRIPT
