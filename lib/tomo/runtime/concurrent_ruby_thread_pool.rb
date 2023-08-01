@@ -17,10 +17,10 @@ module Tomo
         @promises = []
       end
 
-      def post(*args, &block)
+      def post(...)
         return if failure?
 
-        promises << future_on(executor, *args, &block)
+        promises << future_on(executor, ...)
           .on_rejection_using(executor) do |reason|
             self.failure = reason
           end
