@@ -6,16 +6,17 @@ The bundler plugin installs ruby gem dependencies using bundler. This is require
 
 Note that the settings listed here only take effect if you run the [bundler:config](#bundlerconfig) task.
 
-| Name                  | Purpose                                                                                                                                                                       | Default                   |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| `bundler_config_path` | Location where the [bundler:config](#bundlerconfig) task will write bundler's configuration file                                                                              | `".bundle/config"`        |
-| `bundler_deployment`  | Enables bundler's [deployment mode](https://bundler.io/v2.0/man/bundle-install.1.html#DEPLOYMENT-MODE) (strongly recommended)                                                 | `true`                    |
-| `bundler_gemfile`     | Optionally used to override the location of the Gemfile                                                                                                                       | `nil`                     |
-| `bundler_jobs`        | Override bundler's default (number of processors) amount of concurrency used when downloading/installing gems                                                                 | `nil`                     |
-| `bundler_path`        | Directory where gems where be installed                                                                                                                                       | `"%{shared_path}/bundle"` |
-| `bundler_retry`       | Number of times to retry installing a gem if it fails to download                                                                                                             | `"3"`                     |
-| `bundler_version`     | The version of bundler to install, used by the [bundler:upgrade_bundler](#bundlerupgrade_bundler) task; if `nil` (the default), determine the version based on `Gemfile.lock` | `nil`                     |
-| `bundler_without`     | Array of Gemfile groups to exclude from installation                                                                                                                          | `["development", "test"]` |
+| Name                      | Purpose                                                                                                                                                                       | Default                   |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| `bundler_config_path`     | Location where the [bundler:config](#bundlerconfig) task will write bundler's configuration file                                                                              | `".bundle/config"`        |
+| `bundler_deployment`      | Enables bundler's [deployment mode](https://bundler.io/v2.0/man/bundle-install.1.html#DEPLOYMENT-MODE) (strongly recommended)                                                 | `true`                    |
+| `bundler_gemfile`         | Optionally used to override the location of the Gemfile                                                                                                                       | `nil`                     |
+| `bundler_ignore_messages` | Hide gem post-install messages during `bundle install`                                                                                                                        | `true`                    |
+| `bundler_jobs`            | Override bundler's default (number of processors) amount of concurrency used when downloading/installing gems                                                                 | `nil`                     |
+| `bundler_path`            | Directory where gems where be installed                                                                                                                                       | `"%{shared_path}/bundle"` |
+| `bundler_retry`           | Number of times to retry installing a gem if it fails to download                                                                                                             | `"3"`                     |
+| `bundler_version`         | The version of bundler to install, used by the [bundler:upgrade_bundler](#bundlerupgrade_bundler) task; if `nil` (the default), determine the version based on `Gemfile.lock` | `nil`                     |
+| `bundler_without`         | Array of Gemfile groups to exclude from installation                                                                                                                          | `["development", "test"]` |
 
 ## Tasks
 

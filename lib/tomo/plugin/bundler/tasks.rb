@@ -5,6 +5,7 @@ module Tomo::Plugin::Bundler
     CONFIG_SETTINGS = %i[
       bundler_deployment
       bundler_gemfile
+      bundler_ignore_messages
       bundler_jobs
       bundler_path
       bundler_retry
