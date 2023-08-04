@@ -26,6 +26,48 @@ class Tomo::Commands::InitTest < Minitest::Test
     end
   end
 
+  def test_uses_default_branch_on_new_empty_repo
+    @tester.in_temp_dir do
+      Tomo::Testing::Local.capture("git init --initial-branch=develop")
+      @tester.run "init"
+
+      assert_match('set git_branch: "develop"', File.read(".tomo/config.rb"))
+    end
+  end
+
+  def test_uses_main_branch_if_it_exists
+    @tester.in_temp_dir do
+      Tomo::Testing::Local.capture("git init --initial-branch=main")
+      Tomo::Testing::Local.capture("git commit --allow-empty -m init")
+      Tomo::Testing::Local.capture("git checkout -b develop")
+      @tester.run "init"
+
+      assert_match('set git_branch: "main"', File.read(".tomo/config.rb"))
+    end
+  end
+
+  def test_uses_master_branch_if_it_exists
+    @tester.in_temp_dir do
+      Tomo::Testing::Local.capture("git init --initial-branch=master")
+      Tomo::Testing::Local.capture("git commit --allow-empty -m init")
+      Tomo::Testing::Local.capture("git checkout -b develop")
+      @tester.run "init"
+
+      assert_match('set git_branch: "master"', File.read(".tomo/config.rb"))
+    end
+  end
+
+  def test_uses_current_branch_as_fallback
+    @tester.in_temp_dir do
+      Tomo::Testing::Local.capture("git init --initial-branch=develop")
+      Tomo::Testing::Local.capture("git commit --allow-empty -m init")
+      Tomo::Testing::Local.capture("git checkout -b install-tomo")
+      @tester.run "init"
+
+      assert_match('set git_branch: "install-tomo"', File.read(".tomo/config.rb"))
+    end
+  end
+
   private
 
   def with_backtick_stub(command, result)
