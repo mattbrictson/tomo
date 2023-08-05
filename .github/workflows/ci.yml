@@ -39,6 +39,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+      - run: git config --global user.name 'github-actions[bot]'
+      - run: git config --global user.email 'github-actions[bot]@users.noreply.github.com'
       - run: bundle exec rake test
   test_rails_deploy:
     name: "Test / Rails Deploy"

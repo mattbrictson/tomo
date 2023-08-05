@@ -71,10 +71,22 @@ module Tomo
         nil
       end
 
-      def git_branch
+      def git_main_branch
         return unless File.file?(".git/config")
 
-        `git rev-parse --abbrev-ref HEAD`.chomp
+        # If "main" or "master" is in the list of branch names, use that
+        branch = (%w[main master] & `git branch`.scan(/^\W*(.+)$/).flatten).first
+
+        # If not, use the current branch
+        if branch.nil?
+          branch = if `git --version`[/\d+\.\d+/].to_f >= 2.22
+                     `git branch --show-current`.chomp
+                   else
+                     `git rev-parse --abbrev-ref HEAD`.chomp
+                   end
+        end
+
+        branch.empty? ? nil : branch
       rescue SystemCallError
         nil
       end
