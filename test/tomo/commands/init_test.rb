@@ -68,6 +68,15 @@ class Tomo::Commands::InitTest < Minitest::Test
     end
   end
 
+  def test_generates_a_sample_plugin_with_comment
+    @tester.in_temp_dir do
+      @tester.run "init"
+
+      app = File.basename(File.expand_path("."))
+      assert_match(%r{^# https://tomo-deploy.com}, File.read(".tomo/plugins/#{app}.rb"))
+    end
+  end
+
   private
 
   def with_backtick_stub(command, result)

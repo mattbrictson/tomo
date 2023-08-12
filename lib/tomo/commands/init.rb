@@ -30,11 +30,9 @@ module Tomo
 
         app = args.first || current_dir_name || "default"
         app = app.gsub(/([^\w-]|_)+/, "_").downcase
+
         FileUtils.mkdir_p(".tomo/plugins")
-
-        # TODO: use a template for this file
-        FileUtils.touch(".tomo/plugins/#{app}.rb")
-
+        File.write(".tomo/plugins/#{app}.rb", plugin_rb_template)
         File.write(DEFAULT_CONFIG_PATH, config_rb_template(app))
 
         logger.info(green("✔ Created #{DEFAULT_CONFIG_PATH}"))
@@ -128,6 +126,12 @@ module Tomo
 
       def config_rb_template(app)
         path = File.expand_path("../templates/config.rb.erb", __dir__)
+        template = File.read(path)
+        ERB.new(template, trim_mode: "-").result(binding)
+      end
+
+      def plugin_rb_template
+        path = File.expand_path("../templates/plugin.rb.erb", __dir__)
         template = File.read(path)
         ERB.new(template, trim_mode: "-").result(binding)
       end
