@@ -81,7 +81,7 @@ module Tomo::Plugin::Puma
 
     def setup_directories
       files = [service.path, socket.path].compact
-      dirs = files.map(&:dirname).map(&:to_s)
+      dirs = files.map { |f| f.dirname.to_s }
       remote.mkdir_p dirs.uniq
     end
 

@@ -39,7 +39,7 @@ module Tomo
       end
 
       def dump_settings(hash)
-        key_len = hash.keys.map(&:to_s).map(&:length).max
+        key_len = hash.keys.map { |k| k.to_s.length }.max
         dump = "Settings: {\n"
         hash.to_a.sort_by(&:first).each do |key, value|
           justified_key = "#{key}:".ljust(key_len + 1)
