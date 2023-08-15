@@ -67,7 +67,7 @@ module Tomo
     def shell_join(*command)
       return command.first.to_s if command.length == 1
 
-      command.flatten.compact.map(&:to_s).map(&:shellescape).join(" ")
+      command.flatten.compact.map { |arg| arg.to_s.shellescape }.join(" ")
     end
 
     def cd_chdir

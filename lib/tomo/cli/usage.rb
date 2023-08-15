@@ -26,7 +26,7 @@ module Tomo
       attr_reader :banner_proc, :options
 
       def options_help
-        width = options.map(&:first).map(&:length).max
+        width = options.map { |opt| opt.first.length }.max
         options.each_with_object([]) do |(spec, desc), help|
           help << "#{Colors.yellow(spec.ljust(width))}    #{desc}"
         end.join("\n")
