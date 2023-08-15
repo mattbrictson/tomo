@@ -45,7 +45,7 @@ module Tomo
 
         # Don't complete the =value part of long switch unless the user has
         # already typed at least up to the = sign.
-        return true if cand.match?(/\A--.*=/) && !word.match?(/\A--.*=/)
+        true if cand.match?(/\A--.*=/) && !word.match?(/\A--.*=/)
       end
 
       # bash tokenizes the user's input prior to completion, and expects the
