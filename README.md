@@ -131,7 +131,6 @@ Whereas `tomo setup` is typically run once, you can use `tomo deploy` every time
 [→ Here is the default list of tasks invoked by the deploy command.](https://tomo-deploy.com/configuration#deployblock)<br>
 [→ The `tomo deploy` section of the reference docs explains supported command-line options, like `--dry-run`.](https://tomo-deploy.com/commands/deploy/)
 
-
 ### `tomo run [TASK]`
 
 Tomo can also `run` individual remote tasks on demand. You can use the `tasks` command to see the list of tasks tomo knows about.
@@ -145,8 +144,6 @@ One of the built-in Rails tasks is `rails:console`, which brings up a fully-inte
 > 💡 **Protip:** you can shorten this as `tomo rails:console` (the `run` command is implied).
 
 [→ The `tomo run` section of the reference docs explains supported command-line options and has more examples.](https://tomo-deploy.com/commands/run/)
-
-
 
 ## Extending tomo
 
@@ -181,6 +178,10 @@ And run it!
 - [Deploying Rails From Scratch](https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/)
 - [Writing Custom Tasks](https://tomo-deploy.com/tutorials/writing-custom-tasks/)
 - [Publishing a Plugin](https://tomo-deploy.com/tutorials/publishing-a-plugin/)
+
+## Blog posts
+
+- [Automate Rails deployments with GitHub Actions](https://mattbrictson.com/blog/deploy-rails-with-github-actions)
 
 ## Reference documentation
 
