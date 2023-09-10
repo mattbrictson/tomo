@@ -69,7 +69,7 @@ class Tomo::CLITest < Minitest::Test
 
       ArgumentError: wrong number of arguments (given 0, expected 1)
 
-      Visit https://tomo-deploy.com/configuration for syntax reference.
+      Visit https://tomo.mattbrictson.com/configuration for syntax reference.
       You can run this command again with --trace for a full backtrace.
 
     OUTPUT

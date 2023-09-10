@@ -73,7 +73,7 @@ class Tomo::Commands::InitTest < Minitest::Test
       @tester.run "init"
 
       app = File.basename(File.expand_path("."))
-      assert_match(%r{^# https://tomo-deploy.com}, File.read(".tomo/plugins/#{app}.rb"))
+      assert_match(%r{^# https://tomo.mattbrictson.com}, File.read(".tomo/plugins/#{app}.rb"))
     end
   end
 
