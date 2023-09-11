@@ -10,7 +10,7 @@ module Tomo
 
           More configuration documentation and examples can be found here:
 
-            #{blue('https://tomo-deploy.com/configuration')}
+            #{blue('https://tomo.mattbrictson.com/configuration')}
         ERROR
       end
     end

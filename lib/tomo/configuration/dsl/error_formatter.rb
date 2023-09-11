@@ -35,7 +35,7 @@ module Tomo
             #{highlighted_lines}
             #{Colors.red([self.class, message].join(': '))}
 
-            Visit #{Colors.blue('https://tomo-deploy.com/configuration')} for syntax reference.
+            Visit #{Colors.blue('https://tomo.mattbrictson.com/configuration')} for syntax reference.
             #{trace_hint}
           ERROR
         end

@@ -129,7 +129,7 @@ module Tomo::Plugin::Env
         user@host. To deploy multiple applications to the same host, use a separate
         deployer user per app. Refer to the tomo FAQ for details:
 
-          https://tomo-deploy.com/#faq
+          https://tomo.mattbrictson.com/#faq
 
         You may be receiving this message in error if you recently renamed or
         reconfigured your application. In this case, remove the references to the

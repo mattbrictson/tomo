@@ -39,7 +39,7 @@ module Tomo
 
           More documentation and examples can be found here:
 
-            #{blue('https://tomo-deploy.com/commands/deploy')}
+            #{blue('https://tomo.mattbrictson.com/commands/deploy')}
         BANNER
       end
 
