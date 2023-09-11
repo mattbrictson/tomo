@@ -23,7 +23,7 @@
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
       <script>hljs.highlightAll();</script>
-<script defer data-domain="tomo-deploy.com" src="https://plausible.io/js/script.js"></script>
+<script defer data-domain="tomo.mattbrictson.com" src="https://plausible.io/js/script.js"></script>
 
 </head>
 
@@ -205,7 +205,7 @@
 🔌 Easily extensible for polyglot projects (not just Rails!)<br/>
 📚 Quality documentation<br/>
 🔬 Minimal dependencies<br/></p>
-<p><a href="https://tomo-deploy.com/comparisons/">→ See how tomo compares to other Ruby deployment tools like Capistrano and Mina.</a></p>
+<p><a href="https://tomo.mattbrictson.com/comparisons/">→ See how tomo compares to other Ruby deployment tools like Capistrano and Mina.</a></p>
 <hr />
 <ul>
 <li><a href="#quick-start">Quick start</a></li>
@@ -267,8 +267,8 @@ deploy do
 end
 </code></pre>
 <h4 id="next-steps">Next steps</h4>
-<p><a href="https://tomo-deploy.com/configuration/">→ The reference docs have a complete guide to tomo configuration.</a><br>
-<a href="https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/">→ Check out the <strong>Deploying Rails From Scratch</strong> tutorial for a step-by-step guide to using tomo with a real app.</a></p>
+<p><a href="https://tomo.mattbrictson.com/configuration/">→ The reference docs have a complete guide to tomo configuration.</a><br>
+<a href="https://tomo.mattbrictson.com/tutorials/deploying-rails-from-scratch/">→ Check out the <strong>Deploying Rails From Scratch</strong> tutorial for a step-by-step guide to using tomo with a real app.</a></p>
 <h2 id="usage">Usage</h2>
 <p>Once your project is configured, you can:</p>
 <ol>
@@ -289,23 +289,23 @@ end
 <li>Create all necessary deployment directories</li>
 <li>Create the Rails database, load the schema, and insert seed data</li>
 </ul>
-<p><a href="https://tomo-deploy.com/configuration#setupblock">→ Here is the default list of tasks invoked by the setup command.</a><br>
-<a href="https://tomo-deploy.com/commands/setup/">→ The <code>tomo setup</code> section of the reference docs explains supported command-line options.</a></p>
+<p><a href="https://tomo.mattbrictson.com/configuration#setupblock">→ Here is the default list of tasks invoked by the setup command.</a><br>
+<a href="https://tomo.mattbrictson.com/commands/setup/">→ The <code>tomo setup</code> section of the reference docs explains supported command-line options.</a></p>
 <h3 id="tomo-deploy"><code>tomo deploy</code></h3>
 <p>Whereas <code>tomo setup</code> is typically run once, you can use <code>tomo deploy</code> every time you want to deploy a new version of your app. The deploy command will sequentially run the <code>deploy</code> list of tasks specified in <code>.tomo/config.rb</code>. You can customize this list to meet the needs of your app. By default, tomo runs these tasks:</p>
 <ol>
-<li>Create a release (using the <a href="https://tomo-deploy.com/plugins/git#gitcreate_release">git:create_release</a> task)</li>
-<li>Build the project (e.g. <a href="https://tomo-deploy.com/plugins/bundler#bundlerinstall">bundler:install</a>, <a href="https://tomo-deploy.com/plugins/rails#railsassets_precompile">rails:assets_precompile</a>)</li>
-<li>Migrate data to the meet the requirements of the new release (e.g. <a href="https://tomo-deploy.com/plugins/rails#railsdb_migrate">rails:db_migrate</a>)</li>
-<li>Make the new release the &ldquo;current&rdquo; one (<a href="https://tomo-deploy.com/plugins/core#coresymlink_current">core:symlink_current</a>)</li>
-<li>Restart the app to use the new current release (e.g. <a href="https://tomo-deploy.com/plugins/puma#pumarestart">puma:restart</a>)</li>
-<li>Perform any cleanup (e.g. <a href="https://tomo-deploy.com/plugins/bundler#bundlerclean">bundler:clean</a>)</li>
+<li>Create a release (using the <a href="https://tomo.mattbrictson.com/plugins/git#gitcreate_release">git:create_release</a> task)</li>
+<li>Build the project (e.g. <a href="https://tomo.mattbrictson.com/plugins/bundler#bundlerinstall">bundler:install</a>, <a href="https://tomo.mattbrictson.com/plugins/rails#railsassets_precompile">rails:assets_precompile</a>)</li>
+<li>Migrate data to the meet the requirements of the new release (e.g. <a href="https://tomo.mattbrictson.com/plugins/rails#railsdb_migrate">rails:db_migrate</a>)</li>
+<li>Make the new release the &ldquo;current&rdquo; one (<a href="https://tomo.mattbrictson.com/plugins/core#coresymlink_current">core:symlink_current</a>)</li>
+<li>Restart the app to use the new current release (e.g. <a href="https://tomo.mattbrictson.com/plugins/puma#pumarestart">puma:restart</a>)</li>
+<li>Perform any cleanup (e.g. <a href="https://tomo.mattbrictson.com/plugins/bundler#bundlerclean">bundler:clean</a>)</li>
 </ol>
 <blockquote>
 <p>💡 <strong>Protip:</strong> you can abbreviate tomo commands, like <code>tomo d</code> for <code>tomo deploy</code> or <code>tomo s</code> for <code>tomo setup</code>.</p>
 </blockquote>
-<p><a href="https://tomo-deploy.com/configuration#deployblock">→ Here is the default list of tasks invoked by the deploy command.</a><br>
-<a href="https://tomo-deploy.com/commands/deploy/">→ The <code>tomo deploy</code> section of the reference docs explains supported command-line options, like <code>--dry-run</code>.</a></p>
+<p><a href="https://tomo.mattbrictson.com/configuration#deployblock">→ Here is the default list of tasks invoked by the deploy command.</a><br>
+<a href="https://tomo.mattbrictson.com/commands/deploy/">→ The <code>tomo deploy</code> section of the reference docs explains supported command-line options, like <code>--dry-run</code>.</a></p>
 <h3 id="tomo-run-task"><code>tomo run [TASK]</code></h3>
 <p>Tomo can also <code>run</code> individual remote tasks on demand. You can use the <code>tasks</code> command to see the list of tasks tomo knows about.</p>
 <p><img alt="$ tomo tasks" src="readme_images/tomo-tasks.png" /></p>
@@ -314,7 +314,7 @@ end
 <blockquote>
 <p>💡 <strong>Protip:</strong> you can shorten this as <code>tomo rails:console</code> (the <code>run</code> command is implied).</p>
 </blockquote>
-<p><a href="https://tomo-deploy.com/commands/run/">→ The <code>tomo run</code> section of the reference docs explains supported command-line options and has more examples.</a></p>
+<p><a href="https://tomo.mattbrictson.com/commands/run/">→ The <code>tomo run</code> section of the reference docs explains supported command-line options and has more examples.</a></p>
 <h2 id="extending-tomo">Extending tomo</h2>
 <p>Tomo has a powerful plugin system that lets you extend tomo by installing Ruby gems (e.g. <a href="https://github.com/mattbrictson/tomo-plugin-sidekiq">tomo-plugin-sidekiq</a>). You can also define plugins on the fly within your project by adding simple <code>.rb</code> files to <code>.tomo/plugins/</code>. These plugins can define tasks as plain ruby methods. For example:</p>
 <pre><code class="language-ruby"># .tomo/plugins/my-plugin.rb
@@ -330,14 +330,14 @@ plugin &quot;./plugins/my-plugin.rb&quot;
 </code></pre>
 <p>And run it!</p>
 <p><img alt="$ tomo run my-plugin:hello" src="readme_images/tomo-run-hello.png" /></p>
-<p><a href="https://tomo-deploy.com/tutorials/writing-custom-tasks/">→ The <strong>Writing Custom Tasks</strong> tutorial has an in-depth explanation of how plugins work.</a><br>
-<a href="https://tomo-deploy.com/api/TaskLibrary/">→ The <strong>TaskLibrary</strong> API is tomo&rsquo;s DSL for building tasks.</a><br>
-<a href="https://tomo-deploy.com/tutorials/publishing-a-plugin/">→ The <strong>Publishing a Plugin</strong> tutorial explains how to package your plugin as a Ruby gem to share it with the community.</a></p>
+<p><a href="https://tomo.mattbrictson.com/tutorials/writing-custom-tasks/">→ The <strong>Writing Custom Tasks</strong> tutorial has an in-depth explanation of how plugins work.</a><br>
+<a href="https://tomo.mattbrictson.com/api/TaskLibrary/">→ The <strong>TaskLibrary</strong> API is tomo&rsquo;s DSL for building tasks.</a><br>
+<a href="https://tomo.mattbrictson.com/tutorials/publishing-a-plugin/">→ The <strong>Publishing a Plugin</strong> tutorial explains how to package your plugin as a Ruby gem to share it with the community.</a></p>
 <h2 id="tutorials">Tutorials</h2>
 <ul>
-<li><a href="https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a></li>
-<li><a href="https://tomo-deploy.com/tutorials/writing-custom-tasks/">Writing Custom Tasks</a></li>
-<li><a href="https://tomo-deploy.com/tutorials/publishing-a-plugin/">Publishing a Plugin</a></li>
+<li><a href="https://tomo.mattbrictson.com/tutorials/deploying-rails-from-scratch/">Deploying Rails From Scratch</a></li>
+<li><a href="https://tomo.mattbrictson.com/tutorials/writing-custom-tasks/">Writing Custom Tasks</a></li>
+<li><a href="https://tomo.mattbrictson.com/tutorials/publishing-a-plugin/">Publishing a Plugin</a></li>
 </ul>
 <h2 id="blog-posts">Blog posts</h2>
 <ul>
@@ -345,35 +345,35 @@ plugin &quot;./plugins/my-plugin.rb&quot;
 </ul>
 <h2 id="reference-documentation">Reference documentation</h2>
 <ul>
-<li><a href="https://tomo-deploy.com/configuration/">Configuration</a></li>
+<li><a href="https://tomo.mattbrictson.com/configuration/">Configuration</a></li>
 <li>Commands<ul>
-<li><a href="https://tomo-deploy.com/commands/init/">init</a></li>
-<li><a href="https://tomo-deploy.com/commands/setup/">setup</a></li>
-<li><a href="https://tomo-deploy.com/commands/deploy/">deploy</a></li>
-<li><a href="https://tomo-deploy.com/commands/run/">run</a></li>
-<li><a href="https://tomo-deploy.com/commands/tasks/">tasks</a></li>
+<li><a href="https://tomo.mattbrictson.com/commands/init/">init</a></li>
+<li><a href="https://tomo.mattbrictson.com/commands/setup/">setup</a></li>
+<li><a href="https://tomo.mattbrictson.com/commands/deploy/">deploy</a></li>
+<li><a href="https://tomo.mattbrictson.com/commands/run/">run</a></li>
+<li><a href="https://tomo.mattbrictson.com/commands/tasks/">tasks</a></li>
 </ul>
 </li>
 <li>Plugins<ul>
-<li><a href="https://tomo-deploy.com/plugins/core/">core</a></li>
-<li><a href="https://tomo-deploy.com/plugins/bundler/">bundler</a></li>
-<li><a href="https://tomo-deploy.com/plugins/env/">env</a></li>
-<li><a href="https://tomo-deploy.com/plugins/git/">git</a></li>
-<li><a href="https://tomo-deploy.com/plugins/nodenv/">nodenv</a></li>
-<li><a href="https://tomo-deploy.com/plugins/puma/">puma</a></li>
-<li><a href="https://tomo-deploy.com/plugins/rails/">rails</a></li>
-<li><a href="https://tomo-deploy.com/plugins/rbenv/">rbenv</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/core/">core</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/bundler/">bundler</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/env/">env</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/git/">git</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/nodenv/">nodenv</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/puma/">puma</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/rails/">rails</a></li>
+<li><a href="https://tomo.mattbrictson.com/plugins/rbenv/">rbenv</a></li>
 </ul>
 </li>
 <li>API<ul>
-<li><a href="https://tomo-deploy.com/api/Host/">Host</a></li>
-<li><a href="https://tomo-deploy.com/api/Logger/">Logger</a></li>
-<li><a href="https://tomo-deploy.com/api/Paths/">Paths</a></li>
-<li><a href="https://tomo-deploy.com/api/PluginDSL/">PluginDSL</a></li>
-<li><a href="https://tomo-deploy.com/api/Remote/">Remote</a></li>
-<li><a href="https://tomo-deploy.com/api/Result/">Result</a></li>
-<li><a href="https://tomo-deploy.com/api/TaskLibrary/">TaskLibrary</a></li>
-<li><a href="https://tomo-deploy.com/api/testing/MockPluginTester/">Testing::MockPluginTester</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/Host/">Host</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/Logger/">Logger</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/Paths/">Paths</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/PluginDSL/">PluginDSL</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/Remote/">Remote</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/Result/">Result</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/TaskLibrary/">TaskLibrary</a></li>
+<li><a href="https://tomo.mattbrictson.com/api/testing/MockPluginTester/">Testing::MockPluginTester</a></li>
 </ul>
 </li>
 </ul>
@@ -385,7 +385,7 @@ set ssh_strict_host_key_checking: true # or false
 </code></pre>
 <h4 id="can-i-deploy-multiple-apps-to-a-single-host">Can I deploy multiple apps to a single host?</h4>
 <p>Tomo relies on the host user&rsquo;s bash profile for various things, like setting environment variables and initializing rbenv and nodenv. This makes it impractical to deploy multiple apps to a single host using the same deploy user.</p>
-<p>The solution is to create multiple users on the remote host, and then configure a different user for deploying each app. That way each user can have its own distinct environment variables and you can easily configure each app differently without risking conflicts. Refer to the <a href="https://tomo-deploy.com/tutorials/deploying-rails-from-scratch/#set-up-a-deployer-user">tomo Rails tutorial</a> for instructions on creating a deploy user.</p>
+<p>The solution is to create multiple users on the remote host, and then configure a different user for deploying each app. That way each user can have its own distinct environment variables and you can easily configure each app differently without risking conflicts. Refer to the <a href="https://tomo.mattbrictson.com/tutorials/deploying-rails-from-scratch/#set-up-a-deployer-user">tomo Rails tutorial</a> for instructions on creating a deploy user.</p>
 <p>E.g. app1 would be configured to deploy as:</p>
 <pre><code class="language-ruby">host &quot;app1@example.com&quot;
 </code></pre>
@@ -456,5 +456,5 @@ set ssh_strict_host_key_checking: true # or false
 
 <!--
 MkDocs version : 1.5.2
-Build Date UTC : 2023-09-02 17:37:20.925397+00:00
+Build Date UTC : 2023-09-11 00:12:22.152957+00:00
 -->
