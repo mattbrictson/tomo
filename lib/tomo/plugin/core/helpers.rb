@@ -3,7 +3,7 @@ require "shellwords"
 module Tomo::Plugin::Core
   module Helpers
     def capture(*command, **run_opts)
-      result = run(*command, **{ silent: true }.merge(run_opts))
+      result = run(*command, silent: true, **run_opts)
       result.stdout
     end
 
@@ -18,7 +18,8 @@ module Tomo::Plugin::Core
       message = "Writing #{text.bytesize} bytes to #{to}"
       run(
         "echo -n #{text.shellescape} #{append ? '>>' : '>'} #{to.shellescape}",
-        **{ echo: message }.merge(run_opts)
+        echo: message,
+        **run_opts
       )
     end
 
@@ -43,7 +44,7 @@ module Tomo::Plugin::Core
     end
 
     def command_available?(command_name, **run_opts)
-      run?("which", command_name, **{ silent: true }.merge(run_opts))
+      run?("which", command_name, silent: true, **run_opts)
     end
 
     def file?(file, **run_opts)
