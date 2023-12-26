@@ -11,6 +11,14 @@ class Tomo::CLITest < Minitest::Test
     assert_match "Simulated bundler:install", @tester.stdout
   end
 
+  def test_commands_can_be_abbreviated
+    stdout, = capture_io { @tester.run "i", "--help" }
+    assert_match "Usage: tomo init", stdout
+
+    stdout, = capture_io { @tester.run "d", "--help" }
+    assert_match "Usage: tomo deploy", stdout
+  end
+
   def test_dash_t_is_alias_for_tasks
     @tester.run "init"
     @tester.run "-T"

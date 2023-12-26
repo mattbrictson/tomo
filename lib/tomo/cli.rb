@@ -1,5 +1,3 @@
-require "abbrev"
-
 module Tomo
   class CLI
     autoload :Command, "tomo/cli/command"
@@ -63,12 +61,19 @@ module Tomo
       commands = COMMANDS.merge(COMMAND_ALIASES)
 
       command_name = argv.first unless Completions.active? && argv.length == 1
-      command_name = Abbrev.abbrev(commands.keys)[command_name]
+      command_name = expand_abbrev(commands.keys, command_name)
       argv.shift if command_name
 
       command_name = "run" if command_name.nil? && task_format?(argv.first)
       command = commands[command_name] || Tomo::Commands::Default
       [command, command_name]
+    end
+
+    def expand_abbrev(names, abbrev)
+      return nil if abbrev.to_s.empty?
+
+      matches = names.select { |name| name.start_with?(abbrev) }
+      matches.first if matches.one?
     end
 
     def task_format?(arg)
