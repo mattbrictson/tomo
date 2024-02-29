@@ -11,6 +11,7 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
   Exclude:
+    - "bin/**/*"
     - "lib/tomo/templates/config.rb"
     - "readme_images/**/*"
     - "tmp/**/*"
