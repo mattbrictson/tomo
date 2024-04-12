@@ -44,10 +44,12 @@ export RAILS_ENV=production
 export PUMA_THREADS=20
 ```
 
-For environment variables that are used for secrets or other sensitive data, you can specify `:prompt` instead of the actual value. In this case tomo will prompt interactively for the value the first time it is needed. For example:
+#### `:prompt`
+
+For environment variables that are used for API keys or other sensitive data, you can specify `:prompt` instead of the actual value. In this case tomo will prompt interactively for the value the first time it is needed. For example:
 
 ```ruby
-set env_vars: { SECRET_KEY_BASE: :prompt }
+set env_vars: { DATABASE_URL: :prompt }
 ```
 
 The first time `env:update` is run, tomo will prompt for the value:
@@ -57,10 +59,18 @@ $ tomo deploy
 tomo deploy v1.0.0
 → Connecting to user@app.example.com
 • env:update
-SECRET_KEY_BASE?
+DATABASE_URL?
 ```
 
 Once the environment variable exists in the envrc file, tomo will no longer prompt for it.
+
+#### `:generate_secret`
+
+Similarly, for environment variables that requires a randomly generated secret value, like `SECRET_KEY_BASE`, you can specify `:generate_secret`. In this case, tomo will generate a value using `SecureRandom.hex(64)` the first time it is needed.
+
+```ruby
+set env_vars: { SECRET_KEY_BASE: :generate_secret }
+```
 
 `env:update` is intended for use as a [deploy](../commands/deploy.md) task. It should be run at the beginning of a deploy to ensure that the environment has all the latest values before other tasks are run.
 

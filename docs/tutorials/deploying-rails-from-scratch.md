@@ -141,10 +141,7 @@ Tomo comes with a `setup` command that will prepare your VPS for its first deplo
 $ tomo setup
 ```
 
-You will be asked for two environment variables. Tomo will store these values on the VPS so that you only have to provide them once:
-
-- **DATABASE_URL** is needed to tell Rails how to connect to the database. The basic app we are deploying uses sqlite. Provide this value when prompted: `sqlite3:/var/www/rails-new/shared/production.sqlite3`. This will store the database in a shared location so that it doesn't change from release to release.
-- **SECRET_KEY_BASE** is needed by all Rails apps to securely encrypt session cookies and other important data. Run `ruby -rsecurerandom -e "puts SecureRandom.hex(64)"` to generate an appropriate value.
+You will be asked to specify a value for the **DATABASE_URL** environment variable. Tomo will store this value on the VPS so that you only have to provide it once. Provide this value when prompted: `sqlite3:/var/www/rails-new/shared/production.sqlite3`.
 
 Note that `tomo setup` compiles Ruby from source, which will take several minutes.
 

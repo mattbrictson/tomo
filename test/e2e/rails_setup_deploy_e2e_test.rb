@@ -16,7 +16,7 @@ class RailsSetupDeployE2ETest < Minitest::Test
   end
 
   def test_rails_setup_deploy
-    in_cloned_rails_repo do # rubocop:disable Metrics/BlockLength
+    in_cloned_rails_repo do
       bundle_exec("tomo init")
       config = File.read(".tomo/config.rb")
       config.sub!(
@@ -32,11 +32,7 @@ class RailsSetupDeployE2ETest < Minitest::Test
       CONFIG
       File.write(".tomo/config.rb", config)
 
-      bundle_exec(
-        "tomo run env:set " \
-        "DATABASE_URL=sqlite3:/var/www/rails-new/shared/production.sqlite3 " \
-        "SECRET_KEY_BASE=#{SecureRandom.hex(64)}"
-      )
+      bundle_exec("tomo run env:set DATABASE_URL=sqlite3:/var/www/rails-new/shared/production.sqlite3")
       bundle_exec("tomo setup")
       bundle_exec("tomo deploy")
 
