@@ -82,6 +82,12 @@
     <li class="toctree-l3"><a class="reference internal" href="#envsetup">env:setup</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#envupdate">env:update</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#prompt">:prompt</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#generate_secret">:generate_secret</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#envset">env:set</a>
     </li>
@@ -217,17 +223,22 @@ fi
 <pre><code class="language-bash">export RAILS_ENV=production
 export PUMA_THREADS=20
 </code></pre>
-<p>For environment variables that are used for secrets or other sensitive data, you can specify <code>:prompt</code> instead of the actual value. In this case tomo will prompt interactively for the value the first time it is needed. For example:</p>
-<pre><code class="language-ruby">set env_vars: { SECRET_KEY_BASE: :prompt }
+<h4 id="prompt"><code>:prompt</code></h4>
+<p>For environment variables that are used for API keys or other sensitive data, you can specify <code>:prompt</code> instead of the actual value. In this case tomo will prompt interactively for the value the first time it is needed. For example:</p>
+<pre><code class="language-ruby">set env_vars: { DATABASE_URL: :prompt }
 </code></pre>
 <p>The first time <code>env:update</code> is run, tomo will prompt for the value:</p>
 <pre><code>$ tomo deploy
 tomo deploy v1.0.0
 → Connecting to user@app.example.com
 • env:update
-SECRET_KEY_BASE?
+DATABASE_URL?
 </code></pre>
 <p>Once the environment variable exists in the envrc file, tomo will no longer prompt for it.</p>
+<h4 id="generate_secret"><code>:generate_secret</code></h4>
+<p>Similarly, for environment variables that requires a randomly generated secret value, like <code>SECRET_KEY_BASE</code>, you can specify <code>:generate_secret</code>. In this case, tomo will generate a value using <code>SecureRandom.hex(64)</code> the first time it is needed.</p>
+<pre><code class="language-ruby">set env_vars: { SECRET_KEY_BASE: :generate_secret }
+</code></pre>
 <p><code>env:update</code> is intended for use as a <a href="../../commands/deploy/">deploy</a> task. It should be run at the beginning of a deploy to ensure that the environment has all the latest values before other tasks are run.</p>
 <h3 id="envset">env:set</h3>
 <p>Set one or more environment variables in the remote envrc file. This task is intended for use with <a href="../../commands/run/">run</a> and takes command-line arguments. There are two forms:</p>

@@ -266,11 +266,7 @@ host &quot;deployer@IPADDR&quot;
 <pre><code class="language-sh"># Run on your local machine
 $ tomo setup
 </code></pre>
-<p>You will be asked for two environment variables. Tomo will store these values on the VPS so that you only have to provide them once:</p>
-<ul>
-<li><strong>DATABASE_URL</strong> is needed to tell Rails how to connect to the database. The basic app we are deploying uses sqlite. Provide this value when prompted: <code>sqlite3:/var/www/rails-new/shared/production.sqlite3</code>. This will store the database in a shared location so that it doesn&rsquo;t change from release to release.</li>
-<li><strong>SECRET_KEY_BASE</strong> is needed by all Rails apps to securely encrypt session cookies and other important data. Run <code>ruby -rsecurerandom -e "puts SecureRandom.hex(64)"</code> to generate an appropriate value.</li>
-</ul>
+<p>You will be asked to specify a value for the <strong>DATABASE_URL</strong> environment variable. Tomo will store this value on the VPS so that you only have to provide it once. Provide this value when prompted: <code>sqlite3:/var/www/rails-new/shared/production.sqlite3</code>.</p>
 <p>Note that <code>tomo setup</code> compiles Ruby from source, which will take several minutes.</p>
 <h2 id="run-tomo-deploy">Run tomo deploy</h2>
 <p>Once <code>setup</code> completes, your VPS is ready to go. Deploying is now just a matter of running <code>tomo deploy</code>:</p>
