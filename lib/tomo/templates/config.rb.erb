@@ -33,7 +33,7 @@ set env_vars: {
   RUBY_YJIT_ENABLE: "1",
   BOOTSNAP_CACHE_DIR: "tmp/bootsnap-cache",
   DATABASE_URL: :prompt,
-  SECRET_KEY_BASE: :prompt
+  SECRET_KEY_BASE: :generate_secret
 }
 set linked_dirs: %w[
   .yarn/cache

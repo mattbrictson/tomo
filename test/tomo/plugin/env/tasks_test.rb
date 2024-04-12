@@ -94,4 +94,38 @@ class Tomo::Plugin::Env::TasksTest < Minitest::Test
     tester.run_task("env:setup")
     assert_equal("chmod 600 /app/envrc", tester.executed_scripts.last)
   end
+
+  def test_setup_generates_a_random_value_for_var_marked_as_generate_secret
+    tester = Tomo::Testing::MockPluginTester.new(
+      "env",
+      settings: {
+        env_path: "/app/envrc",
+        env_vars: {
+          RAILS_ENV: "production",
+          SECRET_KEY_BASE: :generate_secret
+        }
+      }
+    )
+    tester.run_task("env:setup")
+    assert_match(/SECRET_KEY_BASE\\=\h{64}/, tester.executed_scripts[4])
+  end
+
+  def test_does_not_overwrite_previously_generated_secret
+    tester = Tomo::Testing::MockPluginTester.new(
+      "env",
+      settings: {
+        env_path: "/app/envrc",
+        env_vars: {
+          RAILS_ENV: "production",
+          SECRET_KEY_BASE: :generate_secret
+        }
+      }
+    )
+    tester.mock_script_result("cat /app/envrc", stdout: <<~STDOUT)
+      export SECRET_KEY_BASE=do-not-replace-me
+    STDOUT
+    tester.run_task("env:update")
+
+    assert_match(/SECRET_KEY_BASE\\=do-not-replace-me/, tester.executed_scripts[1])
+  end
 end

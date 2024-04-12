@@ -1,4 +1,5 @@
 require "monitor"
+require "securerandom"
 
 module Tomo::Plugin::Env
   class Tasks < Tomo::TaskLibrary # rubocop:disable Metrics/ClassLength
@@ -14,17 +15,25 @@ module Tomo::Plugin::Env
       update
     end
 
-    def update
+    def update # rubocop:disable Metrics/MethodLength
       return if settings[:env_vars].empty?
 
       modify_env_file do |env|
         settings[:env_vars].each do |name, value|
-          next if value == :prompt && contains_entry?(env, name)
+          case value
+          when :prompt
+            next if contains_entry?(env, name)
 
-          value = prompt_for(name, message: <<~MSG) if value == :prompt
-            The remote host needs a value for the $#{name} environment variable.
-            Please provide a value at the prompt.
-          MSG
+            value = prompt_for(name, message: <<~MSG)
+              The remote host needs a value for the $#{name} environment variable.
+              Please provide a value at the prompt.
+            MSG
+          when :generate_secret
+            next if contains_entry?(env, name)
+
+            value = SecureRandom.hex(64)
+          end
+
           replace_entry(env, name, value)
         end
       end
