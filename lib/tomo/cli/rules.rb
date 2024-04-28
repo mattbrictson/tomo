@@ -51,29 +51,29 @@ module Tomo
       attr_reader :rules
 
       def optional_arg_rule(spec, values_proc)
-        Rules::Argument.new(spec, values_proc: values_proc, required: false, multiple: false)
+        Rules::Argument.new(spec, values_proc:, required: false, multiple: false)
       end
 
       def required_arg_rule(spec, values_proc)
-        Rules::Argument.new(spec, values_proc: values_proc, required: true, multiple: false)
+        Rules::Argument.new(spec, values_proc:, required: true, multiple: false)
       end
 
       def mutiple_optional_args_rule(spec, values_proc)
-        Rules::Argument.new(spec, multiple: true, values_proc: values_proc)
+        Rules::Argument.new(spec, multiple: true, values_proc:)
       end
 
       def on_off_switch_rule(key, name, _values_proc, callback_proc)
-        Rules::Switch.new(key, "--#{name}", "--no-#{name}", callback_proc: callback_proc) do |arg|
+        Rules::Switch.new(key, "--#{name}", "--no-#{name}", callback_proc:) do |arg|
           arg == "--#{name}"
         end
       end
 
       def basic_switch_rule(key, *switches, _values_proc, callback_proc)
-        Rules::Switch.new(key, *switches, callback_proc: callback_proc)
+        Rules::Switch.new(key, *switches, callback_proc:)
       end
 
       def value_switch_rule(key, *switches, values_proc, callback_proc)
-        Rules::ValueSwitch.new(key, *switches, values_proc: values_proc, callback_proc: callback_proc)
+        Rules::ValueSwitch.new(key, *switches, values_proc:, callback_proc:)
       end
     end
   end

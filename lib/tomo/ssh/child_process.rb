@@ -6,7 +6,7 @@ module Tomo
   module SSH
     class ChildProcess
       def self.execute(*command, on_data: ->(data) {})
-        process = new(*command, on_data: on_data)
+        process = new(*command, on_data:)
         process.wait_for_exit
         process.result
       end
@@ -31,7 +31,7 @@ module Tomo
       end
 
       def result
-        Result.new(exit_status: exit_status, stdout: stdout_buffer.string, stderr: stderr_buffer.string)
+        Result.new(exit_status:, stdout: stdout_buffer.string, stderr: stderr_buffer.string)
       end
 
       private

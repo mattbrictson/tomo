@@ -10,7 +10,7 @@ module Tomo
         @argv = argv.dup
         @state = state
         @literal = literal
-        @completions = completions || Completions.new(literal: literal)
+        @completions = completions || Completions.new(literal:)
       end
 
       def call
@@ -18,7 +18,7 @@ module Tomo
           complete_if_needed(remaining_rules, *argv) if argv.length == 1
           rule, matched_args = match_next_rule
           complete_if_needed([rule], *matched_args) if argv.empty?
-          rule.process(*matched_args, state: state)
+          rule.process(*matched_args, state:)
           state.processed_rule(rule)
         end
       end
@@ -29,7 +29,7 @@ module Tomo
 
       def match_next_rule
         matched_rule, length = remaining_rules.find do |rule|
-          matching_length = rule.match(argv.first, literal: literal)
+          matching_length = rule.match(argv.first, literal:)
           break [rule, matching_length] if matching_length
         end
         raise_unrecognized_args if matched_rule.nil?
@@ -41,7 +41,7 @@ module Tomo
       def complete_if_needed(matched_rules, *matched_args)
         return unless Completions.active?
 
-        completions.print_completions_and_exit(matched_rules, *matched_args, state: state)
+        completions.print_completions_and_exit(matched_rules, *matched_args, state:)
       end
 
       def remaining_rules

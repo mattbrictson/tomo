@@ -109,6 +109,6 @@ class Tomo::Plugin::Nodenv::TasksTest < Minitest::Test
   private
 
   def configure(settings={})
-    Tomo::Testing::MockPluginTester.new("nodenv", settings: settings)
+    Tomo::Testing::MockPluginTester.new("nodenv", settings:)
   end
 end

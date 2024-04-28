@@ -24,7 +24,7 @@ module Tomo
       working_path = paths.tomo_config_file&.dirname
       path = File.expand_path(path, working_path) if working_path && path.start_with?(".")
 
-      Runtime::TemplateNotFoundError.raise_with(path: path) unless File.file?(path)
+      Runtime::TemplateNotFoundError.raise_with(path:) unless File.file?(path)
       template = File.read(path)
       ERB.new(template).result(binding)
     end

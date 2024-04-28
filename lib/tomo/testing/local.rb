@@ -8,16 +8,16 @@ require "tmpdir"
 module Tomo
   module Testing
     module Local
-      def with_tomo_gemfile(&block)
-        Local.with_tomo_gemfile(&block)
+      def with_tomo_gemfile(&)
+        Local.with_tomo_gemfile(&)
       end
 
-      def in_temp_dir(token=nil, &block)
-        Local.in_temp_dir(token, &block)
+      def in_temp_dir(token=nil, &)
+        Local.in_temp_dir(token, &)
       end
 
       def capture(*command, raise_on_error: true)
-        Local.capture(*command, raise_on_error: raise_on_error)
+        Local.capture(*command, raise_on_error:)
       end
 
       class << self
@@ -29,11 +29,11 @@ module Tomo
           end
         end
 
-        def in_temp_dir(token=nil, &block)
+        def in_temp_dir(token=nil, &)
           token ||= SecureRandom.hex(8)
           dir = File.join(Dir.tmpdir, "tomo_test_#{token}")
           FileUtils.mkdir_p(dir)
-          Dir.chdir(dir, &block)
+          Dir.chdir(dir, &)
         end
 
         def capture(*command, raise_on_error: true)
@@ -49,10 +49,10 @@ module Tomo
 
         private
 
-        def progress(message, &block)
-          return with_progress(message, &block) if interactive?
+        def progress(message, &)
+          return with_progress(message, &) if interactive?
 
-          thread = Thread.new(&block)
+          thread = Thread.new(&)
           return thread.value if wait_for_exit(thread, 4)
 
           puts "#{message} ..."
@@ -62,9 +62,9 @@ module Tomo
           thread.value
         end
 
-        def with_progress(message, &block)
+        def with_progress(message, &)
           spinner = %w[⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏].cycle
-          thread = Thread.new(&block)
+          thread = Thread.new(&)
           return thread.value if wait_for_exit(thread, 4)
 
           print "#{spinner.next} #{message}..."

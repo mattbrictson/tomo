@@ -25,7 +25,7 @@ module Tomo
 
             task_host = task.is_a?(PrivilegedTask) ? host.as_privileged : host
             remote = remotes[task_host]
-            task_runner.run(task: task, remote: remote)
+            task_runner.run(task:, remote:)
           end
         end
       end

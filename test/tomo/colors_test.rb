@@ -56,7 +56,7 @@ class Tomo::ColorsTest < Minitest::Test
     $stdout.stub(:tty?, tty) { $stderr.stub(:tty?, tty, &block) }
   end
 
-  def with_env(env, &block)
-    ENV.stub(:[], ->(name) { env[name] }, &block)
+  def with_env(env, &)
+    ENV.stub(:[], ->(name) { env[name] }, &)
   end
 end

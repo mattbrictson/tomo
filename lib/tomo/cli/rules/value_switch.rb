@@ -3,7 +3,7 @@ class Tomo::CLI::Rules
     include Tomo::Colors
 
     def initialize(key, *switches, values_proc:, callback_proc:)
-      super(key, *switches, callback_proc: callback_proc)
+      super(key, *switches, callback_proc:)
 
       @values_proc = values_proc
     end

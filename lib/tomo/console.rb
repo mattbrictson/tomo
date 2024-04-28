@@ -56,7 +56,7 @@ module Tomo
     private_constant :CI_VARS
 
     def ci?
-      (env.keys & CI_VARS).any?
+      env.keys.intersect?(CI_VARS)
     end
 
     def assert_interactive

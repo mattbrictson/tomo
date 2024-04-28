@@ -6,9 +6,9 @@ module Tomo
           @tasks = tasks
         end
 
-        def batch(&block)
+        def batch(&)
           batch = []
-          BatchBlock.new(batch).instance_eval(&block)
+          BatchBlock.new(batch).instance_eval(&)
           @tasks << batch unless batch.empty?
           self
         end

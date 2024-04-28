@@ -24,15 +24,15 @@ module Tomo
 
       def run(task:, remote:)
         validate_task!(task)
-        Current.with(task: task, remote: remote) do
+        Current.with(task:, remote:) do
           Tomo.logger.task_start(task)
           tasks_by_name[task].call
         end
       end
 
       def connect(host)
-        Current.with(host: host) do
-          conn = SSH.connect(host: host, options: ssh_options)
+        Current.with(host:) do
+          conn = SSH.connect(host:, options: ssh_options)
           remote = Remote.new(conn, context, helper_modules)
           return remote unless block_given?
 

@@ -101,6 +101,6 @@ class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
   private
 
   def configure(settings={})
-    Tomo::Testing::MockPluginTester.new("bundler", settings: settings)
+    Tomo::Testing::MockPluginTester.new("bundler", settings:)
   end
 end

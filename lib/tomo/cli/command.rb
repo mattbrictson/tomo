@@ -3,11 +3,11 @@ module Tomo
     class Command
       class << self
         def arg(spec, values: [])
-          parser.arg(spec, values: values)
+          parser.arg(spec, values:)
         end
 
         def option(key, spec, desc=nil, values: [], &block)
-          parser.option(key, spec, desc, values: values, &block)
+          parser.option(key, spec, desc, values:, &block)
         end
 
         def after_parse(context_method_name)

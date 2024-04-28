@@ -52,14 +52,14 @@ module Tomo
 
     def run!(task, *args, privileged: false)
       task = task.dup.extend(PrivilegedTask) if privileged
-      execution_plan_for([task], release: :current, args: args).execute
+      execution_plan_for([task], release: :current, args:).execute
     end
 
     def execution_plan_for(tasks, release: :current, args: [])
       ExecutionPlan.new(
-        tasks: tasks,
-        hosts: hosts,
-        task_filter: task_filter,
+        tasks:,
+        hosts:,
+        task_filter:,
         task_runner: new_task_runner(release, args)
       )
     end
@@ -74,7 +74,7 @@ module Tomo
         .merge(settings)
         .merge(run_args: args)
 
-      TaskRunner.new(plugins_registry: plugins_registry, settings: run_settings)
+      TaskRunner.new(plugins_registry:, settings: run_settings)
     end
 
     def release_path_for(type)

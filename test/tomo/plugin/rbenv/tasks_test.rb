@@ -64,6 +64,6 @@ class Tomo::Plugin::Rbenv::TasksTest < Minitest::Test
   private
 
   def configure(settings={})
-    Tomo::Testing::MockPluginTester.new("rbenv", settings: settings)
+    Tomo::Testing::MockPluginTester.new("rbenv", settings:)
   end
 end
