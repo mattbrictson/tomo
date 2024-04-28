@@ -10,7 +10,7 @@ module Tomo
       user, address = host.match(PATTERN).captures
       raise ArgumentError, "host cannot be blank" if address.empty?
 
-      new(user: user, address: address, **kwargs)
+      new(user:, address:, **kwargs)
     end
 
     def initialize(address:, port: nil, log_prefix: nil, roles: nil, user: nil, privileged_user: "root")

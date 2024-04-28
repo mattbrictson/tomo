@@ -47,7 +47,7 @@ module Tomo
       def raise_unknown_plugin_error(error)
         UnknownPluginError.raise_with(
           error.message,
-          name: name,
+          name:,
           gem_name: "#{PLUGIN_PREFIX}/#{name}".tr("/", "-"),
           known_plugins: scan_for_plugins
         )

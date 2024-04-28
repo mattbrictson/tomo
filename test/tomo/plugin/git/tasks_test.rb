@@ -75,6 +75,6 @@ class Tomo::Plugin::Git::TasksTest < Minitest::Test
       release_path: "/app"
     }
     settings = defaults.merge(settings)
-    Tomo::Testing::MockPluginTester.new("git", settings: settings)
+    Tomo::Testing::MockPluginTester.new("git", settings:)
   end
 end

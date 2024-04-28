@@ -17,7 +17,7 @@ module Tomo
       end
 
       def capture(*command, raise_on_error: true)
-        Local.capture(*command, raise_on_error: raise_on_error)
+        Local.capture(*command, raise_on_error:)
       end
 
       class << self

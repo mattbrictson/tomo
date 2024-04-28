@@ -26,7 +26,7 @@ module Tomo
       end
 
       def ssh_subprocess(script, verbose: false)
-        ssh_args = build_args(script, verbose: verbose)
+        ssh_args = build_args(script, verbose:)
         handle_data = ->(data) { logger.script_output(script, data) }
 
         logger.script_start(script)
@@ -62,7 +62,7 @@ module Tomo
       end
 
       def raise_run_error(script, ssh_args, result)
-        ScriptError.raise_with(result.output, host: host, result: result, script: script, ssh_args: ssh_args)
+        ScriptError.raise_with(result.output, host:, result:, script:, ssh_args:)
       end
     end
   end

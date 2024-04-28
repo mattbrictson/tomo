@@ -12,7 +12,7 @@ module Tomo
     autoload :UnspecifiedEnvironmentError, "tomo/configuration/unspecified_environment_error"
 
     def self.from_config_rb(path=DEFAULT_CONFIG_PATH)
-      ProjectNotFoundError.raise_with(path: path) unless File.file?(path)
+      ProjectNotFoundError.raise_with(path:) unless File.file?(path)
       Tomo.logger.debug("Loading configuration from #{path.inspect}")
       config_rb = File.read(path)
 
@@ -51,12 +51,12 @@ module Tomo
       plugins_registry = register_plugins
 
       Runtime.new(
-        deploy_tasks: deploy_tasks,
-        setup_tasks: setup_tasks,
-        plugins_registry: plugins_registry,
+        deploy_tasks:,
+        setup_tasks:,
+        plugins_registry:,
         hosts: add_log_prefixes(hosts),
         settings: { tomo_config_file_path: path }.merge(settings),
-        task_filter: task_filter
+        task_filter:
       )
     end
 

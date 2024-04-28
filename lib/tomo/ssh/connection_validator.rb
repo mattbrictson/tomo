@@ -49,13 +49,13 @@ module Tomo
       end
 
       def handle_bad_executable(error)
-        ExecutableError.raise_with(error, executable: executable)
+        ExecutableError.raise_with(error, executable:)
       end
 
       def raise_unsupported_version(ver)
         UnsupportedVersionError.raise_with(
           ver,
-          host: host,
+          host:,
           command: "#{executable} -V",
           expected_version: "OpenSSH_#{MINIMUM_OPENSSH_VERSION}"
         )
@@ -64,16 +64,16 @@ module Tomo
       def raise_connection_failure(result)
         case result.output
         when /Permission denied/i
-          PermissionError.raise_with(result.output, host: host)
+          PermissionError.raise_with(result.output, host:)
         when /(Could not resolve|Operation timed out|Connection refused)/i
-          ConnectionError.raise_with(result.output, host: host)
+          ConnectionError.raise_with(result.output, host:)
         else
-          UnknownError.raise_with(result.output, host: host)
+          UnknownError.raise_with(result.output, host:)
         end
       end
 
       def raise_unknown_error(result)
-        UnknownError.raise_with(<<~ERROR.strip, host: host)
+        UnknownError.raise_with(<<~ERROR.strip, host:)
           Unexpected output from `ssh`. Expected `echo hi` to return "hi" but got:
           #{result.output}
           (exited with code #{result.exit_status})

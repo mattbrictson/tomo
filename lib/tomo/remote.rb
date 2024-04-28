@@ -20,14 +20,14 @@ module Tomo
     end
 
     def attach(*command, default_chdir: nil, **command_opts)
-      full_command = shell_builder.build(*command, default_chdir: default_chdir)
+      full_command = shell_builder.build(*command, default_chdir:)
       ssh.ssh_exec(Script.new(full_command, pty: true, **command_opts))
     end
 
     def run(*command, attach: false, default_chdir: nil, **command_opts)
-      attach(*command, default_chdir: default_chdir, **command_opts) if attach
+      attach(*command, default_chdir:, **command_opts) if attach
 
-      full_command = shell_builder.build(*command, default_chdir: default_chdir)
+      full_command = shell_builder.build(*command, default_chdir:)
       ssh.ssh_subprocess(Script.new(full_command, **command_opts))
     end
 

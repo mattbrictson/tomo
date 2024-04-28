@@ -35,7 +35,7 @@ module Tomo
 
       def all_candidates(rules, prefix_args, state)
         rules.flat_map do |rule|
-          rule.candidates(*prefix_args, literal: literal, state: state)
+          rule.candidates(*prefix_args, literal:, state:)
         end
       end
 

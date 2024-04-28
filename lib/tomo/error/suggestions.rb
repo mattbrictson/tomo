@@ -12,7 +12,7 @@ module Tomo
 
       def to_a
         @_suggestions ||= if defined?(DidYouMean::SpellChecker)
-                            checker = DidYouMean::SpellChecker.new(dictionary: dictionary)
+                            checker = DidYouMean::SpellChecker.new(dictionary:)
                             suggestions = checker.correct(word)
                             suggestions || []
                           else

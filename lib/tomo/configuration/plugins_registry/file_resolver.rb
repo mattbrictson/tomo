@@ -25,7 +25,7 @@ module Tomo
       attr_reader :path
 
       def raise_file_not_found(path)
-        PluginFileNotFoundError.raise_with(path: path)
+        PluginFileNotFoundError.raise_with(path:)
       end
 
       def define_anonymous_plugin_class

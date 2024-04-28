@@ -14,7 +14,7 @@ module Tomo
       def mock(script, stdout: "", stderr: "", exit_status: 0)
         mocks << [
           script.is_a?(Regexp) ? script : /\A#{Regexp.quote(script)}\z/,
-          Result.new(stdout: stdout, stderr: stderr, exit_status: exit_status)
+          Result.new(stdout:, stderr:, exit_status:)
         ]
       end
 
