@@ -18,19 +18,19 @@ module Tomo
           self
         end
 
-        def environment(name, &block)
+        def environment(name, &)
           environment = @config.environments[name.to_s] ||= Environment.new
-          EnvironmentBlock.new(environment).instance_eval(&block)
+          EnvironmentBlock.new(environment).instance_eval(&)
           self
         end
 
-        def deploy(&block)
-          TasksBlock.new(@config.deploy_tasks).instance_eval(&block)
+        def deploy(&)
+          TasksBlock.new(@config.deploy_tasks).instance_eval(&)
           self
         end
 
-        def setup(&block)
-          TasksBlock.new(@config.setup_tasks).instance_eval(&block)
+        def setup(&)
+          TasksBlock.new(@config.setup_tasks).instance_eval(&)
           self
         end
       end

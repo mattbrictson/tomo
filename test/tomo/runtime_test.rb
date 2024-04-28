@@ -63,8 +63,8 @@ class Tomo::RuntimeTest < Minitest::Test
     end
   end
 
-  def with_whoami_mock(result, &block)
+  def with_whoami_mock(result, &)
     result_callable = ->(*) { result.is_a?(Exception) ? raise(result) : result }
-    Tomo::Runtime.stub(:`, result_callable, &block)
+    Tomo::Runtime.stub(:`, result_callable, &)
   end
 end
