@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   module Testing
     class MockedExitError < Exception # rubocop:disable Lint/InheritException

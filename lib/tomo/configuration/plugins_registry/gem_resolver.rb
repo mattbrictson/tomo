@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Tomo
   class Configuration
     class PluginsRegistry::GemResolver
-      PLUGIN_PREFIX = "tomo/plugin".freeze
+      PLUGIN_PREFIX = "tomo/plugin"
       private_constant :PLUGIN_PREFIX
 
       def self.resolve(name)

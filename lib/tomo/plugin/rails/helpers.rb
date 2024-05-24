@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo::Plugin::Rails
   module Helpers
     def rails(*args, **opts)

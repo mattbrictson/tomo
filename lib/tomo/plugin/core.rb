@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "core/helpers"
 require_relative "core/tasks"
 

@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 module Tomo
   module SSH
     class Options
       DEFAULTS = {
         ssh_connect_timeout: 5,
-        ssh_executable: "ssh".freeze,
+        ssh_executable: "ssh",
         ssh_extra_opts: %w[-o PasswordAuthentication=no].map(&:freeze),
         ssh_forward_agent: true,
         ssh_reuse_connections: true,
-        ssh_strict_host_key_checking: "accept-new".freeze
+        ssh_strict_host_key_checking: "accept-new"
       }.freeze
 
       attr_reader :executable

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   module Commands
     class Version < CLI::Command

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   class Result
     def self.empty_success

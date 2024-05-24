@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo::Plugin::Puma
   class Tasks < Tomo::TaskLibrary
     SystemdUnit = Struct.new(:name, :template, :path)

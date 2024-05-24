@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 concurrent_ver = "~> 1.1"
 
 begin

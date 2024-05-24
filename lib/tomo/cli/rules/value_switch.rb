@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Tomo::CLI::Rules
   class ValueSwitch < Switch
     include Tomo::Colors

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 # THIS SCRIPT IS FOR TESTING PURPOSES ONLY.
 #

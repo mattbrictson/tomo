@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo::Plugin::Git
   module Helpers
     def git(*args, **opts)

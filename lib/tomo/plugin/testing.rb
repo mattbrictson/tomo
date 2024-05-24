@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 raise "The testing plugin cannot be used outside of unit tests" unless defined?(Tomo::Testing)
 
 module Tomo::Plugin
