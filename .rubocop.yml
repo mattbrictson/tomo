@@ -111,9 +111,6 @@ Style/FetchEnvVar:
 Style/FormatStringToken:
   Enabled: false
 
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 Style/NumericLiterals:
   Enabled: false
 
