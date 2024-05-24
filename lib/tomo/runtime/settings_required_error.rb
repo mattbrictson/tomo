@@ -26,7 +26,7 @@ module Tomo
         return "a value for the #{yellow(settings.first.to_s)} setting." if settings.length == 1
 
         sentence = "values for these settings:\n\n  "
-        sentence << settings.map { |s| yellow(s.to_s) }.join("\n  ")
+        sentence + settings.map { |s| yellow(s.to_s) }.join("\n  ")
       end
     end
   end

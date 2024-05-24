@@ -7,8 +7,8 @@ module Tomo
 
       def to_console
         error = ""
-        error << "#{operation_name} requires an interactive console."
-        error << "\n\n#{seems_like_ci}" if ci_var
+        error += "#{operation_name} requires an interactive console."
+        error += "\n\n#{seems_like_ci}" if ci_var
         error
       end
 

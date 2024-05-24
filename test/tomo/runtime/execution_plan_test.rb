@@ -89,7 +89,7 @@ class Tomo::Runtime::ExecutionPlanTest < Minitest::Test
     config = single_host_config
     runtime = config.build_runtime
     plan = runtime.execution_plan_for(
-      setup_tasks + ["puma:setup_systemd".extend(Tomo::Runtime::PrivilegedTask)]
+      setup_tasks + [(+"puma:setup_systemd").extend(Tomo::Runtime::PrivilegedTask)]
     )
     assert_equal(<<~PLAN.strip, plan.explain)
       CONCURRENTLY (2 THREADS):
@@ -106,7 +106,7 @@ class Tomo::Runtime::ExecutionPlanTest < Minitest::Test
     config = role_based_multi_host_config
     runtime = config.build_runtime
     plan = runtime.execution_plan_for(
-      setup_tasks + ["puma:setup_systemd".extend(Tomo::Runtime::PrivilegedTask)]
+      setup_tasks + [(+"puma:setup_systemd").extend(Tomo::Runtime::PrivilegedTask)]
     )
     assert_equal(<<~PLAN.strip, plan.explain)
       CONCURRENTLY (3 THREADS):

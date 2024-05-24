@@ -57,7 +57,7 @@ module Tomo
           last = [dsl_lines.length, error_line_no + 1].min
           width = last.to_s.length
 
-          (first..last).each_with_object("") do |line_no, result|
+          (first..last).each_with_object(+"") do |line_no, result|
             line = dsl_lines[line_no - 1]
             line_no_prefix = line_no.to_s.rjust(width)
 

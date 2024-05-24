@@ -24,7 +24,7 @@ module Tomo
             indent = threads > 1 ? "  = " : ""
             if threads > 1 && step.applicable_tasks.length > 1
               desc << "#{indent}IN SEQUENCE:"
-              indent.sub!("=", "   ")
+              indent = indent.sub("=", "   ")
             end
             desc << step.explain.gsub(/^/, indent)
           end

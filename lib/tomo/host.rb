@@ -33,7 +33,7 @@ module Tomo
 
     def to_s
       str = user ? "#{user}@#{address}" : address
-      str << ":#{port}" unless port == 22
+      str += ":#{port}" unless port == 22
       str
     end
 
