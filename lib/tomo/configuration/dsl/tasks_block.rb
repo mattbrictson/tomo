@@ -14,7 +14,7 @@ module Tomo
         end
 
         def run(task, privileged: false)
-          task.extend(Runtime::PrivilegedTask) if privileged
+          task = String.new(task).extend(Runtime::PrivilegedTask) if privileged
           @tasks << task
           self
         end
