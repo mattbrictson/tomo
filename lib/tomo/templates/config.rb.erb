@@ -1,8 +1,6 @@
-# frozen_string_literal: true
 <% if rubocop? -%>
 # rubocop:disable Style/FormatStringToken
 <% end -%>
-
 plugin "git"
 plugin "env"
 plugin "bundler"
@@ -84,6 +82,5 @@ deploy do
   run "core:log_revision"
 end
 <% if rubocop? -%>
-
 # rubocop:enable Style/FormatStringToken
 <% end -%>
