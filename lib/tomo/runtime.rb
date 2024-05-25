@@ -51,7 +51,7 @@ module Tomo
     end
 
     def run!(task, *args, privileged: false)
-      task = task.dup.extend(PrivilegedTask) if privileged
+      task = String.new(task).extend(PrivilegedTask) if privileged
       execution_plan_for([task], release: :current, args:).execute
     end
 
