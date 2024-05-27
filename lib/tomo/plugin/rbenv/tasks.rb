@@ -21,7 +21,7 @@ module Tomo::Plugin::Rbenv
 
     def modify_bashrc
       existing_rc = remote.capture("cat", paths.bashrc, raise_on_error: false)
-      return if existing_rc.include?("rbenv init")
+      return if existing_rc.include?("rbenv init") && existing_rc.include?("$HOME/.rbenv/bin")
 
       remote.write(text: <<~BASHRC + existing_rc, to: paths.bashrc)
         if [ -d $HOME/.rbenv ]; then

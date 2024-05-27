@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Tomo
-  VERSION = "1.18.3"
+  VERSION = "1.19.0"
 end
