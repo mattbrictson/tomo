@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require "forwardable"
 require "io/console"
 
 module Tomo
   class Console
     class Menu
-      ARROW_UP = "\e[A".freeze
-      ARROW_DOWN = "\e[B".freeze
-      RETURN = "\r".freeze
-      ENTER = "\n".freeze
+      ARROW_UP = "\e[A"
+      ARROW_DOWN = "\e[B"
+      RETURN = "\r"
+      ENTER = "\n"
 
       extend Forwardable
       include Colors

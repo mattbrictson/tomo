@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Tomo::CLI::Rules
   class Switch
     def initialize(key, *switches, callback_proc:, required: false, &convert_proc)

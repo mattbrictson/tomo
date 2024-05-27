@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   class Configuration
     class UnknownPluginError < Tomo::Error
@@ -9,9 +11,9 @@ module Tomo
         ERROR
 
         sugg = Error::Suggestions.new(dictionary: known_plugins, word: name)
-        error << sugg.to_console if sugg.any?
+        error += sugg.to_console if sugg.any?
 
-        error << gem_suggestion
+        error + gem_suggestion
       end
 
       private

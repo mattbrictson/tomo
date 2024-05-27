@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Tomo::CLI::Rules
   class Argument
     def initialize(label, values_proc:, multiple: false, required: false)

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Tomo
   class Result
     def self.empty_success
-      new(stdout: "", stderr: "", exit_status: 0)
+      new(stdout: +"", stderr: +"", exit_status: 0)
     end
 
     attr_reader :stdout, :stderr, :exit_status

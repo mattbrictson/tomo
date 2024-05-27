@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   class Configuration
     class UnknownEnvironmentError < Tomo::Error
@@ -23,10 +25,10 @@ module Tomo
         ERROR
 
         if suggestions.any?
-          error << suggestions.to_console
+          error + suggestions.to_console
         else
           envs = known_environments.map { |env| blue("  #{env}") }
-          error << <<~ENVS
+          error + <<~ENVS
 
             The following environments are available:
 

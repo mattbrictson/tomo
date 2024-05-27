@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   module Testing
     module HostExtensions
@@ -14,7 +16,7 @@ module Tomo
       def mock(script, stdout: "", stderr: "", exit_status: 0)
         mocks << [
           script.is_a?(Regexp) ? script : /\A#{Regexp.quote(script)}\z/,
-          Result.new(stdout:, stderr:, exit_status:)
+          Result.new(stdout: String.new(stdout), stderr: String.new(stderr), exit_status:)
         ]
       end
 

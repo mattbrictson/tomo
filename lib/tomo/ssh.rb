@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   module SSH
     autoload :ChildProcess, "tomo/ssh/child_process"

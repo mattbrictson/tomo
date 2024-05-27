@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "forwardable"
 require "io/console"
 require "time"
@@ -35,7 +37,7 @@ module Tomo
       end
 
       def read_chars_nonblock
-        chars = ""
+        chars = +""
         loop do
           next_char = raw { read_nonblock(1) }
           break if next_char.nil?

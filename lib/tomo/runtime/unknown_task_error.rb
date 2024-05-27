@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   class Runtime
     class UnknownTaskError < Error
@@ -10,7 +12,7 @@ module Tomo
         ERROR
 
         sugg = spelling_suggestion || missing_plugin_suggestion
-        error << sugg if sugg
+        error += sugg if sugg
         error
       end
 

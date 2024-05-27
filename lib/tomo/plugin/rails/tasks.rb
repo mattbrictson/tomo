@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo::Plugin::Rails
   class Tasks < Tomo::TaskLibrary
     def assets_precompile

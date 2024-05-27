@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   autoload :CLI, "tomo/cli"
   autoload :Colors, "tomo/colors"
@@ -21,7 +23,7 @@ module Tomo
   autoload :TaskLibrary, "tomo/task_library"
   autoload :VERSION, "tomo/version"
 
-  DEFAULT_CONFIG_PATH = ".tomo/config.rb".freeze
+  DEFAULT_CONFIG_PATH = ".tomo/config.rb"
 
   class << self
     attr_accessor :logger

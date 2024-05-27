@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   class Runtime
     class SettingsInterpolation
@@ -40,7 +42,7 @@ module Tomo
 
       def dump_settings(hash)
         key_len = hash.keys.map { |k| k.to_s.length }.max
-        dump = "Settings: {\n"
+        dump = +"Settings: {\n"
         hash.to_a.sort_by(&:first).each do |key, value|
           justified_key = "#{key}:".ljust(key_len + 1)
           dump << "  #{justified_key} #{value.inspect},\n"

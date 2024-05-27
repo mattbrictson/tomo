@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo
   module Commands
     autoload :CompletionScript, "tomo/commands/completion_script"

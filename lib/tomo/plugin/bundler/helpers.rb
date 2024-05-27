@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tomo::Plugin::Bundler
   module Helpers
     def bundle(*args, **opts)

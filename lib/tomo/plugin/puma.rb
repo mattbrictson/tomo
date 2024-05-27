@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "puma/tasks"
 
 module Tomo::Plugin
