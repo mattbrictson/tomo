@@ -10,7 +10,7 @@ module Tomo
       extend Forwardable
 
       def initialize(input=$stdin)
-        @buffer = ""
+        @buffer = +""
         @input = input
       end
 
