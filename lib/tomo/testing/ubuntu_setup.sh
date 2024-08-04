@@ -4,6 +4,9 @@ set -e
 
 export DEBIAN_FRONTEND=noninteractive
 
+apt-get -y update
+apt-get -y install adduser
+
 # Create `deployer` user
 adduser --disabled-password deployer < /dev/null
 mkdir -p /home/deployer/.ssh
@@ -16,7 +19,6 @@ mkdir -p /var/lib/systemd/linger
 touch /var/lib/systemd/linger/deployer
 
 # Packages needed for ruby, etc.
-apt-get -y update
 apt-get -y install autoconf \
                    bison \
                    build-essential \
