@@ -164,7 +164,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="deploying-rails-from-scratch">Deploying Rails From Scratch</h1>
-<p>In this tutorial we will use tomo to deploy a <a href="https://github.com/mattbrictson/rails-new">sample Rails project</a> to a virtual private server (VPS). These instructions use <a href="https://www.digitalocean.com">DigitalOcean</a> as the hosting provider, but any provider that offers an Ubuntu 20.04 or 22.04 LTS VPS should work in a similar way. Here are the steps involved (step 1 is the only part that is DigitalOcean-specific):</p>
+<p>In this tutorial we will use tomo to deploy a <a href="https://github.com/mattbrictson/rails-new">sample Rails project</a> to a virtual private server (VPS). These instructions use <a href="https://www.digitalocean.com">DigitalOcean</a> as the hosting provider, but any provider that offers an Ubuntu LTS VPS should work in a similar way. Here are the steps involved (step 1 is the only part that is DigitalOcean-specific):</p>
 <ol>
 <li><a href="#create-an-ubuntu-vps">Create an Ubuntu VPS</a></li>
 <li><a href="#install-necessary-apt-packages">Install necessary apt packages</a></li>
@@ -176,7 +176,7 @@
 <p>This is a basic tutorial that skips over DNS, TLS, load balancing, PostgreSQL, etc. If you have suggestions for expanding this guide, consider <a href="https://github.com/mattbrictson/tomo">opening an issue or pull request on GitHub</a>. Thanks for reading!</p>
 <h2 id="create-an-ubuntu-vps">Create an Ubuntu VPS</h2>
 <p>Log into <a href="https://www.digitalocean.com">DigitalOcean</a> and create a &ldquo;Droplet&rdquo; (aka a VPS). If this is your first time using DigitalOcean, check out their <a href="https://www.digitalocean.com/docs/droplets/quickstart/">Droplet QuickStart</a> guide for an introduction to the service.</p>
-<p>When creating the Droplet, make sure to choose <strong>Ubuntu 20.04 or 22.04 (LTS) x64</strong>:</p>
+<p>When creating the Droplet, make sure to choose <strong>Ubuntu 20.04, 22.04, or 24.04 (LTS) x64</strong>:</p>
 <p><img alt="Ubuntu 20.04 LTS" src="../ubuntu-20-lts%402x.png" /></p>
 <p>And use <strong>SSH keys</strong> for authentication (tomo does not work with password authentication):</p>
 <p><img alt="SSH Authentication" src="../ssh-auth%402x.png" /></p>
