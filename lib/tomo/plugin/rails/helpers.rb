@@ -15,7 +15,7 @@ module Tomo::Plugin::Rails
     end
 
     def rake?(*args, **opts)
-      result = rake(*args, **opts.merge(raise_on_error: false))
+      result = rake(*args, **opts, raise_on_error: false)
       result.success?
     end
 
