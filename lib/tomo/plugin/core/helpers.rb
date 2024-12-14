@@ -10,7 +10,7 @@ module Tomo::Plugin::Core
     end
 
     def run?(*command, **run_opts)
-      result = run(*command, **run_opts.merge(raise_on_error: false))
+      result = run(*command, **run_opts, raise_on_error: false)
       result.success?
     end
 
