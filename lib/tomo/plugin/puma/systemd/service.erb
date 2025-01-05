@@ -8,9 +8,7 @@ ConditionPathExists=<%= paths.current %>
 ExecStart=/bin/bash -lc 'exec bundle exec --keep-file-descriptors puma -C config/puma.rb -b tcp://<%= settings[:puma_host] %>:<%= settings[:puma_port] %>'
 KillMode=mixed
 Restart=always
-StandardError=syslog
 StandardInput=null
-StandardOutput=syslog
 SyslogIdentifier=%n
 TimeoutStopSec=5
 
