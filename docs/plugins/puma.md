@@ -9,7 +9,7 @@ Tomo's implementation installs puma as a _user-level_ service using `systemctl -
 $ loginctl enable-linger <DEPLOY_USER>
 ```
 
-Stdout and stderr of the puma process will be routed to syslog, as is the convention for systemd services. For Rails, it is recommended that you set `RAILS_LOG_TO_STDOUT=1` so that all Rails logs are handled this way (`tomo init` configures this by default).
+Stdout and stderr of the puma process will be routed to the systemd journal. For Rails, it is recommended that you set `RAILS_LOG_TO_STDOUT=1` so that all Rails logs are handled this way (`tomo init` configures this by default).
 
 The tomo puma plugin assumes that your puma server will listen on a single TCP port for HTTP (not HTTPS) traffic. In other words, HTTPS termination will be handled by e.g. Nginx or a separate load balancer.
 
