@@ -11,7 +11,7 @@ module Tomo
       end
 
       def success?
-        status == true || status == 0
+        [true, 0].include?(status)
       end
     end
   end
