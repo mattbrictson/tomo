@@ -1,9 +1,9 @@
-require:
-  - rubocop-md
+plugins:
   - rubocop-minitest
   - rubocop-packaging
   - rubocop-performance
   - rubocop-rake
+  - rubocop-md
 
 AllCops:
   DisplayCopNames: true
