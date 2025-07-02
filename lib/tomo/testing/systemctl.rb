@@ -121,7 +121,7 @@ class Unit
 end
 
 class Service < Unit
-  def is_active # rubocop:disable Naming/PredicateName
+  def is_active # rubocop:disable Naming/PredicatePrefix
     exit(false) unless started?
     puts "active"
   end
