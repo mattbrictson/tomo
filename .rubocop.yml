@@ -88,6 +88,9 @@ Minitest/TestFileName:
 Naming/MemoizedInstanceVariableName:
   Enabled: false
 
+Naming/PredicateMethod:
+  Enabled: false
+
 Naming/VariableNumber:
   Enabled: false
 
