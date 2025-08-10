@@ -42,10 +42,10 @@ module Tomo
         settings.keys.map { |sett| "#{sett}=" }
       end
 
-      def prompt_for_environment(*args, options)
+      def prompt_for_environment(*, options)
         return unless options[:environment].nil?
 
-        envs = environment_names(*args, options)
+        envs = environment_names(*, options)
         return if envs.empty?
         return unless Console.interactive?
 

@@ -14,8 +14,8 @@ module Tomo::Plugin::Rails
       end
     end
 
-    def rake?(*args, **opts)
-      result = rake(*args, **opts, raise_on_error: false)
+    def rake?(*, **)
+      result = rake(*, **, raise_on_error: false)
       result.success?
     end
 

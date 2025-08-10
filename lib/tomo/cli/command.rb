@@ -8,8 +8,8 @@ module Tomo
           parser.arg(spec, values:)
         end
 
-        def option(key, spec, desc=nil, values: [], &block)
-          parser.option(key, spec, desc, values:, &block)
+        def option(key, spec, desc=nil, values: [], &)
+          parser.option(key, spec, desc, values:, &)
         end
 
         def after_parse(context_method_name)
