@@ -228,6 +228,7 @@ end
 <p>You can use <code>tasks self</code> to define a plugin and its tasks together as a single class:</p>
 <pre><code class="language-ruby">class Tomo::Plugin::Git &lt; Tomo::TaskLibrary
   extend Tomo::PluginDSL
+
   tasks self
 
   def clone
