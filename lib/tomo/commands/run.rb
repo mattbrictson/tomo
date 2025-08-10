@@ -52,11 +52,11 @@ module Tomo
         BANNER
       end
 
-      def call(task, *args, options)
+      def call(task, *, options)
         logger.info "tomo run v#{Tomo::VERSION}"
 
         runtime = configure_runtime(options)
-        plan = runtime.run!(task, *args, privileged: options[:privileged])
+        plan = runtime.run!(task, *, privileged: options[:privileged])
         log_completion(task, plan)
       end
 

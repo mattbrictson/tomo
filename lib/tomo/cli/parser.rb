@@ -22,8 +22,8 @@ module Tomo
         rules.add_arg(spec, proc_for(values))
       end
 
-      def option(key, spec, desc=nil, values: [], &block)
-        rules.add_option(key, spec, proc_for(values), &block)
+      def option(key, spec, desc=nil, values: [], &)
+        rules.add_option(key, spec, proc_for(values), &)
         usage.add_option(spec, desc)
       end
 

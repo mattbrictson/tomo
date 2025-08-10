@@ -38,8 +38,8 @@ module Tomo
         host.scripts.map(&:to_s)
       end
 
-      def mock_script_result(script=/.*/, **kwargs)
-        host.mock(script, **kwargs)
+      def mock_script_result(script=/.*/, **)
+        host.mock(script, **)
         self
       end
 
