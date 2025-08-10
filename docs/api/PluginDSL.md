@@ -83,6 +83,7 @@ You can use `tasks self` to define a plugin and its tasks together as a single c
 ```ruby
 class Tomo::Plugin::Git < Tomo::TaskLibrary
   extend Tomo::PluginDSL
+
   tasks self
 
   def clone

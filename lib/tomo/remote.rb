@@ -7,6 +7,7 @@ module Tomo
     include TaskAPI
 
     extend Forwardable
+
     def_delegators :ssh, :close, :host
     def_delegators :shell_builder, :chdir, :env, :prepend, :umask
 
