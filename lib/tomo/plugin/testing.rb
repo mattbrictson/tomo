@@ -5,6 +5,7 @@ raise "The testing plugin cannot be used outside of unit tests" unless defined?(
 module Tomo::Plugin
   class Testing < Tomo::TaskLibrary
     extend Tomo::PluginDSL
+
     tasks self
 
     def call_helper

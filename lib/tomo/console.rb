@@ -11,6 +11,7 @@ module Tomo
 
     class << self
       extend Forwardable
+
       def_delegators :@instance, :interactive?, :prompt, :menu
     end
 
