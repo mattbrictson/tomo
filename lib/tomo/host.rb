@@ -7,12 +7,12 @@ module Tomo
 
     attr_reader :address, :log_prefix, :user, :port, :roles, :as_privileged
 
-    def self.parse(host, **kwargs)
+    def self.parse(host, **)
       host = host.to_s.strip
       user, address = host.match(PATTERN).captures
       raise ArgumentError, "host cannot be blank" if address.empty?
 
-      new(user:, address:, **kwargs)
+      new(user:, address:, **)
     end
 
     def initialize(address:, port: nil, log_prefix: nil, roles: nil, user: nil, privileged_user: "root")

@@ -3,10 +3,10 @@
 module Tomo
   class Runtime
     class InlineThreadPool
-      def post(*args)
+      def post(*)
         return if failure?
 
-        yield(*args)
+        yield(*)
         nil
       rescue StandardError => e
         self.failure = e

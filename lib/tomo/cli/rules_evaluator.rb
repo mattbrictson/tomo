@@ -3,8 +3,8 @@
 module Tomo
   class CLI
     class RulesEvaluator
-      def self.evaluate(**kwargs)
-        new(**kwargs).call
+      def self.evaluate(**)
+        new(**).call
       end
 
       def initialize(rules:, argv:, state:, literal:, completions: nil)

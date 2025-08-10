@@ -8,8 +8,8 @@ module Tomo::Plugin::Bundler
       end
     end
 
-    def bundle?(*args, **opts)
-      result = bundle(*args, **opts, raise_on_error: false)
+    def bundle?(*, **)
+      result = bundle(*, **, raise_on_error: false)
       result.success?
     end
   end
