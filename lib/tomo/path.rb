@@ -11,11 +11,11 @@ module Tomo
     end
 
     def join(*other)
-      self.class.new(Pathname.new(self).join(*other))
+      self.class.new(Pathname.new(to_s).join(*other))
     end
 
     def dirname
-      self.class.new(Pathname.new(self).dirname)
+      self.class.new(Pathname.new(to_s).dirname)
     end
   end
 end
