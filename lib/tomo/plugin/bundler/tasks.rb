@@ -55,7 +55,7 @@ module Tomo::Plugin::Bundler
 
     def extract_bundler_ver_from_lockfile
       lockfile_tail = remote.capture("tail", "-n", "10", paths.release.join("Gemfile.lock"), raise_on_error: false)
-      version = lockfile_tail[/BUNDLED WITH\n   (\S+)$/, 1]
+      version = lockfile_tail[/BUNDLED WITH\n  \s*(\S+)$/, 1]
       return version if version || dry_run?
 
       die <<~REASON
