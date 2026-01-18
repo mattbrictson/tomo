@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 require "net/http"
 require "securerandom"
 
-class RailsSetupDeployE2ETest < Minitest::Test
+class RailsSetupDeployE2ETest < TomoTest
   include Tomo::Testing::Local
 
-  def setup
+  setup do
     @docker = Tomo::Testing::DockerImage.new
     @docker.build_and_run
   end

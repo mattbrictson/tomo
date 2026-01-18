@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "stringio"
 
 class Tomo::Console
-  class KeyReaderTest < Minitest::Test
-    def setup
+  class KeyReaderTest < TomoTest
+    setup do
       @input = StringIO.new
       @input.define_singleton_method(:raw) do |&block|
         block.call

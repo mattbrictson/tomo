@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/core"
 require "shellwords"
 require "time"
 
-class Tomo::Plugin::Core::TasksTest < Minitest::Test
-  def setup
+class Tomo::Plugin::Core::TasksTest < TomoTest
+  setup do
     configure
   end
 
