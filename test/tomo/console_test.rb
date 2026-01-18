@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "stringio"
 
-class Tomo::ConsoleTest < Minitest::Test
+class Tomo::ConsoleTest < TomoTest
   def test_interactive_is_true_for_tty
     assert_predicate Tomo::Console.new({}, tty), :interactive?
   end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
-class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
+class Tomo::Runtime::SettingsInterpolationTest < TomoTest
   def test_interpolates_settings
     interpolated = interpolate(
       application: "test",

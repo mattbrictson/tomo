@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
-require "rake/testtask"
+require "megatest/test_task"
 require "rubocop/rake_task"
 
 task default: %i[test rubocop]
@@ -10,16 +10,14 @@ task test: %w[test:unit]
 
 RuboCop::RakeTask.new
 
-Rake::TestTask.new("test:unit") do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/**/*_test.rb"] - FileList["test/**/*_e2e_test.rb"]
+Megatest::TestTask.create("test:unit") do |t|
+  t.command = "bin/megatest"
+  t.tests = FileList["test/**/*_test.rb"] - FileList["test/**/*_e2e_test.rb"]
 end
 
-Rake::TestTask.new("test:e2e") do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/**/*_e2e_test.rb"]
+Megatest::TestTask.create("test:e2e") do |t|
+  t.command = "bin/megatest"
+  t.tests = FileList["test/**/*_e2e_test.rb"]
 end
 
 # == "rake release" enhancements ==============================================

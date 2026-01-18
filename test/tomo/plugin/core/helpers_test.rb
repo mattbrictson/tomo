@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/core"
 
-class Tomo::Plugin::Core::HelpersTest < Minitest::Test
-  def setup
+class Tomo::Plugin::Core::HelpersTest < TomoTest
+  setup do
     @tester = Tomo::Testing::MockPluginTester.new(
       settings: { application: "test" }
     )

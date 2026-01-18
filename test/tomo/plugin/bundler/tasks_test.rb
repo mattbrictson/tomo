@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/bundler"
 
-class Tomo::Plugin::Bundler::TasksTest < Minitest::Test
+class Tomo::Plugin::Bundler::TasksTest < TomoTest
   def test_install
     tester = configure(release_path: "/app/release")
     tester.mock_script_result(/bundle check/, exit_status: 1)

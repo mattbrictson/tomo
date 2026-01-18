@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/nodenv"
 
-class Tomo::Plugin::Nodenv::TasksTest < Minitest::Test
+class Tomo::Plugin::Nodenv::TasksTest < TomoTest
   def test_install_modifies_bashrc
     bashrc = <<~SH
       # example bashrc
