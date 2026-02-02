@@ -8,7 +8,7 @@ module Tomo
 
     extend Forwardable
 
-    def_delegators :ssh, :close, :host
+    def_delegators :ssh, :close, :host, :ssh_args_for_pipe
     def_delegators :shell_builder, :chdir, :env, :prepend, :umask
 
     attr_reader :release
