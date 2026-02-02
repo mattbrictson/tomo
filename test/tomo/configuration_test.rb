@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
-class Tomo::ConfigurationTest < Minitest::Test
+class Tomo::ConfigurationTest < TomoTest
   include Tomo::Testing::Local
 
   def test_parses_a_config_file_that_contains_frozen_string_literals

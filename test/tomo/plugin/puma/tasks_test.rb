@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/puma"
 
-class Tomo::Plugin::Puma::TasksTest < Minitest::Test
-  def setup
+class Tomo::Plugin::Puma::TasksTest < TomoTest
+  setup do
     configure
   end
 

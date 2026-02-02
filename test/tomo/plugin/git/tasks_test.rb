@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/git"
 
-class Tomo::Plugin::Git::TasksTest < Minitest::Test
+class Tomo::Plugin::Git::TasksTest < TomoTest
   def test_config_sets_name_and_email_with_user_by_default
     tester = configure
     tester.run_task("git:config")
