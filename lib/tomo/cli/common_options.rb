@@ -11,6 +11,9 @@ module Tomo
           option :debug, "--[no-]debug", "Enable/disable verbose debug logging" do |debug|
             Tomo.debug = debug
           end
+          option :quiet, "--[no-]quiet", "Silence all progress output" do |quiet|
+            Tomo.quiet = quiet
+          end
           option :trace, "--[no-]trace", "Display full backtrace on error" do |trace|
             CLI.show_backtrace = trace
           end

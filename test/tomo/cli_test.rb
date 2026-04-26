@@ -7,6 +7,12 @@ class Tomo::CLITest < Minitest::Test
     @tester = Tomo::Testing::CLITester.new
   end
 
+  def test_quiet_option_silences_stdout
+    @tester.run "init"
+    @tester.run "run", "bundler:install", "--dry-run", "--quiet"
+    assert_empty @tester.stdout
+  end
+
   def test_execute_task_with_implicit_run_command
     @tester.run "init"
     @tester.run "bundler:install", "--dry-run"

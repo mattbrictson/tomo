@@ -15,6 +15,7 @@ module Tomo
     end
 
     def script_start(script)
+      return if Tomo.quiet?
       return unless script.echo?
 
       puts yellow(script.echo_string)
@@ -27,6 +28,7 @@ module Tomo
     end
 
     def script_end(script, result)
+      return if Tomo.quiet?
       return unless result.failure?
       return unless script.silent?
       return unless script.raise_on_error?
@@ -35,14 +37,20 @@ module Tomo
     end
 
     def connect(host)
+      return if Tomo.quiet?
+
       puts gray("→ Connecting to #{host}")
     end
 
     def task_start(task)
+      return if Tomo.quiet?
+
       puts blue("• #{task}")
     end
 
     def info(message)
+      return if Tomo.quiet?
+
       puts message
     end
 

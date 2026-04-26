@@ -37,6 +37,7 @@ module Tomo
       ensure
         Tomo.debug = false
         Tomo.dry_run = false
+        Tomo.quiet = false
         Tomo::CLI.show_backtrace = false
         Tomo::CLI::Completions.instance_variable_set(:@active, false)
       end

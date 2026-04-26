@@ -18,6 +18,10 @@ module Tomo
       Tomo.dry_run?
     end
 
+    def quiet?
+      Tomo.quiet?
+    end
+
     def logger
       Tomo.logger
     end

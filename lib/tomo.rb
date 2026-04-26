@@ -27,7 +27,7 @@ module Tomo
 
   class << self
     attr_accessor :logger
-    attr_writer :debug, :dry_run
+    attr_writer :debug, :dry_run, :quiet
 
     def debug?
       !!@debug
@@ -37,6 +37,10 @@ module Tomo
       !!@dry_run
     end
 
+    def quiet?
+      !!@quiet
+    end
+
     def bundled?
       !!(defined?(Bundler) && ENV["BUNDLE_GEMFILE"])
     end
@@ -44,5 +48,6 @@ module Tomo
 
   self.debug = false
   self.dry_run = false
+  self.quiet = false
   self.logger = Logger.new
 end
