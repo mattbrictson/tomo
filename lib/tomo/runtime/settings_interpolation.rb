@@ -23,11 +23,22 @@ module Tomo
 
       def fetch(name, stack=[])
         raise_circular_dependency_error(name, stack) if stack.include?(name)
-        value = settings.fetch(name)
-        return value unless value.is_a?(String)
 
+        stack += [name]
+        value = settings.fetch(name)
+
+        if value.is_a?(String)
+          interpolate_string(value, stack)
+        elsif value.is_a?(Hash)
+          value.transform_values { |v| v.is_a?(String) ? interpolate_string(v, stack) : v }
+        else
+          value
+        end
+      end
+
+      def interpolate_string(value, stack)
         value.gsub(/%{(\w+)}/) do
-          fetch(Regexp.last_match[1].to_sym, stack + [name])
+          fetch(Regexp.last_match[1].to_sym, stack)
         end
       end
 
