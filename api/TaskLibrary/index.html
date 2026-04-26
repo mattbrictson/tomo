@@ -129,6 +129,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#logger-tomologger">logger → Tomo::Logger</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quiet-true-or-false">quiet? → true or false</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#diereason">die(reason)</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#rawstring-string">raw(string) → String</a>
@@ -254,6 +256,8 @@ end
 logger.info &quot;hi!&quot;
 logger.warn &quot;uh oh&quot;
 </code></pre>
+<h3 id="quiet-true-or-false">quiet? → true or false</h3>
+<p>Returns <code>true</code> if tomo was started with the <code>--quiet</code> option.</p>
 <h3 id="diereason">die(reason)</h3>
 <p>Immediately halt task execution by raising an exception. This will automatically print information to stderr about what task failed, on which host, and the <code>reason</code> for the failure.</p>
 <h3 id="rawstring-string">raw(string) → String</h3>
