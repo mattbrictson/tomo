@@ -10,6 +10,10 @@ module Tomo::Plugin::Rails
       remote.rails("console", settings[:run_args], attach: true)
     end
 
+    def query
+      remote.rails("query", settings[:run_args], attach: true)
+    end
+
     def db_console
       remote.rails("dbconsole", "--include-password", settings[:run_args], attach: true)
     end

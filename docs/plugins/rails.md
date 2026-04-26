@@ -78,6 +78,28 @@ Runs `bundle exec rake db:schema:load` to load the schema from `db/schema.rb` in
 
 Runs `bundle exec rake db:structure:load` to load the schema from `db/structure.sql` into an existing database. This task is intended for use as a [setup](../commands/setup.md) task after `rails:db_create`. It will be automatically skipped if the database already contains a schema, so it is safe to re-run.
 
+### rails:query
+
+Executes read-only database queries using `bundle exec rails query [ARGS]`, printing the results as structured data in JSON format. Use tomo’s `--quiet` option to silence progress output, ensuring only JSON is printed. The `--` separator can be used to delineate tomo options from `query` options. Example:
+
+```
+$ bin/tomo run --quiet rails:query -- --sql "SELECT id, name FROM accounts LIMIT 2"
+{
+  "columns": ["id", "name"],
+  "rows": [[1, "Acme"], [2, "Widgets Co"]],
+  "meta": {
+    "row_count": 2,
+    "query_time_ms": 1.8,
+    "page": 1,
+    "per_page": 100,
+    "has_more": false,
+    "sql": "SELECT id, name FROM accounts LIMIT 2"
+  }
+}
+```
+
+See the [Rails Guides](https://edgeguides.rubyonrails.org/command_line.html#bin-rails-query) to learn more about `rails query`.
+
 ## Helpers
 
 These helper methods become available on instances of [Remote](../api/Remote.md) when the rails plugin is loaded. They accept the same `options` as [Remote#run](../api/Remote.md#run42command-4242options-tomoresult).
