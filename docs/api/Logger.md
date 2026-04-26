@@ -28,6 +28,8 @@ tomo run v1.0.0
 * Simulated bundler:clean on deployer@web1.example.com and deployer@web2.example.com (dry run)
 ```
 
+If tomo is run with the `--quiet` option, all log messages are silenced, except `warn` and `error`.
+
 ## Instance methods
 
 ### debug(message) → nil

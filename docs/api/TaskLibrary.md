@@ -126,6 +126,10 @@ logger.info "hi!"
 logger.warn "uh oh"
 ```
 
+### quiet? → true or false
+
+Returns `true` if tomo was started with the `--quiet` option.
+
 ### die(reason)
 
 Immediately halt task execution by raising an exception. This will automatically print information to stderr about what task failed, on which host, and the `reason` for the failure.
