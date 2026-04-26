@@ -127,6 +127,15 @@ set bundler_path: "%{shared_path}/bundle"
 # => "/var/www/my-app/shared/bundle"
 ```
 
+References within hash values are also interpolated. This is useful for setting `:env_vars`:
+
+```ruby
+set env_vars: {
+  DATABASE_URL: "sqlite:%{shared_path}/production.db"
+}
+# => { DATABASE_URL: "/var/www/my-app/shared/production.db" }
+```
+
 Interpolation takes place after tomo has loaded all configuration, plugins, and overrides, just before tasks are run.
 
 #### Custom settings

@@ -8,14 +8,22 @@ class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
       application: "test",
       deploy_to: "/var/www/%{application}",
       current_path: "%{deploy_to}/current",
-      application_json_path: "%{deploy_to}/%{application}.json"
+      application_json_path: "%{deploy_to}/%{application}.json",
+      env_vars: {
+        DATABASE_URL: "sqlite:%{deploy_to}/sqlite.db",
+        SECRET_KEY_BASE: :generate_secret
+      }
     )
     assert_equal(
       {
         application: "test",
         deploy_to: "/var/www/test",
         current_path: "/var/www/test/current",
-        application_json_path: "/var/www/test/test.json"
+        application_json_path: "/var/www/test/test.json",
+        env_vars: {
+          DATABASE_URL: "sqlite:/var/www/test/sqlite.db",
+          SECRET_KEY_BASE: :generate_secret
+        }
       },
       interpolated
     )
