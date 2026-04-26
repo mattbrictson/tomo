@@ -286,6 +286,12 @@ end
 <pre><code class="language-ruby">set bundler_path: &quot;%{shared_path}/bundle&quot;
 # =&gt; &quot;/var/www/my-app/shared/bundle&quot;
 </code></pre>
+<p>References within hash values are also interpolated. This is useful for setting <code>:env_vars</code>:</p>
+<pre><code class="language-ruby">set env_vars: {
+  DATABASE_URL: &quot;sqlite:%{shared_path}/production.db&quot;
+}
+# =&gt; { DATABASE_URL: &quot;/var/www/my-app/shared/production.db&quot; }
+</code></pre>
 <p>Interpolation takes place after tomo has loaded all configuration, plugins, and overrides, just before tasks are run.</p>
 <h4 id="custom-settings">Custom settings</h4>
 <p><code>set</code> will define a setting if it does not already exist. This means you can create arbitrarily-named settings for your own purposes, such as for use within custom tasks.</p>
