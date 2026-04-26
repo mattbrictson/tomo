@@ -103,6 +103,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#railsdb_structure_load">rails:db_structure_load</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#railsquery">rails:query</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#helpers">Helpers</a>
@@ -225,6 +227,23 @@
 <p>Runs <code>bundle exec rake db:schema:load</code> to load the schema from <code>db/schema.rb</code> into an existing database. This task is intended for use as a <a href="../../commands/setup/">setup</a> task after <code>rails:db_create</code>. It will be automatically skipped if the database already contains a schema, so it is safe to re-run.</p>
 <h3 id="railsdb_structure_load">rails:db_structure_load</h3>
 <p>Runs <code>bundle exec rake db:structure:load</code> to load the schema from <code>db/structure.sql</code> into an existing database. This task is intended for use as a <a href="../../commands/setup/">setup</a> task after <code>rails:db_create</code>. It will be automatically skipped if the database already contains a schema, so it is safe to re-run.</p>
+<h3 id="railsquery">rails:query</h3>
+<p>Executes read-only database queries using <code>bundle exec rails query [ARGS]</code>, printing the results as structured data in JSON format. Use tomo’s <code>--quiet</code> option to silence progress output, ensuring only JSON is printed. The <code>--</code> separator can be used to delineate tomo options from <code>query</code> options. Example:</p>
+<pre><code>$ bin/tomo run --quiet rails:query -- --sql &quot;SELECT id, name FROM accounts LIMIT 2&quot;
+{
+  &quot;columns&quot;: [&quot;id&quot;, &quot;name&quot;],
+  &quot;rows&quot;: [[1, &quot;Acme&quot;], [2, &quot;Widgets Co&quot;]],
+  &quot;meta&quot;: {
+    &quot;row_count&quot;: 2,
+    &quot;query_time_ms&quot;: 1.8,
+    &quot;page&quot;: 1,
+    &quot;per_page&quot;: 100,
+    &quot;has_more&quot;: false,
+    &quot;sql&quot;: &quot;SELECT id, name FROM accounts LIMIT 2&quot;
+  }
+}
+</code></pre>
+<p>See the <a href="https://edgeguides.rubyonrails.org/command_line.html#bin-rails-query">Rails Guides</a> to learn more about <code>rails query</code>.</p>
 <h2 id="helpers">Helpers</h2>
 <p>These helper methods become available on instances of <a href="../../api/Remote/">Remote</a> when the rails plugin is loaded. They accept the same <code>options</code> as <a href="../../api/Remote/#run42command-4242options-tomoresult">Remote#run</a>.</p>
 <h3 id="remoterailsargs-options-tomoresult">remote.rails(*args, **options) → <a href="../../api/Result/">Tomo::Result</a></h3>

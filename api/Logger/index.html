@@ -186,7 +186,10 @@ tomo run v1.0.0
 * [2] cd /home/deployer/apps/my-app/current &amp;&amp; bundle clean
 * Simulated bundler:clean on deployer@web1.example.com and deployer@web2.example.com (dry run)
 </code></pre>
-<p>If tomo is run with the <code>--quiet</code> option, all log messages are silenced, except <code>warn</code> and <code>error</code>.</p>
+<p>If tomo is run with the <code>--quiet</code> option, all progress messages and info messages are silenced. Script output, warnings, and errors are still printed.</p>
+<pre><code>$ tomo run bundler:install --quiet
+The Gemfile's dependencies are satisfied
+</code></pre>
 <h2 id="instance-methods">Instance methods</h2>
 <h3 id="debugmessage-nil">debug(message) → nil</h3>
 <p>Prints a message to <em>stderr</em> in gray with a <code>DEBUG:</code> prefix. Debug messages are only shown if tomo is run with the <code>--debug</code> option. Otherwise this is a no-op.</p>
