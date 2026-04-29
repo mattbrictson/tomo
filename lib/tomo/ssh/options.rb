@@ -36,6 +36,18 @@ module Tomo
         [executable, args, script.to_s].flatten
       end
 
+      def build_args_for_pipe(host, control_path)
+        args = [["-o", "LogLevel=ERROR"]]
+        args << "-A" if forward_agent
+        args << connect_timeout_option
+        args << strict_host_key_checking_option
+        args.push(*control_opts(control_path, false)) if reuse_connections
+        args.push(*extra_opts) if extra_opts
+        args << host.to_ssh_args
+
+        [executable, args].flatten
+      end
+
       private
 
       attr_writer :executable
