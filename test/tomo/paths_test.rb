@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Tomo::PathsTest < Minitest::Test
+class Tomo::PathsTest < Tomo::Test
   def test_raises_if_setting_does_not_exist
     paths = Tomo::Paths.new({})
     assert_raises(NoMethodError) { paths.storage }

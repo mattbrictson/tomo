@@ -3,7 +3,7 @@
 require "test_helper"
 require "tomo/plugin/env"
 
-class Tomo::Plugin::Env::TasksTest < Minitest::Test
+class Tomo::Plugin::Env::TasksTest < Tomo::Test
   def test_setup_allows_integer_value
     tester = Tomo::Testing::MockPluginTester.new(
       "env",

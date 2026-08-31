@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Tomo::HostTest < Minitest::Test
+class Tomo::HostTest < Tomo::Test
   def test_parse_hostname
     host = Tomo::Host.parse("app.example.com")
     assert_equal("app.example.com", host.address)

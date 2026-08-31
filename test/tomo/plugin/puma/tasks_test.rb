@@ -3,7 +3,7 @@
 require "test_helper"
 require "tomo/plugin/puma"
 
-class Tomo::Plugin::Puma::TasksTest < Minitest::Test
+class Tomo::Plugin::Puma::TasksTest < Tomo::Test
   def setup
     configure
   end

@@ -3,7 +3,7 @@
 require "test_helper"
 require "tomo/plugin/rails"
 
-class Tomo::Plugin::Rails::TasksTest < Minitest::Test
+class Tomo::Plugin::Rails::TasksTest < Tomo::Test
   def test_db_console
     tester = Tomo::Testing::MockPluginTester.new(
       "bundler", "rails", settings: { current_path: "/app/current" }

@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Tomo::ConfigurationTest < Minitest::Test
+class Tomo::ConfigurationTest < Tomo::Test
   include Tomo::Testing::Local
 
   def test_parses_a_config_file_that_contains_frozen_string_literals

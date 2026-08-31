@@ -5,7 +5,7 @@ require "tomo/plugin/core"
 require "shellwords"
 require "time"
 
-class Tomo::Plugin::Core::TasksTest < Minitest::Test
+class Tomo::Plugin::Core::TasksTest < Tomo::Test
   def setup
     configure
   end

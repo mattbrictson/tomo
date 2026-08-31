@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Tomo::Runtime::ExecutionPlanTest < Minitest::Test
+class Tomo::Runtime::ExecutionPlanTest < Tomo::Test
   def test_single_host_run_plan
     runtime = single_host_config.build_runtime
     plan = runtime.execution_plan_for(["core:clean_releases"])

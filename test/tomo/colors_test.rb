@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Tomo::ColorsTest < Minitest::Test
+class Tomo::ColorsTest < Tomo::Test
   def setup
     # This forces color support detection to happen again
     Tomo::Colors.remove_instance_variable(:@enabled)
@@ -55,10 +55,10 @@ class Tomo::ColorsTest < Minitest::Test
   private
 
   def with_tty(tty, &block)
-    $stdout.stub(:tty?, tty) { $stderr.stub(:tty?, tty, &block) }
+    stub($stdout, :tty?, -> { tty }) { stub($stdout, :tty?, -> { tty }, &block) }
   end
 
   def with_env(env, &)
-    ENV.stub(:[], ->(name) { env[name] }, &)
+    stub(ENV, :[], ->(name) { env[name] }, &)
   end
 end

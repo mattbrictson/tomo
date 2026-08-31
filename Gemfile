@@ -6,7 +6,6 @@ gemspec
 gem "concurrent-ruby", "~> 1.1"
 gem "irb"
 gem "megatest", "~> 0.11.0"
-gem "minitest", "~> 5.11"
 gem "rake", "~> 13.0"
 gem "rubocop", "1.84.0"
 gem "rubocop-md", "2.0.4"

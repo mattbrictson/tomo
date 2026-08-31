@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Tomo::Runtime::SettingsInterpolationTest < Minitest::Test
+class Tomo::Runtime::SettingsInterpolationTest < Tomo::Test
   def test_interpolates_settings
     interpolated = interpolate(
       application: "test",

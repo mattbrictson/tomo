@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Tomo::Commands::InitTest < Minitest::Test
+class Tomo::Commands::InitTest < Tomo::Test
   def setup
     @tester = Tomo::Testing::CLITester.new
   end

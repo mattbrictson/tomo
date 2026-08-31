@@ -203,7 +203,7 @@ Here's what tests look like for the tasks of our hypothetical cron plugin:
 require "test_helper"
 require "tempfile"
 
-class Tomo::Plugin::Cron::TasksTest < Minitest::Test
+class Tomo::Plugin::Cron::TasksTest < Tomo::Test
   def test_show
     tester = Tomo::Testing::MockPluginTester.new("cron")
     tester.run_task("cron:show")

@@ -3,7 +3,7 @@
 require "test_helper"
 require "tomo/plugin/rbenv"
 
-class Tomo::Plugin::Rbenv::TasksTest < Minitest::Test
+class Tomo::Plugin::Rbenv::TasksTest < Tomo::Test
   def test_install_uses_ruby_version_file_for_ruby_version
     tester = configure(release_path: "/tmp/tomo/20201027184921")
     tester.mock_script_result("cat /tmp/tomo/20201027184921/.ruby-version", stdout: "2.7.1\n")
