@@ -54,8 +54,8 @@ class Tomo::ColorsTest < Tomo::Test
 
   private
 
-  def with_tty(tty, &block)
-    stub($stdout, :tty?, -> { tty }) { stub($stdout, :tty?, -> { tty }, &block) }
+  def with_tty(tty, &)
+    stub($stdout, :tty?, -> { tty }, &)
   end
 
   def with_env(env, &)
