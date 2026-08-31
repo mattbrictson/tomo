@@ -115,6 +115,10 @@ Style/NumericLiterals:
 Style/NumericPredicate:
   Enabled: false
 
+Style/OneClassPerFile:
+  Exclude:
+    - "docs/**/*.md"
+
 Style/StringConcatenation:
   Enabled: false
 

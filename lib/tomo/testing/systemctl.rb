@@ -120,7 +120,7 @@ class Unit
   end
 end
 
-class Service < Unit
+class Service < Unit # rubocop:disable Style/OneClassPerFile
   def is_active # rubocop:disable Naming/PredicatePrefix
     exit(false) unless started?
     puts "active"
@@ -176,8 +176,8 @@ class Service < Unit
   end
 
   def with_detached_io
-    null_in = File.open(File::NULL, "r")
-    null_out = File.open(File::NULL, "w")
+    null_in = File.open(File::NULL, "r") # rubocop:disable Style/FileOpen
+    null_out = File.open(File::NULL, "w") # rubocop:disable Style/FileOpen
     $stdin.reopen(null_in)
     $stderr.reopen(null_out)
     $stdout.reopen(null_out)
