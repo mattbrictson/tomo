@@ -26,7 +26,7 @@ module Tomo
 
         case applicable_hosts.length
         when 1 then applicable_hosts.first.to_s
-        when 2 then applicable_hosts.map(&:to_s).join(" and ")
+        when 2 then applicable_hosts.join(" and ")
         else
           "#{applicable_hosts.first} and #{applicable_hosts.length - 1} other hosts"
         end
