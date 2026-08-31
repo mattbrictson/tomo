@@ -4,6 +4,9 @@ module Tomo::Plugin::Puma
   class Tasks < Tomo::TaskLibrary
     SystemdUnit = Struct.new(:name, :template, :path)
 
+    # Exposed to allow override during unit tests
+    def self.polling_delay = 1
+
     def setup_systemd # rubocop:disable Metrics/AbcSize
       linger_must_be_enabled!
 
@@ -90,7 +93,7 @@ module Tomo::Plugin::Puma
     def wait_until
       timeout = settings[:puma_check_timeout].to_i
       start = Time.now.to_i
-      delay = 1
+      delay = self.class.polling_delay
 
       loop do
         sleep delay
@@ -99,7 +102,7 @@ module Tomo::Plugin::Puma
         elapsed = Time.now.to_i - start
         return false if elapsed >= timeout
 
-        delay = [delay + 1, timeout - elapsed].min
+        delay = [delay + self.class.polling_delay, timeout - elapsed].min
       end
     end
 
