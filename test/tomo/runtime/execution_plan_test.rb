@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 class Tomo::Runtime::ExecutionPlanTest < Tomo::Test
   def test_single_host_run_plan
     runtime = single_host_config.build_runtime

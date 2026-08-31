@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 class Tomo::PathsTest < Tomo::Test
   def test_raises_if_setting_does_not_exist
     paths = Tomo::Paths.new({})

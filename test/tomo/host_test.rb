@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 class Tomo::HostTest < Tomo::Test
   def test_parse_hostname
     host = Tomo::Host.parse("app.example.com")

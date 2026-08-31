@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/puma"
 
 class Tomo::Plugin::Puma::TasksTest < Tomo::Test

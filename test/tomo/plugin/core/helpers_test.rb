@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/core"
 
 class Tomo::Plugin::Core::HelpersTest < Tomo::Test

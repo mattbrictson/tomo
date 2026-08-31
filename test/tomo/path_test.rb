@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 class Tomo::PathTest < Tomo::Test
   def test_join
     path = Tomo::Path.new("/some/path").join("tmp/file.txt")

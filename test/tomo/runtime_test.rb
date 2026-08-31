@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 class Tomo::RuntimeTest < Tomo::Test
   def test_deploy_raises_if_no_deploy_tasks
     runtime = Tomo::Configuration.new.build_runtime

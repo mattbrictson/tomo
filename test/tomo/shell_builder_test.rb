@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 class Tomo::ShellBuilderTest < Tomo::Test
   def test_raw_preserves_string_when_shellescaped
     raw_string = Tomo::ShellBuilder.raw("$HOME")
