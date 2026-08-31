@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
-class Tomo::LoggerTest < Minitest::Test
+class Tomo::LoggerTest < Tomo::Test
   def setup
     @stdout_io = StringIO.new
     @stderr_io = StringIO.new

@@ -30,8 +30,9 @@ Ideas for new tomo features are appreciated!
 - Run `bundle install` to install dependencies
 - `bin/console` opens an irb console if you need a REPL to try things out
 - `bundle exec tomo` will run your working copy of tomo
-- `rake install` will install your working copy of tomo globally (so you can test it in other projects)
-- Make sure to run `rake` to run all tests and RuboCop checks prior to opening a PR
+- `bundle exec rake install` will install your working copy of tomo globally (so you can test it in other projects)
+- `bin/megatest <TEST>` will run a specific test file (or directory of tests)
+- Make sure to run `bundle exec rake` to run all tests and RuboCop checks prior to opening a PR
 
 ### Working on docs
 

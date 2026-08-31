@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
-class Tomo::CLI::CompletionsTest < Minitest::Test
+class Tomo::CLI::CompletionsTest < Tomo::Test
   def setup
     @tester = Tomo::Testing::CLITester.new
   end

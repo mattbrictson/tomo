@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
 require "net/http"
 require "securerandom"
 
-class RailsSetupDeployE2ETest < Minitest::Test
+class RailsSetupDeployE2ETest < Tomo::Test
   include Tomo::Testing::Local
 
   def setup

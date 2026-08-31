@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
-
-class Tomo::TaskAPITest < Minitest::Test
+class Tomo::TaskAPITest < Tomo::Test
   Subject = Struct.new(:context)
   Subject.include Tomo::TaskAPI
 

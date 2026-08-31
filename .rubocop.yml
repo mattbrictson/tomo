@@ -1,5 +1,4 @@
 plugins:
-  - rubocop-minitest
   - rubocop-packaging
   - rubocop-performance
   - rubocop-rake
@@ -10,6 +9,8 @@ AllCops:
   DisplayStyleGuide: true
   NewCops: enable
   TargetRubyVersion: 3.2
+  SuggestExtensions:
+    rubocop-minitest: false
   Exclude:
     - "bin/**/*"
     - "lib/tomo/templates/config.rb"
@@ -74,16 +75,6 @@ Metrics/MethodLength:
 
 Metrics/ParameterLists:
   Max: 6
-
-Minitest/EmptyLineBeforeAssertionMethods:
-  Enabled: false
-
-Minitest/MultipleAssertions:
-  Max: 5
-
-Minitest/TestFileName:
-  Exclude:
-    - "**/*.md"
 
 Naming/MemoizedInstanceVariableName:
   Enabled: false

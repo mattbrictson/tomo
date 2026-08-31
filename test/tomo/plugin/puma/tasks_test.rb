@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require "test_helper"
 require "tomo/plugin/puma"
 
-class Tomo::Plugin::Puma::TasksTest < Minitest::Test
+class Tomo::Plugin::Puma::TasksTest < Tomo::Test
   def setup
     configure
   end
@@ -77,7 +76,9 @@ class Tomo::Plugin::Puma::TasksTest < Minitest::Test
   def test_check_active_shows_logs_and_dies_if_service_is_inactive
     @tester.mock_script_result("systemctl --user is-active puma_test.service", exit_status: 1)
     error = assert_raises(Tomo::Runtime::TaskAbortedError) do
-      @tester.run_task("puma:check_active")
+      stub(Tomo::Plugin::Puma::Tasks, :polling_delay, -> { 0.001 }) do
+        @tester.run_task("puma:check_active")
+      end
     end
     assert_match("puma failed to start", error.to_console)
 
