@@ -19,6 +19,23 @@ class Tomo::Plugin::Rbenv::TasksTest < Tomo::Test
     assert_equal("CFLAGS=-O3 rbenv install 2.6.6 --verbose", tester.executed_scripts[-2])
   end
 
+  def test_install_uses_rbenv_tmpdir_path
+    tester = configure(
+      rbenv_ruby_version: "2.6.6",
+      rbenv_tmpdir_path: "/opt/scratch",
+      release_path: "/tmp/tomo/20201027184921"
+    )
+    tester.run_task("rbenv:install")
+
+    assert_equal(
+      [
+        "mkdir -p /opt/scratch",
+        "export TMPDIR=/opt/scratch && CFLAGS=-O3 rbenv install 2.6.6 --verbose"
+      ],
+      tester.executed_scripts[-3..-2]
+    )
+  end
+
   def test_install_fails_with_message_if_no_ruby_version_specified
     tester = configure(release_path: "/tmp/tomo/20201027184921")
     tester.mock_script_result("cat /tmp/tomo/20201027184921/.ruby-version", exit_status: 1)

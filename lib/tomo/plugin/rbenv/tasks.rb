@@ -37,9 +37,19 @@ module Tomo::Plugin::Rbenv
 
       unless ruby_installed?(ruby_version)
         logger.info("Installing ruby #{ruby_version} -- this may take several minutes")
-        remote.run "CFLAGS=-O3 rbenv install #{ruby_version.shellescape} --verbose"
+        using_tmpdir do
+          remote.run "CFLAGS=-O3 rbenv install #{ruby_version.shellescape} --verbose"
+        end
       end
       remote.run "rbenv global #{ruby_version.shellescape}"
+    end
+
+    def using_tmpdir(&)
+      tmpdir = paths.rbenv_tmpdir
+      return yield if tmpdir.nil?
+
+      remote.mkdir_p(tmpdir)
+      remote.env(TMPDIR: tmpdir, &)
     end
 
     def ruby_installed?(version)
