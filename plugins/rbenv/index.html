@@ -162,27 +162,12 @@
                 <h1 id="rbenv">rbenv</h1>
 <p>The rbenv plugin provides a way to install and run a desired version of ruby. This is the recommended way to manage ruby for Rails apps.</p>
 <h2 id="settings">Settings</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Purpose</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>bashrc_path</code></td>
-<td>Location of the deploy user’s <code>.bashrc</code> file</td>
-<td><code>".bashrc"</code></td>
-</tr>
-<tr>
-<td><code>rbenv_ruby_version</code></td>
-<td>Version of ruby to install; if nil (the default), determine the version based on .ruby-version</td>
-<td><code>nil</code></td>
-</tr>
-</tbody>
-</table>
+<p>| Name | Purpose | Default |
+| -------------------- |
+----------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| <code>bashrc_path</code> | Location of the deploy user’s <code>.bashrc</code> file | <code>".bashrc"</code> |
+| <code>rbenv_ruby_version</code> | Version of ruby to install; if nil (the default), determine the version based on .ruby-version | <code>nil</code> |
+| <code>rbenv_tmpdir_path</code> | If present, sets the <code>TMPDIR</code> environment variable to control where sources and compilation artifacts are staged during Ruby installation | <code>nil</code> |</p>
 <h2 id="tasks">Tasks</h2>
 <h3 id="rbenvinstall">rbenv:install</h3>
 <p>Installs rbenv, uses rbenv to install ruby, and makes the desired version of ruby the global default version for the deploy user. During installation, the user’s bashrc file is modified so that rbenv is automatically loaded for interactive and non-interactive shells.</p>
