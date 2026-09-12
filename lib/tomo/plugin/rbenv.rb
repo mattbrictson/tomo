@@ -7,7 +7,8 @@ module Tomo::Plugin
     extend Tomo::PluginDSL
 
     defaults bashrc_path: ".bashrc",
-             rbenv_ruby_version: nil
+             rbenv_ruby_version: nil,
+             rbenv_tmpdir_path: nil
 
     tasks Tomo::Plugin::Rbenv::Tasks
   end
