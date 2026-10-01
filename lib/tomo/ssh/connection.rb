@@ -44,6 +44,10 @@ module Tomo
         FileUtils.rm_f(control_path)
       end
 
+      def ssh_args_for_pipe
+        options.build_args_for_pipe(host, control_path)
+      end
+
       private
 
       attr_reader :options, :exec_proc, :child_proc
