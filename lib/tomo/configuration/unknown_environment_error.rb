@@ -3,7 +3,7 @@
 module Tomo
   class Configuration
     class UnknownEnvironmentError < Tomo::Error
-      attr_accessor :name, :known_environments
+      attr_accessor :name, :known_environments, :default_environment
 
       def to_console
         known_environments.empty? ? no_envs : wrong_envs
@@ -27,7 +27,9 @@ module Tomo
         if suggestions.any?
           error + suggestions.to_console
         else
-          envs = known_environments.map { |env| blue("  #{env}") }
+          envs = known_environments.map do |env|
+            [blue("  #{env}"), env == default_environment ? gray(" (default)") : nil].compact.join
+          end
           error + <<~ENVS
 
             The following environments are available:

@@ -232,7 +232,7 @@ deploy do
 end
 ```
 
-## environment(name, &block)
+## environment(name, default: false, &block)
 
 Define an environment so that tomo can be used to deploy the same project with more than one set of configuration. Each environment must have a unique name and can contain its own [host][] and [set][] directives. For example:
 
@@ -252,6 +252,15 @@ end
 ```
 
 Use the `-e` or `--environment` option when running tomo to select which environment to use.
+
+When a configuration contains multiple environments, you can mark one of them as the default using `default: true`. This environment will be auto-selected by tomo commands when `-e` or `--environment` are unspecified.
+
+```ruby
+# tomo commands will use this environment by default
+environment :staging, default: true do
+  # ...
+end
+```
 
 ## role(name, runs:)
 

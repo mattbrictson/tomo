@@ -38,6 +38,11 @@ module Tomo
       @task_filter = RoleBasedTaskFilter.new
     end
 
+    def default_environment_name
+      default_env = environments.find { |_, env| env.default? }
+      default_env&.first
+    end
+
     def for_environment(environment)
       validate_environment!(environment)
 
@@ -109,12 +114,14 @@ module Tomo
       settings.merge(environments[environ].settings)
     end
 
-    def raise_no_environment_specified
-      UnspecifiedEnvironmentError.raise_with(environments: environments.keys)
-    end
+    def raise_no_environment_specified = UnspecifiedEnvironmentError.raise_with(environments: environments.keys)
 
     def raise_unknown_environment(environ)
-      UnknownEnvironmentError.raise_with(name: environ, known_environments: environments.keys)
+      UnknownEnvironmentError.raise_with(
+        name: environ,
+        default_environment: default_environment_name,
+        known_environments: environments.keys
+      )
     end
   end
 end

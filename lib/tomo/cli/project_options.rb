@@ -13,7 +13,7 @@ module Tomo
 
       def configure_runtime(options, strict: true)
         config = load_configuration(options)
-        env = options[:environment]
+        env = options[:environment] || config.default_environment_name
         env = config.environments.keys.first if env.nil? && !strict
         config = config.for_environment(env)
         config.settings.merge!(settings_from_env)
