@@ -71,7 +71,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#deployblock">deploy(&amp;block)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#environmentname-block">environment(name, &amp;block)</a>
+    <li class="toctree-l2"><a class="reference internal" href="#environmentname-default-false-block">environment(name, default: false, &amp;block)</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#rolename-runs">role(name, runs:)</a>
     </li>
@@ -361,7 +361,7 @@ end
   run &quot;core:log_revision&quot;
 end
 </code></pre>
-<h2 id="environmentname-block">environment(name, &amp;block)</h2>
+<h2 id="environmentname-default-false-block">environment(name, default: false, &amp;block)</h2>
 <p>Define an environment so that tomo can be used to deploy the same project with more than one set of configuration. Each environment must have a unique name and can contain its own <a href="#hostaddress-4242options">host</a> and <a href="#sethash">set</a> directives. For example:</p>
 <pre><code class="language-ruby"># Top-level config is shared by both environments
 set git_url: &quot;git@github.com:username/repo.git&quot;
@@ -377,6 +377,12 @@ environment :production do
 end
 </code></pre>
 <p>Use the <code>-e</code> or <code>--environment</code> option when running tomo to select which environment to use.</p>
+<p>When a configuration contains multiple environments, you can mark one of them as the default using <code>default: true</code>. This environment will be auto-selected by tomo commands when <code>-e</code> or <code>--environment</code> are unspecified.</p>
+<pre><code class="language-ruby"># tomo commands will use this environment by default
+environment :staging, default: true do
+  # ...
+end
+</code></pre>
 <h2 id="rolename-runs">role(name, runs:)</h2>
 <p>Specify that certain task(s) are only allowed to run on hosts that have the role <code>name</code>. The <code>runs</code> option must be an array of Strings representing task names. Simple wildcards (glob rules using <code>*</code>) can be used to match multiple tasks.</p>
 <p>By default, every task that is listed in <a href="#setupblock">setup</a> and <a href="#deployblock">deploy</a> blocks is run on every host. In a multi-host deployment this is not always desirable. For example, the <code>rails:db_seed</code> and <code>rails:db_migrate</code> tasks should only be run once per deployment (i.e. on one host). To accomplish this, we can define a role named &ldquo;db&rdquo; that is responsible for running these tasks, like this:</p>
