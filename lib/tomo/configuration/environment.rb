@@ -5,9 +5,14 @@ module Tomo
     class Environment
       attr_accessor :hosts, :settings
 
-      def initialize
+      def initialize(default: false)
+        @default = default
         @hosts = []
         @settings = {}
+      end
+
+      def default?
+        !!@default
       end
     end
   end

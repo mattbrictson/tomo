@@ -19,4 +19,23 @@ class Tomo::ConfigurationTest < Tomo::Test
       assert_instance_of(Tomo::Configuration, parsed)
     end
   end
+
+  def test_allows_environment_to_be_marked_as_default
+    in_temp_dir do
+      FileUtils.mkdir ".tomo"
+      File.write(".tomo/config.rb", <<~CONFIG)
+        environment :production do
+          host "1.1.1.1"
+        end
+
+        environment :staging, default: true do
+          host "2.2.2.2"
+        end
+      CONFIG
+
+      parsed = Tomo::Configuration.from_config_rb
+
+      assert_equal "staging", parsed.default_environment_name
+    end
+  end
 end

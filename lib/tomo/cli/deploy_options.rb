@@ -43,6 +43,7 @@ module Tomo
       end
 
       def prompt_for_environment(*, options)
+        options[:environment] ||= load_configuration(options).default_environment_name
         return unless options[:environment].nil?
 
         envs = environment_names(*, options)
