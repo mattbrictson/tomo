@@ -39,7 +39,7 @@ module Tomo
     end
 
     def default_environment_name
-      default_env = environments.find { |_, env| env.default? }
+      default_env = environments.one? ? environments.first : environments.find { |_, env| env.default? }
       default_env&.first
     end
 
