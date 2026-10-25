@@ -38,4 +38,19 @@ class Tomo::ConfigurationTest < Tomo::Test
       assert_equal "staging", parsed.default_environment_name
     end
   end
+
+  def test_treats_single_environment_as_implicit_default
+    in_temp_dir do
+      FileUtils.mkdir ".tomo"
+      File.write(".tomo/config.rb", <<~CONFIG)
+        environment :production do
+          host "1.1.1.1"
+        end
+      CONFIG
+
+      parsed = Tomo::Configuration.from_config_rb
+
+      assert_equal "production", parsed.default_environment_name
+    end
+  end
 end

@@ -38,6 +38,20 @@ class Tomo::CLITest < Tomo::Test
     assert_match(/did you forget to install the foo plugin/i, @tester.stderr)
   end
 
+  def test_auto_selects_environment_when_only_one_is_configured
+    @tester.run "init"
+    @tester.in_temp_dir do
+      File.write(".tomo/config.rb", <<~CONFIG, mode: "a+")
+        environment :production do
+          host "deployer@1.2.3.4"
+        end
+      CONFIG
+    end
+    @tester.run "env:show", "--dry-run"
+
+    assert_match("Simulated env:show on deployer@1.2.3.4", @tester.stdout)
+  end
+
   def test_prints_error_when_config_has_syntax_error
     @tester.in_temp_dir do
       FileUtils.mkdir_p(".tomo")
